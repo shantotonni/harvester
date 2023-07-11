@@ -15,6 +15,7 @@ export default {
     actions:{
         getAllUserMenu(context){
             axios.get('api/sidebar-get-all-user-menu').then((response)=>{
+                console.log(response)
                 context.commit('getAllUserMenu',response.data.user_menu);
             }).catch((error)=>{
                 if(error.response.data.status == 401){

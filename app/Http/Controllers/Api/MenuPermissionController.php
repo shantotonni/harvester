@@ -48,11 +48,11 @@ class MenuPermissionController extends Controller
         $user = JWTAuth::parseToken()->authenticate();
 
         $menuId = MenuItem::join('UserMenu', 'UserMenu.MenuItemId', 'MenuItem.Id')
-            ->where('UserMenu.UserId', $user->UserID)
+            ->where('UserMenu.UserId', $user->username)
             ->pluck('MenuItem.MenuID');
 
         $menuItemId = MenuItem::join('UserMenu', 'UserMenu.MenuItemId', 'MenuItem.Id')
-            ->where('UserMenu.UserId', $user->UserID)
+            ->where('UserMenu.UserId', $user->username)
             ->pluck('MenuItem.Id');
 
         $menu = Menu::whereIn('MenuID', $menuId)->where('Status', 'Y')
