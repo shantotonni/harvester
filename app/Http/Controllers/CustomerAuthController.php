@@ -37,7 +37,7 @@ class CustomerAuthController extends Controller
             ],200);
         }
         return response()->json([
-            'message'=>'UserId or Password Not Match',
+            'message'=>'Username or Password Not Match',
             'status'=>401
         ],200);
     }

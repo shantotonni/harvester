@@ -37,13 +37,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="(role, i) in roles" :key="role.ID" v-if="roles.length">
+                                            <tr v-for="(role, i) in roles" :key="role.id" v-if="roles.length">
                                                 <th class="text-left" scope="row">{{ ++i }}</th>
-                                                <td class="text-left">{{ role.Name }}</td>
-                                                <td class="text-left">{{ role.CreatedAt }}</td>
+                                                <td class="text-left">{{ role.name }}</td>
+                                                <td class="text-left">{{ role.created_at }}</td>
                                                 <td class="text-left">
                                                     <button @click="edit(role)" class="btn btn-success btn-sm"><i class="far fa-edit"></i></button>
-                                                    <button @click="destroy(role.ID)" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                                    <button @click="destroy(role.id)" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -80,8 +80,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Role Name</label>
-                                            <input type="text" name="Name" v-model="form.Name" class="form-control" :class="{ 'is-invalid': form.errors.has('Name') }">
-                                            <div class="error" v-if="form.errors.has('Name')" v-html="form.errors.get('Name')" />
+                                            <input type="text" name="name" v-model="form.name" class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
+                                            <div class="error" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
                                         </div>
                                     </div>
                                 </div>
@@ -115,8 +115,9 @@ export default {
             editMode: false,
             isLoading: false,
             form: new Form({
-                ID:'',
-                Name:'',
+                id:'',
+                name:'',
+                created_at:''
             }),
         }
     },
@@ -130,7 +131,7 @@ export default {
         }
     },
     mounted() {
-        document.title = 'Role List | Diesel Engine';
+        document.title = 'Role List | Harvester';
         this.getAllRole();
     },
     methods: {
@@ -185,7 +186,7 @@ export default {
         },
         update(){
             this.form.busy = true;
-            this.form.put("/api/role/" + this.form.ID).then(response => {
+            this.form.put("/api/role/" + this.form.id).then(response => {
                     $("#roleModal").modal("hide");
                     this.getAllRole();
                 }).catch(e => {

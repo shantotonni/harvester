@@ -4,7 +4,7 @@
             <router-link :to="{name:'Dashboard'}" class="logo" style="line-height: 67px;color: white">
 <!--                <span><img style="width: 200px" :src="`${mainOrigin}images/PowerEX.png`" alt="logo"/> </span><i><img-->
 <!--                :src="`assets/images/aci.jpeg`" style="border-radius: 5%;" alt="" height="40"/></i>-->
-                AHMobileApp
+               Harvester
             </router-link>
         </div>
         <nav class="navbar-custom">

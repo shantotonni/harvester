@@ -38,7 +38,6 @@ export default {
   methods: {
     save() {
         axios.post("/api/save-user-menu-permission",{permission: this.menuPermission, userId: this.userId}).then(response => {
-            console.log(response)
             this.$toaster.success('Data Successfully Updated');
         }).catch(e => {
             this.isLoading = false;

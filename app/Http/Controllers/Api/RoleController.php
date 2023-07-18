@@ -12,14 +12,14 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role::orderBy('ID','desc')->paginate(15);
+        $roles = Role::orderBy('id','desc')->paginate(15);
         return new RoleCollection($roles);
     }
 
     public function store(RoleRequest $request)
     {
         $role = new Role();
-        $role->Name = $request->Name;
+        $role->name = $request->name;
         $role->save();
         return response()->json(['message'=>'Role Created Successfully'],200);
     }
@@ -27,19 +27,19 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $role = Role::find($id);
-        $role->Name = $request->Name;
+        $role->name = $request->name;
         $role->save();
         return response()->json(['message'=>'Role Updated Successfully'],200);
     }
 
     public function destroy($id)
     {
-        Role::where('ID',$id)->delete();
+        Role::where('id',$id)->delete();
         return response()->json(['message'=>'Role Deleted Successfully'],200);
     }
 
     public function search($query)
     {
-        return new RoleCollection(Role::where('Name','LIKE',"%$query%")->latest()->paginate(20));
+        return new RoleCollection(Role::where('name','LIKE',"%$query%")->latest()->paginate(20));
     }
 }

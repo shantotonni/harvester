@@ -17,11 +17,11 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $this->validate($request, [
-            'UserID' => 'required',
+            'Username' => 'required',
             'Password' => 'required',
         ]);
 
-        if ($token = JWTAuth::attempt(['UserID' => $request->UserID, 'password' => $request->Password,'is_active' =>1])){
+        if ($token = JWTAuth::attempt(['Username' => $request->Username, 'password' => $request->Password,'is_active' =>1])){
              $user = Auth::user();
              $update_user = User::where('id',$user->id)->first();
              $update_user->device_token = $request->device_token;
@@ -33,7 +33,7 @@ class AuthController extends Controller
             ],200);
         }
         return response()->json([
-            'message'=>'UserId or Password Not Match',
+            'message'=>'Username or Password Not Match',
             'status'=>401
         ],200);
 
@@ -43,13 +43,13 @@ class AuthController extends Controller
     public function dashboardLogin(Request $request)
     {
         $this->validate($request, [
-            'UserID' => 'required',
+            'Username' => 'required',
             'Password' => 'required',
         ]);
 
-        if (!$token = JWTAuth::attempt(['username' => $request->UserID, 'password' => $request->Password,'is_active' =>1,'role_id'=>[1]])){
+        if (!$token = JWTAuth::attempt(['username' => $request->Username, 'password' => $request->Password,'is_active' =>1,'role_id'=>[1]])){
             return response()->json([
-                'message'=>'UserId or Password Not Match',
+                'message'=>'Username or Password Not Match',
                 'status'=>401
             ],200);
         }

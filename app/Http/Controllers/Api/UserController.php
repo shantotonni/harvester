@@ -20,8 +20,8 @@ class UserController extends Controller
     }
 
     public function store(UserStoreRequest $request){
-        if ($request->has('Image')) {
-            $image = $request->Image;
+        if ($request->has('image')) {
+            $image = $request->image;
             $name = uniqid().time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
             Image::make($image)->save(public_path('images/user/').$name);
         } else {
@@ -30,13 +30,13 @@ class UserController extends Controller
 
         $user = new User();
 
-        $user->Name = $request->Name;
-        $user->UserID = $request->UserID;
-        $user->RoleId = $request->RoleId;
-        $user->Designation = $request->Designation;
-        $user->Email = $request->Email;
-        $user->Mobile = $request->Mobile;
-        $user->Image = $name;
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->role_id = $request->role_id;
+        $user->designation = $request->designation;
+        $user->email = $request->email;
+        $user->mobile = $request->mobile;
+        $user->image = $name;
         $user->Password = bcrypt($request->Password);
         $user->Active = 'Y';
         $user->save();
@@ -46,7 +46,7 @@ class UserController extends Controller
 
     public function update(UserUpdateRequest $request, $id){
 
-        $user = User::where('ID',$id)->first();
+        $user = User::where('id',$id)->first();
         $image = $request->Image;
 
         if ($image != $user->Image) {
@@ -68,13 +68,13 @@ class UserController extends Controller
             $name = $user->Image;
         }
 
-        $user->Name = $request->Name;
-        $user->UserID = $request->UserID;
-        $user->RoleId = $request->RoleId;
-        $user->Designation = $request->Designation;
-        $user->Email = $request->Email;
-        $user->Mobile = $request->Mobile;
-        $user->Image = $name;
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->role_id = $request->role_id;
+        $user->designation = $request->designation;
+        $user->email = $request->email;
+        $user->mobile = $request->mobile;
+        $user->image = $name;
         $user->save();
         return response()->json(['message'=>'User Updated Successfully'],200);
     }
@@ -91,7 +91,7 @@ class UserController extends Controller
     }
 
     public function updateProfile(Request $request){
-        $user = User::where('ID',$request->id)->where('UserID',$request->UserID)->first();
+        $user = User::where('id',$request->id)->where('UserID',$request->userId)->first();
         $user->designation = $request->designation;
         $user->email = $request->email;
         $user->mobile = $request->mobile;
@@ -104,6 +104,6 @@ class UserController extends Controller
 
     public function search($query)
     {
-        return new UserCollection(User::where('Name','LIKE',"%$query%")->orWhere('UserID','LIKE',"%$query%")->latest()->paginate(20));
+        return new UserCollection(User::where('Name','LIKE',"%$query%")->orWhere('username','LIKE',"%$query%")->latest()->paginate(20));
     }
 }

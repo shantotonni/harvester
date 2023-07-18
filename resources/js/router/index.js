@@ -35,17 +35,12 @@ import ChangePassword from '../views/settings/ChangePassword'
 import CustomerList from '../views/customer/List'
 import RoleList from '../views/role/List'
 import BrandList from '../views/brand/List'
+import ServiceCenters from '../views/service_centers/List'
 import Profile from '../views/profile/Profile'
 import AdminDashboard from '../views/admin_dashboard/Index'
-import Portfolio from '../views/portfolio/List.vue'
-import Category from '../views/category/List.vue'
-import Banner from '../views/banner/List.vue'
-import Product from '../views/product/List.vue'
-import Doctor from '../views/doctor/List.vue'
-import MOInfo from '../views/moinfo/List.vue'
-import Shop from '../views/shop/List.vue'
-import District from '../views/district/List.vue'
-import Upazila from '../views/upazila/List.vue'
+import HarvesterServiceDetails from '../views/harvester_service_details/list'
+import ServiceTypes from '../views/service_types/list'
+
 const routes = [
     {
         path: base_url + '/',
@@ -95,41 +90,17 @@ const routes = [
             {
                 path: base_url + '/admin-dashboard', name: 'AdminDashboard', component: AdminDashboard
             },
-           // portfolio route
+            //Service centers
             {
-                path: base_url + '/portfolio-list', name: 'Portfolio', component: Portfolio
+                path: base_url + '/service-centers', name: 'ServiceCenters', component: ServiceCenters
             },
-            //category route
+            //Harvester Service details
             {
-                path: base_url + '/category-list', name: 'Category', component: Category
+                path: base_url + '/harvester-service-details', name: 'HarvesterServiceDetails', component: HarvesterServiceDetails
             },
-            //banner route
+            //Harvester Service details
             {
-                path: base_url + '/banner-list', name: 'Banner', component: Banner
-            },
-            //product route
-            {
-                path: base_url + '/product-list', name: 'Product', component: Product
-            },
-            //doctor route
-            {
-                path: base_url + '/doctor-list', name: 'Doctor', component: Doctor
-            },
-            //MOInfo route
-            {
-                path: base_url + '/moinfo-list', name: 'MOInfo', component: MOInfo
-            },
-            //MOInfo route
-            {
-                path: base_url + '/shop-list', name: 'Shop', component: Shop
-            },
-            //District route
-            {
-                path: base_url + '/district-list', name: 'District', component: District
-            },
-            //Upazila route
-            {
-                path: base_url + '/upazila-list', name: 'Upazila', component: Upazila
+                path: base_url + '/service-types', name: 'ServiceTypes', component: ServiceTypes
             },
         ],
         beforeEnter(to, from, next) {

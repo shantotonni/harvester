@@ -4,15 +4,15 @@
             <div class="card overflow-hidden account-card mx-3">
                 <div class="bg-primary p-4 text-white text-center position-relative">
                     <h4 class="font-20 m-b-5">Welcome Back !</h4>
-                    <p class="text-white-50 mb-4">Sign in to continue to DEGS.</p>
+                    <p class="text-white-50 mb-4">Sign in to continue to Harvester.</p>
                     <div class="logo logo-admin" style="height: 80px;width:100px"><img :src="`${mainOrigin}assets/images/logo.jpeg`" height="40" alt="logo"></div>
                 </div>
                 <div class="account-card-content">
                     <form class="form-horizontal m-t-30" @submit.prevent="login" @keydown="form.onKeydown($event)">
                         <div class="form-group">
-                            <label for="UserID">User ID</label>
-                            <input type="text" class="form-control" id="UserID" :class="{ 'is-invalid': form.errors.has('UserID') }" v-model="form.UserID" name="UserID" placeholder="User ID">
-                            <div class="error" v-if="form.errors.has('UserID')" v-html="form.errors.get('UserID')" />
+                            <label for="Username">Username</label>
+                            <input type="text" class="form-control" id="Username" :class="{ 'is-invalid': form.errors.has('Username') }" v-model="form.Username" name="Username" placeholder="Username">
+                            <div class="error" v-if="form.errors.has('Username')" v-html="form.errors.get('Username')" />
                         </div>
                         <div class="form-group">
                             <label for="Password">Password</label>
@@ -33,13 +33,13 @@ export default {
     data(){
         return{
             form : new Form({
-                UserID : '',
+                Username : '',
                 Password : ''
             }),
         }
     },
     mounted() {
-        document.title = 'Login | Diesel Engine';
+        document.title = 'Login | Harvester';
     },
     methods: {
         login(){

@@ -13,6 +13,7 @@ use App\Http\Resources\Portfolio\PortfolioCollection;
 use App\Http\Resources\Product\ProductCollection;
 use App\Http\Resources\Shop\ShopCollection;
 use App\Http\Resources\Upazila\UpazilaCollection;
+use App\Models\Area;
 use App\Models\Banner;
 use App\Models\Brand;
 use App\Models\Category;
@@ -23,7 +24,11 @@ use App\Models\Menu;
 use App\Models\MOInfo;
 use App\Models\Portfolio;
 use App\Models\Product;
+use App\Models\ProductModel;
 use App\Models\Role;
+use App\Models\ServiceCenter;
+use App\Models\ServiceType;
+use App\Models\ServicingType;
 use App\Models\Shop;
 use App\Models\Upazila;
 use App\Models\User;
@@ -32,42 +37,6 @@ use Illuminate\Support\Facades\DB;
 
 class CommonController extends Controller
 {
-    public function getAllBanner()
-    {
-        $banners = Banner::orderBy('CreatedDate', 'desc')->get();
-        return new BannerCollection($banners);
-    }
-
-    public function getAllPortfolio()
-    {
-        $portfolios = Portfolio::orderBy('CreatedDate', 'desc')->get();
-        return new PortfolioCollection($portfolios);
-    }
-
-    public function getAllCategory(Request $request)
-    {
-        $categories = Category::orderBy('CreatedDate', 'desc')->get();
-        return new CategoryCollection($categories);
-//        $PortfolioID = $request->PortfolioID;
-//        $categories = Category::where('PortfolioID',$PortfolioID)->orderBy('CreatedDate', 'desc')->get();
-//        return new CategoryCollection($categories);
-    }
-
-    public function getAllDoctor()
-    {
-        $doctors = Doctor::orderBy('CreatedDate', 'desc')->get();
-        return new DoctorCollection($doctors);
-    }
-
-    public function getAllProduct(Request $request)
-    {
-//        $CategoryID = $request->CategoryID;
-//        $products = Product::where('CategoryID',$CategoryID)->orderBy('CreatedDate', 'desc')->get();
-//        return new ProductCollection($products);
-
-        $products = Product::orderBy('CreatedDate', 'desc')->get();
-        return new ProductCollection($products);
-    }
 
     public function getAllBrand()
     {
@@ -108,75 +77,40 @@ class CommonController extends Controller
             'roles' => $roles
         ]);
     }
-
-    public function getAllShop()
+    public function getAllServiceCenter()
     {
-        $shops = Shop::orderBy('CreatedDate', 'desc')->get();
+        $service_centers = ServiceCenter::orderBy('CreatedDate', 'desc')->get();
         return response()->json([
-            'shops' => $shops
+            'service_centers' => $service_centers
         ]);
     }
 
-    public function getAllMOInfo()
-    {
-        $moinfos = MOInfo::orderBy('CreatedDate', 'desc')->get();
+    public function getAllArea(Request $request){
+        $areas = Area::OrderBy('id','asc')->get();
         return response()->json([
-            'moinfos' => $moinfos
+            'areas'=>$areas
         ]);
-    }
 
-    public function getAllDistrict()
-    {
-        $districts = District::orderBy('CreatedDate', 'desc')->get();
-        return new DistrictCollection($districts);
     }
+    public function getAllProductModel(Request $request){
+        $models = ProductModel::OrderBy('id','asc')->get();
+        return response()->json([
+            'models'=>$models
+        ]);
 
-    public function getAllUpazila()
-    {
-        $upazilas = Upazila::orderBy('CreatedDate', 'desc')->get();
-        return new UpazilaCollection($upazilas);
     }
+    public function getAllServicetype(Request $request){
+        $servicetypes = ServiceType::OrderBy('id','asc')->get();
+        return response()->json([
+            'servicetypes'=>$servicetypes
+        ]);
 
-    public function getDistrictWiseDoctor(Request $request)
-    {
-        $DistrictID = $request->DistricID;
-        $UpazilaID = $request->UpazilaID;
-        try {
-            $doctors = Doctor::where('DistrictID', $DistrictID)->where('UpazilaID', $UpazilaID)->get();
-            return new DoctorCollection($doctors);
-        } catch (\Exception $exception) {
-            return response()->json([
-                'status' => 401,
-                'message' => $exception->getMessage()
-            ],401);
-        }
     }
-    public function getDistrictWiseMoinfo(Request $request)
+    public function getAllServicingtype(Request $request)
     {
-        $DistrictID = $request->DistrictID;
-        $UpazilaID = $request->UpazilaID;
-        try {
-            $moinfos = MOInfo::where('DistrictID', $DistrictID)->where('UpazilaID', $UpazilaID)->get();
-            return new MOInfoCollection($moinfos);
-        } catch (\Exception $exception) {
-            return response()->json([
-                'status' => 401,
-                'message' => $exception->getMessage()
-            ],401);
-        }
-    }
-    public function getDistrictWiseShop(Request $request)
-    {
-        $DistrictID = $request->DistrictID;
-        $UpazilaID = $request->UpazilaID;
-        try {
-            $shops = Shop::where('DistrictID', $DistrictID)->where('UpazilaID', $UpazilaID)->get();
-            return new ShopCollection($shops);
-        } catch (\Exception $exception) {
-            return response()->json([
-                'status' => 401,
-                'message' => $exception->getMessage()
-            ],500);
-        }
+        $servicingtypes = ServicingType::OrderBy('id', 'asc')->get();
+        return response()->json([
+            'servicingtypes' => $servicingtypes
+        ]);
     }
 }

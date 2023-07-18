@@ -1,23 +1,20 @@
 <?php
 
 use App\Http\Controllers\Api\AdminDashboardController;
-use App\Http\Controllers\Api\BannerController;
+use App\Http\Controllers\Api\AreaController;
 use App\Http\Controllers\Api\BrandController;
-use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\DashboardController;
-use App\Http\Controllers\Api\DistrictController;
-use App\Http\Controllers\Api\DoctorController;
+use App\Http\Controllers\Api\HarvesterServiceController;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\MenuPermissionController;
 use App\Http\Controllers\Api\Mobile\CommonController;
-use App\Http\Controllers\Api\MOInfoController;
-use App\Http\Controllers\Api\PortfolioController;
-use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ProductModelController;
 use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\ServiceCenterController;
+use App\Http\Controllers\Api\ServiceTypeController;
+use App\Http\Controllers\Api\ServicingTypeController;
 use App\Http\Controllers\Api\SettingController;
-use App\Http\Controllers\Api\ShopController;
-use App\Http\Controllers\Api\UpazilaController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerAuthController;
@@ -37,42 +34,7 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-users/', [UserController::class, 'getAllUser']);
     Route::get('user-by-user-id', [UserController::class, 'getUserByUserId']);
     Route::post('user-profile-update', [UserController::class, 'updateProfile']);
-    //Portfolio route
-    Route::apiResource('portfolio', PortfolioController::class);
-    Route::get('search/portfolio/{query}', [PortfolioController::class, 'search']);
 
-    //Portfolio route
-    Route::apiResource('category', CategoryController::class);
-    Route::get('search/category/{query}', [CategoryController::class, 'search']);
-
-//banner route
-    Route::apiResource('banner', BannerController::class);
-    Route::get('search/banner/{query}', [BannerController::class, 'search']);
-
-    //product route
-    Route::apiResource('product', ProductController::class);
-    Route::get('search/product/{query}', [ProductController::class, 'search']);
-
-    //doctor route
-    Route::apiResource('doctor', DoctorController::class);
-    Route::get('search/doctor/{query}', [DoctorController::class, 'search']);
-
-    //moinfo route
-    Route::apiResource('moinfo', MOInfoController::class);
-    Route::get('search/moinfo/{query}', [MOInfoController::class, 'search']);
-
-    //shop route
-    Route::apiResource('shop', ShopController::class);
-    Route::get('search/shop/{query}', [ShopController::class, 'search']);
-
-    //district route
-    Route::apiResource('district', DistrictController::class);
-    Route::get('search/district/{query}', [DistrictController::class, 'search']);
-    //district route
-    Route::apiResource('upazila', UpazilaController::class);
-    Route::get('search/upazila/{query}', [UpazilaController::class, 'search']);
-    Route::get('get-all-upazila', [UpazilaController::class, 'getAllUpazila']);
-    Route::get('district-wise-upazila/{ID}', [UpazilaController::class, 'getAllUpazilaByDistrict']);
 
 
     //menu resource route
@@ -105,6 +67,12 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-user', [CommonController::class, 'getAllUser']);
     Route::get('get-all-customer', [CommonController::class, 'getAllCustomer']);
     Route::get('get-all-role', [CommonController::class, 'getAllRole']);
+    Route::get('get-all-service-centers', [CommonController::class, 'getAllServiceCenter']);
+    Route::get('get-all-areas', [CommonController::class, 'getAllArea']);
+    Route::get('get-all-service-type', [CommonController::class, 'getAllServiceType']);
+    Route::get('get-all-servicing-type', [CommonController::class, 'getAllServicingType']);
+    Route::get('get-all-product-model', [CommonController::class, 'getAllProductModel']);
+
 
 
     //get dashboard data route
@@ -114,6 +82,23 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //admin dashboard
     Route::get('get-all-admin-dashboard-data', [AdminDashboardController::class, 'getAdminDashboardAllData']);
 
+//ServiceCenter
+    Route::apiResource('service-centers', ServiceCenterController::class);
+    Route::get('search/service-centers/{query}', [ServiceCenterController::class, 'search']);
+    Route::get('get-all-service-centers', [ServiceCenterController::class, 'getAllServiceCenter']);
+    Route::get('get-all-areas', [AreaController::class, 'getAllArea']);
+
+    //HarvesterServiceRequest
+    Route::apiResource('harvester-service-details', HarvesterServiceController::class);
+    Route::get('search/harvester-service-details/{query}', [HarvesterServiceController::class, 'search']);
+    Route::get('get-all-harvester-service-details', [HarvesterServiceController::class, 'getAllHarvesterServiceDetails']);
+
+    Route::get('get-all-servicing-type', [ServicingTypeController::class, 'getAllServicingType']);
+    Route::get('get-all-product-model', [ProductModelController::class, 'getAllProductModel']);
+
+//service type
+    Route::get('get-all-service-types', [ServiceTypeController::class, 'getAllServiceType']);
+    Route::apiResource('service-types', ServiceTypeController::class);
 });
 
 //For Customer
@@ -129,17 +114,4 @@ Route::group(['middleware' => 'CustomerAuth'], function () {
 
 });
 
-//get data route
-Route::get('get-all-banner', [CommonController::class, 'getAllBanner']);
-Route::get('get-all-portfolio', [CommonController::class, 'getAllPortfolio']);
-Route::get('get-all-category', [CommonController::class, 'getAllCategory']);
-Route::get('get-all-product', [CommonController::class, 'getAllProduct']);
-Route::get('get-all-doctor', [CommonController::class, 'getAllDoctor']);
-Route::get('get-all-shop', [CommonController::class, 'getAllShop']);
-Route::get('get-all-moinfo', [CommonController::class, 'getAllMOInfo']);
-Route::post('doctors/district-wise', [CommonController::class, 'getDistrictWiseDoctor']);
-Route::post('moinfos/district-wise', [CommonController::class, 'getDistrictWiseMoinfo']);
-Route::post('shops/district-wise', [CommonController::class, 'getDistrictWiseShop']);
-Route::post('product-details', [\App\Http\Controllers\Api\Mobile\ProductController::class, 'productDetails']);
-Route::get('get-all-district', [CommonController::class, 'getAllDistrict']);
-Route::get('get-all-upazila', [CommonController::class, 'getAllUpazila']);
+

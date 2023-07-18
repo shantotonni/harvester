@@ -20,8 +20,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>UserID</label>
-                                                    <input type="text" readonly name="UserID" v-model="form.UserID" class="form-control" :class="{ 'is-invalid': form.errors.has('UserID') }">
-                                                    <div class="error" v-if="form.errors.has('UserID')" v-html="form.errors.get('UserID')" />
+                                                    <input type="text" readonly name="username" v-model="form.username" class="form-control" :class="{ 'is-invalid': form.errors.has('username') }">
+                                                    <div class="error" v-if="form.errors.has('username')" v-html="form.errors.get('username')" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -76,7 +76,7 @@ export default {
             form: new Form({
                 id:'',
                 name:'',
-                UserID: '',
+                username: '',
                 email:'',
                 designation: '',
                 mobile: '',
@@ -84,7 +84,7 @@ export default {
         }
     },
     mounted() {
-        document.title = 'User Profile | Diesel Engine';
+        document.title = 'User Profile | Harvester';
         this.getUserByUserId();
     },
     methods: {

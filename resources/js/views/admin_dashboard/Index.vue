@@ -5,7 +5,7 @@
                 <div class="row" style="margin-bottom: 15px">
                     <div class="col-md-12">
                         <div style="text-align: center;background: #3C96C6;padding-left: 12px;padding-right: 12px;padding-top: 1px;padding-bottom: 1px;color: white;text-transform: uppercase;">
-                            <h4 style="font-size: 30px">Diesel Generator Service Dashboard</h4>
+                            <h4 style="font-size: 30px">Harvester Dashboard</h4>
                         </div>
 
                     </div>
@@ -146,7 +146,7 @@ export default {
         }
     },
     mounted() {
-        document.title = 'Admin Dashboard | Diesel Engine';
+        document.title = 'Admin Dashboard | Harvester';
         this.getAllDashboardData();
     },
     methods: {

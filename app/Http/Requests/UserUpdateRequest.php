@@ -24,10 +24,10 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'UserID'=>'required',
-            'Name'=>'required',
-            'Email'=>'required',
-            'Mobile'=>'required',
+            'username'=>'required',
+            'name'=>'required',
+            'email'=>'required',
+            'mobile'=>'required',
         ];
     }
 }

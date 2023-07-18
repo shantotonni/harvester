@@ -6,7 +6,7 @@
                     <div class="col-sm-6">
                         <h4 class="page-title">Dashboard</h4>
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item active">Welcome to Diesel Engine Generator Service Dashboard</li>
+                            <li class="breadcrumb-item active">Welcome to Harvester Dashboard</li>
                         </ol>
                     </div>
                 </div>
@@ -135,7 +135,7 @@ export default {
         }
     },
     mounted() {
-        document.title = 'Dashboard | Diesel Engine';
+        document.title = 'Dashboard | Harvester';
         this.getAllDashboardData();
     },
     methods: {

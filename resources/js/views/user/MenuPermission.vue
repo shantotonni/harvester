@@ -15,7 +15,7 @@
                                                 <div class="input-group">
                                                     <select class="form-control" id="user" v-model="userId" name="userId">
                                                         <option disabled value="">Select User</option>
-                                                        <option :value="user.UserID" v-for="(user , index) in users" :key="index">{{ user.Name }}</option>
+                                                        <option :value="user.username" v-for="(user , index) in users" :key="index">{{ user.name }}</option>
                                                     </select>
                                                     <div class="form-group row mb-0" >
                                                         <div class="col-sm-12 text-right">
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-document.title = 'User Menu Permission | Diesel Engine';
+document.title = 'User Menu Permission | Harvester';
 export default {
     name: "Create",
     data() {

@@ -42,21 +42,21 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(user, i) in users" :key="user.ID" v-if="users.length">
+                                        <tr v-for="(user, i) in users" :key="user.id" v-if="users.length">
                                             <th class="text-left" scope="row">{{ ++i }}</th>
-                                            <td class="text-left">{{ user.Name }}</td>
-                                            <td class="text-left">{{ user.UserID }}</td>
-                                            <td class="text-left">{{ user.role_name }}</td>
-                                            <td class="text-left">{{ user.Designation }}</td>
-                                            <td class="text-left">{{ user.Mobile }}</td>
-                                            <td class="text-left">{{ user.Email }}</td>
+                                            <td class="text-left">{{ user.name }}</td>
+                                            <td class="text-left">{{ user.username }}</td>
+                                            <td class="text-left">{{ user.name }}</td>
+                                            <td class="text-left">{{ user.designation }}</td>
+                                            <td class="text-left">{{ user.mobile }}</td>
+                                            <td class="text-left">{{ user.email }}</td>
                                             <td class="text-left">
                                                 <span class="badge badge-success" v-if="user.Active == 1">Active</span>
                                                 <span class="badge badge-success" v-else>InActive</span>
                                             </td>
                                             <td class="text-left">
                                                 <button @click="edit(user)" class="btn btn-success btn-sm"><i class="far fa-edit"></i></button>
-                                                <button @click="destroy(user.ID)" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                                <button @click="destroy(user.id)" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -93,36 +93,36 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>User Name</label>
-                                            <input type="text" name="Name" v-model="form.Name" class="form-control" :class="{ 'is-invalid': form.errors.has('Name') }">
-                                            <div class="error" v-if="form.errors.has('Name')" v-html="form.errors.get('Name')" />
+                                            <input type="text" name="name" v-model="form.name" class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
+                                            <div class="error" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>UserID</label>
-                                            <input type="text" name="UserID" v-model="form.UserID" class="form-control" :class="{ 'is-invalid': form.errors.has('UserID') }">
-                                            <div class="error" v-if="form.errors.has('UserID')" v-html="form.errors.get('UserID')" />
+                                            <input type="text" name="username" v-model="form.username" class="form-control" :class="{ 'is-invalid': form.errors.has('username') }">
+                                            <div class="error" v-if="form.errors.has('username')" v-html="form.errors.get('username')" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Designation</label>
-                                            <input type="text" name="Designation" v-model="form.Designation" class="form-control" :class="{ 'is-invalid': form.errors.has('Designation') }">
-                                            <div class="error" v-if="form.errors.has('Designation')" v-html="form.errors.get('Designation')" />
+                                            <input type="text" name="designation" v-model="form.Designation" class="form-control" :class="{ 'is-invalid': form.errors.has('designation') }">
+                                            <div class="error" v-if="form.errors.has('designation')" v-html="form.errors.get('designation')" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Mobile</label>
-                                            <input type="text" name="Mobile" v-model="form.Mobile" class="form-control" :class="{ 'is-invalid': form.errors.has('Mobile') }">
-                                            <div class="error" v-if="form.errors.has('Mobile')" v-html="form.errors.get('Mobile')" />
+                                            <input type="text" name="mobile" v-model="form.mobile" class="form-control" :class="{ 'is-invalid': form.errors.has('mobile') }">
+                                            <div class="error" v-if="form.errors.has('mobile')" v-html="form.errors.get('mobile')" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="text" name="Email" v-model="form.Email" class="form-control" :class="{ 'is-invalid': form.errors.has('Email') }">
-                                            <div class="error" v-if="form.errors.has('Email')" v-html="form.errors.get('Email')" />
+                                            <input type="text" name="email" v-model="form.email" class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
+                                            <div class="error" v-if="form.errors.has('email')" v-html="form.errors.get('email')" />
                                         </div>
                                     </div>
                                     <div class="col-md-6" v-if="!editMode">
@@ -135,19 +135,19 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Role</label>
-                                            <select name="RoleId" id="RoleId" class="form-control" v-model="form.RoleId" :class="{ 'is-invalid': form.errors.has('RoleId') }">
+                                            <select name="role_id" id="role_id" class="form-control" v-model="form.role_id" :class="{ 'is-invalid': form.errors.has('role_id') }">
                                                 <option disabled value="">Select Role</option>
-                                                <option :value="role.ID" v-for="(role , index) in roles" :key="index">{{ role.Name }}</option>
+                                                <option :value="role.id" v-for="(role , index) in roles" :key="index">{{ role.name }}</option>
                                             </select>
-                                            <div class="error" v-if="form.errors.has('RoleId')" v-html="form.errors.get('RoleId')" />
+                                            <div class="error" v-if="form.errors.has('role_id')" v-html="form.errors.get('role_id')" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Image</label>
-                                            <input @change="changeImage($event)" type="file" name="Image" class="form-control" :class="{ 'is-invalid': form.errors.has('Image') }">
-                                            <div class="error" v-if="form.errors.has('Image')" v-html="form.errors.get('Image')" />
-                                            <img v-if="form.Image" :src="showImage(form.Image)" alt="" height="40px" width="40px">
+                                            <input @change="changeImage($event)" type="file" name="image" class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
+                                            <div class="error" v-if="form.errors.has('image')" v-html="form.errors.get('image')" />
+                                            <img v-if="form.image" :src="showImage(form.image)" alt="" height="40px" width="40px">
                                         </div>
                                     </div>
                                 </div>
@@ -179,14 +179,14 @@ export default {
             editMode: false,
             isLoading: false,
             form: new Form({
-                ID:'',
-                Name:'',
-                UserID: '',
-                RoleId: '',
-                Email:'',
-                Designation: '',
-                Mobile: '',
-                Image: '',
+                id:'',
+                name:'',
+                username: '',
+                role_id: '',
+                email:'',
+                designation: '',
+                mobile: '',
+                image: '',
             }),
         }
     },
@@ -200,7 +200,7 @@ export default {
         }
     },
     mounted() {
-        document.title = 'User List | Diesel Engine';
+        document.title = 'User List | Harvester';
         this.getAllUser();
     },
     methods: {
