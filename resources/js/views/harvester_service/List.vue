@@ -30,7 +30,7 @@
                                                 <div class="form-group">
                                                     <select name="" id="" v-model="model_id" class="form-control">
                                                         <option disabled value="">Select Model</option>
-                                                        <option :value="model.id" v-for="(model , index) in models" :key="index">{{ model.model_id }}
+                                                        <option :value="model.id" v-for="(model , index) in models" :key="index">{{ model.model_name }}
                                                         </option>
                                                     </select>
                                                 </div>
@@ -295,7 +295,7 @@ export default {
         getAllProductModel() {
             axios.get('/api/get-all-product-model').then((response) => {
                 console.log(response)
-                //this.model = response.data.model;
+                this.models = response.data.models;
             }).catch((error) => {
 
             })
