@@ -260,11 +260,6 @@ export default {
             this.form.reset();
             this.form.clear();
             $("#harvesterserviceModal").modal("show");
-            this.getAllHarvesterServiceDetails();
-            this.getAllProductModel();
-            this.getAllServicingType();
-
-
         },
         store() {
             this.form.busy = true;
