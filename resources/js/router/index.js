@@ -38,8 +38,8 @@ import BrandList from '../views/brand/List'
 import ServiceCenters from '../views/service_centers/List'
 import Profile from '../views/profile/Profile'
 import AdminDashboard from '../views/admin_dashboard/Index'
-import HarvesterServiceDetails from '../views/harvester_service_details/list'
-import ServiceTypes from '../views/service_types/list'
+import HarvesterService from '../views/harvester_service/List'
+import ServiceTypes from '../views/service_types/List'
 
 const routes = [
     {
@@ -94,11 +94,10 @@ const routes = [
             {
                 path: base_url + '/service-centers', name: 'ServiceCenters', component: ServiceCenters
             },
-            //Harvester Service details
             {
-                path: base_url + '/harvester-service-details', name: 'HarvesterServiceDetails', component: HarvesterServiceDetails
+                path: base_url + '/harvester-service', name: 'HarvesterService', component: HarvesterService
             },
-            //Harvester Service details
+            //Harvester Service type
             {
                 path: base_url + '/service-types', name: 'ServiceTypes', component: ServiceTypes
             },
