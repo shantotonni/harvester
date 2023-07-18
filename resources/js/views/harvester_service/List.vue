@@ -30,15 +30,13 @@
                                                 <div class="form-group">
                                                     <select name="" id="" v-model="model_id" class="form-control">
                                                         <option disabled value="">Select Model</option>
-                                                        <option :value="model.id" v-for="(model , index) in models"
-                                                                :key="index">{{ model.model_id }}
+                                                        <option :value="model.id" v-for="(model , index) in models" :key="index">{{ model.model_id }}
                                                         </option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 col-sm-3">
-                                                <button type="submit" @click="getAllHarvesterServiceDetails"
-                                                        class="btn btn-success"><i class="mdi mdi-filter"></i>Filter
+                                                <button type="submit" @click="getAllHarvesterServiceDetails" class="btn btn-success"><i class="mdi mdi-filter"></i>Filter
                                                 </button>
                                             </div>
                                         </div>
@@ -233,7 +231,6 @@ export default {
         getAllHarvesterServiceDetails() {
             this.isLoading = true;
             axios.get('/api/harvester-service-details?page=' + this.pagination.current_page + "&model_id=" + this.model_id).then((response) => {
-                console.log('data', response.data.data)
                 this.harvester_services = response.data.data;
                 this.pagination = response.data.meta;
                 this.isLoading = false;
@@ -297,8 +294,8 @@ export default {
         },
         getAllProductModel() {
             axios.get('/api/get-all-product-model').then((response) => {
-                console.log('model', response.data.model)
-                this.model = response.data.model;
+                console.log(response)
+                //this.model = response.data.model;
             }).catch((error) => {
 
             })
@@ -306,7 +303,6 @@ export default {
 
         getAllServicingType() {
             axios.get('/api/get-all-servicing-type').then((response) => {
-                console.log('servicing_types', response.data.servicing_types)
                 this.models = response.data.servicing_types;
             }).catch((error) => {
 

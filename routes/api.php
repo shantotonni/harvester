@@ -74,7 +74,6 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-product-model', [CommonController::class, 'getAllProductModel']);
 
 
-
     //get dashboard data route
     Route::get('get-all-dashboard-data', [DashboardController::class, 'getDashboardAllDara']);
     Route::get('check-expired', [DashboardController::class, 'checkExpired']);
@@ -82,7 +81,7 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //admin dashboard
     Route::get('get-all-admin-dashboard-data', [AdminDashboardController::class, 'getAdminDashboardAllData']);
 
-//ServiceCenter
+    //ServiceCenter
     Route::apiResource('service-centers', ServiceCenterController::class);
     Route::get('search/service-centers/{query}', [ServiceCenterController::class, 'search']);
     Route::get('get-all-service-centers', [ServiceCenterController::class, 'getAllServiceCenter']);
@@ -94,7 +93,8 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-harvester-service-details', [HarvesterServiceController::class, 'getAllHarvesterServiceDetails']);
 
     Route::get('get-all-servicing-type', [ServicingTypeController::class, 'getAllServicingType']);
-    Route::get('get-all-product-model', [ProductModelController::class, 'getAllProductModel']);
+
+    //Route::get('get-all-product-model', [ProductModelController::class, 'getAllProductModel']);
 
 //service type
     Route::get('get-all-service-types', [ServiceTypeController::class, 'getAllServiceType']);

@@ -18,6 +18,5 @@ class ProductModelController extends Controller
         return response()->json([
             'models'=>$models
         ]);
-
     }
 }

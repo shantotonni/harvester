@@ -94,6 +94,7 @@ class CommonController extends Controller
     }
     public function getAllProductModel(Request $request){
         $models = ProductModel::OrderBy('id','asc')->get();
+        return 'ok';
         return response()->json([
             'models'=>$models
         ]);
