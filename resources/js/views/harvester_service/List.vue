@@ -245,9 +245,9 @@ export default {
             });
         },
         reload() {
-            this.getAllHarvesterServiceDetails();
             this.model_id = "";
             this.query = "";
+            this.getAllHarvesterServiceDetails();
             this.$toaster.success('Data Successfully Refresh');
         },
         closeModal() {

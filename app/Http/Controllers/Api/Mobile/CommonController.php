@@ -11,6 +11,7 @@ use App\Http\Resources\Doctor\DoctorResource;
 use App\Http\Resources\MOInfo\MOInfoCollection;
 use App\Http\Resources\Portfolio\PortfolioCollection;
 use App\Http\Resources\Product\ProductCollection;
+use App\Http\Resources\ProductModel\ProductModelCollection;
 use App\Http\Resources\Products\ProductsCollection;
 use App\Http\Resources\Shop\ShopCollection;
 use App\Http\Resources\Upazila\UpazilaCollection;
@@ -137,5 +138,9 @@ class CommonController extends Controller
         return response()->json([
             'harvester_infos' => $harvester_infos
         ]);
+    }
+
+    public function getAllModelByProduct($id){
+        return new ProductModelCollection(ProductModel::where('product_id',$id)->paginate(20));
     }
 }

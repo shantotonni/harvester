@@ -103,8 +103,7 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //HarvesterInfoRequest
     Route::apiResource('harvester-info', HarvesterinfoController::class);
     Route::get('search/harvester-info/{query}', [HarvesterInfoController::class, 'search']);
-    Route::get('get-all-model-by-product/{id}', [HarvesterInfoController::class, 'getAllModelByProduct']);
-
+    Route::get('get-all-model-by-product/{id}', [CommonController::class, 'getAllModelByProduct']);
 
 
 });

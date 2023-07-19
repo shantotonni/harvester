@@ -81,10 +81,5 @@ class HarvesterInfoController extends Controller
         return response()->json(['message'=>'Harvester Info Deleted Successfully']);
     }
 
-    public function getAllModelByProduct($id){
-
-        return new ProductModelCollection(ProductModel::where('product_id',$id)->paginate(20));
-    }
-
 
 }

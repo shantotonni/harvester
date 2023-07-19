@@ -341,7 +341,7 @@ export default {
         },
         getAllModelByProduct() {
             axios.get( '/api/get-all-model-by-product/' + this.form.product_id).then((response) => {
-                //console.log(response)
+                console.log(response)
                 this.models = response.data.data;
             }).catch((error) => {
 
