@@ -11,6 +11,7 @@ use App\Http\Resources\Doctor\DoctorResource;
 use App\Http\Resources\MOInfo\MOInfoCollection;
 use App\Http\Resources\Portfolio\PortfolioCollection;
 use App\Http\Resources\Product\ProductCollection;
+use App\Http\Resources\Products\ProductsCollection;
 use App\Http\Resources\Shop\ShopCollection;
 use App\Http\Resources\Upazila\UpazilaCollection;
 use App\Models\Area;
@@ -20,11 +21,14 @@ use App\Models\Category;
 use App\Models\Customer;
 use App\Models\District;
 use App\Models\Doctor;
+use App\Models\HarvesterInfo;
+use App\Models\HarvesterService;
 use App\Models\Menu;
 use App\Models\MOInfo;
 use App\Models\Portfolio;
 use App\Models\Product;
 use App\Models\ProductModel;
+use App\Models\Products;
 use App\Models\Role;
 use App\Models\ServiceCenter;
 use App\Models\ServiceType;
@@ -85,32 +89,53 @@ class CommonController extends Controller
         ]);
     }
 
-    public function getAllArea(Request $request){
+    public function getAllArea(){
         $areas = Area::OrderBy('id','asc')->get();
         return response()->json([
             'areas'=>$areas
         ]);
 
     }
-    public function getAllProductModel(Request $request){
+    public function getAllProductModel(){
         $models = ProductModel::OrderBy('id','asc')->get();
         return response()->json([
             'models'=>$models
         ]);
 
     }
-    public function getAllServicetype(Request $request){
-        $servicetypes = ServiceType::OrderBy('id','asc')->get();
+    public function getAllProducts(){
+        $products = Products::OrderBy('id','asc')->get();
         return response()->json([
-            'servicetypes'=>$servicetypes
+            'products'=>$products
         ]);
 
     }
-    public function getAllServicingtype(Request $request)
-    {
-        $servicingtypes = ServicingType::OrderBy('id', 'asc')->get();
+    public function getAllServiceType(){
+        $service_types = ServiceType::OrderBy('id','asc')->get();
         return response()->json([
-            'servicingtypes' => $servicingtypes
+            'service_types'=>$service_types
+        ]);
+
+    }
+    public function getAllServicingType()
+    {
+        $servicing_types = ServicingType::OrderBy('id', 'asc')->get();
+        return response()->json([
+            'servicing_types' => $servicing_types
+        ]);
+    }
+    public function getAllHarvesterServiceDetails()
+    {
+        $harvester_services = HarvesterService::orderBy('CreatedDate', 'desc')->get();
+        return response()->json([
+            'harvester_services' => $harvester_services
+        ]);
+    }
+    public function getAllHarvesterInfo()
+    {
+        $harvester_infos = HarvesterInfo::orderBy('CreatedDate', 'desc')->get();
+        return response()->json([
+            'harvester_infos' => $harvester_infos
         ]);
     }
 }

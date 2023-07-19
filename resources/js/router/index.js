@@ -40,6 +40,8 @@ import Profile from '../views/profile/Profile'
 import AdminDashboard from '../views/admin_dashboard/Index'
 import HarvesterService from '../views/harvester_service/List'
 import ServiceTypes from '../views/service_types/List'
+import ServicingTypes from '../views/servicing_types/List'
+import HarvesterInfo from '../views/harvester_info/List'
 
 const routes = [
     {
@@ -94,12 +96,21 @@ const routes = [
             {
                 path: base_url + '/service-centers', name: 'ServiceCenters', component: ServiceCenters
             },
+          //harvester service
             {
                 path: base_url + '/harvester-service', name: 'HarvesterService', component: HarvesterService
+            },
+            //harvester info
+            {
+                path: base_url + '/harvester-info', name: 'HarvesterInfo', component: HarvesterInfo
             },
             //Harvester Service type
             {
                 path: base_url + '/service-types', name: 'ServiceTypes', component: ServiceTypes
+            },
+            //Harvester Service type
+            {
+                path: base_url + '/servicing-types', name: 'ServicingTypes', component: ServicingTypes
             },
         ],
         beforeEnter(to, from, next) {

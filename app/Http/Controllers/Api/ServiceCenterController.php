@@ -64,12 +64,5 @@ class ServiceCenterController extends Controller
         return new ServiceCenterCollection(ServiceCenter::Where('address', 'like', "%$query%")->latest()->paginate(10));
     }
 
-    public function getAllServiceCenter()
-    {
-        $service_centers = ServiceCenter::orderBy('CreatedDate', 'desc')->get();
-        return response()->json([
-            'service_centers' => $service_centers
-        ]);
-    }
 
 }

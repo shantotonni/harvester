@@ -25,6 +25,7 @@ class ServiceTypeStoreRequest extends FormRequest
     {
         return [
             'name'=>'required',
+            'name_bn'=>'required',
             'code'=>'required'
         ];
     }

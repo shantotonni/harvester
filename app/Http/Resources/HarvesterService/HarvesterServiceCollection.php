@@ -19,9 +19,9 @@ class HarvesterServiceCollection extends ResourceCollection
                 return [
                     'id' => $harvester_service->id,
                     'model_id' => $harvester_service->model_id,
-//                    'model_name'=>isset($harvester_service->model) ? $harvester_service->model->name:'',
-                    'servicing_type_id' => $harvester_service->model_id,
-//                    'servicing_type' => isset($harvester_service->servicing) ? $harvester_service->servicing->name : '',
+                    'model_name'=>isset($harvester_service->ProductModel) ? $harvester_service->ProductModel->model_name:'',
+                    'servicing_type_id' => $harvester_service->servicing_type_id,
+                    'servicing_name'=>isset($harvester_service->ServicingType) ? $harvester_service->ServicingType->name:'',
                     'from_hr' => $harvester_service->from_hr,
                     'to_hr' => $harvester_service->to_hr,
                 ];

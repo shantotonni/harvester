@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\AdminDashboardController;
-use App\Http\Controllers\Api\AreaController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\HarvesterInfoController;
 use App\Http\Controllers\Api\HarvesterServiceController;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\MenuPermissionController;
@@ -70,8 +70,11 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-service-centers', [CommonController::class, 'getAllServiceCenter']);
     Route::get('get-all-areas', [CommonController::class, 'getAllArea']);
     Route::get('get-all-service-type', [CommonController::class, 'getAllServiceType']);
-    Route::get('get-all-servicing-type', [CommonController::class, 'getAllServicingType']);
+    Route::get('get-all-servicing-types', [CommonController::class, 'getAllServicingType']);
     Route::get('get-all-product-model', [CommonController::class, 'getAllProductModel']);
+    Route::get('get-all-products', [CommonController::class, 'getAllProducts']);
+    Route::get('get-all-harvester-service-details', [CommonController::class, 'getAllHarvesterServiceDetails']);
+    Route::get('get-all-harvester-info', [CommonController::class, 'getAllHarvesterInfo']);
 
 
     //get dashboard data route
@@ -84,21 +87,26 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //ServiceCenter
     Route::apiResource('service-centers', ServiceCenterController::class);
     Route::get('search/service-centers/{query}', [ServiceCenterController::class, 'search']);
-    Route::get('get-all-service-centers', [ServiceCenterController::class, 'getAllServiceCenter']);
-    Route::get('get-all-areas', [AreaController::class, 'getAllArea']);
+
+    //ServiceCenter
+    Route::apiResource('service-types', ServiceTypeController::class);
+    Route::get('search/service-types/{query}', [ServiceTypeController::class, 'search']);
+
+    //ServiceCenter
+    Route::apiResource('servicing-types', ServicingTypeController::class);
+    Route::get('search/servicing-types/{query}', [ServicingTypeController::class, 'search']);
 
     //HarvesterServiceRequest
     Route::apiResource('harvester-service-details', HarvesterServiceController::class);
     Route::get('search/harvester-service-details/{query}', [HarvesterServiceController::class, 'search']);
-    Route::get('get-all-harvester-service-details', [HarvesterServiceController::class, 'getAllHarvesterServiceDetails']);
 
-    Route::get('get-all-servicing-type', [ServicingTypeController::class, 'getAllServicingType']);
+    //HarvesterInfoRequest
+    Route::apiResource('harvester-info', HarvesterinfoController::class);
+    Route::get('search/harvester-info/{query}', [HarvesterInfoController::class, 'search']);
+    Route::get('get-all-model-by-product/{id}', [HarvesterInfoController::class, 'getAllModelByProduct']);
 
-    //Route::get('get-all-product-model', [ProductModelController::class, 'getAllProductModel']);
 
-//service type
-    Route::get('get-all-service-types', [ServiceTypeController::class, 'getAllServiceType']);
-    Route::apiResource('service-types', ServiceTypeController::class);
+
 });
 
 //For Customer

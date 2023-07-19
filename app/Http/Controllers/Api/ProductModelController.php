@@ -10,13 +10,9 @@ use Illuminate\Http\Request;
 class ProductModelController extends Controller
 {
     public function index(){
-        $models = ProductModel::all();
+        $models = ProductModel::with('Products')->paginate(20);
         return new ProductModelCollection($models);
     }
-    public function getAllProductModel(Request $request){
-        $models = ProductModel::OrderBy('id','asc')->get();
-        return response()->json([
-            'models'=>$models
-        ]);
-    }
+
+
 }

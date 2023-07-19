@@ -15,12 +15,12 @@ class ServiceTypeCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data' => $this->collection->transform(function ($servicetype){
+            'data' => $this->collection->transform(function ($service_type){
                 return[
-                    'id'=>$servicetype->id,
-                    'servicetypename'=>$servicetype->name,
-                    'servicetypenamebn'=>$servicetype->name_bn,
-                    'code'=>$servicetype->code,
+                    'id'=>$service_type->id,
+                    'name'=>$service_type->name,
+                    'name_bn'=>$service_type->name_bn,
+                    'code'=>$service_type->code,
 
                 ];
             })

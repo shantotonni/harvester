@@ -6,13 +6,22 @@ use App\Http\Requests\HarvesterService\HarvesterServiceStoreRequest;
 use App\Http\Requests\HarvesterService\HarvesterServiceUpdateRequest;
 use App\Http\Resources\HarvesterService\HarvesterServiceCollection;
 use App\Models\HarvesterService;
+use Illuminate\Http\Request;
 
 
 class HarvesterServiceController extends Controller
 {
-    public function index()
+    public function index(Request  $request)
     {
-        $harvester_services = HarvesterService::with('models','service_types')->paginate(10);
+        $model_id = $request->model_id;
+
+        $harvester_services = HarvesterService::query()->with('ProductModel');
+        if (!empty($model_id)){
+            $harvester_services = $harvester_services->where('model_id',$model_id);
+
+        }
+        $harvester_services = $harvester_services->paginate(10);
+
         return new HarvesterServiceCollection($harvester_services);
     }
 
@@ -47,14 +56,10 @@ class HarvesterServiceController extends Controller
 
     public function search($query)
     {
-        return new HarvesterServiceCollection(HarvesterService::Where('address', 'like', "%$query%")->latest()->paginate(10));
+        return new HarvesterServiceCollection(HarvesterService::Where('product_model.model_name', 'like', "%$query%")
+            ->join('product_model','product_model.id','harvester_service_details.model_id')
+            ->paginate(10));
     }
 
-    public function getAllHarvesterServiceDetails()
-    {
-        $harvester_services = HarvesterService::orderBy('CreatedDate', 'desc')->get();
-        return response()->json([
-            'harvester_services' => $harvester_services
-        ]);
-    }
+
 }

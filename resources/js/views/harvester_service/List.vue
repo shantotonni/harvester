@@ -64,8 +64,8 @@
                                         <tr v-for="(harvester_service, i) in harvester_services" :key="harvester_service.id"
                                             v-if="harvester_services.length">
                                             <th class="text-left" scope="row">{{ ++i }}</th>
-                                            <td class="text-left">{{ harvester_service.model_id }}</td>
-                                            <td class="text-left">{{ harvester_service.servicing_type_id }}</td>
+                                            <td class="text-left">{{ harvester_service.model_name }}</td>
+                                            <td class="text-left">{{ harvester_service.servicing_name }}</td>
                                             <td class="text-left">{{ harvester_service.from_hr }}</td>
                                             <td class="text-left">{{ harvester_service.to_hr }}</td>
                                             <td class="text-left">
@@ -121,8 +121,7 @@
                                             <select name="text" id="model_id" class="form-control" v-model="form.model_id"
                                                     :class="{ 'is-invalid': form.errors.has('model_id') }">
                                                 <option disabled value="">Select Model</option>
-                                                <option :value="model.id" v-for="(model , index) in models" :key="index">
-                                                    {{ model.model_id }}
+                                                <option :value="model.id" v-for="(model , index) in models" :key="index">{{ model.model_name }}
                                                 </option>
                                             </select>
                                             <div class="error" v-if="form.errors.has('model_id')"
@@ -134,15 +133,15 @@
                                             <label>Servicing Type</label>
                                             <select name="text" id="servicing_type_id" class="form-control" v-model="form.servicing_type_id"
                                                     :class="{ 'is-invalid': form.errors.has('servicing_type_id') }">
-                                                <option disabled value="">Select Servicing Type</option>
-                                                <option :value="servicing_type.id" v-for="(servicing_type , index) in servicing_types" :key="index">
-                                                    {{ servicing_types.name }}
+                                                <option disabled value="">Select Service Type</option>
+                                                <option :value="servicing_type.id" v-for="(servicing_type , index) in servicing_types" :key="index">{{ servicing_type.name }}
                                                 </option>
                                             </select>
                                             <div class="error" v-if="form.errors.has('servicing_type_id')"
                                                  v-html="form.errors.get('servicing_type_id')"/>
                                         </div>
                                     </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>From Hour</label>
@@ -199,7 +198,6 @@ export default {
                 current_page: 1
             },
             model_id: '',
-            servicing_type_id: '',
             query: "",
             editMode: false,
             isLoading: false,
@@ -265,6 +263,7 @@ export default {
             this.form.busy = true;
             this.form.post("/api/harvester-service-details").then(response => {
                 $("#harvesterserviceModal").modal("hide");
+                this.getAllHarvesterServiceDetails()
 
             }).catch(e => {
                 this.isLoading = false;
@@ -298,7 +297,7 @@ export default {
 
         getAllServicingType() {
             axios.get('/api/get-all-servicing-type').then((response) => {
-                this.models = response.data.servicing_types;
+                this.servicing_types = response.data.servicing_types;
             }).catch((error) => {
 
             })
