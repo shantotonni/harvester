@@ -181,7 +181,6 @@
             </div>
         </div>
 
-
     </div>
 </template>
 
@@ -222,8 +221,6 @@ export default {
     mounted() {
         document.title = 'Harvester Service Details | Harvester';
         this.getAllHarvesterServiceDetails();
-        this.getAllProductModel();
-        this.getAllServicingType();
     },
     methods: {
         getAllHarvesterServiceDetails() {
@@ -258,6 +255,8 @@ export default {
             this.form.reset();
             this.form.clear();
             $("#harvesterserviceModal").modal("show");
+            this.getAllProductModel();
+            this.getAllServicingType();
         },
         store() {
             this.form.busy = true;
@@ -274,8 +273,9 @@ export default {
             this.form.reset();
             this.form.clear();
             this.form.fill(harvester_service);
-            this.getAllHarvesterServiceDetails();
             $("#harvesterserviceModal").modal("show");
+            this.getAllProductModel();
+            this.getAllServicingType();
         },
         update() {
             this.form.busy = true;
@@ -297,6 +297,7 @@ export default {
 
         getAllServicingType() {
             axios.get('/api/get-all-servicing-type').then((response) => {
+                console.log(response)
                 this.servicing_types = response.data.servicing_types;
             }).catch((error) => {
 

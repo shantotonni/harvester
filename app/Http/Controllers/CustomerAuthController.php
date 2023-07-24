@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\CustomerChassis;
 use App\Models\Otp;
+use App\Models\StockBatch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -24,11 +26,11 @@ class CustomerAuthController extends Controller
     public function login(Request $request)
     {
         $this->validate($request, [
-            'Mobile' => 'required',
-            'Password' => 'required',
+            'mobile' => 'required',
+            'password' => 'required',
         ]);
 
-        if ($token = JWTAuth::attempt(['Mobile' => $request->Mobile, 'password' => $request->Password,'Status'=>'Y'])){
+        if ($token = JWTAuth::attempt(['mobile' => $request->mobile, 'password' => $request->password])){
             $user = Auth::user();
             return response()->json([
                 'status'=>200,
@@ -37,7 +39,7 @@ class CustomerAuthController extends Controller
             ],200);
         }
         return response()->json([
-            'message'=>'Username or Password Not Match',
+            'message'=>'Mobile or Password Not Match',
             'status'=>401
         ],200);
     }
@@ -98,33 +100,55 @@ class CustomerAuthController extends Controller
             ]);
         }
     }
+    public function findChassisNumber(Request $request){
+        $chassis = $request->chassis;
+        $chassis = StockBatch::where('BatchNo',$chassis)->first();
+        //return $chassis;
 
+        return response()->json([
+            'status'=>200,
+            'data'=>$chassis
+        ]);
+    }
     public function registration(Request $request){
+        $chassis = $request->chassis;
+        $model = $request->model;
         $this->validate($request, [
             'Name' => 'required',
             'Mobile' => 'required',
-            'Password' => 'required',
+            'password' => 'required',
+            'Email' => 'required',
         ]);
 
         DB::beginTransaction();
 
         try {
-            $exist_customer = Customer::where('Mobile',$request->Mobile)->exists();
+            $exist_customer = Customer::where('Mobile',$request->Mobile,'customer_type',$request->customer_type)->exists();
             if ($exist_customer){
                 return response()->json([
                     'status'=>401,
-                    'message' => 'Mobile number Already Exists'
+                    'message' => 'Customer already exist'
                 ],200);
             }
 
             $customer = new Customer();
             $customer->Name = $request->Name;
             $customer->Mobile = $request->Mobile;
-            $customer->password = bcrypt($request->Password);
-            $customer->Status = 'Y';
+            $customer->Email = $request->Email;
+            $customer->district_id = $request->district_id;
+            $customer->password = bcrypt($request->password);
+            $customer->customer_type = 'harvester';
+
             if ($customer->save()){
-                if ($token = JWTAuth::attempt(['Mobile' => $request->Mobile, 'password' => $request->Password])){
+                if ($token = JWTAuth::attempt(['Mobile' => $request->Mobile, 'password' => $request->password])){
                     $user = Auth::user();
+                    $customer_chassis=new CustomerChassis();
+                    $customer_chassis->customer_id = $customer->id;
+                    $customer_chassis->model = $model;
+                    $customer_chassis->chassis_no = $chassis;
+
+
+                    $customer_chassis->save();
                     DB::commit();
                     return response()->json([
                         'status'=>200,
@@ -138,6 +162,7 @@ class CustomerAuthController extends Controller
                     ],200);
                 }
             }
+
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json([
@@ -145,6 +170,7 @@ class CustomerAuthController extends Controller
                 'message'=>$e->getMessage()
             ],400);
         }
+
 
     }
 
@@ -157,9 +183,10 @@ class CustomerAuthController extends Controller
         ]);
 
         $customer = Customer::where('id',$request->id)->first();
-        $customer->name = $request->name;
+        $customer->Name = $request->Name;
         $customer->Mobile = $request->Mobile;
-        $customer->Address = $request->Address;
+        $customer->Email = $request->Email;
+        $customer->district_id = $request->district_id;
         $customer->save();
 
         return response()->json([
@@ -219,4 +246,6 @@ class CustomerAuthController extends Controller
         //print_r($response); exit();
         return json_decode($response);
     }
+
+
 }

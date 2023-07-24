@@ -37,7 +37,7 @@ class HarvesterServiceController extends Controller
     }
 
 
-    public function update(HarvesterServiceUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $harvester_service = HarvesterService::where('id', $id)->first();
         $harvester_service->model_id = $request->model_id;

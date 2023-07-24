@@ -40,7 +40,7 @@ class ServiceCenterController extends Controller
     }
 
 
-    public function update(ServiceCenterUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $service_center = ServiceCenter::where('id', $id)->first();
         $service_center->area_id = $request->area_id;

@@ -62,7 +62,20 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-
+// main
+        'MotorBrInvoiceMirror' => [
+            'driver' => 'sqlsrv',
+            'host' => '192.168.100.25',
+            'port' => '1433',
+            'database' => 'MotorBrInvoiceMirror',
+            'username' => 'sa',
+            'password' => 'dataport',
+            'charset' => 'utf8',
+            // 'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            // 'engine' => null,
+        ],
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

@@ -19,6 +19,7 @@ use App\Models\Area;
 use App\Models\Banner;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Crop;
 use App\Models\Customer;
 use App\Models\District;
 use App\Models\Doctor;
@@ -31,6 +32,7 @@ use App\Models\Product;
 use App\Models\ProductModel;
 use App\Models\Products;
 use App\Models\Role;
+use App\Models\SeasonalCrops;
 use App\Models\ServiceCenter;
 use App\Models\ServiceType;
 use App\Models\ServicingType;
@@ -140,7 +142,31 @@ class CommonController extends Controller
         ]);
     }
 
+    public function getAllDistrictWiseSeasonalCrops()
+    {
+        $seasonal_crops = SeasonalCrops::orderBy('created_at', 'desc')->get();
+        return response()->json([
+            'seasonal_crops' => $seasonal_crops
+        ]);
+    }
+
+    public function getAllCrops()
+    {
+        $crops = Crop::orderBy('created_at', 'desc')->get();
+        return response()->json([
+            'crops' => $crops
+        ]);
+    }
+    public function getAllDistricts()
+    {
+        $districts = District::orderBy('created_at', 'desc')->get();
+        return response()->json([
+            'districts' => $districts
+        ]);
+    }
+
     public function getAllModelByProduct($id){
         return new ProductModelCollection(ProductModel::where('product_id',$id)->paginate(20));
     }
+
 }

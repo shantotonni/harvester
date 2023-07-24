@@ -26,6 +26,9 @@ class CustomerRequest extends FormRequest
         return [
             'name'=>'required|min:3',
             'mobile'=>'required',
+            'email'=>'required',
+            'password'=>'required',
+            'model'=>'required',
         ];
     }
 }

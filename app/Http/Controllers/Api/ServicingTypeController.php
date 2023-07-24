@@ -29,7 +29,7 @@ class ServicingTypeController extends Controller
     }
 
 
-    public function update(ServicingTypeUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $servicing_type = ServicingType::where('id', $id)->first();
         $servicing_type->name = $request->name;

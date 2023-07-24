@@ -11,12 +11,9 @@ class Customer extends Authenticatable implements JWTSubject
 {
     use HasFactory;
 
-    protected $table = 'Customer';
-    public $primaryKey = 'ID';
+    protected $table = 'customers';
+    public $primaryKey = 'id';
     protected $guarded = [];
-
-    const CREATED_AT = 'CreatedDate';
-    const UPDATED_AT = 'UpdatedDate';
 
     protected $hidden = [
         'password',
@@ -31,5 +28,8 @@ class Customer extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+    public function Customer(){
+        return $this->hasMany(Crop::class,'customer_id','id');
     }
 }

@@ -42,6 +42,7 @@ import HarvesterService from '../views/harvester_service/List'
 import ServiceTypes from '../views/service_types/List'
 import ServicingTypes from '../views/servicing_types/List'
 import HarvesterInfo from '../views/harvester_info/List'
+import SeasonalCrops from '../views/seasonal_crops/List'
 
 const routes = [
     {
@@ -108,9 +109,13 @@ const routes = [
             {
                 path: base_url + '/service-types', name: 'ServiceTypes', component: ServiceTypes
             },
-            //Harvester Service type
+            //Harvester Servicing types
             {
                 path: base_url + '/servicing-types', name: 'ServicingTypes', component: ServicingTypes
+            },
+            //District wise seasonal crops
+            {
+                path: base_url + '/district-wise-seasonal-crops', name: 'SeasonalCrops', component: SeasonalCrops
             },
         ],
         beforeEnter(to, from, next) {

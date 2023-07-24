@@ -40,8 +40,8 @@
                                         <thead>
                                         <tr>
                                             <th class="text-left">SN</th>
+                                            <th class="text-left">Product Name </th>
                                             <th class="text-left">Product Category</th>
-                                            <th class="text-left">Product Name</th>
                                             <th class="text-left">Model Name</th>
                                             <th class="text-left">Horse Power</th>
                                             <th class="text-left">Details</th>
@@ -54,11 +54,11 @@
                                         <tr v-for="( harvester_info, i) in harvester_infos" :key=" harvester_info.id"
                                             v-if=" harvester_infos.length">
                                             <th class="text-left" scope="row">{{ ++i }}</th>
-                                            <td class="text-left">{{ harvester_info.product_category }}</td>
+                                            <td class="text-left">{{ harvester_info.product_name }}</td>
                                             <td class="text-left">{{ harvester_info.name }}</td>
                                             <td class="text-left">{{ harvester_info.model_name }}</td>
                                             <td class="text-left">{{ harvester_info.horse_power }}</td>
-                                            <td class="text-left">{{ harvester_info.details }}</td>
+                                            <td class="text-left" v-html="harvester_info.details "></td>
                                             <td class="text-left">
                                                 <img v-if="harvester_info.image" height="40" width="40"
                                                      :src="tableImage(harvester_info.image)" alt="">
@@ -127,11 +127,11 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Product Name</label>
-                                            <input type="text" name="To Hour" v-model="form.product_category"
+                                            <input type="text" name="product_name" v-model="form.product_name"
                                                    class="form-control"
-                                                   :class="{ 'is-invalid': form.errors.has('product_category') }">
-                                            <div class="error" v-if="form.errors.has('product_category')"
-                                                 v-html="form.errors.get('product_category')"/>
+                                                   :class="{ 'is-invalid': form.errors.has('product_name') }">
+                                            <div class="error" v-if="form.errors.has('product_name')"
+                                                 v-html="form.errors.get('product_name')"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -142,7 +142,7 @@
                                                     :class="{ 'is-invalid': form.errors.has('model_id') }">
                                                 <option disabled value="">Select Model</option>
                                                 <option :value="model.id" v-for="(model , index) in models"
-                                                        :key="index">{{ model.model_name }}
+                                                        :key="index">{{model.model_name}}
                                                 </option>
                                             </select>
                                             <div class="error" v-if="form.errors.has('model_id')"
@@ -159,17 +159,7 @@
                                                  v-html="form.errors.get('horse_power')"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Details</label>
-                                            <input type="text" name="details"
-                                                   v-model="form.from_hr"
-                                                   class="form-control"
-                                                   :class="{ 'is-invalid': form.errors.has('details') }">
-                                            <div class="error" v-if="form.errors.has('details')"
-                                                 v-html="form.errors.get('details')"/>
-                                        </div>
-                                    </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Image</label>
@@ -182,6 +172,16 @@
                                                  width="40px">
                                         </div>
                                     </div>
+                                    <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Details</label>
+                                        <vue-editor  name="details"
+                                                     v-model="form.details"
+                                                     :class="{ 'is-invalid': form.errors.has('details') }"></vue-editor>
+                                        <div class="error" v-if="form.errors.has('details')"
+                                             v-html="form.errors.get('details')"/>
+                                    </div>
+                                </div>
                                 </div>
 
                             </div>
@@ -204,8 +204,11 @@
 </template>
 
 <script>
-
+import {VueEditor} from "vue2-editor";
 export default {
+    components: {
+        VueEditor
+    },
     name: "List",
     data() {
         return {
@@ -220,7 +223,7 @@ export default {
             isLoading: false,
             form: new Form({
                 id: '',
-                product_category: '',
+                product_name: '',
                 model_id: '',
                 product_id: '',
                 details: '',
@@ -245,7 +248,7 @@ export default {
     methods: {
         getAllHarvesterInfo() {
             this.isLoading = true;
-            axios.get('/api/harvester-info?page=' + this.pagination.current_page + "&model_id=" + this.model_id).then((response) => {
+            axios.get('/api/harvester-info?page=' + this.pagination.current_page ).then((response) => {
                 this.harvester_infos = response.data.data;
                 this.pagination = response.data.meta;
                 this.isLoading = false;
@@ -263,7 +266,6 @@ export default {
         },
         reload() {
             this.getAllHarvesterInfo();
-            this.model_id = "";
             this.query = "";
             this.$toaster.success('Data Successfully Refresh');
         },
@@ -291,7 +293,7 @@ export default {
             this.form.reset();
             this.form.clear();
             this.form.fill(harvester_info);
-            this.getAllHarvesterInfo();
+            this.getAllProduct();
             this.getAllModelByProduct();
             $("#harvesterinfoModal").modal("show");
         },
@@ -317,16 +319,16 @@ export default {
             if (img.length > 100) {
                 return this.form.image;
             } else {
-                return window.location.origin + "/Harvester/HarvesterInfoImages/" + this.form.image;
+                return window.location.origin + "/harvester/public/images/HarvesterInfo/" + this.form.image;
             }
         },
         tableImage(image) {
-            return window.location.origin + "/Harvester/HarvesterInfoImages/" + image;
+            return window.location.origin + "/harvester/public/images/HarvesterInfo/" + image;
         },
         getAllProductModel() {
             axios.get('/api/get-all-product-model').then((response) => {
                 console.log(response)
-                this.models = response.data.models;
+                this.models = response.data.data;
             }).catch((error) => {
 
             })

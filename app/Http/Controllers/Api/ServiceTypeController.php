@@ -27,7 +27,7 @@ class ServiceTypeController extends Controller
     }
 
 
-    public function update(ServiceCenterUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $service_type = ServiceType::where('id', $id)->first();
 
