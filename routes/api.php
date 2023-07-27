@@ -77,7 +77,6 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-harvester-service-details', [CommonController::class, 'getAllHarvesterServiceDetails']);
     Route::get('get-all-harvester-info', [CommonController::class, 'getAllHarvesterInfo']);
     Route::get('get-all-crops', [CommonController::class, 'getAllCrops']);
-    Route::get('get-all-districts', [CommonController::class, 'getAllDistricts']);
 
 
     //get dashboard data route
@@ -112,9 +111,9 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::apiResource('district-wise-seasonal-crops', SeasonalCropsController::class);
     Route::get('search/district-wise-seasonal-crops/{query}', [SeasonalCropsController::class, 'search']);
     Route::get('get-all-district-wise-seasonal-crops/{id}', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
-
-
 });
+
+Route::get('get-all-districts', [CommonController::class, 'getAllDistricts']);
 
 //For Customer
 //Customer Login

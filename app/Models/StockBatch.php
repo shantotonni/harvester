@@ -10,4 +10,8 @@ class StockBatch extends Model
     protected $connection= 'MotorBrInvoiceMirror';
 
     protected $table = 'StockBatch';
+
+    public function product(){
+        return $this->belongsTo(Product::class,'ProductCode','ProductCode');
+    }
 }
