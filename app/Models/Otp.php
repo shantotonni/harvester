@@ -9,10 +9,10 @@ class Otp extends Model
 {
     use HasFactory;
 
-    protected $table = 'OTP';
-    public $primaryKey = 'ID';
+    protected $table = 'otps';
+    public $primaryKey = 'id';
     protected $guarded = [];
 
-    const CREATED_AT = 'CreatedDate';
-    const UPDATED_AT = 'UpdatedDate';
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
 }

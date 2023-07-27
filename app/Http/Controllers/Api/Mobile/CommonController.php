@@ -86,35 +86,35 @@ class CommonController extends Controller
     }
     public function getAllServiceCenter()
     {
-        $service_centers = ServiceCenter::orderBy('CreatedDate', 'desc')->get();
+        $service_centers = ServiceCenter::orderBy('created_at', 'desc')->paginate(2);
         return response()->json([
             'service_centers' => $service_centers
         ]);
     }
 
     public function getAllArea(){
-        $areas = Area::OrderBy('id','asc')->get();
+        $areas = Area::OrderBy('id','asc')->paginate(5);
         return response()->json([
             'areas'=>$areas
         ]);
 
     }
     public function getAllProductModel(){
-        $models = ProductModel::OrderBy('id','asc')->get();
+        $models = ProductModel::OrderBy('id','asc')->paginate(5);
         return response()->json([
             'models'=>$models
         ]);
 
     }
     public function getAllProducts(){
-        $products = Products::OrderBy('id','asc')->get();
+        $products = Products::OrderBy('id','asc')->paginate(5);
         return response()->json([
             'products'=>$products
         ]);
 
     }
     public function getAllServiceType(){
-        $service_types = ServiceType::OrderBy('id','asc')->get();
+        $service_types = ServiceType::OrderBy('id','asc')->paginate(5);
         return response()->json([
             'service_types'=>$service_types
         ]);
@@ -122,21 +122,21 @@ class CommonController extends Controller
     }
     public function getAllServicingType()
     {
-        $servicing_types = ServicingType::OrderBy('id', 'asc')->get();
+        $servicing_types = ServicingType::OrderBy('id', 'asc')->paginate(5);
         return response()->json([
             'servicing_types' => $servicing_types
         ]);
     }
     public function getAllHarvesterServiceDetails()
     {
-        $harvester_services = HarvesterService::orderBy('CreatedDate', 'desc')->get();
+        $harvester_services = HarvesterService::orderBy('created_at', 'desc')->paginate(5);
         return response()->json([
             'harvester_services' => $harvester_services
         ]);
     }
     public function getAllHarvesterInfo()
     {
-        $harvester_infos = HarvesterInfo::orderBy('CreatedDate', 'desc')->get();
+        $harvester_infos = HarvesterInfo::orderBy('created_at', 'desc')->paginate(5);
         return response()->json([
             'harvester_infos' => $harvester_infos
         ]);
@@ -144,7 +144,7 @@ class CommonController extends Controller
 
     public function getAllDistrictWiseSeasonalCrops()
     {
-        $seasonal_crops = SeasonalCrops::orderBy('created_at', 'desc')->get();
+        $seasonal_crops = SeasonalCrops::orderBy('created_at', 'desc')->paginate(5);
         return response()->json([
             'seasonal_crops' => $seasonal_crops
         ]);
@@ -152,21 +152,21 @@ class CommonController extends Controller
 
     public function getAllCrops()
     {
-        $crops = Crop::orderBy('created_at', 'desc')->get();
+        $crops = Crop::orderBy('created_at', 'desc')->paginate(5);
         return response()->json([
             'crops' => $crops
         ]);
     }
     public function getAllDistricts()
     {
-        $districts = District::orderBy('created_at', 'desc')->get();
+        $districts = District::orderBy('created_at', 'desc')->paginate(5);
         return response()->json([
             'districts' => $districts
         ]);
     }
 
     public function getAllModelByProduct($id){
-        return new ProductModelCollection(ProductModel::where('product_id',$id)->paginate(20));
+        return new ProductModelCollection(ProductModel::where('product_id',$id)->paginate(5));
     }
 
 }

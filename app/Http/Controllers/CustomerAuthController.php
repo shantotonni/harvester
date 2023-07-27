@@ -22,7 +22,6 @@ class CustomerAuthController extends Controller
             'model' => Customer::class,
         ]]);
     }
-
     public function login(Request $request)
     {
         $this->validate($request, [
@@ -43,62 +42,20 @@ class CustomerAuthController extends Controller
             'status'=>401
         ],200);
     }
+    public function findMobile(Request $request){
+        $mobile = $request->mobile;
+        $number = Customer::where('mobile',$request->mobile)->exists();
 
-    public function sendOtp(Request $request){
-        $this->validate($request, [
-            'Mobile' => 'required|min:11|max:11',
-        ]);
-
-        $exist_customer = Customer::where('Mobile',$request->Mobile)->exists();
-        if ($exist_customer){
-            return response()->json([
-                'status'=>200,
-                'message' => 'Mobile number Already Exists'
-            ],200);
-        }else{
-            try {
-                $six_digit_random_number = random_int(100000, 999999);
-                $smscontent = 'Otp Code - '.$six_digit_random_number;
-                $mobileno = $request->Mobile;
-                $this->sendsms($ip = '192.168.100.213', $userid = 'motors', $password = 'Asdf1234', $smstext = urlencode($smscontent), $receipient = urlencode($mobileno));
-
-                $otp = new Otp();
-                $otp->OtpCode = $six_digit_random_number;
-                $otp->Mobile = $mobileno;
-                $otp->Status = 0;
-                $otp->save();
-
-                return response()->json([
-                    'status'=>200,
-                    'message'=>'success'
-                ]);
-            }catch (\Exception $e){
-                return response()->json([
-                    'status'=>401,
-                    'error'=>$e
-                ]);
-            }
-        }
-    }
-
-    public function checkOtp(Request $request){
-        $otp = $request->OtpCode;
-        $mobileno = $request->Mobile;
-
-        $check_otp = Otp::where('Mobile',$mobileno)->where('OtpCode',$otp)->where('Status',0)->orderBy('CreatedDate','desc')->first();
-        if ($check_otp){
-            $check_otp->Status = 1;
-            $check_otp->save();
-            return response()->json([
-                'status'=>200,
-                'message'=>'Otp Match Successfully'
-            ]);
-        }else{
+        if ($number){
             return response()->json([
                 'status'=>401,
-                'message'=>'Otp Not Match'
-            ]);
+                'message' => 'Number already exist'
+            ],200);
         }
+        return response()->json([
+            'status'=>200,
+            'data'=>$number
+        ]);
     }
     public function findChassisNumber(Request $request){
         $chassis = $request->chassis;
@@ -110,20 +67,21 @@ class CustomerAuthController extends Controller
             'data'=>$chassis
         ]);
     }
+
     public function registration(Request $request){
         $chassis = $request->chassis;
         $model = $request->model;
         $this->validate($request, [
-            'Name' => 'required',
-            'Mobile' => 'required',
+            'name' => 'required',
+            'mobile' => 'required',
             'password' => 'required',
-            'Email' => 'required',
+            'email' => 'required',
         ]);
 
         DB::beginTransaction();
 
         try {
-            $exist_customer = Customer::where('Mobile',$request->Mobile,'customer_type',$request->customer_type)->exists();
+            $exist_customer = Customer::where('mobile',$request->mobile,'customer_type',$request->customer_type)->exists();
             if ($exist_customer){
                 return response()->json([
                     'status'=>401,
@@ -132,23 +90,23 @@ class CustomerAuthController extends Controller
             }
 
             $customer = new Customer();
-            $customer->Name = $request->Name;
-            $customer->Mobile = $request->Mobile;
-            $customer->Email = $request->Email;
+            $customer->name = $request->name;
+            $customer->mobile = $request->mobile;
+            $customer->email = $request->email;
             $customer->district_id = $request->district_id;
             $customer->password = bcrypt($request->password);
             $customer->customer_type = 'harvester';
 
+
             if ($customer->save()){
-                if ($token = JWTAuth::attempt(['Mobile' => $request->Mobile, 'password' => $request->password])){
+                if ($token = JWTAuth::attempt(['mobile' => $request->mobile, 'password' => $request->password])){
                     $user = Auth::user();
                     $customer_chassis=new CustomerChassis();
                     $customer_chassis->customer_id = $customer->id;
                     $customer_chassis->model = $model;
                     $customer_chassis->chassis_no = $chassis;
-
-
                     $customer_chassis->save();
+
                     DB::commit();
                     return response()->json([
                         'status'=>200,
@@ -170,8 +128,62 @@ class CustomerAuthController extends Controller
                 'message'=>$e->getMessage()
             ],400);
         }
+    }
+    public function sendOtp(Request $request){
+        $this->validate($request, [
+            'mobile' => 'required|min:11|max:11',
+        ]);
 
+        $exist_customer = Customer::where('mobile',$request->mobile)->exists();
+        if ($exist_customer){
+            return response()->json([
+                'status'=>200,
+                'message' => 'Mobile number Already Exists'
+            ],200);
+        }else{
+            try {
+                $six_digit_random_number = random_int(100000, 999999);
+                $smscontent = 'Otp Code - '.$six_digit_random_number;
+                $mobile = $request->mobile;
+                $this->sendsms($ip = '192.168.100.213', $userid = 'motors', $password = 'Asdf1234', $smstext = urlencode($smscontent), $receipient = urlencode($mobile));
 
+                $otp = new Otp();
+                $otp->otp_code = $six_digit_random_number;
+                $otp->mobile = $mobile;
+                $otp->Status = 0;
+                $otp->save();
+
+                return response()->json([
+                    'status'=>200,
+                    'message'=>'success'
+                ]);
+            }catch (\Exception $e){
+                return response()->json([
+                    'status'=>401,
+                    'error'=>$e
+                ]);
+            }
+        }
+    }
+    public function checkOtp(Request $request){
+        $otp = $request->otp_code;
+        $mobile = $request->mobile;
+
+        $check_otp = Otp::where('mobile',$mobile)->where('otp_code',$otp)->where('Status',0)->orderBy('created_at','desc')->first();
+
+        if ($check_otp){
+            $check_otp->Status = 1;
+            $check_otp->save();
+            return response()->json([
+                'status'=>200,
+                'message'=>'Otp Match Successfully'
+            ]);
+        }else{
+            return response()->json([
+                'status'=>401,
+                'message'=>'Otp Not Match'
+            ]);
+        }
     }
 
     public function updateProfile(Request $request){
@@ -183,9 +195,9 @@ class CustomerAuthController extends Controller
         ]);
 
         $customer = Customer::where('id',$request->id)->first();
-        $customer->Name = $request->Name;
-        $customer->Mobile = $request->Mobile;
-        $customer->Email = $request->Email;
+        $customer->name = $request->name;
+        $customer->mobile = $request->mobile;
+        $customer->email = $request->email;
         $customer->district_id = $request->district_id;
         $customer->save();
 
@@ -194,14 +206,14 @@ class CustomerAuthController extends Controller
             'message'=>'success'
         ],200);
     }
-
     public function changePassword(Request $request){
+
         $this->validate($request,[
             'previous_password' => 'required|min:6',
             'password' => 'required|min:6|confirmed',
         ]);
-
         $current_password = Auth::User()->password;
+
         $customer = JWTAuth::parseToken()->authenticate();
 
         if(Hash::check($request->previous_password, $current_password))
@@ -209,8 +221,9 @@ class CustomerAuthController extends Controller
             if(Hash::check($request->password, $current_password)){
                 return response()->json(['message'=>'Previous Password and Old Password Same']);
             }else{
-                $customer = Customer::where('ID',$customer->ID)->first();
+                $customer = Customer::where('id',$customer->id)->first();
                 $customer->password = bcrypt($request->password);
+
                 $customer->save();
                 return response()->json(['message'=>'Password Change successfully :)']);
             }
