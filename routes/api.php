@@ -78,7 +78,8 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-harvester-info', [CommonController::class, 'getAllHarvesterInfo']);
     Route::get('get-all-crops', [CommonController::class, 'getAllCrops']);
     Route::get('get-all-districts', [CommonController::class, 'getAllDistricts']);
-
+    Route::get('get-all-district-wise-seasonal-crops/{id}', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
+    Route::get('get-all-model-by-product/{id}', [CommonController::class, 'getAllModelByProduct']);
 
     //get dashboard data route
     Route::get('get-all-dashboard-data', [DashboardController::class, 'getDashboardAllDara']);
@@ -106,12 +107,12 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //HarvesterInfoRequest
     Route::apiResource('harvester-info', HarvesterinfoController::class);
     Route::get('search/harvester-info/{query}', [HarvesterInfoController::class, 'search']);
-    Route::get('get-all-model-by-product/{id}', [CommonController::class, 'getAllModelByProduct']);
+
 
     //District wise seasonal crops
     Route::apiResource('district-wise-seasonal-crops', SeasonalCropsController::class);
     Route::get('search/district-wise-seasonal-crops/{query}', [SeasonalCropsController::class, 'search']);
-    Route::get('get-all-district-wise-seasonal-crops/{id}', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
+
 
 
 });
@@ -123,6 +124,7 @@ Route::post('send-otp-for-registration', [CustomerAuthController::class, 'sendOt
 Route::post('check-otp-for-registration', [CustomerAuthController::class, 'checkOtp']);
 Route::post('customer-registration', [CustomerAuthController::class, 'registration']);
 Route::post('verify-chassis-number', [CustomerAuthController::class, 'findChassisNumber']);
+Route::post('find-mobile', [CustomerAuthController::class, 'findMobile']);
 
 Route::group(['middleware' => 'CustomerAuth'], function () {
     Route::post('auth/profile-update', [CustomerAuthController::class, 'updateProfile']);
