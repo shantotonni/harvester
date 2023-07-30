@@ -18,12 +18,13 @@ class HarvesterInfoResource extends JsonResource
             'id' => $this->id,
             'product_category_name' => $this->product_name,
             'product_id' => $this->product_id,
-            'product_name'=>isset($this->product) ? $this->product->name:'',
+            'product_name' => isset($this->product) ? $this->product->name : '',
             'model_id' => $this->model_id,
-            'model_name'=>isset($this->model) ? $this->model->model_name:'',
+            'model_name' => isset($this->model) ? $this->model->model_name : '',
             'horse_power' => $this->horse_power,
             'details' => $this->details,
-            'image' => $this->image
+            'image' => $this->image,
+            'harvesterInfo_image' => url('/') . '/images/HarvesterInfo/' . $this->image,
         ];
     }
 }

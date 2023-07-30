@@ -30,6 +30,6 @@ class Customer extends Authenticatable implements JWTSubject
         return [];
     }
     public function Customer(){
-        return $this->hasMany(Crop::class,'customer_id','id');
+        return $this->hasMany(Customer::class,'customer_id','id');
     }
 }
