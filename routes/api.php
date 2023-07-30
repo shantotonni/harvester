@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\ProductModelController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SeasonalCropsController;
 use App\Http\Controllers\Api\ServiceCenterController;
+use App\Http\Controllers\Api\ServiceRequestController;
 use App\Http\Controllers\Api\ServiceTypeController;
 use App\Http\Controllers\Api\ServicingTypeController;
 use App\Http\Controllers\Api\SettingController;
@@ -114,6 +115,10 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //District wise seasonal crops
     Route::apiResource('district-wise-seasonal-crops', SeasonalCropsController::class);
     Route::get('search/district-wise-seasonal-crops/{query}', [SeasonalCropsController::class, 'search']);
+
+
+    //District wise seasonal crops
+    Route::apiResource('service-request', ServiceRequestController::class);
 
     Route::get('get-all-district-wise-seasonal-crops/{id}', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
 

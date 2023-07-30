@@ -8,6 +8,7 @@ use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\District\DistrictCollection;
 use App\Http\Resources\Doctor\DoctorCollection;
 use App\Http\Resources\Doctor\DoctorResource;
+use App\Http\Resources\HarvesterInfo\HarvesterInfoCollection;
 use App\Http\Resources\MOInfo\MOInfoCollection;
 use App\Http\Resources\Portfolio\PortfolioCollection;
 use App\Http\Resources\Product\ProductCollection;
@@ -140,7 +141,7 @@ class CommonController extends Controller
     {
         $harvester_infos = HarvesterInfo::orderBy('created_at', 'desc')->paginate(15);
         return response()->json([
-            'harvester_infos' => $harvester_infos
+            'harvester_infos' => new HarvesterInfoCollection($harvester_infos)
         ]);
     }
 
