@@ -20,6 +20,11 @@ class Customer extends Authenticatable implements JWTSubject
         'remember_token',
     ];
 
+    public function getAuthPassword()
+    {
+        return $this->password;
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -28,8 +33,5 @@ class Customer extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
-    }
-    public function Customer(){
-        return $this->hasMany(Customer::class,'customer_id','id');
     }
 }

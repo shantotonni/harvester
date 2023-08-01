@@ -15,8 +15,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CustomerAuthController extends Controller
 {
-    function __construct()
-    {
+    function __construct() {
         Config::set('jwt.user', Customer::class);
         Config::set('auth.providers', ['users' => [
             'driver' => 'eloquent',
@@ -123,7 +122,6 @@ class CustomerAuthController extends Controller
             ]);
         }
     }
-
 
     public function registration(Request $request)
     {

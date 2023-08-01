@@ -34,6 +34,7 @@ use App\Models\ProductModel;
 use App\Models\Products;
 use App\Models\Role;
 use App\Models\SeasonalCrops;
+use App\Models\Section;
 use App\Models\ServiceCenter;
 use App\Models\ServiceType;
 use App\Models\ServicingType;
@@ -85,6 +86,7 @@ class CommonController extends Controller
             'roles' => $roles
         ]);
     }
+
     public function getAllServiceCenter()
     {
         $service_centers = ServiceCenter::orderBy('created_at', 'desc')->paginate(15);
@@ -101,14 +103,14 @@ class CommonController extends Controller
     }
 
     public function getAllProductModel(){
-        $models = ProductModel::OrderBy('id','asc')->get();
+        $models = ProductModel::OrderBy('id','asc')->where('product_id',4)->select('id','product_id','model_name','model_name_bn')->get();
         return response()->json([
             'models'=>$models
         ]);
     }
 
     public function getAllProducts(){
-        $products = Products::OrderBy('id','asc')->paginate(15);
+        $products = Products::OrderBy('id','asc')->where('id',4)->get();
         return response()->json([
             'products'=>$products
         ]);
@@ -169,7 +171,24 @@ class CommonController extends Controller
         ]);
     }
 
+    public function getAllDistrictsUpazilla()
+    {
+        $districts = District::orderBy('created_at', 'desc')->get();
+        $upazilla = Upazila::orderBy('created_at', 'desc')->get();
+        return response()->json([
+            'districts' => $districts,
+            'upazilla' => $upazilla,
+        ]);
+    }
+
     public function getAllModelByProduct($id){
         return new ProductModelCollection(ProductModel::where('product_id',$id)->get());
+    }
+    public function getAllProblemSection(){
+        $sections = Section::select('id','name','product_id')->where('product_id',4)->get();
+        return response()->json([
+            'status' => 'success',
+            'sections' => $sections
+        ]);
     }
 }

@@ -9,11 +9,11 @@ use App\Http\Controllers\Api\HarvesterServiceController;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\MenuPermissionController;
 use App\Http\Controllers\Api\Mobile\CommonController;
+use App\Http\Controllers\Api\Mobile\ServiceRequestController;
 use App\Http\Controllers\Api\ProductModelController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SeasonalCropsController;
 use App\Http\Controllers\Api\ServiceCenterController;
-use App\Http\Controllers\Api\ServiceRequestController;
 use App\Http\Controllers\Api\ServiceTypeController;
 use App\Http\Controllers\Api\ServicingTypeController;
 use App\Http\Controllers\Api\SettingController;
@@ -36,7 +36,6 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-users/', [UserController::class, 'getAllUser']);
     Route::get('user-by-user-id', [UserController::class, 'getUserByUserId']);
     Route::post('user-profile-update', [UserController::class, 'updateProfile']);
-
 
 
     //menu resource route
@@ -116,15 +115,10 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::apiResource('district-wise-seasonal-crops', SeasonalCropsController::class);
     Route::get('search/district-wise-seasonal-crops/{query}', [SeasonalCropsController::class, 'search']);
 
-
-    //District wise seasonal crops
-    Route::apiResource('service-request', ServiceRequestController::class);
-
     Route::get('get-all-district-wise-seasonal-crops/{id}', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
 
 });
 
-Route::get('get-all-districts', [CommonController::class, 'getAllDistricts']);
 
 //For Customer
 //Customer Login
@@ -134,8 +128,15 @@ Route::post('check-otp-for-registration', [CustomerAuthController::class, 'check
 Route::post('customer-registration', [CustomerAuthController::class, 'registration']);
 Route::post('verify-chassis-number', [CustomerAuthController::class, 'findChassisNumber']);
 Route::post('find-mobile', [CustomerAuthController::class, 'findMobile']);
+Route::get('get_districts_upazilla', [CommonController::class, 'getAllDistrictsUpazilla']);
 
 Route::group(['middleware' => 'CustomerAuth'], function () {
+    //get data
+    Route::get('get-all-problem-section', [CommonController::class, 'getAllProblemSection']);
+
+    //service request
+    Route::post('customer-service-request', [ServiceRequestController::class,'customerServiceRequest']);
+
     Route::post('auth/profile-update', [CustomerAuthController::class, 'updateProfile']);
     Route::post('change-password', [CustomerAuthController::class, 'changePassword']);
 
