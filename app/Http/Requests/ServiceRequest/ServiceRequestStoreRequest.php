@@ -24,7 +24,7 @@ class ServiceRequestStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'customer_moblie'=>'required'
+            'customer_mobile'=>'required'
         ];
     }
 }

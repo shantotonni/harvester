@@ -9,11 +9,10 @@ use App\Http\Controllers\Api\HarvesterServiceController;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\MenuPermissionController;
 use App\Http\Controllers\Api\Mobile\CommonController;
-use App\Http\Controllers\Api\ProductModelController;
+use App\Http\Controllers\Api\Mobile\ServiceRequestController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SeasonalCropsController;
 use App\Http\Controllers\Api\ServiceCenterController;
-use App\Http\Controllers\Api\ServiceRequestController;
 use App\Http\Controllers\Api\ServiceTypeController;
 use App\Http\Controllers\Api\ServicingTypeController;
 use App\Http\Controllers\Api\SettingController;
@@ -78,8 +77,6 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-harvester-service-details', [CommonController::class, 'getAllHarvesterServiceDetails']);
     Route::get('get-all-harvester-info', [CommonController::class, 'getAllHarvesterInfo']);
     Route::get('get-all-crops', [CommonController::class, 'getAllCrops']);
-
-
     Route::get('get-all-districts', [CommonController::class, 'getAllDistricts']);
     Route::get('get-all-district-wise-seasonal-crops/{id}', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
     Route::get('get-all-model-by-product/{id}', [CommonController::class, 'getAllModelByProduct']);
@@ -117,8 +114,6 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('search/district-wise-seasonal-crops/{query}', [SeasonalCropsController::class, 'search']);
 
 
-    //District wise seasonal crops
-    Route::apiResource('service-request', ServiceRequestController::class);
 
     Route::get('get-all-district-wise-seasonal-crops/{id}', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
 
@@ -138,6 +133,11 @@ Route::post('find-mobile', [CustomerAuthController::class, 'findMobile']);
 Route::group(['middleware' => 'CustomerAuth'], function () {
     Route::post('auth/profile-update', [CustomerAuthController::class, 'updateProfile']);
     Route::post('change-password', [CustomerAuthController::class, 'changePassword']);
+
+    Route::post('customer-service-request', [ServiceRequestController::class, 'customerServiceRequest']);
+    //District wise seasonal crops
+
+    //Route::apiResource('service-request', ServiceRequestController::class);
 
 });
 
