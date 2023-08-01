@@ -34,4 +34,8 @@ class Customer extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function customer_chassis(){
+        return $this->hasMany('App\Models\CustomerChassis','customer_id','id');
+    }
 }

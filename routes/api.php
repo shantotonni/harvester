@@ -136,6 +136,7 @@ Route::group(['middleware' => 'CustomerAuth'], function () {
 
     //service request
     Route::post('customer-service-request', [ServiceRequestController::class,'customerServiceRequest']);
+    Route::get('get-all-customer-service-request', [ServiceRequestController::class,'getAllCustomerServiceRequest']);
 
     Route::post('auth/profile-update', [CustomerAuthController::class, 'updateProfile']);
     Route::post('change-password', [CustomerAuthController::class, 'changePassword']);

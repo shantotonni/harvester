@@ -26,9 +26,10 @@ class ServiceRequestController extends Controller
         ]]);
     }
 
-    public function index()
+    public function getAllCustomerServiceRequest()
     {
-        $service_requests = ServiceRequest::with('ProductModel', 'Products', 'section', 'district', 'upazila')->paginate(10);
+        $user = JWTAuth::parseToken()->authenticate();
+        $service_requests = JobCard::where('customer_id',$user->id)->with('model','product','district','upazila','section')->paginate(15);
         return new ServiceRequestCollection($service_requests);
     }
 
@@ -67,7 +68,10 @@ class ServiceRequestController extends Controller
       $job_card->job_card_no = 'MS'.$job_card->id;
       $job_card->save();
 
-      return response()->json(['message'=>'Job Card Created Successfully'], 200);
+      return response()->json([
+          'status'=>'success',
+           'message'=>'Job Card Created Successfully'
+          ], 200);
 
     }
 }
