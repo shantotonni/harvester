@@ -12,13 +12,12 @@ class JWTAuthentication
 {
     public function handle(Request $request, Closure $next)
     {
-
         try {
             $user = JWTAuth::parseToken()->authenticate();
         }catch (\Exception $e){
             if ($e instanceof TokenExpiredException) {
-               // $newToken =JWTAuth::parseToken()->refresh();
-               // header('Authorization: Bearer ' . '');
+                // $newToken =JWTAuth::parseToken()->refresh();
+                // header('Authorization: Bearer ' . '');
                 return response()->json(['status'=>401,'message'=>'Token Expired'],401);
             }elseif ($e instanceof TokenInvalidException){
                 return response()->json(['status'=>401,'message'=>'Token Invalid'],401);

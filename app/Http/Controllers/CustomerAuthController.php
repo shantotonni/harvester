@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\CustomerChassis;
 use App\Models\Otp;
 use App\Models\StockBatch;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -15,8 +16,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CustomerAuthController extends Controller
 {
-    function __construct()
-    {
+    function __construct() {
         Config::set('jwt.user', Customer::class);
         Config::set('auth.providers', ['users' => [
             'driver' => 'eloquent',
@@ -33,10 +33,12 @@ class CustomerAuthController extends Controller
 
         if ($token = JWTAuth::attempt(['mobile' => $request->mobile, 'password' => $request->password])) {
             $user = Auth::user();
+            $customer = Customer::where('id',$user->id)->with('customer_chassis')->first();
+            //$chassis = CustomerChassis::where('customer_id',$user->id)->select('id','customer_id','chassis_no','model')->get();
             return response()->json([
                 'status' => 'success',
                 'token' => $token,
-                'user' => $user,
+                'user' => $customer,
             ], 200);
         }
         return response()->json([
@@ -123,7 +125,6 @@ class CustomerAuthController extends Controller
             ]);
         }
     }
-
 
     public function registration(Request $request)
     {

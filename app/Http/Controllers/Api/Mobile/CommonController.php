@@ -9,6 +9,7 @@ use App\Http\Resources\District\DistrictCollection;
 use App\Http\Resources\Doctor\DoctorCollection;
 use App\Http\Resources\Doctor\DoctorResource;
 use App\Http\Resources\HarvesterInfo\HarvesterInfoCollection;
+use App\Http\Resources\HarvesterServiceDetailsCollection;
 use App\Http\Resources\MOInfo\MOInfoCollection;
 use App\Http\Resources\Portfolio\PortfolioCollection;
 use App\Http\Resources\Product\ProductCollection;
@@ -34,6 +35,7 @@ use App\Models\ProductModel;
 use App\Models\Products;
 use App\Models\Role;
 use App\Models\SeasonalCrops;
+use App\Models\Section;
 use App\Models\ServiceCenter;
 use App\Models\ServiceType;
 use App\Models\ServicingType;
@@ -85,6 +87,7 @@ class CommonController extends Controller
             'roles' => $roles
         ]);
     }
+
     public function getAllServiceCenter()
     {
         $service_centers = ServiceCenter::orderBy('created_at', 'desc')->paginate(15);
@@ -101,14 +104,14 @@ class CommonController extends Controller
     }
 
     public function getAllProductModel(){
-        $models = ProductModel::OrderBy('id','asc')->get();
+        $models = ProductModel::OrderBy('id','asc')->where('product_id',4)->select('id','product_id','model_name','model_name_bn')->get();
         return response()->json([
             'models'=>$models
         ]);
     }
 
     public function getAllProducts(){
-        $products = Products::OrderBy('id','asc')->paginate(15);
+        $products = Products::OrderBy('id','asc')->where('id',4)->get();
         return response()->json([
             'products'=>$products
         ]);
@@ -129,12 +132,14 @@ class CommonController extends Controller
         ]);
     }
 
-    public function getAllHarvesterServiceDetails()
+    public function getAllHarvesterServiceDetails(Request $request)
     {
-        $harvester_services = HarvesterService::orderBy('created_at', 'desc')->paginate(15);
-        return response()->json([
-            'harvester_services' => $harvester_services
-        ]);
+        $hour = $request->hour;
+        $harvester_services = HarvesterService::orderBy('created_at', 'desc')->with('ServicingType','ProductModel')
+            ->where('from_hr','<=', $hour)
+            ->where('to_hr','>=', $hour)
+            ->where('model_id',$request->model_id)->get();
+       return new HarvesterServiceDetailsCollection($harvester_services);
     }
 
     public function getAllHarvesterInfo()
@@ -169,7 +174,24 @@ class CommonController extends Controller
         ]);
     }
 
+    public function getAllDistrictsUpazilla()
+    {
+        $districts = District::orderBy('created_at', 'desc')->get();
+        $upazilla = Upazila::orderBy('created_at', 'desc')->get();
+        return response()->json([
+            'districts' => $districts,
+            'upazilla' => $upazilla,
+        ]);
+    }
+
     public function getAllModelByProduct($id){
         return new ProductModelCollection(ProductModel::where('product_id',$id)->get());
+    }
+    public function getAllProblemSection(){
+        $sections = Section::select('id','name','product_id')->where('product_id',4)->get();
+        return response()->json([
+            'status' => 'success',
+            'sections' => $sections
+        ]);
     }
 }
