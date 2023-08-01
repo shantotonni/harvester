@@ -30,18 +30,12 @@ class ServiceRequestCollection extends ResourceCollection
                     'upazila_id'=>$service_request->upazila_id,
                     'upazila_name'=>isset($service_request->upazila)? $service_request->upazila->name:'',
 
-<<<<<<< HEAD
-                    'customer_mobile'=>$service_request->customer_moblie,
-                    'remarks'=>$service_request->remarks,
-                    'customer_id'=>isset($service_request->customer)? $service_request->customer->id:'',
-                    'chassis_number'=>isset($service_request->customer)?$service_request->customer->chassis_no:'',
-=======
                     'customer_id'=>$service_request->customer_id,
                     'customer_name'=>$service_request->customer_name,
                     'customer_moblie'=>$service_request->customer_moblie,
                     'remarks'=>$service_request->remarks,
                     'chassis_number'=>$service_request->chassis_number,
->>>>>>> 2fad115dd100494791695c988769a905899e016c
+
                     'job_status'=>$service_request->job_status,
                     'job_creator'=>$service_request->job_creator,
 
