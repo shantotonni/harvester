@@ -35,6 +35,7 @@ class ServiceRequestCollection extends ResourceCollection
                     'customer_moblie'=>$service_request->customer_moblie,
                     'remarks'=>$service_request->remarks,
                     'chassis_number'=>$service_request->chassis_number,
+
                     'job_status'=>$service_request->job_status,
                     'job_creator'=>$service_request->job_creator,
 

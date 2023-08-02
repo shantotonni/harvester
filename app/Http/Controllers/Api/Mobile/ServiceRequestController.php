@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\Mobile;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\JobCard\JobCardRequest;
 use App\Http\Resources\ServiceRequest\ServiceRequestCollection;
 use App\Models\Customer;
 use App\Models\JobCard;
@@ -75,4 +74,5 @@ class ServiceRequestController extends Controller
           ], 200);
 
     }
+
 }
