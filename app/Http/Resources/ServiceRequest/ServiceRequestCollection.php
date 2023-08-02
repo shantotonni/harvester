@@ -44,6 +44,13 @@ class ServiceRequestCollection extends ResourceCollection
                     'model_id'=>$service_request->model_id,
                     'model_name'=>isset($service_request->model)? $service_request->model->model_name:'',
 
+                    'service_wanted_date'=> $service_request->service_wanted_at,
+                    'service_start_at'=> $service_request->service_start_at,
+                    'service_end_at'=> $service_request->service_end_at,
+
+                    'technitian_id'=> $service_request->technitian_id,
+                    'technitian_name'=> isset($service_request->technician) ? $service_request->technician->name: '',
+                    'technitian_mobile'=> isset($service_request->technician) ? $service_request->technician->mobile: '',
                 ];
             })
         ];
