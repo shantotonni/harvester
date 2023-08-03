@@ -10,7 +10,7 @@
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:wLJ4QKCKyZZKE0RrS+BEIJ3V4yD2V+ePYQdBjizoUC8=',
+    'key' => 'base64:eusNHjfw5I3owra0rKTbiY/uNO++KIsGfouL+RTvjrA=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -192,7 +192,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'D:\\XAMPP\\htdocs\\harvester\\storage\\framework/cache/data',
+        'path' => 'D:\\xampp\\htdocs\\harvester\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -299,12 +299,12 @@
         array (
         ),
       ),
-      'MotorBrInvoiceMirror' => 
+      'MotorSparePartsMirror' => 
       array (
         'driver' => 'sqlsrv',
         'host' => '192.168.100.25',
         'port' => '1433',
-        'database' => 'MotorBrInvoiceMirror',
+        'database' => 'MotorSparePartsMirror',
         'username' => 'sa',
         'password' => 'dataport',
         'charset' => 'utf8',
@@ -472,7 +472,7 @@
     ),
     'temporary_files' => 
     array (
-      'local_path' => 'D:\\XAMPP\\htdocs\\harvester\\storage\\framework/cache/laravel-excel',
+      'local_path' => 'D:\\xampp\\htdocs\\harvester\\storage\\framework/cache/laravel-excel',
       'remote_disk' => NULL,
       'remote_prefix' => NULL,
       'force_resync_remote' => NULL,
@@ -486,12 +486,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\XAMPP\\htdocs\\harvester\\storage\\app',
+        'root' => 'D:\\xampp\\htdocs\\harvester\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\XAMPP\\htdocs\\harvester\\storage\\app/public',
+        'root' => 'D:\\xampp\\htdocs\\harvester\\storage\\app/public',
         'url' => 'http://localhost/harvester//storage',
         'visibility' => 'public',
       ),
@@ -509,7 +509,7 @@
     ),
     'links' => 
     array (
-      'D:\\XAMPP\\htdocs\\harvester\\public\\storage' => 'D:\\XAMPP\\htdocs\\harvester\\storage\\app/public',
+      'D:\\xampp\\htdocs\\harvester\\public\\storage' => 'D:\\xampp\\htdocs\\harvester\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -532,7 +532,7 @@
   ),
   'jwt' => 
   array (
-    'secret' => 'Cdty5aFaSqTMtfv3zr4KTEHmAVdZrXLZ8zVDrtBTO5cyZmz6yCG8rs58uXCBlmAp',
+    'secret' => 'cuHD5o5Lyp9q4jwua8nAHX3PWDB345fOyUq2XIB47cLVtKrEqIpuQani5K8OJx77',
     'keys' => 
     array (
       'public' => NULL,
@@ -584,13 +584,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'D:\\XAMPP\\htdocs\\harvester\\storage\\logs/laravel.log',
+        'path' => 'D:\\xampp\\htdocs\\harvester\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'D:\\XAMPP\\htdocs\\harvester\\storage\\logs/laravel.log',
+        'path' => 'D:\\xampp\\htdocs\\harvester\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -641,7 +641,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'D:\\XAMPP\\htdocs\\harvester\\storage\\logs/laravel.log',
+        'path' => 'D:\\xampp\\htdocs\\harvester\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -707,7 +707,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'D:\\XAMPP\\htdocs\\harvester\\resources\\views/vendor/mail',
+        0 => 'D:\\xampp\\htdocs\\harvester\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -812,7 +812,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'D:\\XAMPP\\htdocs\\harvester\\storage\\framework/sessions',
+    'files' => 'D:\\xampp\\htdocs\\harvester\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -832,9 +832,9 @@
   array (
     'paths' => 
     array (
-      0 => 'D:\\XAMPP\\htdocs\\harvester\\resources\\views',
+      0 => 'D:\\xampp\\htdocs\\harvester\\resources\\views',
     ),
-    'compiled' => 'D:\\XAMPP\\htdocs\\harvester\\storage\\framework\\views',
+    'compiled' => 'D:\\xampp\\htdocs\\harvester\\storage\\framework\\views',
   ),
   'flare' => 
   array (

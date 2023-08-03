@@ -63,11 +63,11 @@ return [
             ]) : [],
         ],
 // main
-        'MotorBrInvoiceMirror' => [
+        'MotorSparePartsMirror' => [
             'driver' => 'sqlsrv',
             'host' => '192.168.100.25',
             'port' => '1433',
-            'database' => 'MotorBrInvoiceMirror',
+            'database' => 'MotorSparePartsMirror',
             'username' => 'sa',
             'password' => 'dataport',
             'charset' => 'utf8',

@@ -45,7 +45,7 @@
                                             <th class="text-left">section</th>
                                             <th class="text-left">Model</th>
                                             <th class="text-left">Image</th>
-                                            <th class="text-left">Status</th>
+<!--                                            <th class="text-left">Status</th>-->
                                             <th class="text-left">Action</th>
                                         </tr>
                                         </thead>
@@ -58,13 +58,12 @@
                                             <td class="text-left">{{ harvester_part.section_name }}</td>
                                             <td class="text-left">{{ harvester_part.model_name}}</td>
                                             <td class="text-left">
-                                                <img v-if="harvester_part.image" height="40" width="40"
-                                                     :src="tableImage(harvester_part.image)" alt="">
+                                                <img v-if="harvester_part.image" height="40" width="40" :src="tableImage(harvester_part.image)" alt="">
                                             </td>
-                                            <td class="text-left">
-                                                <span class="badge badge-success" v-if="harvester_part.Active == 1">Active</span>
-                                                <span class="badge badge-success" v-else>InActive</span>
-                                            </td>
+<!--                                            <td class="text-left">-->
+<!--                                                <span class="badge badge-success" v-if="harvester_part.Active == 1">Active</span>-->
+<!--                                                <span class="badge badge-success" v-else>InActive</span>-->
+<!--                                            </td>-->
                                             <td class="text-left">
                                                 <button @click="edit(harvester_part)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>
@@ -111,54 +110,42 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Code</label>
-                                            <select name="ProductCode" id="ProductCode" class="form-control"
-                                                    v-model="form.ProductCode"
-                                                    :class="{ 'is-invalid': form.errors.has('ProductCode') }">
+                                            <select name="ProductCode" id="ProductCode" class="form-control" v-model="form.ProductCode" :class="{ 'is-invalid': form.errors.has('ProductCode') }">
                                                 <option disabled value="">Select Product Code</option>
-                                                <option :value="mirror_product.ProductCode" v-for="(mirror_product , index) in mirror_products"
-                                                        :key="index">{{ mirror_product.ProductCode }}
+                                                <option :value="mirror_product.ProductCode" v-for="(mirror_product , index) in mirror_products" :key="index">{{ mirror_product.ProductName }}
                                                 </option>
                                             </select>
-                                            <div class="error" v-if="form.errors.has('ProductCode')"
-                                                 v-html="form.errors.get('ProductCode')"/>
+                                            <div class="error" v-if="form.errors.has('ProductCode')" v-html="form.errors.get('ProductCode')"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Custom Name</label>
-                                            <input type="text" name="custom_name" v-model="form.custom_name"
-                                                   class="form-control"
-                                                   :class="{ 'is-invalid': form.errors.has('custom_name') }">
-                                            <div class="error" v-if="form.errors.has('custom_name')"
-                                                 v-html="form.errors.get('custom_name')"/>
+                                            <input type="text" name="custom_name" v-model="form.custom_name" class="form-control" :class="{ 'is-invalid': form.errors.has('custom_name') }">
+                                            <div class="error" v-if="form.errors.has('custom_name')" v-html="form.errors.get('custom_name')"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Section</label>
-                                            <select name="text" id="section_id" class="form-control"
-                                                    v-model="form.section_id"
-                                                    :class="{ 'is-invalid': form.errors.has('section_id') }">
+                                            <select name="text" id="section_id" class="form-control" v-model="form.section_id" :class="{ 'is-invalid': form.errors.has('section_id') }">
                                                 <option disabled value="">Select Section</option>
-                                                <option :value="section.id" v-for="(section , index) in sections"
-                                                        :key="index">{{ section.name }}
+                                                <option :value="section.id" v-for="(section , index) in sections" :key="index">{{ section.name }}
                                                 </option>
                                             </select>
-                                            <div class="error" v-if="form.errors.has('section_id')"
-                                                 v-html="form.errors.get('section_id')"/>
+                                            <div class="error" v-if="form.errors.has('section_id')" v-html="form.errors.get('section_id')"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Model</label>
-                                            <select name="text" id="model_id" class="form-control" v-model="form.model_id"
-                                                    :class="{ 'is-invalid': form.errors.has('model_id') }">
+                                            <select name="text" id="product_model_id" class="form-control" v-model="form.product_model_id" :class="{ 'is-invalid': form.errors.has('product_model_id') }">
                                                 <option disabled value="">Select Model</option>
                                                 <option :value="model.id" v-for="(model , index) in models" :key="index">{{ model.model_name }}
                                                 </option>
                                             </select>
-                                            <div class="error" v-if="form.errors.has('model_id')"
-                                                 v-html="form.errors.get('model_id')"/>
+                                            <div class="error" v-if="form.errors.has('product_model_id')"
+                                                 v-html="form.errors.get('product_model_id')"/>
                                         </div>
                                     </div>
 
@@ -217,8 +204,7 @@ export default {
             form: new Form({
                 parts_id : '',
                 custom_name: '',
-                model_id: '',
-                model_name: '',
+                product_model_id: '',
                 ProductCode: '',
                 section_id: '',
                 image: '',
@@ -279,7 +265,7 @@ export default {
             this.form.busy = true;
             this.form.post("/api/harvester-parts").then(response => {
                 $("#harvesterpartsModal").modal("hide");
-
+                this.getAllHarvesterPart()
             }).catch(e => {
                 this.isLoading = false;
             });
@@ -324,7 +310,6 @@ export default {
         },
         getAllProductModel() {
             axios.get('/api/get-all-product-model').then((response) => {
-                console.log(response)
                 this.models = response.data.models;
             }).catch((error) => {
 
@@ -332,7 +317,6 @@ export default {
         },
         getAllMirrorProduct() {
             axios.get('/api/get-all-mirror-product').then((response) => {
-                console.log(response)
                 this.mirror_products = response.data.mirror_products;
             }).catch((error) => {
 
@@ -340,7 +324,6 @@ export default {
         },
         getAllSections() {
             axios.get('/api/get-all-sections').then((response) => {
-                console.log(response)
                 this.sections = response.data.sections;
             }).catch((error) => {
 

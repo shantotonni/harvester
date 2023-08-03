@@ -9,14 +9,10 @@ class MirrorProduct extends Model
 {
     use HasFactory;
 
-    protected $connection= 'MotorBrInvoiceMirror';
+    protected $connection= 'MotorSparePartsMirror';
 
     protected $table = 'product';
     public $primaryKey = 'ProductCode';
     protected $keyType = 'string';
 
-    public function MirrorProducts(){
-        return $this->hasMany(MirrorProduct::class,'ProductCode','ProductCode');
-
-    }
 }
