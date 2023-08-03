@@ -30,5 +30,8 @@ class JobCard extends Model
     public function section(){
         return $this->belongsTo(Section::class,'section_id','id');
     }
+    public function technician(){
+        return $this->belongsTo(Technician::class,'technitian_id','id');
+    }
 
 }

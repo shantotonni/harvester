@@ -17,6 +17,7 @@ use App\Http\Resources\Portfolio\PortfolioCollection;
 use App\Http\Resources\Product\ProductCollection;
 use App\Http\Resources\ProductModel\ProductModelCollection;
 use App\Http\Resources\Products\ProductsCollection;
+use App\Http\Resources\SeasonalCrops\SeasonalCropsCollection;
 use App\Http\Resources\Shop\ShopCollection;
 use App\Http\Resources\Upazila\UpazilaCollection;
 use App\Models\Area;
@@ -163,7 +164,7 @@ class CommonController extends Controller
     {
         $harvester_infos = HarvesterInfo::orderBy('created_at', 'desc')->paginate(15);
         return response()->json([
-            'harvester_infos' => new HarvesterInfoCollection($harvester_infos)
+            'product_list' => new HarvesterInfoCollection($harvester_infos)
         ]);
     }
     public function getAllHarvesterParts()
@@ -174,12 +175,21 @@ class CommonController extends Controller
         ]);
     }
 
-    public function getAllDistrictWiseSeasonalCrops()
+    public function getAllDistrictWiseSeasonalCrops(Request $request)
     {
-        $seasonal_crops = SeasonalCrops::orderBy('created_at', 'desc')->get();
-        return response()->json([
-            'seasonal_crops' => $seasonal_crops
-        ]);
+        $district_id = $request->district_id;
+        $seasonal_crops_id = $request->seasonal_crops_id;
+
+        $seasonal_crops = SeasonalCrops::query()->with('District','Crop');
+        if ($district_id){
+            $seasonal_crops = $seasonal_crops ->where('district_id',$district_id);
+        }
+        if ($seasonal_crops_id){
+            $seasonal_crops = $seasonal_crops->where('seasonal_crops_id',$request->seasonal_crops_id);
+        }
+
+        $seasonal_crops = $seasonal_crops->orderBy('created_at', 'desc')->get();
+        return new SeasonalCropsCollection($seasonal_crops);
     }
 
     public function getAllCrops()

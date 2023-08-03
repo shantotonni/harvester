@@ -8,8 +8,7 @@ class HarvesterInfoCollection extends ResourceCollection
 {
     public function toArray($request)
     {
-        return [
-            'data' => $this->collection->transform(function ($harvester_info) {
+        return $this->collection->transform(function ($harvester_info) {
                 return [
                     'id' => $harvester_info->id,
                     'product_name' => $harvester_info->product_name,
@@ -22,7 +21,6 @@ class HarvesterInfoCollection extends ResourceCollection
                     'image' => $harvester_info->image,
                     'harvesterInfo_image'=>url('/').'/images/HarvesterInfo/'.$harvester_info->image,
                 ];
-            })
-        ];
+            });
     }
 }

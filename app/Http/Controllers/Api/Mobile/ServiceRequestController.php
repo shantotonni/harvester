@@ -28,7 +28,7 @@ class ServiceRequestController extends Controller
     public function getAllCustomerServiceRequest()
     {
         $user = JWTAuth::parseToken()->authenticate();
-        $service_requests = JobCard::where('customer_id',$user->id)->with('model','product','district','upazila','section')->paginate(15);
+        $service_requests = JobCard::where('customer_id',$user->id)->with('model','product','district','upazila','section','technician')->paginate(15);
         return new ServiceRequestCollection($service_requests);
     }
 
@@ -57,6 +57,7 @@ class ServiceRequestController extends Controller
       $job_card->chassis_number = $request->chassis_number;
       $job_card->customer_id = $request->customer_id;
       $job_card->service_wanted_at = Carbon::now();
+      $job_card->service_date = Carbon::now();
       $job_card->job_creator = 'customer';
       $job_card->job_status = 'started';
       $job_card->is_approved = 0;

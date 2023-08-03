@@ -22,8 +22,10 @@ class SeasonalCropsCollection extends ResourceCollection
                     'district_name' => isset($seasonal_crop->District) ? $seasonal_crop->District->name : '',
                     'seasonal_crops_id' => $seasonal_crop->seasonal_crops_id,
                     'seasonal_crops_name' => isset($seasonal_crop->Crop) ? $seasonal_crop->Crop->name : '',
-                    'date_from' => $seasonal_crop->date_from,
-                    'date_to' => $seasonal_crop->date_to
+                    'date_from' => date('d F Y',strtotime($seasonal_crop->date_from)),
+                    'date_fromd' => $seasonal_crop->date_from,
+                    'date_to' => date('d F Y',strtotime($seasonal_crop->date_to)),
+                    'date_tod' => $seasonal_crop->date_to
                 ];
             })
 
