@@ -44,6 +44,7 @@ use App\Models\ServiceCenter;
 use App\Models\ServiceType;
 use App\Models\ServicingType;
 use App\Models\Shop;
+use App\Models\Showroom;
 use App\Models\Upazila;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -97,6 +98,13 @@ class CommonController extends Controller
         $service_centers = ServiceCenter::orderBy('created_at', 'desc')->paginate(15);
         return response()->json([
             'service_centers' => $service_centers
+        ]);
+    }
+    public function getAllShowroom()
+    {
+        $showrooms = Showroom::orderBy('created_at', 'desc')->paginate(15);
+        return response()->json([
+            'showrooms' => $showrooms
         ]);
     }
 

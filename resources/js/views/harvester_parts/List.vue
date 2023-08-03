@@ -23,17 +23,6 @@
                         <div class="datatable" v-if="!isLoading">
                             <div class="card-body">
 
-                                <div class="d-flex">
-                                    <div class="flex-grow-1">
-                                        <div class="row">
-
-                                        </div>
-                                    </div>
-                                    <div class="card-tools">
-                                        <input v-model="query" type="text" class="form-control" placeholder="Search">
-                                    </div>
-
-                                </div>
                                 <div class="table-responsive">
                                     <table
                                         class="table table-bordered table-striped dt-responsive nowrap dataTable no-footer dtr-inline table-sm small">

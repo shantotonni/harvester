@@ -56,7 +56,6 @@
                                             <th class="text-left">Seasonal Crops</th>
                                             <th class="text-left">From Date</th>
                                             <th class="text-left">To Date</th>
-                                            <th class="text-left">Status</th>
                                             <th class="text-left">Action</th>
                                         </tr>
                                         </thead>
@@ -68,11 +67,6 @@
                                             <td class="text-left">{{ seasonal_crop.seasonal_crops_name }}</td>
                                             <td class="text-left">{{ seasonal_crop.date_from }}</td>
                                             <td class="text-left">{{ seasonal_crop.date_to }}</td>
-
-                                            <td class="text-left">
-                                                <span class="badge badge-success" v-if="seasonal_crop.Active == 1">Active</span>
-                                                <span class="badge badge-success" v-else>InActive</span>
-                                            </td>
                                             <td class="text-left">
                                                 <button @click="edit(seasonal_crop)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>

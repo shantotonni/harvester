@@ -46,7 +46,6 @@
                                             <th class="text-left">Horse Power</th>
                                             <th class="text-left">Details</th>
                                             <th class="text-left">Image</th>
-                                            <th class="text-left">Status</th>
                                             <th class="text-left">Action</th>
                                         </tr>
                                         </thead>
@@ -62,10 +61,6 @@
                                             <td class="text-left">
                                                 <img v-if="harvester_info.image" height="40" width="40"
                                                      :src="tableImage(harvester_info.image)" alt="">
-                                            </td>
-                                            <td class="text-left">
-                                                <span class="badge badge-success" v-if="harvester_info.Active == 1">Active</span>
-                                                <span class="badge badge-success" v-else>InActive</span>
                                             </td>
                                             <td class="text-left">
                                                 <button @click="edit(harvester_info)" class="btn btn-success btn-sm"><i
@@ -283,7 +278,7 @@ export default {
             this.form.busy = true;
             this.form.post("/api/harvester-info").then(response => {
                 $("#harvesterinfoModal").modal("hide");
-
+                this.getAllHarvesterInfo();
             }).catch(e => {
                 this.isLoading = false;
             });

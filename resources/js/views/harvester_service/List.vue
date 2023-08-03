@@ -56,7 +56,6 @@
                                             <th class="text-left">Servicing Type</th>
                                             <th class="text-left">From hour</th>
                                             <th class="text-left">To hour</th>
-                                            <th class="text-left">Status</th>
                                             <th class="text-left">Action</th>
                                         </tr>
                                         </thead>
@@ -68,10 +67,6 @@
                                             <td class="text-left">{{ harvester_service.servicing_name }}</td>
                                             <td class="text-left">{{ harvester_service.from_hr }}</td>
                                             <td class="text-left">{{ harvester_service.to_hr }}</td>
-                                            <td class="text-left">
-                                                <span class="badge badge-success" v-if="harvester_service.Active == 1">Active</span>
-                                                <span class="badge badge-success" v-else>InActive</span>
-                                            </td>
                                             <td class="text-left">
                                                 <button @click="edit(harvester_service)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>

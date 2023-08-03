@@ -44,6 +44,7 @@ import ServicingTypes from '../views/servicing_types/List'
 import HarvesterInfo from '../views/harvester_info/List'
 import SeasonalCrops from '../views/seasonal_crops/List'
 import HarvesterParts from '../views/harvester_parts/List'
+import ShowroomList from '../views/showroom/List'
 
 const routes = [
     {
@@ -121,6 +122,10 @@ const routes = [
             //Harvester Parts
             {
                 path: base_url + '/harvester-parts', name: 'HarvesterParts', component: HarvesterParts
+            },
+            //Showroom
+            {
+                path: base_url + '/showroom-list', name: 'ShowroomList', component: ShowroomList
             },
         ],
         beforeEnter(to, from, next) {

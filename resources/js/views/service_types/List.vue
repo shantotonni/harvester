@@ -36,7 +36,6 @@
                                             <th class="text-left">Name</th>
                                             <th class="text-left">Bangla Name</th>
                                             <th class="text-left">Code</th>
-                                            <th class="text-left">Status</th>
                                             <th class="text-left">Action</th>
                                         </tr>
                                         </thead>
@@ -47,11 +46,6 @@
                                             <td class="text-left">{{ service_type.name }}</td>
                                             <td class="text-left">{{ service_type.name_bn }}</td>
                                             <td class="text-left">{{ service_type.code }}</td>
-                                            <td class="text-left">
-                                                <span class="badge badge-success"
-                                                      v-if="service_type.Active == 1">Active</span>
-                                                <span class="badge badge-success" v-else>InActive</span>
-                                            </td>
                                             <td class="text-left">
                                                 <button @click="edit(service_type)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>
@@ -222,7 +216,7 @@ export default {
             this.form.busy = true;
             this.form.post("/api/service-types").then(response => {
                 $("#servicetypeModal").modal("hide");
-
+                this.getAllServiceType();
             }).catch(e => {
                 this.isLoading = false;
             });

@@ -60,7 +60,6 @@
                                             <th class="text-left">Mobile</th>
                                             <th class="text-left">Lat</th>
                                             <th class="text-left">Lon</th>
-                                            <th class="text-left">Status</th>
                                             <th class="text-left">Action</th>
                                         </tr>
                                         </thead>
@@ -74,10 +73,6 @@
                                             <td class="text-left">{{ service_center.mobile }}</td>
                                             <td class="text-left">{{ service_center.lat }}</td>
                                             <td class="text-left">{{ service_center.lon }}</td>
-                                            <td class="text-left">
-                                                <span class="badge badge-success" v-if="service_center.Active == 1">Active</span>
-                                                <span class="badge badge-success" v-else>InActive</span>
-                                            </td>
                                             <td class="text-left">
                                                 <button @click="edit(service_center)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>
@@ -294,7 +289,7 @@ export default {
             this.form.busy = true;
             this.form.post("/api/service-centers").then(response => {
                 $("#servicecenterModal").modal("hide");
-
+                this.getAllServiceCenter();
             }).catch(e => {
                 this.isLoading = false;
             });

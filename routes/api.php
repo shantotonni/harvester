@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\ServiceCenterController;
 use App\Http\Controllers\Api\ServiceTypeController;
 use App\Http\Controllers\Api\ServicingTypeController;
 use App\Http\Controllers\Api\SettingController;
+use App\Http\Controllers\Api\ShowroomController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerAuthController;
@@ -81,7 +82,7 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-harvester-parts', [CommonController::class, 'getAllHarvesterParts']);
     Route::get('get-all-crops', [CommonController::class, 'getAllCrops']);
     Route::get('get-all-districts', [CommonController::class, 'getAllDistricts']);
-
+    Route::get('get-all-showrooms', [CommonController::class, 'getAllShowroom']);
     Route::get('get-all-district-wise-seasonal-crops', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
     Route::get('get-all-model-by-product/{id}', [CommonController::class, 'getAllModelByProduct']);
 
@@ -120,6 +121,10 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //District wise seasonal crops
     Route::apiResource('district-wise-seasonal-crops', SeasonalCropsController::class);
     Route::get('search/district-wise-seasonal-crops/{query}', [SeasonalCropsController::class, 'search']);
+
+    //Showroom
+    Route::apiResource('showroom-list', ShowroomController::class);
+    Route::get('search/showroom-list/{query}', [ShowroomController::class, 'search']);
 
 
   //  Route::get('get-all-district-wise-seasonal-crops/{id}', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);

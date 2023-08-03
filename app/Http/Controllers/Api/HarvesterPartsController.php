@@ -18,12 +18,13 @@ class HarvesterPartsController extends Controller
         return new HarvesterPartsCollection($harvester_parts);
     }
 
-    public function store(Request $request)
+    public function store(HarvesterPartsStoreRequest $request)
     {
+
         if ($request->has('image')) {
             $image = $request->image;
             $name = uniqid() . time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-            Image::make($image)->save(public_path('images/HarvesterParts/') . $name);
+            Image::make($image)->resize('800','700')->save(public_path('images/HarvesterParts/') . $name);
         } else {
             $name = 'not_found.jpg';
         }
@@ -31,7 +32,7 @@ class HarvesterPartsController extends Controller
         $harvester_part = new HarvesterParts();
         $harvester_part->custom_name = $request->custom_name;
         $harvester_part->ProductCode = $request->ProductCode;
-        $harvester_part->product_model_id = $request->model_id;
+        $harvester_part->product_model_id = $request->product_model_id;
         $harvester_part->section_id = $request->section_id;
         $harvester_part->image = $name;
         $harvester_part->save();
@@ -51,7 +52,7 @@ class HarvesterPartsController extends Controller
                     unlink($file_old);
                 }
                 $name = uniqid() . time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-                Image::make($image)->save(public_path('images/HarvesterParts/') . $name);
+                Image::make($image)->resize('800','700')->save(public_path('images/HarvesterParts/') . $name);
             } else {
                 $name = $harvester_part->image;
             }
@@ -63,7 +64,7 @@ class HarvesterPartsController extends Controller
 
         $harvester_part->custom_name = $request->custom_name;
         $harvester_part->ProductCode = $request->ProductCode;
-        $harvester_part->product_model_id = $request->model_id;
+        $harvester_part->product_model_id = $request->product_model_id;
         $harvester_part->section_id = $request->section_id;
         $harvester_part->image = $name;
         $harvester_part->save();
@@ -73,13 +74,11 @@ class HarvesterPartsController extends Controller
     public function destroy($parts_id)
     {
         HarvesterParts::where('parts_id',$parts_id)->delete();
-
         return response()->json(['message'=>'Harvester Part Deleted Successfully']);
     }
     public function search($query)
     {
-        return new HarvesterPartsCollection(HarvesterParts::Where('product_model.model_name', 'like', "%$query%")
-            ->paginate(10));
+        return new HarvesterPartsCollection(HarvesterParts::Where('custom_name', 'like', "%$query%")->latest()->paginate(10));
     }
 
 }
