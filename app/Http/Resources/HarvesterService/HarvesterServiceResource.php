@@ -17,9 +17,9 @@ class HarvesterServiceResource extends JsonResource
         return [
             'id' => $this->id,
             'model_id' => $this->model_id,
-            'modelname'=>isset($this->model) ? $this->model->name:'',
+            'model_name'=>isset($this->model) ? $this->model->name:'',
             'servicing_type_id' => $this->servicing_type_id,
-            'servicingname' => isset($this->servicing) ? $this->servicing->name : '',
+            'servicing_name' => isset($this->servicing) ? $this->servicing->name : '',
             'from_hr' => $this->from_hr,
             'to_hr' => $this->to_hr,
         ];

@@ -12,6 +12,6 @@ class StockBatch extends Model
     protected $table = 'StockBatch';
 
     public function product(){
-        return $this->belongsTo(Product::class,'ProductCode','ProductCode');
+        return $this->belongsTo(MirrorProduct::class,'ProductCode','ProductCode');
     }
 }

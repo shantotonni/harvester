@@ -5,14 +5,12 @@ use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\HarvesterInfoController;
+use App\Http\Controllers\Api\HarvesterPartsController;
 use App\Http\Controllers\Api\HarvesterServiceController;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\MenuPermissionController;
 use App\Http\Controllers\Api\Mobile\CommonController;
-
 use App\Http\Controllers\Api\Mobile\ServiceRequestController;
-use App\Http\Controllers\Api\ProductModelController;
-
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SeasonalCropsController;
 use App\Http\Controllers\Api\ServiceCenterController;
@@ -76,11 +74,14 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-servicing-type', [CommonController::class, 'getAllServicingType']);
     Route::get('get-all-product-model', [CommonController::class, 'getAllProductModel']);
     Route::get('get-all-products', [CommonController::class, 'getAllProducts']);
+    Route::get('get-all-mirror-product', [CommonController::class, 'getAllMirrorProduct']);
+    Route::get('get-all-sections', [CommonController::class, 'getAllSections']);
     Route::get('get-all-harvester-service-details', [CommonController::class, 'getAllHarvesterServiceDetails']);
     Route::get('get-all-harvester-info', [CommonController::class, 'getAllHarvesterInfo']);
+    Route::get('get-all-harvester-parts', [CommonController::class, 'getAllHarvesterParts']);
     Route::get('get-all-crops', [CommonController::class, 'getAllCrops']);
     Route::get('get-all-districts', [CommonController::class, 'getAllDistricts']);
-    Route::get('get-all-district-wise-seasonal-crops/{id}', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
+    Route::get('get-all-district-wise-seasonal-crops', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
     Route::get('get-all-model-by-product/{id}', [CommonController::class, 'getAllModelByProduct']);
 
     //get dashboard data route
@@ -110,12 +111,15 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::apiResource('harvester-info', HarvesterinfoController::class);
     Route::get('search/harvester-info/{query}', [HarvesterInfoController::class, 'search']);
 
+    //HarvesterParts
+    Route::apiResource('harvester-parts', HarvesterPartsController::class);
+    Route::get('search/harvester-parts{query}', [HarvesterPartsController::class, 'search']);
+
 
     //District wise seasonal crops
     Route::apiResource('district-wise-seasonal-crops', SeasonalCropsController::class);
     Route::get('search/district-wise-seasonal-crops/{query}', [SeasonalCropsController::class, 'search']);
 
-    Route::get('get-all-district-wise-seasonal-crops/{id}', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
 
 });
 

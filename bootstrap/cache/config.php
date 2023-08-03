@@ -10,7 +10,7 @@
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:eusNHjfw5I3owra0rKTbiY/uNO++KIsGfouL+RTvjrA=',
+    'key' => 'base64:wLJ4QKCKyZZKE0RrS+BEIJ3V4yD2V+ePYQdBjizoUC8=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -532,7 +532,7 @@
   ),
   'jwt' => 
   array (
-    'secret' => 'cuHD5o5Lyp9q4jwua8nAHX3PWDB345fOyUq2XIB47cLVtKrEqIpuQani5K8OJx77',
+    'secret' => 'Cdty5aFaSqTMtfv3zr4KTEHmAVdZrXLZ8zVDrtBTO5cyZmz6yCG8rs58uXCBlmAp',
     'keys' => 
     array (
       'public' => NULL,

@@ -9,7 +9,9 @@ use App\Http\Resources\District\DistrictCollection;
 use App\Http\Resources\Doctor\DoctorCollection;
 use App\Http\Resources\Doctor\DoctorResource;
 use App\Http\Resources\HarvesterInfo\HarvesterInfoCollection;
+use App\Http\Resources\HarvesterParts\HarvesterPartsCollection;
 use App\Http\Resources\HarvesterServiceDetailsCollection;
+use App\Http\Resources\MirrorProduct\MirrorProductCollection;
 use App\Http\Resources\MOInfo\MOInfoCollection;
 use App\Http\Resources\Portfolio\PortfolioCollection;
 use App\Http\Resources\Product\ProductCollection;
@@ -26,11 +28,12 @@ use App\Models\Customer;
 use App\Models\District;
 use App\Models\Doctor;
 use App\Models\HarvesterInfo;
+use App\Models\HarvesterParts;
 use App\Models\HarvesterService;
 use App\Models\Menu;
 use App\Models\MOInfo;
 use App\Models\Portfolio;
-use App\Models\Product;
+use App\Models\MirrorProduct;
 use App\Models\ProductModel;
 use App\Models\Products;
 use App\Models\Role;
@@ -104,7 +107,8 @@ class CommonController extends Controller
     }
 
     public function getAllProductModel(){
-        $models = ProductModel::OrderBy('id','asc')->where('product_id',4)->select('id','product_id','model_name','model_name_bn')->get();
+        $models = ProductModel::OrderBy('id','asc')
+            ->where('product_id',4)->select('id','product_id','model_name','model_name_bn')->get();
         return response()->json([
             'models'=>$models
         ]);
@@ -116,6 +120,19 @@ class CommonController extends Controller
             'products'=>$products
         ]);
     }
+    public function getAllMirrorProduct(){
+
+        $mirror_products = MirrorProduct::OrderBy('ProductCode','desc')
+            ->select('ProductCode','ProductName','UnitPrice')
+            ->where('Business','W')
+            ->where('Active','Y')
+            ->get();
+        return response()->json([
+            'mirror_products'=>$mirror_products
+        ]);
+
+    }
+
 
     public function getAllServiceType(){
         $service_types = ServiceType::OrderBy('id','asc')->paginate(15);
@@ -149,6 +166,13 @@ class CommonController extends Controller
             'harvester_infos' => new HarvesterInfoCollection($harvester_infos)
         ]);
     }
+    public function getAllHarvesterParts()
+    {
+        $harvester_parts = HarvesterParts::orderBy('created_at', 'desc')->paginate(15);
+        return response()->json([
+            'harvester_parts' => new HarvesterPartsCollection($harvester_parts)
+        ]);
+    }
 
     public function getAllDistrictWiseSeasonalCrops()
     {
@@ -171,6 +195,13 @@ class CommonController extends Controller
         $districts = District::orderBy('created_at', 'desc')->get();
         return response()->json([
             'districts' => $districts
+        ]);
+    }
+    public function getAllSections()
+    {
+        $sections = Section::orderBy('created_at', 'asc')->get();
+        return response()->json([
+            'sections' => $sections
         ]);
     }
 
