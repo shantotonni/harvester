@@ -69,7 +69,7 @@ class HarvesterInfoController extends Controller
         $harvester_info->details = $request->details;
         $harvester_info->image = $name;
         $harvester_info->save();
-        return response()->json(['message'=>'Harvester Info Sucessfully Updated '],200);
+        return response()->json(['message'=>'Harvester Info Successfully Updated '],200);
     }
 
     public function destroy($id)
