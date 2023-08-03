@@ -11,8 +11,7 @@ class SeasonalCrops extends Model
     protected $table ='district_wise_seasonal_crops';
     public $primaryKey='id';
     protected $guarded = [];
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT  = 'updated_at';
+
     public function Crop(){
         return $this->belongsTo(Crop::class,'seasonal_crops_id','id');
     }
