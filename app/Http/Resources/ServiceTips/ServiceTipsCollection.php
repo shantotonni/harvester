@@ -21,7 +21,7 @@ class ServiceTipsCollection extends ResourceCollection
                 'title' => $service_tip->title,
                 'type' => $service_tip->type,
                 'active' => $service_tip->active,
-                'description' => $service_tip->description,
+                'description' => strip_tags($service_tip->description),
                 'video_link' => $service_tip->video_link,
                 'image' => $service_tip->image,
                 'serviceTips_image' => url('/') . '/images/ServiceTips/' . $service_tip->image,
