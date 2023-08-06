@@ -95,14 +95,14 @@ class CommonController extends Controller
 
     public function getAllServiceCenter()
     {
-        $service_centers = ServiceCenter::orderBy('created_at', 'desc')->paginate(15);
+        $service_centers = ServiceCenter::orderBy('created_at', 'desc')->get();
         return response()->json([
             'service_centers' => $service_centers
         ]);
     }
     public function getAllShowroom()
     {
-        $showrooms = Showroom::orderBy('created_at', 'desc')->paginate(15);
+        $showrooms = Showroom::orderBy('created_at', 'desc')->get();
         return response()->json([
             'showrooms' => $showrooms
         ]);
