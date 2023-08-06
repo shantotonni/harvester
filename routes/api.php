@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\Mobile\ServiceRequestController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SeasonalCropsController;
 use App\Http\Controllers\Api\ServiceCenterController;
+use App\Http\Controllers\Api\ServiceTipsController;
 use App\Http\Controllers\Api\ServiceTypeController;
 use App\Http\Controllers\Api\ServicingTypeController;
 use App\Http\Controllers\Api\SettingController;
@@ -85,6 +86,7 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-showrooms', [CommonController::class, 'getAllShowroom']);
     Route::get('get-all-district-wise-seasonal-crops', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
     Route::get('get-all-model-by-product/{id}', [CommonController::class, 'getAllModelByProduct']);
+    Route::get('get-all-service-tips', [CommonController::class, 'getAllServiceTips']);
 
     //get dashboard data route
     Route::get('get-all-dashboard-data', [DashboardController::class, 'getDashboardAllDara']);
@@ -125,6 +127,10 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //Showroom
     Route::apiResource('showroom-list', ShowroomController::class);
     Route::get('search/showroom-list/{query}', [ShowroomController::class, 'search']);
+
+    //Service Tips
+    Route::apiResource('service-tips', ServiceTipsController::class);
+    Route::get('search/service-tips/{query}', [ServiceTipsController::class, 'search']);
 
 
   //  Route::get('get-all-district-wise-seasonal-crops/{id}', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
