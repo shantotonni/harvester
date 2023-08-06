@@ -18,6 +18,7 @@ use App\Http\Resources\Product\ProductCollection;
 use App\Http\Resources\ProductModel\ProductModelCollection;
 use App\Http\Resources\Products\ProductsCollection;
 use App\Http\Resources\SeasonalCrops\SeasonalCropsCollection;
+use App\Http\Resources\ServiceEngineer\ServiceEngineerCollection;
 use App\Http\Resources\ServiceTips\ServiceTipsCollection;
 use App\Http\Resources\Shop\ShopCollection;
 use App\Http\Resources\Upazila\UpazilaCollection;
@@ -42,6 +43,7 @@ use App\Models\Role;
 use App\Models\SeasonalCrops;
 use App\Models\Section;
 use App\Models\ServiceCenter;
+use App\Models\ServiceEngineer;
 use App\Models\ServiceTips;
 use App\Models\ServiceType;
 use App\Models\ServicingType;
@@ -228,6 +230,13 @@ class CommonController extends Controller
         $service_tips = ServiceTips::orderBy('created_at', 'asc')->get();
         return response()->json([
             'service_tips' => new ServiceTipsCollection($service_tips)
+        ]);
+    }
+    public function getAllServiceEngineer()
+    {
+        $service_engineers = ServiceEngineer::orderBy('created_at', 'asc')->get();
+        return response()->json([
+            'service_engineers' => new ServiceEngineerCollection($service_engineers)
         ]);
     }
 

@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class HarvesterParts extends Model
 {
     use HasFactory;
-
-    use HasFactory;
     protected  $table = 'harvester_parts';
     public $primaryKey = 'parts_id';
     protected $guarded=[];

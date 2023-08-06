@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\HarvesterParts\HarvesterPartsStoreRequest;
 use App\Http\Resources\HarvesterParts\HarvesterPartsCollection;
 use App\Models\HarvesterParts;
+use App\Models\MirrorProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -64,6 +65,7 @@ class HarvesterPartsController extends Controller
 
         $harvester_part->custom_name = $request->custom_name;
         $harvester_part->ProductCode = $request->ProductCode;
+
         $harvester_part->product_model_id = $request->product_model_id;
         $harvester_part->section_id = $request->section_id;
         $harvester_part->image = $name;

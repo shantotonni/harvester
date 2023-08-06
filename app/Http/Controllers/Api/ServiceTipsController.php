@@ -77,5 +77,9 @@ class ServiceTipsController extends Controller
         ServiceTips::where('id',$id)->delete();
         return response()->json(['message'=>'Service Tips Deleted Successfully']);
     }
+    public function search($query)
+    {
+        return new ServiceTipsCollection(ServiceTips::Where('title', 'like', "%$query%")->latest()->paginate(10));
+    }
 
 }

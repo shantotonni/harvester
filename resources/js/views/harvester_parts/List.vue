@@ -35,6 +35,8 @@
                                         <tr>
                                             <th class="text-left">SN</th>
                                             <th class="text-left">Code</th>
+                                            <th class="text-left">Product Name</th>
+                                            <th class="text-left">Unit Price</th>
                                             <th class="text-left">Custom Name</th>
                                             <th class="text-left">section</th>
                                             <th class="text-left">Model</th>
@@ -48,6 +50,8 @@
                                             v-if=" harvester_parts.length">
                                             <th class="text-left" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ harvester_part.ProductCode }}</td>
+                                            <td class="text-left">{{ harvester_part.ProductName }}</td>
+                                            <td class="text-left">{{ harvester_part.UnitPrice }}</td>
                                             <td class="text-left">{{ harvester_part.custom_name }}</td>
                                             <td class="text-left">{{ harvester_part.section_name }}</td>
                                             <td class="text-left">{{ harvester_part.model_name}}</td>
@@ -200,7 +204,9 @@ export default {
                 custom_name: '',
                 product_model_id: '',
                 ProductCode: '',
+                ProductName: '',
                 section_id: '',
+                UnitPrice: '',
                 image: '',
             }),
         }

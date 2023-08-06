@@ -21,6 +21,7 @@ class HarvesterPartsCollection extends ResourceCollection
                     'parts_id' => $harvester_part->parts_id,
                     'ProductName'=>isset($harvester_part->MirrorProducts) ? $harvester_part->MirrorProducts->ProductName:'',
                     'ProductCode' => $harvester_part->ProductCode,
+                    'UnitPrice'=>isset($harvester_part->MirrorProducts) ? $harvester_part->MirrorProducts->UnitPrice:'',
                     'product_model_id' => $harvester_part->product_model_id,
                     'model_name'=>isset($harvester_part->ProductModel) ? $harvester_part->ProductModel->model_name:'',
                     'section_id' => $harvester_part->section_id,

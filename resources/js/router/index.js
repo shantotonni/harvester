@@ -46,6 +46,7 @@ import SeasonalCrops from '../views/seasonal_crops/List'
 import HarvesterParts from '../views/harvester_parts/List'
 import ShowroomList from '../views/showroom/List'
 import ServiceTips from '../views/service_tips/List'
+import ServiceEngineer from '../views/service_engineer/List'
 
 const routes = [
     {
@@ -131,6 +132,11 @@ const routes = [
             //Service tips
             {
                 path: base_url + '/service-tips', name: 'ServiceTips', component: ServiceTips
+            },
+
+            //Service Engineer
+            {
+                path: base_url + '/service-engineer', name: 'ServiceEngineer', component: ServiceEngineer
             },
         ],
         beforeEnter(to, from, next) {
