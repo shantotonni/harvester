@@ -22,8 +22,24 @@
                     <div class="card">
                         <div class="datatable" v-if="!isLoading">
                             <div class="card-body">
-
                                 <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <select name="" id="" v-model="district_id" class="form-control">
+                                                        <option disabled value="">Select District</option>
+                                                        <option :value="district.id" v-for="(district , index) in districts" :key="index">{{ district.name }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3">
+                                                <button type="submit" @click="getAllShowroom" class="btn btn-success"><i class="mdi mdi-filter"></i>Filter
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="card-tools">
                                         <input v-model="query" type="text" class="form-control" placeholder="Search">
                                     </div>
@@ -35,6 +51,7 @@
                                         <thead>
                                         <tr>
                                             <th class="text-left">SN</th>
+                                            <th class="text-left">District</th>
                                             <th class="text-left">Owner name</th>
                                             <th class="text-left">Showroom</th>
                                             <th class="text-left">Address</th>
@@ -48,6 +65,7 @@
                                         <tr v-for="(showroom, i) in showrooms" :key="showroom.id"
                                             v-if="showrooms.length">
                                             <th class="text-left" scope="row">{{ ++i }}</th>
+                                            <td class="text-left">{{ showroom.district_name }}</td>
                                             <td class="text-left">{{ showroom.owner_name }}</td>
                                             <td class="text-left">{{ showroom.showroom_name }}</td>
                                             <td class="text-left">{{ showroom.address }}</td>
@@ -97,6 +115,19 @@
                         <div class="modal-body">
                             <div class="col-md-12">
                                 <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>District</label>
+                                            <select name="text" id="district_id" class="form-control" v-model="form.district_id"
+                                                    :class="{ 'is-invalid': form.errors.has('district_id') }">
+                                                <option disabled value="">Select District</option>
+                                                <option :value="district.id" v-for="(district , index) in districts" :key="index">{{ district.name}}
+                                                </option>
+                                            </select>
+                                            <div class="error" v-if="form.errors.has('district_id')"
+                                                 v-html="form.errors.get('district_id')"/>
+                                        </div>
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Owner Name</label>
@@ -187,14 +218,17 @@ export default {
     data() {
         return {
             showrooms: [],
+            districts: [],
             pagination: {
                 current_page: 1
             },
             query: "",
+            district_id:'',
             editMode: false,
             isLoading: false,
             form: new Form({
                 id: '',
+                district_id: '',
                 owner_name: '',
                 address: '',
                 showroom_name: '',
@@ -220,8 +254,8 @@ export default {
     methods: {
         getAllShowroom() {
             this.isLoading = true;
-            axios.get('/api/showroom-list?page=' + this.pagination.current_page ).then((response) => {
-                console.log('data', response.data.data)
+            axios.get('/api/showroom-list?page=' + this.pagination.current_page +"&district_id="+ this.district_id ).then((response) => {
+                // console.log('data', response.data.data)
                 this.showrooms = response.data.data;
                 this.pagination = response.data.meta;
                 this.isLoading = false;
@@ -239,6 +273,7 @@ export default {
         },
         reload() {
             this.getAllShowroom();
+            this.district_id="";
             this.query = "";
             this.$toaster.success('Data Successfully Refresh');
         },
@@ -251,6 +286,7 @@ export default {
             this.form.clear();
             $("#showroomModal").modal("show");
             this.getAllShowroom();
+            this.getAllDistricts();
 
 
         },
@@ -269,6 +305,7 @@ export default {
             this.form.clear();
             this.form.fill(showroom);
             this.getAllShowroom();
+            this.getAllDistricts();
             $("#showroomModal").modal("show");
         },
         update() {
@@ -280,6 +317,15 @@ export default {
                 this.isLoading = false;
             });
         },
+        getAllDistricts() {
+            axios.get('/api/get-all-districts').then((response) => {
+              console.log(response)
+                this.districts = response.data.districts;
+            }).catch((error) => {
+
+            })
+        },
+
         destroy(id) {
             Swal.fire({
                 title: 'Are you sure?',

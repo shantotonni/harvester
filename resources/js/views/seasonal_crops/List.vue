@@ -22,7 +22,6 @@
                     <div class="card">
                         <div class="datatable" v-if="!isLoading">
                             <div class="card-body">
-
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
                                         <div class="row">
@@ -226,6 +225,7 @@ export default {
     mounted() {
         document.title = 'District Wise Seasonal Crops | Harvester';
         this.getAllDistrictWiseSeasonalCrops();
+        this.getAllDistricts();
     },
     methods: {
         getAllDistrictWiseSeasonalCrops() {

@@ -17,6 +17,8 @@ class ShowroomResource extends JsonResource
 
         return [
             'id' => $this->showroom_id,
+            'district_id' => $this->district_id,
+            'district_name' => isset($this->District) ? $this->District->name : '',
             'owner_name' => $this->owner_name,
             'showroom_name' => $this->showroom_name,
             'address' => $this->address,

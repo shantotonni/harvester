@@ -25,6 +25,7 @@ class ShowroomStoreRequest extends FormRequest
     {
         return [
             'owner_name'=>'required',
+            'district_id'=>'required',
             'showroom_name'=>'required',
             'address'=>'required',
             'mobile'=>'required',

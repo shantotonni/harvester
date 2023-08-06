@@ -10,10 +10,16 @@ use Illuminate\Http\Request;
 
 class ShowroomController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
 
-        $showrooms = Showroom::paginate(10);
+        $district_id =$request->district_id;
+        $showrooms = Showroom::query()->with('District');
+        if (!empty($district_id)){
+            $showrooms=$showrooms->where('district_id',$district_id);
+
+        }
+        $showrooms = $showrooms->paginate();
 
         return new ShowroomCollection($showrooms);
     }
@@ -22,6 +28,7 @@ class ShowroomController extends Controller
     {
         $showroom = new Showroom();
         $showroom->owner_name = $request->owner_name;
+        $showroom->district_id = $request->district_id;
         $showroom->address = $request->address;
         $showroom->showroom_name = $request->showroom_name;
         $showroom->mobile = $request->mobile;
@@ -36,6 +43,7 @@ class ShowroomController extends Controller
     {
         $showroom = Showroom::where('showroom_id', $id)->first();
         $showroom->owner_name = $request->owner_name;
+        $showroom->district_id = $request->district_id;;
         $showroom->address = $request->address;
         $showroom->showroom_name = $request->showroom_name;
         $showroom->mobile = $request->mobile;

@@ -13,4 +13,10 @@ class Showroom extends Model
     protected $guarded =[];
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
+
+    public function District()
+    {
+        return $this->belongsTo(District::class,'district_id','id');
+
+    }
 }
