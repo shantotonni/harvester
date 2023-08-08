@@ -5,7 +5,7 @@
                 <div class="col-sm-6">
                     <div class="float-right d-none d-md-block">
                         <div class="card-tools">
-                            <button type="button" class="btn btn-success btn-sm" @click="createHarvesterInfo">
+                            <button type="button" class="btn btn-success btn-sm" @click="createHarvesterParts">
                                 <i class="fas fa-plus"></i>
                                 Add Harvester Parts
                             </button>
@@ -23,6 +23,11 @@
                         <div class="datatable" v-if="!isLoading">
                             <div class="card-body">
                                 <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        <div class="row">
+
+                                        </div>
+                                    </div>
                                     <div class="card-tools">
                                         <input v-model="query" type="text" class="form-control" placeholder="Search">
                                     </div>
@@ -149,7 +154,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Image</label>
+                                            <label>Image <small>(Image type:jpeg,jpg,png,svg)</small></label>
                                             <input @change="changeImage($event)" type="file" name="image"
                                                    class="form-control"
                                                    :class="{ 'is-invalid': form.errors.has('image') }">
@@ -251,7 +256,7 @@ export default {
         closeModal() {
             $("#harvesterpartsModal").modal("hide");
         },
-        createHarvesterInfo() {
+        createHarvesterParts() {
             this.editMode = false;
             this.form.reset();
             this.form.clear();

@@ -157,7 +157,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Image</label>
+                                            <label>Image <small>(Image type:jpeg,jpg,png,svg)</small></label>
                                             <input @change="changeImage($event)" type="file" name="image"
                                                    class="form-control"
                                                    :class="{ 'is-invalid': form.errors.has('image') }">
