@@ -66,13 +66,13 @@
                                         <tbody>
                                         <tr v-for="(service_center, i) in service_centers" :key="service_center.id"
                                             v-if="service_centers.length">
-                                            <th class="text-left" scope="row">{{ ++i }}</th>
+                                            <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ service_center.areaname }}</td>
                                             <td class="text-left">{{ service_center.address }}</td>
                                             <td class="text-left">{{ service_center.responsible_person }}</td>
-                                            <td class="text-left">{{ service_center.mobile }}</td>
-                                            <td class="text-left">{{ service_center.lat }}</td>
-                                            <td class="text-left">{{ service_center.lon }}</td>
+                                            <td class="text-right">{{ service_center.mobile }}</td>
+                                            <td class="text-right">{{ service_center.lat }}</td>
+                                            <td class="text-right">{{ service_center.lon }}</td>
                                             <td class="text-left">
                                                 <button @click="edit(service_center)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>

@@ -38,7 +38,7 @@
                                         </thead>
                                         <tbody>
                                             <tr v-for="(role, i) in roles" :key="role.id" v-if="roles.length">
-                                                <th class="text-left" scope="row">{{ ++i }}</th>
+                                                <th class="text-center" scope="row">{{ ++i }}</th>
                                                 <td class="text-left">{{ role.name }}</td>
                                                 <td class="text-left">{{ role.created_at }}</td>
                                                 <td class="text-left">

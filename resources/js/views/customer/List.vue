@@ -41,9 +41,9 @@
                                         </thead>
                                         <tbody>
                                             <tr v-for="(customer, i) in customers" :key="customer.CustomerID" v-if="customers.length">
-                                                <th class="text-left" scope="row">{{ ++i }}</th>
+                                                <th class="text-center" scope="row">{{ ++i }}</th>
                                                 <td class="text-left">{{ customer.name }}</td>
-                                                <td class="text-left">{{ customer.mobile }}</td>
+                                                <td class="text-right">{{ customer.mobile }}</td>
                                                 <td class="text-left">{{ customer.date_of_purchase }}</td>
                                                 <td class="text-left">{{ customer.image }}</td>
                                                 <td class="text-left">

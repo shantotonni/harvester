@@ -41,7 +41,7 @@
                                         <tbody>
                                         <tr v-for="(servicing_type, i) in servicing_types" :key="servicing_type.id"
                                             v-if="servicing_types.length">
-                                            <th class="text-left" scope="row">{{ ++i }}</th>
+                                            <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ servicing_type.name }}</td>
                                             <td class="text-left">{{ servicing_type.code }}</td>
                                             <td class="text-left">

@@ -53,10 +53,10 @@
                                         <tbody>
                                         <tr v-for="( harvester_part, i) in harvester_parts" :key=" harvester_part.parts_id"
                                             v-if=" harvester_parts.length">
-                                            <th class="text-left" scope="row">{{ ++i }}</th>
+                                            <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ harvester_part.ProductCode }}</td>
                                             <td class="text-left">{{ harvester_part.ProductName }}</td>
-                                            <td class="text-left">{{ harvester_part.UnitPrice }}</td>
+                                            <td class="text-right">{{ harvester_part.UnitPrice }}</td>
                                             <td class="text-left">{{ harvester_part.custom_name }}</td>
                                             <td class="text-left">{{ harvester_part.section_name }}</td>
                                             <td class="text-left">{{ harvester_part.model_name}}</td>

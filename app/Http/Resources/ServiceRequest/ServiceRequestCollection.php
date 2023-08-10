@@ -10,15 +10,14 @@ class ServiceRequestCollection extends ResourceCollection
     /**
      * Transform the resource collection into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
     {
-        return[
-            'data'=>$this->collection->transform(function ($service_request)
-            {
-                return[
+        return [
+            'data' => $this->collection->transform(function ($service_request) {
+                return [
                     'id'=>$service_request->id,
 
                     'product_id'=>$service_request->product_id,
@@ -52,6 +51,7 @@ class ServiceRequestCollection extends ResourceCollection
                     'technitian_id'=> $service_request->technitian_id,
                     'technitian_name'=> isset($service_request->technician) ? $service_request->technician->name: '',
                     'technitian_mobile'=> isset($service_request->technician) ? $service_request->technician->mobile: '',
+
                 ];
             })
         ];

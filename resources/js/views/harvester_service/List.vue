@@ -62,11 +62,11 @@
                                         <tbody>
                                         <tr v-for="(harvester_service, i) in harvester_services" :key="harvester_service.id"
                                             v-if="harvester_services.length">
-                                            <th class="text-left" scope="row">{{ ++i }}</th>
+                                            <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ harvester_service.model_name }}</td>
                                             <td class="text-left">{{ harvester_service.servicing_name }}</td>
-                                            <td class="text-left">{{ harvester_service.from_hr }}</td>
-                                            <td class="text-left">{{ harvester_service.to_hr }}</td>
+                                            <td class="text-right">{{ harvester_service.from_hr }}</td>
+                                            <td class="text-right">{{ harvester_service.to_hr }}</td>
                                             <td class="text-left">
                                                 <button @click="edit(harvester_service)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>

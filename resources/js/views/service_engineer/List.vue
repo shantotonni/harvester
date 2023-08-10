@@ -61,11 +61,11 @@
                                         <tbody>
                                         <tr v-for="(service_engineer, i) in service_engineers" :key="service_engineer.id"
                                             v-if="service_engineers.length">
-                                            <th class="text-left" scope="row">{{ ++i }}</th>
+                                            <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ service_engineer.district_name }}</td>
                                             <td class="text-left">{{ service_engineer.engineer_name }}</td>
                                             <td class="text-left">{{ service_engineer.address }}</td>
-                                            <td class="text-left">{{ service_engineer.mobile }}</td>
+                                            <td class="text-right">{{ service_engineer.mobile }}</td>
                                             <td class="text-left">
                                                 <button @click="edit(service_engineer)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>

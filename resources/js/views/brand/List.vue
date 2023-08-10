@@ -38,7 +38,7 @@
                                         </thead>
                                         <tbody>
                                             <tr v-for="(brand, i) in brands" :key="brand.id" v-if="brands.length">
-                                                <th class="text-left" scope="row">{{ ++i }}</th>
+                                                <th class="text-center" scope="row">{{ ++i }}</th>
                                                 <td class="text-left">{{ brand.name }}</td>
                                                 <td class="text-left">{{ brand.created_at }}</td>
                                                 <td class="text-left">

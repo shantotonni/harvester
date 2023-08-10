@@ -47,6 +47,9 @@ import HarvesterParts from '../views/harvester_parts/List'
 import ShowroomList from '../views/showroom/List'
 import ServiceTips from '../views/service_tips/List'
 import ServiceEngineer from '../views/service_engineer/List'
+import CompleteService from '../views/service_request/CompletedList.vue'
+import PendingService from '../views/service_request/PendingList'
+import ServiceRequestDetails from '../views/service_request/Details.vue'
 
 const routes = [
     {
@@ -137,6 +140,17 @@ const routes = [
             //Service Engineer
             {
                 path: base_url + '/service-engineer', name: 'ServiceEngineer', component: ServiceEngineer
+            },
+            //Pending Service Request
+            {
+                path: base_url + '/pending-service-request-list', name: 'PendingService', component: PendingService
+            },
+            //Complete Service Request
+            {
+                    path: base_url + '/completed-service-request-list', name: 'CompleteService', component: CompleteService
+            }, //Details Service Request
+            {
+                    path: base_url + '/service-request-details/:id', name: 'ServiceRequestDetails', component: ServiceRequestDetails
             },
         ],
         beforeEnter(to, from, next) {

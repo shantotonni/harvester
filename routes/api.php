@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SeasonalCropsController;
 use App\Http\Controllers\Api\ServiceCenterController;
 use App\Http\Controllers\Api\ServiceEngineerController;
+use App\Http\Controllers\Api\ServiceRequestDetailsController;
 use App\Http\Controllers\Api\ServiceTipsController;
 use App\Http\Controllers\Api\ServiceTypeController;
 use App\Http\Controllers\Api\ServicingTypeController;
@@ -89,6 +90,8 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-model-by-product/{id}', [CommonController::class, 'getAllModelByProduct']);
     Route::get('get-all-service-tips', [CommonController::class, 'getAllServiceTips']);
     Route::get('get-all-service-engineer', [CommonController::class, 'getAllServiceEngineer']);
+    Route::get('get-all-pending-service-request-list', [CommonController::class, 'getAllPendingServiceRequestList']);
+    Route::get('get-all-completed-service-request-list', [CommonController::class, 'getAllCompletedServiceRequestList']);
 
     //get dashboard data route
     Route::get('get-all-dashboard-data', [DashboardController::class, 'getDashboardAllDara']);
@@ -137,6 +140,18 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //Service Tips
     Route::apiResource('service-engineer', ServiceEngineerController::class);
     Route::get('search/service-engineer/{query}', [ServiceEngineerController::class, 'search']);
+
+    //	Pending Service List
+    Route::apiResource('pending-service-request-list	', ServiceRequestController::class);
+    Route::get('search/pending-service-request-list	/{query}', [ServiceRequestController::class, 'search']);
+
+    //	Completed Service List
+    Route::apiResource('completed-service-request-list', ServiceRequestController::class);
+    Route::get('search/	completed-service-request-list/{query}', [ServiceRequestController::class, 'search']);
+
+    //	Completed Service List
+    Route::apiResource('/service-request-details/{id}', ServiceRequestDetailsController::class);
+
 
 
   //  Route::get('get-all-district-wise-seasonal-crops/{id}', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);

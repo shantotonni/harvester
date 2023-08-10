@@ -61,7 +61,7 @@
                                         <tbody>
                                         <tr v-for="(seasonal_crop, i) in seasonal_crops" :key="seasonal_crop.id"
                                             v-if="seasonal_crops.length">
-                                            <th class="text-left" scope="row">{{ ++i }}</th>
+                                            <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ seasonal_crop.district_name }}</td>
                                             <td class="text-left">{{ seasonal_crop.seasonal_crops_name }}</td>
                                             <td class="text-left">{{ seasonal_crop.date_from }}</td>

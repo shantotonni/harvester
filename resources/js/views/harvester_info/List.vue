@@ -52,11 +52,11 @@
                                         <tbody>
                                         <tr v-for="( harvester_info, i) in harvester_infos" :key=" harvester_info.id"
                                             v-if=" harvester_infos.length">
-                                            <th class="text-left" scope="row">{{ ++i }}</th>
+                                            <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ harvester_info.product_name }}</td>
                                             <td class="text-left">{{ harvester_info.name }}</td>
                                             <td class="text-left">{{ harvester_info.model_name }}</td>
-                                            <td class="text-left">{{ harvester_info.horse_power }}</td>
+                                            <td class="text-right">{{ harvester_info.horse_power }}</td>
                                             <td class="text-left" v-html="harvester_info.details "></td>
                                             <td class="text-left">
                                                 <img v-if="harvester_info.image" height="40" width="40"
