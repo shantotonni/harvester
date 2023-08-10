@@ -170,6 +170,13 @@ class CommonController extends Controller
             'sections' => $sections
         ]);
     }
+    public function getAllTechnician()
+    {
+        $technitians = Section::OrderBy('id', 'asc')->get();
+        return response()->json([
+            'technitians' => $technitians
+        ]);
+    }
 
     public function getAllHarvesterServiceDetails(Request $request)
     {

@@ -29,6 +29,7 @@ class ServiceRequestJobCardResource extends JsonResource
             'participant_id' =>$this->participant_id,
             'product' =>isset($this->product) ? $this->product->name_bn : '',
             'product_id' =>$this->product_id,
+            'product_type'=>$this->product_type,
             'model_name' =>isset($this->model) ? $this->model->model_name_bn:'',
             'model_id' =>$this->model_id,
             'call_type' =>isset($this->call_type) ? $this->call_type->name : '',

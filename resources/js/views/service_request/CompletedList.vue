@@ -40,10 +40,10 @@
                                         <tbody>
                                         <tr v-for="(job_card, i) in job_cards" :key="job_card.id" v-if="job_cards.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
-                                            <td class="text-center">{{ job_card.engineer_name }}</td>
-                                            <td class="text-center">{{ job_card.technitian_name }}</td>
+                                            <td class="text-center">{{ job_card.engineer }}</td>
+                                            <td class="text-center">{{ job_card.technitian }}</td>
                                             <td class="text-center">{{ job_card.service_type }}</td>
-                                            <td class="text-center">{{ job_card.section_name }}</td>
+                                            <td class="text-center">{{ job_card.section}}</td>
                                             <td class="text-center">{{ job_card.customer_name }}</td>
                                             <td class="text-center">{{ job_card.customer_moblie }}</td>
                                             <td class="text-center">{{ job_card.remarks }}</td>
@@ -52,7 +52,8 @@
                                             <td class="text-center">{{ job_card.service_end_at }}</td>
                                             <td class="text-center">
                                                 <span class="badge badge-warning" v-if="job_card.job_status == 'completed'">Completed</span>
-                                                <span class="badge badge-info" v-if="job_card.job_status == 'approved'">Approved</span>
+                                                <span class="badge badge-warning" v-if="job_card.job_status == 'finished'">Completed</span>
+
                                             </td>
                                             <td class="text-center">
                                                 <router-link :to="`/harvester/service-request-details/${job_card.id}`" class="btn btn-primary btn-sm btn-xs"><i class="far fa-eye"></i></router-link>
@@ -102,8 +103,6 @@ export default {
                 engineer_id: '',
                 service_type_id : '',
                 customer_moblie: '',
-                product_id: '',
-                model_id: '',
                 section_id: '',
                 territory_id: '',
             }),

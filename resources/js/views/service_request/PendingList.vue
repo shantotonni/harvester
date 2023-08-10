@@ -40,10 +40,10 @@
                                         <tbody>
                                         <tr v-for="(job_card, i) in job_cards" :key="job_card.id" v-if="job_cards.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
-                                            <td class="text-center">{{ job_card.engineer_name }}</td>
-                                            <td class="text-center">{{ job_card.technitian_name }}</td>
+                                            <td class="text-center">{{ job_card.engineer }}</td>
+                                            <td class="text-center">{{ job_card.technitian}}</td>
                                             <td class="text-center">{{ job_card.service_type }}</td>
-                                            <td class="text-center">{{ job_card.section_name }}</td>
+                                            <td class="text-center">{{ job_card.section }}</td>
                                             <td class="text-center">{{ job_card.customer_name }}</td>
                                             <td class="text-center">{{ job_card.customer_moblie }}</td>
                                             <td class="text-center">{{ job_card.remarks }}</td>
@@ -51,8 +51,8 @@
                                             <td class="text-center">{{ job_card.service_start_at }}</td>
                                             <td class="text-center">{{ job_card.service_end_at }}</td>
                                             <td class="text-center">
-                                                <span class="badge badge-warning" v-if="job_card.job_status == 'completed'">Completed</span>
-                                                <span class="badge badge-info" v-if="job_card.job_status == 'approved'">Approved</span>
+                                                <span class="badge badge-warning" v-if="job_card.job_status == 'started'">started</span>
+                                                <span class="badge badge-warning" v-if="job_card.job_status == 'pending'">pending</span>
                                             </td>
                                             <td class="text-center">
                                                 <router-link :to="`/harvester/service-request-details/${job_card.id}`" class="btn btn-primary btn-sm btn-xs"><i class="far fa-eye"></i></router-link>
@@ -100,12 +100,12 @@ export default {
                 technitian_id: '',
                 customer_id: '',
                 engineer_id: '',
-                service_type_id : '',
-                customer_moblie: '',
-                product_id: '',
-                model_id: '',
-                section_id: '',
-                territory_id: '',
+                customer_name: '',
+                remarks: '',
+                service_wanted_at: '',
+                service_start_at: '',
+                service_end_at: '',
+                job_status: '',
             }),
         }
     },
@@ -121,12 +121,15 @@ export default {
     mounted() {
         document.title = 'Service Request List | Harvester';
         this. getAllPendingServiceRequestList();
+        this. getAllSections();
+        this. getAllServiceType();
+        this. getAllTechnician();
     },
     methods: {
         getAllPendingServiceRequestList() {
             this.isLoading = true;
             axios.get('/api/pending-service-request-list?page=' + this.pagination.current_page).then((response) => {
-                console.log('job_cards', response.data.data)
+                console.log( response)
                 this.job_cards = response.data.data;
                 this.pagination = response.data.meta;
                 this.isLoading = false;
@@ -148,6 +151,29 @@ export default {
             this.$toaster.success('Data Successfully Refresh');
         },
 
+
+        getAllTechnician(){
+            axios.get('/api/get-all-technician').then((response)=>{
+                this.technicians = response.data.data;
+            }).catch((error)=>{
+
+            })
+        },
+        getAllSections(){
+            axios.get('/api/get-all-sections').then((response)=>{
+                console.log(response)
+                this.problem_section = response.data.data;
+            }).catch((error)=>{
+
+            })
+        },
+        getAllServiceType(){
+            axios.get('/api/get-all-service-type').then((response)=>{
+                this.service_types = response.data.data;
+            }).catch((error)=>{
+
+            })
+        },
         destroy(id) {
             Swal.fire({
                 title: 'Are you sure?',

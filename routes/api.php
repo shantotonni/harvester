@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\HarvesterServiceController;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\MenuPermissionController;
 use App\Http\Controllers\Api\Mobile\CommonController;
-use App\Http\Controllers\Api\Mobile\ServiceRequestController;
+use App\Http\Controllers\Api\ServiceRequestController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SeasonalCropsController;
 use App\Http\Controllers\Api\SectionController;
@@ -94,6 +94,9 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-service-engineer', [CommonController::class, 'getAllServiceEngineer']);
     Route::get('get-all-pending-service-request-list', [CommonController::class, 'getAllPendingServiceRequestList']);
     Route::get('get-all-completed-service-request-list', [CommonController::class, 'getAllCompletedServiceRequestList']);
+    Route::get('get-all-technician', [CommonController::class, 'getAllTechnician']);
+
+
     Route::get('get-all-section', [CommonController::class, 'getAllSectionList']);
 
     //get dashboard data route
@@ -145,11 +148,11 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('search/service-engineer/{query}', [ServiceEngineerController::class, 'search']);
 
     //	Pending Service List
-    Route::apiResource('pending-service-request-list	', ServiceRequestController::class);
+    Route::get('pending-service-request-list	', [ServiceRequestController::class,'pendingJobCard'])->name('pendingRequest');
     Route::get('search/pending-service-request-list	/{query}', [ServiceRequestController::class, 'search']);
 
     //	Completed Service List
-    Route::apiResource('completed-service-request-list', ServiceRequestController::class);
+    Route::get('completed-service-request-list', [ServiceRequestController::class,'approveJobCard'])->name('completeRequest');
     Route::get('search/	completed-service-request-list/{query}', [ServiceRequestController::class, 'search']);
 
     //	Completed Service List
@@ -179,13 +182,13 @@ Route::group(['middleware' => 'CustomerAuth'], function () {
     Route::get('get-all-problem-section', [CommonController::class, 'getAllProblemSection']);
 
     //service request
-    Route::post('customer-service-request', [ServiceRequestController::class,'customerServiceRequest']);
-    Route::get('get-all-customer-service-request', [ServiceRequestController::class,'getAllCustomerServiceRequest']);
+    Route::post('customer-service-request', [App\Http\Controllers\Api\Mobile\ServiceRequestController::class,'customerServiceRequest']);
+    Route::get('get-all-customer-service-request', [App\Http\Controllers\Api\Mobile\ServiceRequestController::class,'getAllCustomerServiceRequest']);
 
     Route::post('auth/profile-update', [CustomerAuthController::class, 'updateProfile']);
     Route::post('change-password', [CustomerAuthController::class, 'changePassword']);
 
-    Route::post('customer-service-request', [ServiceRequestController::class, 'customerServiceRequest']);
+    Route::post('customer-service-request', [App\Http\Controllers\Api\Mobile\ServiceRequestController::class, 'customerServiceRequest']);
     //District wise seasonal crops
 
     //Route::apiResource('service-request', ServiceRequestController::class);
