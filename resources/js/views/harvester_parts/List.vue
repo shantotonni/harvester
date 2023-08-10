@@ -67,7 +67,7 @@
 <!--                                                <span class="badge badge-success" v-if="harvester_part.Active == 1">Active</span>-->
 <!--                                                <span class="badge badge-success" v-else>InActive</span>-->
 <!--                                            </td>-->
-                                            <td class="text-left">
+                                            <td class="text-center">
                                                 <button @click="edit(harvester_part)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>
                                                 <button @click="destroy(harvester_part.parts_id)"

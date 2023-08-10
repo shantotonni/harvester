@@ -66,7 +66,7 @@
                                             <td class="text-left">{{ seasonal_crop.seasonal_crops_name }}</td>
                                             <td class="text-left">{{ seasonal_crop.date_from }}</td>
                                             <td class="text-left">{{ seasonal_crop.date_to }}</td>
-                                            <td class="text-left">
+                                            <td class="text-center">
                                                 <button @click="edit(seasonal_crop)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>
                                                 <button @click="destroy(seasonal_crop.id)"

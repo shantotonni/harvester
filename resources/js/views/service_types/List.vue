@@ -46,12 +46,12 @@
                                             <td class="text-left">{{ service_type.name }}</td>
                                             <td class="text-left">{{ service_type.name_bn }}</td>
                                             <td class="text-left">{{ service_type.code }}</td>
-                                            <td class="text-left">
+                                            <td class="text-center">
                                                 <button @click="edit(service_type)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>
-                                                <button @click="destroy(service_type.id)"
-                                                        class="btn btn-danger btn-sm"><i class="fas fa-trash"></i>
-                                                </button>
+<!--                                                <button @click="destroy(service_type.id)"-->
+<!--                                                        class="btn btn-danger btn-sm"><i class="fas fa-trash"></i>-->
+<!--                                                </button>-->
                                             </td>
                                         </tr>
                                         </tbody>

@@ -163,6 +163,13 @@ class CommonController extends Controller
             'servicing_types' => $servicing_types
         ]);
     }
+    public function getAllSectionList()
+    {
+        $sections = Section::OrderBy('id', 'asc')->get();
+        return response()->json([
+            'sections' => $sections
+        ]);
+    }
 
     public function getAllHarvesterServiceDetails(Request $request)
     {

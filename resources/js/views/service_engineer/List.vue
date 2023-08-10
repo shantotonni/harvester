@@ -66,7 +66,7 @@
                                             <td class="text-left">{{ service_engineer.engineer_name }}</td>
                                             <td class="text-left">{{ service_engineer.address }}</td>
                                             <td class="text-right">{{ service_engineer.mobile }}</td>
-                                            <td class="text-left">
+                                            <td class="text-center">
                                                 <button @click="edit(service_engineer)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>
                                                 <button @click="destroy(service_engineer.id)"

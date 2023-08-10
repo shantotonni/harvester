@@ -50,6 +50,7 @@ import ServiceEngineer from '../views/service_engineer/List'
 import CompleteService from '../views/service_request/CompletedList.vue'
 import PendingService from '../views/service_request/PendingList'
 import ServiceRequestDetails from '../views/service_request/Details.vue'
+import SectionList from '../views/section/List'
 
 const routes = [
     {
@@ -148,9 +149,14 @@ const routes = [
             //Complete Service Request
             {
                     path: base_url + '/completed-service-request-list', name: 'CompleteService', component: CompleteService
-            }, //Details Service Request
+            },
+            //Details Service Request
             {
                     path: base_url + '/service-request-details/:id', name: 'ServiceRequestDetails', component: ServiceRequestDetails
+            },
+            //Section Request
+            {
+                    path: base_url + '/section-list', name: 'SectionList', component: SectionList
             },
         ],
         beforeEnter(to, from, next) {

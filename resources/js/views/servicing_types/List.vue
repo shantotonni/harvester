@@ -44,12 +44,12 @@
                                             <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ servicing_type.name }}</td>
                                             <td class="text-left">{{ servicing_type.code }}</td>
-                                            <td class="text-left">
+                                            <td class="text-center">
                                                 <button @click="edit(servicing_type)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>
-                                                <button @click="destroy(servicing_type.id)"
-                                                        class="btn btn-danger btn-sm"><i class="fas fa-trash"></i>
-                                                </button>
+<!--                                                <button @click="destroy(servicing_type.id)"-->
+<!--                                                        class="btn btn-danger btn-sm"><i class="fas fa-trash"></i>-->
+<!--                                                </button>-->
                                             </td>
                                         </tr>
                                         </tbody>

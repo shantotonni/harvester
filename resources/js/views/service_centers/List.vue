@@ -73,12 +73,12 @@
                                             <td class="text-right">{{ service_center.mobile }}</td>
                                             <td class="text-right">{{ service_center.lat }}</td>
                                             <td class="text-right">{{ service_center.lon }}</td>
-                                            <td class="text-left">
+                                            <td class="text-center">
                                                 <button @click="edit(service_center)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>
-                                                <button @click="destroy(service_center.id)"
-                                                        class="btn btn-danger btn-sm"><i class="fas fa-trash"></i>
-                                                </button>
+<!--                                                <button @click="destroy(service_center.id)"-->
+<!--                                                        class="btn btn-danger btn-sm"><i class="fas fa-trash"></i>-->
+<!--                                                </button>-->
                                             </td>
                                         </tr>
                                         </tbody>

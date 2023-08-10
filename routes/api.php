@@ -13,8 +13,10 @@ use App\Http\Controllers\Api\Mobile\CommonController;
 use App\Http\Controllers\Api\Mobile\ServiceRequestController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SeasonalCropsController;
+use App\Http\Controllers\Api\SectionController;
 use App\Http\Controllers\Api\ServiceCenterController;
 use App\Http\Controllers\Api\ServiceEngineerController;
+use App\Http\Controllers\Api\ServiceRequestDetailController;
 use App\Http\Controllers\Api\ServiceRequestDetailsController;
 use App\Http\Controllers\Api\ServiceTipsController;
 use App\Http\Controllers\Api\ServiceTypeController;
@@ -92,6 +94,7 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-service-engineer', [CommonController::class, 'getAllServiceEngineer']);
     Route::get('get-all-pending-service-request-list', [CommonController::class, 'getAllPendingServiceRequestList']);
     Route::get('get-all-completed-service-request-list', [CommonController::class, 'getAllCompletedServiceRequestList']);
+    Route::get('get-all-section', [CommonController::class, 'getAllSectionList']);
 
     //get dashboard data route
     Route::get('get-all-dashboard-data', [DashboardController::class, 'getDashboardAllDara']);
@@ -150,7 +153,10 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('search/	completed-service-request-list/{query}', [ServiceRequestController::class, 'search']);
 
     //	Completed Service List
-    Route::apiResource('/service-request-details/{id}', ServiceRequestDetailsController::class);
+    Route::apiResource('/service-request-details', ServiceRequestDetailController::class);
+//Section
+    Route::apiResource('section-list', SectionController::class);
+    Route::get('search/section-list/{query}', [SectionController::class, 'search']);
 
 
 
