@@ -5,7 +5,7 @@
                 <div class="col-sm-6">
                     <div class="float-right d-none d-md-block">
                         <div class="card-tools">
-                                <button type="button" class="btn btn-success btn-sm" @click="createHarvesterService">
+                            <button type="button" class="btn btn-success btn-sm" @click="createHarvesterService">
                                 <i class="fas fa-plus"></i>
                                 Add Harvester Service Details
                             </button>
@@ -30,13 +30,15 @@
                                                 <div class="form-group">
                                                     <select name="" id="" v-model="model_id" class="form-control">
                                                         <option disabled value="">Select Model</option>
-                                                        <option :value="model.id" v-for="(model , index) in models" :key="index">{{ model.model_name }}
+                                                        <option :value="model.id" v-for="(model , index) in models"
+                                                                :key="index">{{ model.model_name }}
                                                         </option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 col-sm-3">
-                                                <button type="submit" @click="getAllHarvesterServiceDetails" class="btn btn-success"><i class="mdi mdi-filter"></i>Filter
+                                                <button type="submit" @click="getAllHarvesterServiceDetails"
+                                                        class="btn btn-success"><i class="mdi mdi-filter"></i>Filter
                                                 </button>
                                             </div>
                                         </div>
@@ -65,7 +67,8 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(harvester_service, i) in harvester_services" :key="harvester_service.id"
+                                        <tr v-for="(harvester_service, i) in harvester_services"
+                                            :key="harvester_service.id"
                                             v-if="harvester_services.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ harvester_service.model_name }}</td>
@@ -78,8 +81,9 @@
                                             <td class="text-right">{{ harvester_service.price }}</td>
                                             <td class="text-right">{{ harvester_service.quantity }}</td>
                                             <td class="text-center">
-                                                <button @click="edit(harvester_service)" class="btn btn-success btn-sm"><i
-                                                    class="far fa-edit"></i></button>
+                                                <button @click="edit(harvester_service)" class="btn btn-success btn-sm">
+                                                    <i
+                                                        class="far fa-edit"></i></button>
                                                 <button @click="destroy(harvester_service.id)"
                                                         class="btn btn-danger btn-sm"><i class="fas fa-trash"></i>
                                                 </button>
@@ -105,12 +109,14 @@
             </div>
         </div>
         <!--  Modal content for the above example -->
-        <div class="modal fade" id="harvesterserviceModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        <div class="modal fade" id="harvesterserviceModal" tabindex="-1" role="dialog"
+             aria-labelledby="myLargeModalLabel"
              aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title mt-0" id="myLargeModalLabel">{{ editMode ? "Edit" : "Add" }} Harvester Service Details</h5>
+                        <h5 class="modal-title mt-0" id="myLargeModalLabel">{{ editMode ? "Edit" : "Add" }} Harvester
+                            Service Details</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="closeModal">
                             ×
                         </button>
@@ -123,10 +129,12 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Model</label>
-                                            <select name="text" id="model_id" class="form-control" v-model="form.model_id"
+                                            <select name="text" id="model_id" class="form-control"
+                                                    v-model="form.model_id"
                                                     :class="{ 'is-invalid': form.errors.has('model_id') }">
                                                 <option disabled value="">Select Model</option>
-                                                <option :value="model.id" v-for="(model , index) in models" :key="index">{{ model.model_name }}
+                                                <option :value="model.id" v-for="(model , index) in models"
+                                                        :key="index">{{ model.model_name }}
                                                 </option>
                                             </select>
                                             <div class="error" v-if="form.errors.has('model_id')"
@@ -136,10 +144,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Servicing Type</label>
-                                            <select name="text" id="servicing_type_id" class="form-control" v-model="form.servicing_type_id"
+                                            <select name="text" id="servicing_type_id" class="form-control"
+                                                    v-model="form.servicing_type_id"
                                                     :class="{ 'is-invalid': form.errors.has('servicing_type_id') }">
                                                 <option disabled value="">Select Service Type</option>
-                                                <option :value="servicing_type.id" v-for="(servicing_type , index) in servicing_types" :key="index">{{ servicing_type.name }}
+                                                <option :value="servicing_type.id"
+                                                        v-for="(servicing_type , index) in servicing_types"
+                                                        :key="index">{{ servicing_type.name }}
                                                 </option>
                                             </select>
                                             <div class="error" v-if="form.errors.has('servicing_type_id')"
@@ -167,7 +178,8 @@
                                             <div class="error" v-if="form.errors.has('to_hr')"
                                                  v-html="form.errors.get('to_hr')"/>
                                         </div>
-                                    </div> <div class="col-md-6">
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Fixed Hour</label>
                                             <input type="text" name="Fixed Hour" v-model="form.fix_hour"
@@ -187,30 +199,6 @@
                                                  v-html="form.errors.get('product_name')"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Parts Code</label>
-                                            <select name="ProductCode" id="ProductCode" class="form-control" v-model="form.ProductCode" :class="{ 'is-invalid': form.errors.has('ProductCode') }" @change="getAllPriceByMirror()">
-                                                <option disabled value="">Select Parts Code</option>
-                                                <option :value="mirror_product.ProductCode" v-for="(mirror_product , index) in mirror_products" :key="index">{{ mirror_product.ProductCode}} - {{ mirror_product.ProductName}}
-                                                </option>
-                                            </select>
-                                            <div class="error" v-if="form.errors.has('ProductCode')" v-html="form.errors.get('ProductCode')"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Price</label>
-                                        <select name="UnitPrice" id="UnitPrice" class="form-control" v-model="form.UnitPrice" :class="{ 'is-invalid': form.errors.has('UnitPrice') }">
-                                            <option disabled value="">Select Parts Price</option>
-                                            <option :value="prices.ProductCode"
-                                                    v-for="(prices , index) in prices" :key="index">
-                                                {{ prices.UnitPrice}}
-                                            </option>
-                                        </select>
-                                        <div class="error" v-if="form.errors.has('UnitPrice')" v-html="form.errors.get('UnitPrice')"/>
-                                    </div>
-                                </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Parts Name</label>
@@ -233,6 +221,39 @@
                                                  v-html="form.errors.get('quantity')"/>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Parts Code</label>
+                                            <select name="ProductCode" id="ProductCode" class="form-control"
+                                                    v-model="form.ProductCode"
+                                                    :class="{ 'is-invalid': form.errors.has('ProductCode') }"
+                                                    @change="getAllPriceByMirror()">
+                                                <option disabled value="">Select Parts Code</option>
+                                                <option :value="mirror_product.ProductCode"
+                                                        v-for="(mirror_product , index) in mirror_products"
+                                                        :key="index">{{ mirror_product.ProductCode }} -
+                                                    {{ mirror_product.ProductName }}
+                                                </option>
+                                            </select>
+                                            <div class="error" v-if="form.errors.has('ProductCode')"
+                                                 v-html="form.errors.get('ProductCode')"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Price</label>
+                                            <div name="UnitPrice" id="UnitPrice" class="form-control"
+                                                 v-model="form.UnitPrice"
+                                                 :class="{ 'is-invalid': form.errors.has('UnitPrice') }"
+                                                 v-for="(prices , index) in prices" :key="index">
+                                                {{ prices.UnitPrice }}
+
+                                            </div>
+                                            <div class="error" v-if="form.errors.has('UnitPrice')"
+                                                 v-html="form.errors.get('UnitPrice')"/>
+                                        </div>
+                                    </div>
+
                                 </div>
 
 
@@ -369,7 +390,7 @@ export default {
         },
         getAllPriceByMirror() {
 
-            axios.get('/api/get-all-mirror-price/' +this.form.ProductCode).then((response) => {
+            axios.get('/api/get-all-mirror-price/' + this.form.ProductCode).then((response) => {
                 console.log(response)
                 this.prices = response.data.prices;
             }).catch((error) => {

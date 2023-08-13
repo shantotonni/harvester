@@ -161,6 +161,20 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label>Area</label>
+                                            <select name="text" id="area_id" class="form-control" v-model="form.area_id"
+                                                    :class="{ 'is-invalid': form.errors.has('area_id') }">
+                                                <option disabled value="">Select Area</option>
+                                                <option :value="area.id" v-for="(area , index) in areas" :key="index">
+                                                    {{ area.name }}
+                                                </option>
+                                            </select>
+                                            <div class="error" v-if="form.errors.has('area_id')"
+                                                 v-html="form.errors.get('area_id')"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label>Product Category</label>
                                             <select name="product_id" id="product_id" class="form-control"
                                                     v-model="form.product_id"
@@ -245,50 +259,38 @@
                                                  v-html="form.errors.get('customer_type')"/>
                                         </div>
                                     </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Area</label>
-                                            <select name="text" id="area_id" class="form-control" v-model="form.area_id"
-                                                    :class="{ 'is-invalid': form.errors.has('area_id') }">
-                                                <option disabled value="">Select Area</option>
-                                                <option :value="area.id" v-for="(area , index) in areas" :key="index">
-                                                    {{ area.name }}
-                                                </option>
-                                            </select>
-                                            <div class="error" v-if="form.errors.has('area_id')"
-                                                 v-html="form.errors.get('area_id')"/>
+                                            <label>Purchase Date</label>
+                                            <datepicker name="To Hour" v-model="form.data_of_purchase"
+                                                        :format="customFormatter"
+                                                        placeholder="Enter To Date"
+                                                        :class="{ 'is-invalid': form.errors.has('data_of_purchase') }"
+                                                        style="width: 100%;height: 32px"></datepicker>
+                                            <div class="error" v-if="form.errors.has('data_of_purchase')"
+                                                 v-html="form.errors.get('data_of_purchase')"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Purchase Date</label>
-                                        <datepicker name="To Hour" v-model="form.data_of_purchase"
-                                                    :format="customFormatter"
-                                                    placeholder="Enter To Date"
-                                                    :class="{ 'is-invalid': form.errors.has('data_of_purchase') }" style="width: 100%;height: 32px" > </datepicker>
-                                        <div class="error" v-if="form.errors.has('data_of_purchase')"
-                                             v-html="form.errors.get('data_of_purchase')"/>
-                                    </div>
-                                </div>
                                 </div>
 
+                            </div>
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                    @click.prevent="closeModal">Close
+                            </button>
+                            <button :disabled="form.busy" type="submit" class="btn btn-primary">
+                                {{ editMode ? "Update" : "Create" }} Customer
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                            @click.prevent="closeModal">Close
-                    </button>
-                    <button :disabled="form.busy" type="submit" class="btn btn-primary">
-                        {{ editMode ? "Update" : "Create" }} Customer
-                    </button>
-                </div>
-                </form>
+                <!-- /.modal-content -->
             </div>
-            <!-- /.modal-content -->
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
+        <!-- /.modal -->
     </div>
 </template>
 
@@ -320,16 +322,23 @@ export default {
                 mobile: '',
                 password: '',
                 product_id: '',
-                model_id: '',
-                service_hour: '',
+                customer_type: '',
                 data_of_purchase: '',
-                area_id: '',
+                chassis_image: '',
+                service_hour: '',
                 district_id: '',
+                model_id: '',
+                area_id: '',
                 address: '',
                 chassis: '',
-                chassis_image: '',
-                customer_type: '',
                 image: '',
+
+
+
+
+
+
+
             }),
         }
     },
