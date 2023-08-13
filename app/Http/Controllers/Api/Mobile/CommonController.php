@@ -10,6 +10,7 @@ use App\Http\Resources\Doctor\DoctorCollection;
 use App\Http\Resources\Doctor\DoctorResource;
 use App\Http\Resources\HarvesterInfo\HarvesterInfoCollection;
 use App\Http\Resources\HarvesterParts\HarvesterPartsCollection;
+use App\Http\Resources\HarvesterService\HarvesterServiceCollection;
 use App\Http\Resources\HarvesterServiceDetailsCollection;
 use App\Http\Resources\MirrorProduct\MirrorProductCollection;
 use App\Http\Resources\MOInfo\MOInfoCollection;
@@ -19,6 +20,8 @@ use App\Http\Resources\ProductModel\ProductModelCollection;
 use App\Http\Resources\Products\ProductsCollection;
 use App\Http\Resources\SeasonalCrops\SeasonalCropsCollection;
 use App\Http\Resources\ServiceEngineer\ServiceEngineerCollection;
+use App\Http\Resources\ServiceRequest\ServiceRequestJobCardCollection;
+use App\Http\Resources\ServiceRequest\ServiceRequestJobCardResource;
 use App\Http\Resources\ServiceTips\ServiceTipsCollection;
 use App\Http\Resources\Shop\ShopCollection;
 use App\Http\Resources\Upazila\UpazilaCollection;
@@ -33,6 +36,7 @@ use App\Models\Doctor;
 use App\Models\HarvesterInfo;
 use App\Models\HarvesterParts;
 use App\Models\HarvesterService;
+use App\Models\JobCard;
 use App\Models\Menu;
 use App\Models\MOInfo;
 use App\Models\Portfolio;
@@ -44,6 +48,7 @@ use App\Models\SeasonalCrops;
 use App\Models\Section;
 use App\Models\ServiceCenter;
 use App\Models\ServiceEngineer;
+use App\Models\ServiceRequest;
 use App\Models\ServiceTips;
 use App\Models\ServiceType;
 use App\Models\ServicingType;
@@ -75,7 +80,7 @@ class CommonController extends Controller
 
     public function getAllCustomer()
     {
-        $customers = Customer::orderBy('CreatedDate', 'desc')->get();
+        $customers = Customer::orderBy('id', 'asc')->get();
         return response()->json([
             'customers' => $customers
         ]);
@@ -145,7 +150,6 @@ class CommonController extends Controller
 
     }
 
-
     public function getAllServiceType(){
         $service_types = ServiceType::OrderBy('id','asc')->paginate(15);
         return response()->json([
@@ -160,16 +164,43 @@ class CommonController extends Controller
             'servicing_types' => $servicing_types
         ]);
     }
+    public function getAllSectionList()
+    {
+        $sections = Section::OrderBy('id', 'asc')->get();
+        return response()->json([
+            'sections' => $sections
+        ]);
+    }
+    public function getAllTechnician()
+    {
+        $technitians = Section::OrderBy('id', 'asc')->get();
+        return response()->json([
+            'technitians' => $technitians
+        ]);
+    }
+    public function getAllPriceByMirror($ProductCode)
+    {
+        $prices = MirrorProduct::where('ProductCode', $ProductCode)
+            ->where('Business', 'W')
+            ->where('Active', 'Y')
+            ->select('UnitPrice','ProductCode')
+            ->get();
 
+        return response()->json([
+            'prices' => $prices
+        ]);
+    }
     public function getAllHarvesterServiceDetails(Request $request)
     {
         $hour = $request->hour;
-        $harvester_services = HarvesterService::orderBy('created_at', 'desc')->with('ServicingType','ProductModel')
+        $harvester_services = HarvesterService::orderBy('created_at', 'desc')->with('ServicingType','ProductModel','MirrorProducts')
             ->where('from_hr','<=', $hour)
             ->where('to_hr','>=', $hour)
             ->where('model_id',$request->model_id)->get();
        return new HarvesterServiceDetailsCollection($harvester_services);
     }
+
+
 
     public function getAllHarvesterInfo()
     {
@@ -237,6 +268,28 @@ class CommonController extends Controller
         $service_engineers = ServiceEngineer::orderBy('created_at', 'asc')->get();
         return response()->json([
             'service_engineers' => new ServiceEngineerCollection($service_engineers)
+        ]);
+    }
+
+    public function getAllPendingServiceRequestList()
+    {
+        $job_cards = JobCard::orderBy('created_at', 'asc')->get();
+        return response()->json([
+            'job_cards' => new ServiceRequestJobCardCollection($job_cards)
+        ]);
+    }
+    public function getAllCompletedServiceRequestList()
+    {
+        $job_cards = JobCard::orderBy('created_at', 'asc')->get();
+        return response()->json([
+            'job_cards' => new ServiceRequestJobCardCollection($job_cards)
+        ]);
+    }
+   public function getAllServiceRequestDetailsList()
+    {
+        $job_cards = JobCard::orderBy('created_at', 'asc')->get();
+        return response()->json([
+            'job_cards' => new ServiceRequestJobCardCollection($job_cards)
         ]);
     }
 

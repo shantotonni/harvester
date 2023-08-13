@@ -32,6 +32,11 @@ class HarvesterServiceController extends Controller
         $harvester_service->servicing_type_id = $request->servicing_type_id;
         $harvester_service->from_hr = $request->from_hr;
         $harvester_service->to_hr = $request->to_hr;
+        $harvester_service->fix_hour = $request->fix_hour;
+        $harvester_service->parts_name = $request->parts_name;
+        $harvester_service->parts_code = $request->ProductCode;
+        $harvester_service->quantity = $request->quantity;
+        $harvester_service->price = $request->UnitPrice;
         $harvester_service->save();
         return response()->json(['message' => 'Harvester Service Details created Successfully', 200]);
     }
@@ -44,6 +49,11 @@ class HarvesterServiceController extends Controller
         $harvester_service->servicing_type_id = $request->servicing_type_id;
         $harvester_service->from_hr = $request->from_hr;
         $harvester_service->to_hr = $request->to_hr;
+        $harvester_service->fix_hour = $request->fix_hour;
+        $harvester_service->parts_name = $request->parts_name;
+        $harvester_service->parts_code = $request->ProductCode;
+        $harvester_service->quantity = $request->quantity;
+        $harvester_service->price = $request->UnitPrice;
         $harvester_service->save();
         return response()->json(['message' => 'Harvester Service Details  updated Successfully', 200]);
     }

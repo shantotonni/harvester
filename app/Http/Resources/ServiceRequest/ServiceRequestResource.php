@@ -14,30 +14,31 @@ class ServiceRequestResource extends JsonResource
      */
     public function toArray($request)
     {
-        return[
-            'id'=>$this->id,
-            'technitian_id'=>$this->technitian_id,
 
-            'district_id'=>$this->district_id,
-            'district_name'=>isset($this->district)? $this->district->name:'',
+             return[
+                 'id'=>$this->id,
+                 'technitian_id'=>$this->technitian_id,
 
-            'upazila_id'=>$this->upazila_id,
-            'upazila_name'=>isset($this->upazila)? $this->upazila->name:'',
+                 'district_id'=>$this->district_id,
+                 'district_name'=>isset($this->district)? $this->district->name:'',
 
-            'customer_moblie'=>$this->customer_moblie,
-            'remarks'=>$this->remarks,
-            'chassis_number'=>$this->chassis_number,
-            'job_status'=>$this->job_status,
+                 'upazila_id'=>$this->upazila_id,
+                 'upazila_name'=>isset($this->upazila)? $this->upazila->name:'',
 
-            'section_id'=>$this->section_id,
-            'section_name'=>isset($this->section)? $this->section->name:'',
+                 'customer_moblie'=>$this->customer_moblie,
+                 'remarks'=>$this->remarks,
+                 'chassis_number'=>$this->chassis_number,
+                 'job_status'=>$this->job_status,
 
-            'product_id'=>$this->product_id,
-            'name'=>isset($this->product)? $this->product->name:'',
+                 'section_id'=>$this->section_id,
+                 'section_name'=>isset($this->section)? $this->section->name:'',
 
-            'model_id'=>$this->model_id,
-            'model_name'=>isset($this->ProductModel)? $this->ProductModel->model_name:'',
+                 'product_id'=>$this->product_id,
+                 'name'=>isset($this->product)? $this->product->name:'',
 
-        ];
+                 'model_id'=>$this->model_id,
+                 'model_name'=>isset($this->ProductModel)? $this->ProductModel->model_name:'',
+
+             ];
     }
 }

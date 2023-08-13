@@ -5,7 +5,7 @@
                 <div class="col-sm-6">
                     <div class="float-right d-none d-md-block">
                         <div class="card-tools">
-                            <button type="button" class="btn btn-success btn-sm" @click="createHarvesterInfo">
+                            <button type="button" class="btn btn-success btn-sm" @click="createHarvesterParts">
                                 <i class="fas fa-plus"></i>
                                 Add Harvester Parts
                             </button>
@@ -23,6 +23,11 @@
                         <div class="datatable" v-if="!isLoading">
                             <div class="card-body">
                                 <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        <div class="row">
+
+                                        </div>
+                                    </div>
                                     <div class="card-tools">
                                         <input v-model="query" type="text" class="form-control" placeholder="Search">
                                     </div>
@@ -48,10 +53,10 @@
                                         <tbody>
                                         <tr v-for="( harvester_part, i) in harvester_parts" :key=" harvester_part.parts_id"
                                             v-if=" harvester_parts.length">
-                                            <th class="text-left" scope="row">{{ ++i }}</th>
+                                            <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ harvester_part.ProductCode }}</td>
                                             <td class="text-left">{{ harvester_part.ProductName }}</td>
-                                            <td class="text-left">{{ harvester_part.UnitPrice }}</td>
+                                            <td class="text-right">{{ harvester_part.UnitPrice }}</td>
                                             <td class="text-left">{{ harvester_part.custom_name }}</td>
                                             <td class="text-left">{{ harvester_part.section_name }}</td>
                                             <td class="text-left">{{ harvester_part.model_name}}</td>
@@ -62,7 +67,7 @@
 <!--                                                <span class="badge badge-success" v-if="harvester_part.Active == 1">Active</span>-->
 <!--                                                <span class="badge badge-success" v-else>InActive</span>-->
 <!--                                            </td>-->
-                                            <td class="text-left">
+                                            <td class="text-center">
                                                 <button @click="edit(harvester_part)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>
                                                 <button @click="destroy(harvester_part.parts_id)"
@@ -149,7 +154,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Image</label>
+                                            <label>Image <small>(Image type:jpeg,jpg,png,svg)</small></label>
                                             <input @change="changeImage($event)" type="file" name="image"
                                                    class="form-control"
                                                    :class="{ 'is-invalid': form.errors.has('image') }">
@@ -251,7 +256,7 @@ export default {
         closeModal() {
             $("#harvesterpartsModal").modal("hide");
         },
-        createHarvesterInfo() {
+        createHarvesterParts() {
             this.editMode = false;
             this.form.reset();
             this.form.clear();

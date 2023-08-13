@@ -52,17 +52,17 @@
                                         <tbody>
                                         <tr v-for="( harvester_info, i) in harvester_infos" :key=" harvester_info.id"
                                             v-if=" harvester_infos.length">
-                                            <th class="text-left" scope="row">{{ ++i }}</th>
+                                            <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ harvester_info.product_name }}</td>
                                             <td class="text-left">{{ harvester_info.name }}</td>
                                             <td class="text-left">{{ harvester_info.model_name }}</td>
-                                            <td class="text-left">{{ harvester_info.horse_power }}</td>
+                                            <td class="text-right">{{ harvester_info.horse_power }}</td>
                                             <td class="text-left" v-html="harvester_info.details "></td>
                                             <td class="text-left">
                                                 <img v-if="harvester_info.image" height="40" width="40"
                                                      :src="tableImage(harvester_info.image)" alt="">
                                             </td>
-                                            <td class="text-left">
+                                            <td class="text-center">
                                                 <button @click="edit(harvester_info)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>
                                                 <button @click="destroy(harvester_info.id)"
@@ -108,6 +108,16 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label>Product Name</label>
+                                            <input type="text" name="product_name" v-model="form.product_name"
+                                                   class="form-control"
+                                                   :class="{ 'is-invalid': form.errors.has('product_name') }">
+                                            <div class="error" v-if="form.errors.has('product_name')"
+                                                 v-html="form.errors.get('product_name')"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label>Product Category</label>
                                             <select name="product_id" id="product_id" class="form-control" v-model="form.product_id"
                                                     :class="{ 'is-invalid': form.errors.has('product_id') }" @change="getAllModelByProduct()">
@@ -119,16 +129,7 @@
                                                  v-html="form.errors.get('product_id')"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Product Name</label>
-                                            <input type="text" name="product_name" v-model="form.product_name"
-                                                   class="form-control"
-                                                   :class="{ 'is-invalid': form.errors.has('product_name') }">
-                                            <div class="error" v-if="form.errors.has('product_name')"
-                                                 v-html="form.errors.get('product_name')"/>
-                                        </div>
-                                    </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Model</label>
@@ -157,7 +158,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Image</label>
+                                            <label>Image <small>(Image type:jpeg,jpg,png,svg)</small></label>
                                             <input @change="changeImage($event)" type="file" name="image"
                                                    class="form-control"
                                                    :class="{ 'is-invalid': form.errors.has('image') }">

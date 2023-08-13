@@ -8,18 +8,23 @@ use App\Http\Resources\HarvesterInfo\HarvesterInfoCollection;
 use App\Models\HarvesterInfo;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
+use ZipStream\File;
 
 class HarvesterInfoController extends Controller
 {
 
     public function index()
     {
-        $harvester_infos = HarvesterInfo::with('ProductModel','Products')->paginate(10);
+        $harvester_infos = HarvesterInfo::with('ProductModel', 'Products')->paginate(10);
         return new HarvesterInfoCollection($harvester_infos);
     }
 
     public function store(HarvesterInfoStoreRequest $request)
     {
+        $this->validate($request, [
+            'image' => 'required|min:jpeg,jpg,png,svg'
+        ]);
+
         if ($request->has('image')) {
             $image = $request->image;
             $name = uniqid() . time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
@@ -42,13 +47,16 @@ class HarvesterInfoController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'image' => 'required|min:jpeg,jpg,png,svg'
+        ]);
         $harvester_info = HarvesterInfo::where('id', $id)->first();
         $image = $request->image;
         if ($image != $harvester_info->image) {
             if ($request->has('image')) {
                 $destinationPath = 'images/HarvesterInfo/';
-                $file_old = public_path('/').$destinationPath.$harvester_info->image;
-                if (file_exists($file_old)){
+                $file_old = public_path('/') . $destinationPath . $harvester_info->image;
+                if (file_exists($file_old)) {
                     unlink($file_old);
                 }
                 $name = uniqid() . time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
@@ -57,8 +65,7 @@ class HarvesterInfoController extends Controller
                 $name = $harvester_info->image;
             }
 
-        }
-        else{
+        } else {
             $name = $harvester_info->image;
         }
 
@@ -69,18 +76,28 @@ class HarvesterInfoController extends Controller
         $harvester_info->details = $request->details;
         $harvester_info->image = $name;
         $harvester_info->save();
-        return response()->json(['message'=>'Harvester Info Successfully Updated '],200);
+        return response()->json(['message' => 'Harvester Info Successfully Updated '], 200);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        HarvesterInfo::where('id',$id)->delete();
-        return response()->json(['message'=>'Harvester Info Deleted Successfully']);
+
+        $harvester_info = HarvesterInfo::where('id', $id);
+        if ($request->has('image')) {
+            $image = $request->image;
+            if (file_exists($image)) {
+                unlink($image);
+            }
+        }
+
+        $harvester_info->delete();
+        return response()->json(['message' => 'Harvester Info Deleted Successfully']);
     }
+
     public function search($query)
     {
         return new HarvesterInfoCollection(HarvesterInfo::Where('product_model.model_name', 'like', "%$query%")
-            ->join('product_model','product_model.id','harvester_service_details.model_id')
+            ->join('product_model', 'product_model.id', 'harvester_service_details.model_id')
             ->paginate(10));
     }
 

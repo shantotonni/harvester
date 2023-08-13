@@ -10,11 +10,14 @@ use App\Http\Controllers\Api\HarvesterServiceController;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\MenuPermissionController;
 use App\Http\Controllers\Api\Mobile\CommonController;
-use App\Http\Controllers\Api\Mobile\ServiceRequestController;
+use App\Http\Controllers\Api\ServiceRequestController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SeasonalCropsController;
+use App\Http\Controllers\Api\SectionController;
 use App\Http\Controllers\Api\ServiceCenterController;
 use App\Http\Controllers\Api\ServiceEngineerController;
+use App\Http\Controllers\Api\ServiceRequestDetailController;
+use App\Http\Controllers\Api\ServiceRequestDetailsController;
 use App\Http\Controllers\Api\ServiceTipsController;
 use App\Http\Controllers\Api\ServiceTypeController;
 use App\Http\Controllers\Api\ServicingTypeController;
@@ -78,6 +81,7 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-product-model', [CommonController::class, 'getAllProductModel']);
     Route::get('get-all-products', [CommonController::class, 'getAllProducts']);
     Route::get('get-all-mirror-product', [CommonController::class, 'getAllMirrorProduct']);
+    Route::get('get-all-mirror-price/{ProductCode}', [CommonController::class, 'getAllPriceByMirror']);
     Route::get('get-all-sections', [CommonController::class, 'getAllSections']);
     Route::get('get-all-harvester-service-details', [CommonController::class, 'getAllHarvesterServiceDetails']);
     Route::get('get-all-harvester-info', [CommonController::class, 'getAllHarvesterInfo']);
@@ -89,6 +93,13 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-model-by-product/{id}', [CommonController::class, 'getAllModelByProduct']);
     Route::get('get-all-service-tips', [CommonController::class, 'getAllServiceTips']);
     Route::get('get-all-service-engineer', [CommonController::class, 'getAllServiceEngineer']);
+    Route::get('get-all-pending-service-request-list', [CommonController::class, 'getAllPendingServiceRequestList']);
+    Route::get('get-all-completed-service-request-list', [CommonController::class, 'getAllCompletedServiceRequestList']);
+    Route::get('get-all-service-request-details-list', [CommonController::class, 'getAllServiceRequestDetailsList']);
+    Route::get('get-all-technician', [CommonController::class, 'getAllTechnician']);
+
+
+    Route::get('get-all-section', [CommonController::class, 'getAllSectionList']);
 
     //get dashboard data route
     Route::get('get-all-dashboard-data', [DashboardController::class, 'getDashboardAllDara']);
@@ -138,6 +149,21 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::apiResource('service-engineer', ServiceEngineerController::class);
     Route::get('search/service-engineer/{query}', [ServiceEngineerController::class, 'search']);
 
+    //	Pending Service List
+    Route::get('pending-service-request-list	', [ServiceRequestController::class,'pendingJobCard'])->name('pendingRequest');
+    Route::get('search/pending-service-request-list	/{query}', [ServiceRequestController::class, 'search']);
+
+    //	Completed Service List
+    Route::get('completed-service-request-list', [ServiceRequestController::class,'approveJobCard'])->name('completeRequest');
+    Route::get('search/	completed-service-request-list/{query}', [ServiceRequestController::class, 'search']);
+
+    //	Completed Service List
+    Route::apiResource('/service-request-details', ServiceRequestDetailController::class);
+//Section
+    Route::apiResource('section-list', SectionController::class);
+    Route::get('search/section-list/{query}', [SectionController::class, 'search']);
+
+
 
   //  Route::get('get-all-district-wise-seasonal-crops/{id}', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
 
@@ -158,13 +184,13 @@ Route::group(['middleware' => 'CustomerAuth'], function () {
     Route::get('get-all-problem-section', [CommonController::class, 'getAllProblemSection']);
 
     //service request
-    Route::post('customer-service-request', [ServiceRequestController::class,'customerServiceRequest']);
-    Route::get('get-all-customer-service-request', [ServiceRequestController::class,'getAllCustomerServiceRequest']);
+    Route::post('customer-service-request', [App\Http\Controllers\Api\Mobile\ServiceRequestController::class,'customerServiceRequest']);
+    Route::get('get-all-customer-service-request', [App\Http\Controllers\Api\Mobile\ServiceRequestController::class,'getAllCustomerServiceRequest']);
 
     Route::post('auth/profile-update', [CustomerAuthController::class, 'updateProfile']);
     Route::post('change-password', [CustomerAuthController::class, 'changePassword']);
 
-    Route::post('customer-service-request', [ServiceRequestController::class, 'customerServiceRequest']);
+    Route::post('customer-service-request', [App\Http\Controllers\Api\Mobile\ServiceRequestController::class, 'customerServiceRequest']);
     //District wise seasonal crops
 
     //Route::apiResource('service-request', ServiceRequestController::class);

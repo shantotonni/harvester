@@ -21,6 +21,9 @@ class ServiceRequest extends Model
         return $this->belongsTo(District::class,'district_id','id');
 
     }
+    public function upazila(){
+        return $this->belongsTo('App\Models\Upazila');
+    }
     public function ProductModel(){
         return $this->belongsTo(ProductModel::class,'model_id','id');
     }
@@ -30,5 +33,6 @@ class ServiceRequest extends Model
     public function Customer(){
         return $this->belongsTo(Customer::class,'customer_id','id');
     }
+
 
 }

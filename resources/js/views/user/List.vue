@@ -43,12 +43,12 @@
                                         </thead>
                                         <tbody>
                                         <tr v-for="(user, i) in users" :key="user.id" v-if="users.length">
-                                            <th class="text-left" scope="row">{{ ++i }}</th>
+                                            <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ user.name }}</td>
                                             <td class="text-left">{{ user.username }}</td>
                                             <td class="text-left">{{ user.name }}</td>
                                             <td class="text-left">{{ user.designation }}</td>
-                                            <td class="text-left">{{ user.mobile }}</td>
+                                            <td class="text-right">{{ user.mobile }}</td>
                                             <td class="text-left">{{ user.email }}</td>
                                             <td class="text-left">
                                                 <span class="badge badge-success" v-if="user.Active == 1">Active</span>

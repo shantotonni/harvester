@@ -43,12 +43,12 @@
                                         </thead>
                                         <tbody>
                                         <tr v-for="(menu_item, i) in menu_items" :key="menu_item.Id" v-if="menu_items.length">
-                                            <th class="text-left" scope="row">{{ ++i }}</th>
+                                            <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ menu_item.Name }}</td>
                                             <td class="text-left">{{ menu_item.Icon }}</td>
                                             <td class="text-left">{{ menu_item.Status }}</td>
                                             <td class="text-left">{{ menu_item.Link }}</td>
-                                            <td class="text-left">{{ menu_item.Order }}</td>
+                                            <td class="text-right">{{ menu_item.Order }}</td>
                                             <td class="text-left">{{ menu_item.MenuName }}</td>
                                             <td class="text-left">
                                                 <button @click="edit(menu_item)" class="btn btn-success btn-sm"><i class="far fa-edit"></i></button>

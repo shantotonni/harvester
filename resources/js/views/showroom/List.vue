@@ -64,14 +64,14 @@
                                         <tbody>
                                         <tr v-for="(showroom, i) in showrooms" :key="showroom.id"
                                             v-if="showrooms.length">
-                                            <th class="text-left" scope="row">{{ ++i }}</th>
+                                            <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ showroom.district_name }}</td>
                                             <td class="text-left">{{ showroom.owner_name }}</td>
                                             <td class="text-left">{{ showroom.showroom_name }}</td>
                                             <td class="text-left">{{ showroom.address }}</td>
-                                            <td class="text-left">{{ showroom.mobile }}</td>
-                                            <td class="text-left">{{ showroom.lat }}</td>
-                                            <td class="text-left">{{ showroom.long }}</td>
+                                            <td class="text-right">{{ showroom.mobile }}</td>
+                                            <td class="text-right">{{ showroom.lat }}</td>
+                                            <td class="text-right">{{ showroom.long }}</td>
                                             <td class="text-left">
                                                 <button @click="edit(showroom)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>

@@ -22,7 +22,7 @@ class HarvesterInfoResource extends JsonResource
             'model_id' => $this->model_id,
             'model_name' => isset($this->model) ? $this->model->model_name : '',
             'horse_power' => $this->horse_power,
-            'details' => $this->details,
+            'details' =>strip_tags($this->details) ,
             'image' => $this->image,
             'harvesterInfo_image' => url('/') . '/images/HarvesterInfo/' . $this->image,
         ];

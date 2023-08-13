@@ -24,6 +24,13 @@ class HarvesterServiceCollection extends ResourceCollection
                     'servicing_name'=>isset($harvester_service->ServicingType) ? $harvester_service->ServicingType->name:'',
                     'from_hr' => $harvester_service->from_hr,
                     'to_hr' => $harvester_service->to_hr,
+                    'fix_hour' => $harvester_service->fix_hour,
+                    'parts_name' => $harvester_service->parts_name,
+                    'parts_code' => $harvester_service->parts_code,
+                    'price' => $harvester_service->price,
+                    'ProductCode'=>isset($harvester_service->MirrorProducts) ? $harvester_service->MirrorProducts->ProductCode:'',
+                    'UnitPrice'=>isset($harvester_service->MirrorProducts) ? $harvester_service->MirrorProducts->UnitPrice:'',
+                    'quantity' => $harvester_service->quantity,
                 ];
             })
         ];

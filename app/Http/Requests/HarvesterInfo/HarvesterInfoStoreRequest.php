@@ -26,7 +26,6 @@ class HarvesterInfoStoreRequest extends FormRequest
         return [
             'product_name'=>'required',
             'details'=>'required',
-            'image'=>'required|min:jpeg,jpg,png,svg',
             'horse_power'=>'required'
 
         ];

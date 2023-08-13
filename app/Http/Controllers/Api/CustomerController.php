@@ -15,7 +15,9 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $customers = Customer::orderBy('id','desc')->paginate(15);
+        $customers = Customer::with('ProductModel', 'Products','area','District')->orderBy('id','desc')
+//            ->where('customer_type','harvester')
+            ->paginate(15);
         return new CustomerCollection($customers);
     }
 

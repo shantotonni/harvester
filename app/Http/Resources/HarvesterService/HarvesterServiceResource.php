@@ -22,6 +22,13 @@ class HarvesterServiceResource extends JsonResource
             'servicing_name' => isset($this->servicing) ? $this->servicing->name : '',
             'from_hr' => $this->from_hr,
             'to_hr' => $this->to_hr,
+            'fixe_hour' => $this->fixe_hour,
+            'parts_name' => $this->parts_name,
+            'parts_code' => $this->parts_code,
+            'price' => $this->price,
+            'ProductCode'=>isset($this->MirrorProducts) ? $this->MirrorProducts->ProductCode:'',
+            'UnitPrice'=>isset($this->MirrorProducts) ? $this->MirrorProducts->UnitPrice:'',
+            'quantity' => $this->quantity,
         ];
     }
 }

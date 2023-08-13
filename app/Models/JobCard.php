@@ -18,7 +18,7 @@ class JobCard extends Model
     public function model(){
         return $this->belongsTo(ProductModel::class,'model_id','id');
     }
-    public function product(){
+    public function products(){
         return $this->belongsTo(Products::class,'product_id','id');
     }
     public function district(){
@@ -33,5 +33,44 @@ class JobCard extends Model
     public function technician(){
         return $this->belongsTo(Technician::class,'technitian_id','id');
     }
+
+
+
+
+    public function territory(){
+        return $this->belongsTo('App\Models\Territory');
+    }
+    public function area(){
+        return $this->belongsTo('App\Models\Area','area_id','id');
+    }
+    public function engineer(){
+        return $this->belongsTo('App\Models\User','engineer_id','id');
+    }
+    public function technitian(){
+        return $this->belongsTo('App\Models\User','technitian_id','id');
+    }
+    public function participant(){
+        return $this->belongsTo('App\Models\User');
+    }
+    public function call_type(){
+        return $this->belongsTo('App\Models\CallType');
+    }
+    public function customer(){
+        return $this->belongsTo('App\Models\Customer','customer_id','id');
+    }
+       public function user(){
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function image(){
+        return $this->belongsTo('App\Models\ChassisImage','job_card_id','id');
+    }
+    public function service_type(){
+        return $this->belongsTo('App\Models\ServiceType','service_types_id','id');
+    }
+
+
+
+
 
 }
