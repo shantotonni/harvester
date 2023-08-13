@@ -15,7 +15,7 @@ class HarvesterServiceController extends Controller
     {
         $model_id = $request->model_id;
 
-        $harvester_services = HarvesterService::query()->with('ProductModel');
+        $harvester_services = HarvesterService::query()->with(['ProductModel','MirrorProducts']);
         if (!empty($model_id)){
             $harvester_services = $harvester_services->where('model_id',$model_id);
 
@@ -36,7 +36,7 @@ class HarvesterServiceController extends Controller
         $harvester_service->parts_name = $request->parts_name;
         $harvester_service->parts_code = $request->ProductCode;
         $harvester_service->quantity = $request->quantity;
-        $harvester_service->price = $request->UnitPrice;
+        //$harvester_service->price = $request->UnitPrice;
         $harvester_service->save();
         return response()->json(['message' => 'Harvester Service Details created Successfully', 200]);
     }
@@ -53,7 +53,7 @@ class HarvesterServiceController extends Controller
         $harvester_service->parts_name = $request->parts_name;
         $harvester_service->parts_code = $request->ProductCode;
         $harvester_service->quantity = $request->quantity;
-        $harvester_service->price = $request->UnitPrice;
+        //$harvester_service->price = $request->UnitPrice;
         $harvester_service->save();
         return response()->json(['message' => 'Harvester Service Details  updated Successfully', 200]);
     }

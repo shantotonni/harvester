@@ -192,7 +192,7 @@
                                             <label>Parts Code</label>
                                             <select name="ProductCode" id="ProductCode" class="form-control" v-model="form.ProductCode" :class="{ 'is-invalid': form.errors.has('ProductCode') }" @change="getAllPriceByMirror()">
                                                 <option disabled value="">Select Parts Code</option>
-                                                <option :value="mirror_product.ProductCode" v-for="(mirror_product , index) in mirror_products" :key="index">{{ mirror_product.ProductCode}}
+                                                <option :value="mirror_product.ProductCode" v-for="(mirror_product , index) in mirror_products" :key="index">{{ mirror_product.ProductCode}} - {{ mirror_product.ProductName}}
                                                 </option>
                                             </select>
                                             <div class="error" v-if="form.errors.has('ProductCode')" v-html="form.errors.get('ProductCode')"/>
