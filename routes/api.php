@@ -81,6 +81,7 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-product-model', [CommonController::class, 'getAllProductModel']);
     Route::get('get-all-products', [CommonController::class, 'getAllProducts']);
     Route::get('get-all-mirror-product', [CommonController::class, 'getAllMirrorProduct']);
+    Route::get('get-all-mirror-price/{ProductCode}', [CommonController::class, 'getAllPriceByMirror']);
     Route::get('get-all-sections', [CommonController::class, 'getAllSections']);
     Route::get('get-all-harvester-service-details', [CommonController::class, 'getAllHarvesterServiceDetails']);
     Route::get('get-all-harvester-info', [CommonController::class, 'getAllHarvesterInfo']);
@@ -94,6 +95,7 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-service-engineer', [CommonController::class, 'getAllServiceEngineer']);
     Route::get('get-all-pending-service-request-list', [CommonController::class, 'getAllPendingServiceRequestList']);
     Route::get('get-all-completed-service-request-list', [CommonController::class, 'getAllCompletedServiceRequestList']);
+    Route::get('get-all-service-request-details-list', [CommonController::class, 'getAllServiceRequestDetailsList']);
     Route::get('get-all-technician', [CommonController::class, 'getAllTechnician']);
 
 

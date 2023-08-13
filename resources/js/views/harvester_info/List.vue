@@ -108,6 +108,16 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label>Product Name</label>
+                                            <input type="text" name="product_name" v-model="form.product_name"
+                                                   class="form-control"
+                                                   :class="{ 'is-invalid': form.errors.has('product_name') }">
+                                            <div class="error" v-if="form.errors.has('product_name')"
+                                                 v-html="form.errors.get('product_name')"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label>Product Category</label>
                                             <select name="product_id" id="product_id" class="form-control" v-model="form.product_id"
                                                     :class="{ 'is-invalid': form.errors.has('product_id') }" @change="getAllModelByProduct()">
@@ -119,16 +129,7 @@
                                                  v-html="form.errors.get('product_id')"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Product Name</label>
-                                            <input type="text" name="product_name" v-model="form.product_name"
-                                                   class="form-control"
-                                                   :class="{ 'is-invalid': form.errors.has('product_name') }">
-                                            <div class="error" v-if="form.errors.has('product_name')"
-                                                 v-html="form.errors.get('product_name')"/>
-                                        </div>
-                                    </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Model</label>

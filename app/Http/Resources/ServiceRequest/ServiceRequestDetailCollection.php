@@ -16,11 +16,11 @@ class ServiceRequestDetailCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data' => $this->collection->transform(function ($service_request_detail) {
+            'data' => $this->collection->transform(function ($job_card_detail) {
                 return [
-                    'id' =>$service_request_detail->id,
-                    'job_card_id' =>$service_request_detail->job_card_id,
-                    'user_id' =>$service_request_detail->user_id,
+                    'id' =>$job_card_detail->id,
+                    'job_card_id' =>$job_card_detail->job_card_id,
+                    'user_id' =>$job_card_detail->user_id,
                 ];
             })
         ];

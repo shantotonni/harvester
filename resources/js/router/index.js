@@ -51,6 +51,7 @@ import CompleteService from '../views/service_request/CompletedList.vue'
 import PendingService from '../views/service_request/PendingList'
 import ServiceRequestDetails from '../views/service_request/Details.vue'
 import SectionList from '../views/section/List'
+import CustomerInfo from '../views/customer_info/List'
 
 const routes = [
     {
@@ -157,6 +158,11 @@ const routes = [
             //Section Request
             {
                     path: base_url + '/section-list', name: 'SectionList', component: SectionList
+            },
+
+            //Customer list
+            {
+                    path: base_url + '/customer-info', name: 'CustomerInfo', component: CustomerInfo
             },
         ],
         beforeEnter(to, from, next) {

@@ -34,7 +34,7 @@ class ServiceRequestController extends Controller
     public function index(Request $request)
     {
 
-        $is_approved = $request->is_approved ? $request->is_approved : 0;
+
         $from_date = $request->from_date ? date('Y-m-d', strtotime($request->from_date)) : date('Y-m-01', strtotime(date('Y-m-01') . ' -1 month'));
         $to_date = $request->to_date ? date('Y-m-d', strtotime($request->to_date)) : date('Y-m-d');
         $searchId = $request->search ? $request->search : 0;
@@ -136,8 +136,8 @@ class ServiceRequestController extends Controller
                 ->whereDate('service_date', ">=", $from_date)
                 ->whereDate('service_date', "<=", $to_date)
                 ->Where('product_type', 'Harvester')
-                ->Where('product_type', '<>', 'tractor')
-                ->Where('product_type', '<>', "' '")
+                ->orWhere('product_type', '<>', 'tractor')
+                ->orWhere('product_type', '<>', "' '")
                 ->Where('job_status', 'created')
                 ->orWhere('job_status', 'started')
                 ->orWhere('job_status', "' '")
@@ -345,7 +345,7 @@ class ServiceRequestController extends Controller
         $job_card = JobCard::find($id);
         $chassisImage = ChassisImage::whereNotNull('image_url')->where('job_card_id', $id)->first();
         // dd($chassisImage);
-        return view("job_card.job_card_show", compact("job_card", 'chassisImage'));
+        return new ServiceRequestJobCardCollection($job_card);
     }
 
     public function jobCardChassisUpdate(Request $request)

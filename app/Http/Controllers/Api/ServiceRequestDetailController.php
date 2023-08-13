@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ServiceRequest\ServiceRequestDetailCollection;
 use App\Models\ServiceRequest;
 use App\Models\ServiceRequestDetails;
 use App\Models\User;
@@ -16,7 +17,8 @@ class ServiceRequestDetailController extends Controller{
 
     public function index(){
         $job_card_details = ServiceRequestDetails::orderBy('id','Desc')->paginate(20);
-        return view("job_card_detail.job_card_detail_list",compact("job_card_details"));
+        return new ServiceRequestDetailCollection($job_card_details);
+
     }
 
 
@@ -30,7 +32,7 @@ class ServiceRequestDetailController extends Controller{
     }
 
 
-    public function store(ServiceRequestDetailStoreRequest $request){
+    public function store(Request $request){
 
         $job_card_detail= new ServiceRequestDetails;
         $job_card_detail->job_card_id=$request->job_card_id;
@@ -67,7 +69,7 @@ class ServiceRequestDetailController extends Controller{
 
     public function show($id){
         $job_card_detail = ServiceRequestDetails::find($id);
-        return view("job_card_detail.job_card_detail_show",compact("job_card_detail"));
+        return new ServiceRequestDetailCollection($job_card_detail);
     }
 
 

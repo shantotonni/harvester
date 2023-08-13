@@ -56,6 +56,11 @@
                                             <th class="text-left">Servicing Type</th>
                                             <th class="text-left">From hour</th>
                                             <th class="text-left">To hour</th>
+                                            <th class="text-left">Fixed Hour</th>
+                                            <th class="text-left">Parts Name</th>
+                                            <th class="text-left">Parts Code</th>
+                                            <th class="text-left">Price</th>
+                                            <th class="text-left">Quantity</th>
                                             <th class="text-left">Action</th>
                                         </tr>
                                         </thead>
@@ -67,6 +72,11 @@
                                             <td class="text-left">{{ harvester_service.servicing_name }}</td>
                                             <td class="text-right">{{ harvester_service.from_hr }}</td>
                                             <td class="text-right">{{ harvester_service.to_hr }}</td>
+                                            <td class="text-left">{{ harvester_service.fix_hour }}</td>
+                                            <td class="text-left">{{ harvester_service.parts_name }}</td>
+                                            <td class="text-right">{{ harvester_service.parts_code }}</td>
+                                            <td class="text-right">{{ harvester_service.price }}</td>
+                                            <td class="text-right">{{ harvester_service.quantity }}</td>
                                             <td class="text-center">
                                                 <button @click="edit(harvester_service)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>
@@ -157,6 +167,71 @@
                                             <div class="error" v-if="form.errors.has('to_hr')"
                                                  v-html="form.errors.get('to_hr')"/>
                                         </div>
+                                    </div> <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Fixed Hour</label>
+                                            <input type="text" name="Fixed Hour" v-model="form.fix_hour"
+                                                   class="form-control"
+                                                   :class="{ 'is-invalid': form.errors.has('fix_hour') }">
+                                            <div class="error" v-if="form.errors.has('fix_hour')"
+                                                 v-html="form.errors.get('fix_hour')"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Product Name</label>
+                                            <input type="text" name="product_name" v-model="form.product_name"
+                                                   class="form-control"
+                                                   :class="{ 'is-invalid': form.errors.has('product_name') }">
+                                            <div class="error" v-if="form.errors.has('product_name')"
+                                                 v-html="form.errors.get('product_name')"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Parts Code</label>
+                                            <select name="ProductCode" id="ProductCode" class="form-control" v-model="form.ProductCode" :class="{ 'is-invalid': form.errors.has('ProductCode') }" @change="getAllPriceByMirror()">
+                                                <option disabled value="">Select Parts Code</option>
+                                                <option :value="mirror_product.ProductCode" v-for="(mirror_product , index) in mirror_products" :key="index">{{ mirror_product.ProductCode}}
+                                                </option>
+                                            </select>
+                                            <div class="error" v-if="form.errors.has('ProductCode')" v-html="form.errors.get('ProductCode')"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <select name="UnitPrice" id="UnitPrice" class="form-control" v-model="form.UnitPrice" :class="{ 'is-invalid': form.errors.has('UnitPrice') }">
+                                            <option disabled value="">Select Parts Price</option>
+                                            <option :value="prices.UnitPrice"
+                                                    v-for="(prices , index) in prices" :key="index">
+                                                {{ prices.UnitPrice}}
+                                            </option>
+                                        </select>
+                                        <div class="error" v-if="form.errors.has('UnitPrice')" v-html="form.errors.get('UnitPrice')"/>
+                                    </div>
+                                </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Parts Name</label>
+                                            <input type="text" name="parts_name" v-model="form.parts_name"
+                                                   class="form-control"
+                                                   :class="{ 'is-invalid': form.errors.has('parts_name') }">
+                                            <div class="error" v-if="form.errors.has('parts_name')"
+                                                 v-html="form.errors.get('parts_name')"/>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Quantity</label>
+                                            <input type="number" name="quantity" v-model="form.quantity"
+                                                   class="form-control"
+                                                   :class="{ 'is-invalid': form.errors.has('quantity') }">
+                                            <div class="error" v-if="form.errors.has('quantity')"
+                                                 v-html="form.errors.get('quantity')"/>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -188,6 +263,8 @@ export default {
             harvester_services: [],
             models: [],
             servicing_types: [],
+            mirror_products: [],
+            prices: [],
             pagination: {
                 current_page: 1
             },
@@ -201,6 +278,11 @@ export default {
                 servicing_type_id: '',
                 from_hr: '',
                 to_hr: '',
+                fix_hour: '',
+                parts_name: '',
+                parts_code: '',
+                price: '',
+                quantity: '',
             }),
         }
     },
@@ -216,6 +298,8 @@ export default {
     mounted() {
         document.title = 'Harvester Service Details | Harvester';
         this.getAllHarvesterServiceDetails();
+        this.getAllMirrorProduct();
+        this.getAllPriceByMirror();
     },
     methods: {
         getAllHarvesterServiceDetails() {
@@ -250,6 +334,7 @@ export default {
             this.form.reset();
             this.form.clear();
             $("#harvesterserviceModal").modal("show");
+            this.getAllMirrorProduct();
             this.getAllProductModel();
             this.getAllServicingType();
         },
@@ -269,6 +354,7 @@ export default {
             this.form.clear();
             this.form.fill(harvester_service);
             $("#harvesterserviceModal").modal("show");
+            this.getAllMirrorProduct();
             this.getAllProductModel();
             this.getAllServicingType();
         },
@@ -281,18 +367,33 @@ export default {
                 this.isLoading = false;
             });
         },
+        getAllPriceByMirror() {
+
+            axios.get('/api/get-all-mirror-price/' +this.form.ProductCode).then((response) => {
+                console.log(response)
+                this.prices = response.data.prices;
+            }).catch((error) => {
+
+            })
+        },
         getAllProductModel() {
             axios.get('/api/get-all-product-model').then((response) => {
-                console.log(response)
                 this.models = response.data.models;
             }).catch((error) => {
 
             })
         },
+        getAllMirrorProduct() {
+            axios.get('/api/get-all-mirror-product').then((response) => {
+                this.mirror_products = response.data.mirror_products;
+            }).catch((error) => {
+
+            })
+        },
+
 
         getAllServicingType() {
             axios.get('/api/get-all-servicing-type').then((response) => {
-                console.log(response)
                 this.servicing_types = response.data.servicing_types;
             }).catch((error) => {
 

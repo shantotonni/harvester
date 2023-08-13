@@ -67,7 +67,6 @@ class HarvesterPartsController extends Controller
 
         $harvester_part->custom_name = $request->custom_name;
         $harvester_part->ProductCode = $request->ProductCode;
-
         $harvester_part->product_model_id = $request->product_model_id;
         $harvester_part->section_id = $request->section_id;
         $harvester_part->image = $name;

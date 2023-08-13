@@ -24,6 +24,11 @@ class HarvesterServiceDetailsCollection extends ResourceCollection
                     'servicing_name'=>isset($details->ServicingType) ? $details->ServicingType->name:'',
                     'from_hr' => $details->from_hr,
                     'to_hr' => $details->to_hr,
+                    'fix_hour' => $details->fix_hour,
+                    'parts_name' => $details->parts_name,
+                    'parts_code' => $details->parts_code,
+                    'price' => $details->price,
+                    'quantity' => $details->quantity,
                 ];
             })
         ];

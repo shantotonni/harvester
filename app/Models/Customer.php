@@ -38,4 +38,18 @@ class Customer extends Authenticatable implements JWTSubject
     public function customer_chassis(){
         return $this->hasMany('App\Models\CustomerChassis','customer_id','id');
     }
+    public function ProductModel(){
+        return $this->belongsTo(ProductModel::class,'model_id','id');
+    }
+    public function Products(){
+        return $this->belongsTo(Products::class,'product_id','id');
+    }
+    public function District()
+    {
+        return $this->belongsTo(District::class,'district_id','id');
+
+    }
+    public function area(){
+        return $this->belongsTo(Area::class,'area_id','id');
+    }
 }

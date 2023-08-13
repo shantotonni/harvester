@@ -52,7 +52,7 @@
                                             <td class="text-center">{{ job_card.service_end_at }}</td>
                                             <td class="text-center">
                                                 <span class="badge badge-warning" v-if="job_card.job_status == 'started'">started</span>
-                                                <span class="badge badge-warning" v-if="job_card.job_status == 'pending'">pending</span>
+                                                <span class="badge badge-warning" v-if="job_card.job_status == ''">pending</span>
                                             </td>
                                             <td class="text-center">
                                                 <router-link :to="`/harvester/service-request-details/${job_card.id}`" class="btn btn-primary btn-sm btn-xs"><i class="far fa-eye"></i></router-link>
