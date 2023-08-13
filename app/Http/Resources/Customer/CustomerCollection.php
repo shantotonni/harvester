@@ -35,7 +35,10 @@ class CustomerCollection extends ResourceCollection
                     'address' => $customer->address,
                     'chassis' => $customer->chassis,
                     'chassis_image' => $customer->chassis_image,
-                    'customer_type' => $customer->customer_type
+                    'customer_type' => $customer->customer_type,
+                    'image' => $customer->image,
+                    'customer_image'=>url('/').'/images/customer/'.$customer->image,
+
                 ];
             })
         ];

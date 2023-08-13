@@ -183,8 +183,8 @@
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker';
-import moment from "moment";
+    import Datepicker from 'vuejs-datepicker';
+    import moment from "moment";
 export default {
 
     name: "List",

@@ -203,7 +203,7 @@
                                         <label>Price</label>
                                         <select name="UnitPrice" id="UnitPrice" class="form-control" v-model="form.UnitPrice" :class="{ 'is-invalid': form.errors.has('UnitPrice') }">
                                             <option disabled value="">Select Parts Price</option>
-                                            <option :value="prices.UnitPrice"
+                                            <option :value="prices.ProductCode"
                                                     v-for="(prices , index) in prices" :key="index">
                                                 {{ prices.UnitPrice}}
                                             </option>

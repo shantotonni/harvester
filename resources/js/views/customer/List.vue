@@ -214,16 +214,7 @@
                                                  v-html="form.errors.get('service_hour')"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Purchase Date</label>
-                                            <input v-model="form.mobile" type="number" name="data_of_purchase"
-                                                   class="form-control"
-                                                   :class="{ 'is-invalid': form.errors.has('data_of_purchase') }">
-                                            <div class="error" v-if="form.errors.has('data_of_purchase')"
-                                                 v-html="form.errors.get('data_of_purchase')"/>
-                                        </div>
-                                    </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Customer Address</label>
@@ -268,6 +259,17 @@
                                                  v-html="form.errors.get('area_id')"/>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Purchase Date</label>
+                                        <datepicker name="To Hour" v-model="form.data_of_purchase"
+                                                    :format="customFormatter"
+                                                    placeholder="Enter To Date"
+                                                    :class="{ 'is-invalid': form.errors.has('data_of_purchase') }" style="width: 100%;height: 32px" > </datepicker>
+                                        <div class="error" v-if="form.errors.has('data_of_purchase')"
+                                             v-html="form.errors.get('data_of_purchase')"/>
+                                    </div>
+                                </div>
                                 </div>
 
                         </div>
@@ -291,9 +293,15 @@
 </template>
 
 <script>
+import Datepicker from "vuejs-datepicker";
+import moment from "moment";
+
 document.title = 'Customer List | Harvester';
 export default {
     name: "List",
+    components: {
+        Datepicker
+    },
     data() {
         return {
             customers: [],
@@ -366,6 +374,11 @@ export default {
         },
         createCustomer() {
             this.getAllCompany();
+            this.getAllDistricts();
+            this.getAllArea();
+            this.getAllModelByProduct();
+            this.getAllProduct();
+            this.getAllProductModel();
             this.editMode = false;
             this.form.reset();
             this.form.clear();
@@ -382,6 +395,11 @@ export default {
         },
         edit(customer) {
             this.getAllCompany();
+            this.getAllDistricts();
+            this.getAllArea();
+            this.getAllModelByProduct();
+            this.getAllProduct();
+            this.getAllProductModel();
             this.editMode = true;
             this.form.reset();
             this.form.clear();
@@ -459,7 +477,10 @@ export default {
             }).catch((error) => {
 
             })
-        }
+        },
+        customFormatter(date) {
+            return moment(date).format('MMMM Do YYYY');
+        },
     },
 }
 </script>

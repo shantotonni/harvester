@@ -28,7 +28,7 @@ class CustomerRequest extends FormRequest
             'mobile'=>'required',
             'email'=>'required',
             'password'=>'required',
-            'model'=>'required',
+
         ];
     }
 }

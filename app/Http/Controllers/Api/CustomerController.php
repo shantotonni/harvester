@@ -16,7 +16,7 @@ class CustomerController extends Controller
     public function index()
     {
         $customers = Customer::with('ProductModel', 'Products','area','District')->orderBy('id','desc')
-//            ->where('customer_type','harvester')
+            ->where('customer_type','harvester')
             ->paginate(15);
         return new CustomerCollection($customers);
     }
@@ -33,14 +33,21 @@ class CustomerController extends Controller
         }
         $customer = new Customer();
         $customer->name = $request->name;
-        $customer->code = $request->code;
+        $customer->model_id = $request->model_id;
+        $customer->product_id = $request->product_id;
         $customer->mobile = $request->mobile;
+        $customer->email = $request->email;
+        $customer->service_hour = $request->service_hour;
+        $customer->data_of_purchase = $request->data_of_purchase;
+        $customer->area_id = $request->area_id;
+        $customer->district_id = $request->district_id;
+        $customer->address = $request->address;
+        $customer->customer_type = $request->customer_type;
+        $customer->chassis = $request->chassis;
         $customer->password = bcrypt($request->password);
         $customer->date_of_purchase = $request->date_of_purchase;
-        $customer->generator_info_id = $request->generator_info_id;
         $customer->image = $name;
-        $customer->status = 'Y';
-
+        $customer->save();
         return response()->json(['message'=>'Customer Created Successfully'],200);
     }
 
@@ -65,13 +72,21 @@ class CustomerController extends Controller
         }
 
         $customer->name = $request->name;
-        $customer->code = $request->code;
+        $customer->model_id = $request->model_id;
+        $customer->product_id = $request->product_id;
         $customer->mobile = $request->mobile;
+        $customer->email = $request->email;
+        $customer->service_hour = $request->service_hour;
+        $customer->data_of_purchase = $request->data_of_purchase;
+        $customer->area_id = $request->area_id;
+        $customer->district_id = $request->district_id;
+        $customer->address = $request->address;
+        $customer->customer_type = $request->customer_type;
+        $customer->chassis = $request->chassis;
+        $customer->password = bcrypt($request->password);
         $customer->date_of_purchase = $request->date_of_purchase;
-        $customer->generator_info_id = $request->generator_info_id;
         $customer->image = $name;
-        $customer->Active = 'Y';
-
+        $customer->save();
         return response()->json(['message'=>'Customer Updated Successfully'],200);
     }
 
