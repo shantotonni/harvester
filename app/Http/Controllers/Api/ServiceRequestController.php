@@ -43,7 +43,7 @@ class ServiceRequestController extends Controller
         $product_id = $request->product_id;
 
         if (Auth::user()->role_id == 1) {
-            $job_cards = JobCard::query()->with(['area', 'territory', 'engineer', 'technitian', 'call_type', 'service_type', 'product', 'model']);
+            $job_cards = JobCard::query()->with(['area', 'territory', 'engineer', 'technitian', 'call_type', 'service_types', 'product', 'model']);
 
             if ($searchId) {
                 $job_cards = $job_cards->where('id', $searchId);
@@ -64,7 +64,7 @@ class ServiceRequestController extends Controller
 
             $user_id = Auth::user()->id;
 
-            $job_cards = JobCard::query()->with(['area', 'territory', 'engineer', 'technitian', 'call_type', 'service_type', 'product', 'model']);
+            $job_cards = JobCard::query()->with(['area', 'territory', 'engineer', 'technitian', 'call_type', 'service_types', 'product', 'model']);
 
             if ($searchId) {
                 $job_cards = $job_cards->where('id', $searchId);
@@ -92,10 +92,11 @@ class ServiceRequestController extends Controller
         $chassis_number = $request->chassis_number;
         $products = Products::all();
         $product_id = $request->product_id;
+        $product_type = 'Harvester';
 
 
         if (Auth::user()->role_id == 1) {
-            $job_cards = JobCard::query()->with(['area', 'territory', 'engineer', 'technitian', 'participant', 'call_type', 'service_type', 'products', 'model', 'image']);
+            $job_cards = JobCard::query()->with(['area', 'territory', 'engineer', 'technitian', 'participant', 'call_type', 'service_types', 'products', 'model', 'image']);
 
             if ($searchId) {
                 $job_cards = $job_cards->where('id', $searchId);
@@ -104,24 +105,19 @@ class ServiceRequestController extends Controller
                 $job_cards = $job_cards->where('chassis_number', $chassis_number);
             }
             if ($product_id) {
-                $job_cards = $job_cards->where('product_id', $product_id);
+                $job_cards = $job_cards->where('product_id', 'Harvester');
             }
-            $job_cards = $job_cards->whereDate('service_date', ">=", $from_date)
+            $job_cards = $job_cards->Where('product_type', 'Harvester')
+                ->whereDate('service_date', ">=", $from_date)
                 ->whereDate('service_date', "<=", $to_date)
-                ->Where('product_type', 'Harvester')
-                ->orWhere('product_type', '<>', 'tractor')
-                ->orWhere('product_type', '<>', "' '")
-                ->Where('job_status', 'created')
-                ->orWhere('job_status', 'started')
-                ->orWhere('job_status', "' '")
-                ->orWhere('job_status', 'ongoing')
+                ->Where('job_status', 'started')
                 //->where('id','263607')
                 ->orderBy('id', 'desc');
         } else {
 
             $user_id = Auth::user()->id;
 
-            $job_cards = JobCard::query()->with(['area', 'territory', 'engineer', 'technitian', 'participant', 'call_type', 'service_type', 'products', 'model', 'image']);
+            $job_cards = JobCard::query()->with(['area', 'territory', 'engineer', 'technitian', 'participant', 'call_type', 'service_types', 'products', 'model', 'image']);
 
             if ($searchId) {
                 $job_cards = $job_cards->where('id', $searchId);
@@ -132,16 +128,11 @@ class ServiceRequestController extends Controller
             }
 
             $job_cards = $job_cards
+                ->Where('product_type', 'Harvester')
                 ->where('engineer_id', $user_id)
                 ->whereDate('service_date', ">=", $from_date)
                 ->whereDate('service_date', "<=", $to_date)
-                ->Where('product_type', 'Harvester')
-                ->orWhere('product_type', '<>', 'tractor')
-                ->orWhere('product_type', '<>', "' '")
-                ->Where('job_status', 'created')
-                ->orWhere('job_status', 'started')
-                ->orWhere('job_status', "' '")
-                ->orWhere('job_status', 'ongoing')->latest()->orderBy('id', 'desc');
+                ->Where('job_status', 'started')->latest()->orderBy('id', 'desc');
         }
 
         $job_cards = $job_cards->paginate(50);
@@ -193,9 +184,10 @@ class ServiceRequestController extends Controller
         $chassis_number = $request->chassis_number;
         $products = Products::all();
         $product_id = $request->product_id;
+        $product_type = 'Harvester';
 
         if (Auth::user()->role_id == 1) {
-            $job_cards = JobCard::query()->with(['area', 'territory', 'engineer', 'technitian', 'participant', 'call_type', 'service_type', 'products', 'model']);
+            $job_cards = JobCard::query()->with(['area', 'territory', 'engineer', 'technitian', 'participant', 'call_type', 'service_types', 'products', 'model']);
 
             if ($searchId) {
                 $job_cards = $job_cards->where('id', $searchId);
@@ -209,9 +201,7 @@ class ServiceRequestController extends Controller
 
             $job_cards = $job_cards->whereDate('service_date', ">=", $from_date)
                 ->whereDate('service_date', "<=", $to_date)
-                ->Where('product_type', 'Harvester')
-                ->orWhere('product_type', '!=', 'tractor')
-                ->orWhere('product_type', '!=', "''")
+                ->Where('product_type', $product_type)
                 ->where('job_status', 'finished')
                 ->orWhere('job_status', 'completed')
                 ->latest()->orderBy('id', 'desc')
@@ -220,7 +210,7 @@ class ServiceRequestController extends Controller
 
             $user_id = Auth::user()->id;
 
-            $job_cards = JobCard::query()->with(['area', 'territory', 'engineer', 'technitian', 'participant', 'call_type', 'service_type', 'products', 'model']);
+            $job_cards = JobCard::query()->with(['area', 'territory', 'engineer', 'technitian', 'participant', 'call_type', 'service_types', 'products', 'model']);
 
             if ($searchId) {
                 $job_cards = $job_cards->where('id', $searchId);
@@ -233,9 +223,7 @@ class ServiceRequestController extends Controller
             $job_cards = $job_cards->where('engineer_id', $user_id)
                 ->whereDate('service_date', ">=", $from_date)
                 ->whereDate('service_date', "<=", $to_date)
-                ->Where('product_type', 'Harvester')
-                ->orWhere('product_type', '<>', 'tractor')
-                ->orWhere('product_type', '<>', "''")
+                ->Where('product_type', $product_type)
                 ->where('job_status', 'finished')
                 ->orWhere('job_status', 'completed')
                 ->paginate(50);
@@ -347,6 +335,10 @@ class ServiceRequestController extends Controller
         // dd($chassisImage);
         return new ServiceRequestJobCardCollection($job_card);
     }
+//    public function show($id){
+//        $job_card = JobCard::find($id);
+//        return new ServiceRequestJobCardCollection($job_card);
+//    }
 
     public function jobCardChassisUpdate(Request $request)
     {

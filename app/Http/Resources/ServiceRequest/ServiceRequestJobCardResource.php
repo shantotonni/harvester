@@ -35,7 +35,7 @@ class ServiceRequestJobCardResource extends JsonResource
             'call_type' =>isset($this->call_type) ? $this->call_type->name : '',
             'call_type_id' =>$this->call_type_id,
             'service_type_id' =>$this->service_type_id,
-            'service_type' =>isset($this->service_type) ? $this->service_type->name : '',
+            'service_type' =>isset($this->service_types) ? $this->service_types->name : '',
             'customer_name' =>$this->customer_name,
             'customer_moblie' =>$this->customer_moblie,
             'buy_date' => $this->buy_date ? date('d-m-Y',strtotime($this->buy_date)) : null,

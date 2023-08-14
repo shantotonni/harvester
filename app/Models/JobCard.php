@@ -65,10 +65,9 @@ class JobCard extends Model
     public function image(){
         return $this->belongsTo('App\Models\ChassisImage','job_card_id','id');
     }
-    public function service_type(){
-        return $this->belongsTo('App\Models\ServiceType','service_types_id','id');
+    public function service_types(){
+        return $this->belongsTo(ServiceType::class,'service_type_id','id');
     }
-
 
 
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\HarvesterServiceController;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\MenuPermissionController;
 use App\Http\Controllers\Api\Mobile\CommonController;
+use App\Http\Controllers\Api\ProductModelController;
 use App\Http\Controllers\Api\ServiceRequestController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SeasonalCropsController;
@@ -162,6 +163,9 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
 //Section
     Route::apiResource('section-list', SectionController::class);
     Route::get('search/section-list/{query}', [SectionController::class, 'search']);
+    //Section
+    Route::apiResource('product-model', ProductModelController::class);
+    Route::get('search/product-model/{query}', [ProductModelController::class, 'search']);
 
 
 

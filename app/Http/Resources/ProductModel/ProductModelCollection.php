@@ -21,7 +21,10 @@ class ProductModelCollection extends ResourceCollection
                     'product_id'=>$model->product_id,
                     'name'=>isset($model->Products) ? $model->Products->name:'',
                     'model_name'=>$model->model_name,
+                    'model_name_bn'=>$model->model_name_bn,
                     'model_code'=>$model->model_code,
+                    'image'=>$model->model_image,
+                    'details'=>$model->model_details,
 
                 ];
             })

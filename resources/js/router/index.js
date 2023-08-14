@@ -52,6 +52,7 @@ import PendingService from '../views/service_request/PendingList'
 import ServiceRequestDetails from '../views/service_request/Details.vue'
 import SectionList from '../views/section/List'
 import CustomerInfo from '../views/customer_info/List'
+import ProductModel from '../views/product_model/List'
 
 const routes = [
     {
@@ -163,6 +164,10 @@ const routes = [
             //Customer list
             {
                     path: base_url + '/customer-info', name: 'CustomerInfo', component: CustomerInfo
+            },
+            //Product model list
+            {
+                    path: base_url + '/product-model', name: 'ProductModel', component: ProductModel
             },
         ],
         beforeEnter(to, from, next) {

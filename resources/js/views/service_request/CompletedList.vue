@@ -67,6 +67,12 @@
                                         </tbody>
                                     </table>
                                     <br>
+                                    <pagination
+                                        v-if="pagination.last_page > 1"
+                                        :pagination="pagination"
+                                        :offset="5"
+                                        @paginate="query === '' ? getAllCompletedServiceRequestList() : searchData()"
+                                    ></pagination>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +93,7 @@ export default {
     data() {
         return {
             job_cards: [],
-            technicians: [],
+            technitians: [],
             service_type: [],
             pagination: {
                 current_page: 1

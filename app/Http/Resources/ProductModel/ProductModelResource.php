@@ -14,6 +14,16 @@ class ProductModelResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return[
+            'id'=>$this->id,
+            'product_id'=>$this->product_id,
+            'name'=>isset($this->Products) ? $this->Products->name:'',
+            'model_name'=>$this->model_name,
+            'model_name_bn'=>$this->model_name_bn,
+            'model_code'=>$this->model_code,
+            'image'=>$this->model_image,
+            'model_details'=>$this->model_details,
+
+        ];
     }
 }

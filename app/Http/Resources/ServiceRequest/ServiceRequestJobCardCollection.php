@@ -37,7 +37,7 @@ class ServiceRequestJobCardCollection extends ResourceCollection
                     'call_type' =>isset($job_card->call_type) ? $job_card->call_type->name : '',
                     'call_type_id' =>$job_card->call_type_id,
                     'service_type_id' =>$job_card->service_type_id,
-                    'service_type' =>isset($job_card->service_type) ? $job_card->service_type->name : '',
+                    'service_type' =>isset($job_card->service_types) ? $job_card->service_types->name : '',
                     'customer_name' =>$job_card->customer_name,
                     'customer_moblie' =>$job_card->customer_moblie,
                     'buy_date' => $job_card->buy_date ? date('d-m-Y',strtotime($job_card->buy_date)) : null,

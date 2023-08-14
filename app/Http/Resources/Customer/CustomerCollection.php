@@ -27,7 +27,7 @@ class CustomerCollection extends ResourceCollection
                     'mobile' => $customer->mobile,
                     'password' => $customer->password,
                     'service_hour' => $customer->service_hour,
-                    'data_of_purchase' => $customer->data_of_purchase,
+                    'date_of_purchase' => $customer->date_of_purchase,
                     'area_id' => $customer->area_id,
                     'area_name'=>isset($customer->area) ? $customer->area->name:'',
                     'district_id' => $customer->district_id,
@@ -38,7 +38,6 @@ class CustomerCollection extends ResourceCollection
                     'customer_type' => $customer->customer_type,
                     'image' => $customer->image,
                     'customer_image'=>url('/').'/images/customer/'.$customer->image,
-
                 ];
             })
         ];

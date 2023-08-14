@@ -66,6 +66,12 @@
                                         </tbody>
                                     </table>
                                     <br>
+                                    <pagination
+                                        v-if="pagination.last_page > 1"
+                                        :pagination="pagination"
+                                        :offset="5"
+                                        @paginate="query === '' ? getAllPendingServiceRequestList() : searchData()"
+                                    ></pagination>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +92,7 @@ export default {
     data() {
         return {
             job_cards: [],
-            technicians: [],
+            technitian: [],
             service_types: [],
             pagination: {
                 current_page: 1
@@ -106,6 +112,7 @@ export default {
                 service_start_at: '',
                 service_end_at: '',
                 job_status: '',
+                service_type_id: '',
             }),
         }
     },
@@ -169,7 +176,8 @@ export default {
         },
         getAllServiceType(){
             axios.get('/api/get-all-service-type').then((response)=>{
-                this.service_types = response.data.data;
+                console.log(response)
+                this.service_types = response.data.service_types;
             }).catch((error)=>{
 
             })

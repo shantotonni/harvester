@@ -62,7 +62,9 @@
                                             <td class="text-left">{{ customer.district_name }}</td>
                                             <td class="text-left">{{ customer.address }}</td>
                                             <td class="text-left">{{ customer.chassis }}</td>
-                                            <td class="text-left">{{ customer.image }}</td>
+                                            <td class="text-left">
+                                                <img v-if="customer.image" height="40" width="40"
+                                                                          :src="tableImage(customer.image)" alt=""></td>
                                             <td class="text-left">{{ customer.customer_type }}</td>
                                             <td class="text-left">
                                                 <button @click="edit(customer)" class="btn btn-success btn-sm"><i
@@ -239,7 +241,7 @@
                                                  v-html="form.errors.get('address')"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-6" v-if="!editMode">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Chassis</label>
                                             <input type="text" name="chassis" v-model="form.chassis"
@@ -249,7 +251,8 @@
                                                  v-html="form.errors.get('chassis')"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-6" v-if="!editMode">
+<!--                                    <div class="col-md-6" v-if="!editMode"> this helps to hide the option-->
+                                    <div class="col-md-6" >
                                         <div class="form-group">
                                             <label>Customer Type</label>
                                             <input type="text" name="customer_type" v-model="form.customer_type"
@@ -263,13 +266,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Purchase Date</label>
-                                            <datepicker name="To Hour" v-model="form.data_of_purchase"
+                                            <datepicker name="To Hour" v-model="form.date_of_purchase"
                                                         :format="customFormatter"
                                                         placeholder="Enter To Date"
-                                                        :class="{ 'is-invalid': form.errors.has('data_of_purchase') }"
+                                                        :class="{ 'is-invalid': form.errors.has('date_of_purchase') }"
                                                         style="width: 100%;height: 32px"></datepicker>
-                                            <div class="error" v-if="form.errors.has('data_of_purchase')"
-                                                 v-html="form.errors.get('data_of_purchase')"/>
+                                            <div class="error" v-if="form.errors.has('date_of_purchase')"
+                                                 v-html="form.errors.get('date_of_purchase')"/>
                                         </div>
                                     </div>
                                 </div>
@@ -286,11 +289,11 @@
                         </div>
                     </form>
                 </div>
-                <!-- /.modal-content -->
+
             </div>
-            <!-- /.modal-dialog -->
+
         </div>
-        <!-- /.modal -->
+
     </div>
 </template>
 
@@ -309,6 +312,8 @@ export default {
             customers: [],
             districts: [],
             areas: [],
+            products: [],
+            models: [],
             companies: [],
             pagination: {
                 current_page: 1
@@ -323,7 +328,7 @@ export default {
                 password: '',
                 product_id: '',
                 customer_type: '',
-                data_of_purchase: '',
+                date_of_purchase: '',
                 chassis_image: '',
                 service_hour: '',
                 district_id: '',
@@ -332,13 +337,6 @@ export default {
                 address: '',
                 chassis: '',
                 image: '',
-
-
-
-
-
-
-
             }),
         }
     },
@@ -353,6 +351,7 @@ export default {
     },
     mounted() {
         this.getAllCustomer();
+
     },
     methods: {
         getAllCustomer() {
@@ -440,9 +439,12 @@ export default {
                 return window.location.origin + "/Harvester/images/customer/" + this.form.Image;
             }
         },
+        tableImage(image) {
+            return window.location.origin + "/harvester/public/images/customer/" + image;
+        },
         getAllProductModel() {
             axios.get('/api/get-all-product-model').then((response) => {
-                console.log(response)
+
                 this.models = response.data.models;
             }).catch((error) => {
 
@@ -450,7 +452,7 @@ export default {
         },
         getAllProduct() {
             axios.get('/api/get-all-products').then((response) => {
-                console.log(response)
+
                 this.products = response.data.products;
             }).catch((error) => {
 
@@ -458,7 +460,7 @@ export default {
         },
         getAllModelByProduct() {
             axios.get('/api/get-all-model-by-product/' + this.form.product_id).then((response) => {
-                console.log(response)
+
                 this.models = response.data.data;
             }).catch((error) => {
 
@@ -466,7 +468,7 @@ export default {
         },
         getAllArea() {
             axios.get('/api/get-all-areas').then((response) => {
-                console.log('areas', response.data.areas)
+
                 this.areas = response.data.areas;
             }).catch((error) => {
 
@@ -474,7 +476,7 @@ export default {
         },
         getAllDistricts() {
             axios.get('/api/get-all-districts').then((response) => {
-                console.log(response)
+
                 this.districts = response.data.districts;
             }).catch((error) => {
 

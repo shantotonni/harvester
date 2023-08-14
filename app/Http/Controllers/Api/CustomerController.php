@@ -38,7 +38,7 @@ class CustomerController extends Controller
         $customer->mobile = $request->mobile;
         $customer->email = $request->email;
         $customer->service_hour = $request->service_hour;
-        $customer->data_of_purchase = $request->data_of_purchase;
+        $customer->date_of_purchase = $request->date_of_purchase;
         $customer->area_id = $request->area_id;
         $customer->district_id = $request->district_id;
         $customer->address = $request->address;
@@ -77,7 +77,7 @@ class CustomerController extends Controller
         $customer->mobile = $request->mobile;
         $customer->email = $request->email;
         $customer->service_hour = $request->service_hour;
-        $customer->data_of_purchase = $request->data_of_purchase;
+        $customer->date_of_purchase = $request->date_of_purchase;
         $customer->area_id = $request->area_id;
         $customer->district_id = $request->district_id;
         $customer->address = $request->address;
@@ -90,10 +90,7 @@ class CustomerController extends Controller
         return response()->json(['message'=>'Customer Updated Successfully'],200);
     }
 
-    public function destroy($id)
-    {
-        //
-    }
+
 
     public function search($query)
     {

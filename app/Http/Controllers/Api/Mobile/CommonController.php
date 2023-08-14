@@ -80,7 +80,7 @@ class CommonController extends Controller
 
     public function getAllCustomer()
     {
-        $customers = Customer::orderBy('id', 'asc')->get();
+        $customers = Customer::where('customer_type','harvester')->orderBy('id', 'asc')->get();
         return response()->json([
             'customers' => $customers
         ]);

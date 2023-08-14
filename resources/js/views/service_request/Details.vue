@@ -6,163 +6,159 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="d-flex">
-
-                            <!-- Tab panes -->
                             <div class="tab-content">
                                 <div class="tab-pane p-3 active" id="home-1" role="tabpanel">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <h4 class="page-title" style="font-size: 14px">Service Request Details</h4>
+                                        <div class="col-md-12">
                                             <div class="table-responsive">
                                                 <table class="table table-bordered table-striped table-hover dt-responsive nowrap dataTable no-footer dtr-inline table-sm small">
                                                     <tbody>
                                                     <tr>
                                                         <th style="width: 50%">Engineer name</th>
-                                                        <th style="width: 50%">{{ job_card_detail.engineer }}</th>
+                                                        <th style="width: 50%">{{ job_card.engineer }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Technician name</th>
-                                                        <th style="width: 50%">{{ job_card_detail.technitian }}</th>
+                                                        <th style="width: 50%">{{ job_card.technitian }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Service type name</th>
-                                                        <th style="width: 50%">{{ job_card_detail.service_type}}</th>
+                                                        <th style="width: 50%">{{ job_card.service_type}}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Area </th>
-                                                        <th style="width: 50%">{{ job_card_detail.area }}</th>
+                                                        <th style="width: 50%">{{ job_card.area }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Customer name</th>
-                                                        <th style="width: 50%">{{ job_card_detail.customer_name }}</th>
+                                                        <th style="width: 50%">{{ job_card.customer_name }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Customer Mobile</th>
-                                                        <th style="width: 50%">{{ job_card_detail.customer_mobile }}</th>
+                                                        <th style="width: 50%">{{ job_card.customer_mobile }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Engineer</th>
-                                                        <th style="width: 50%">{{ job_card_detail.engineer }}</th>
+                                                        <th style="width: 50%">{{ job_card.engineer }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Creator</th>
-                                                        <th style="width: 50%">{{ job_card_detail.creator_name }}</th>
+                                                        <th style="width: 50%">{{ job_card.creator_name }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Product</th>
-                                                        <th style="width: 50%">{{ job_card_detail.product}}</th>
+                                                        <th style="width: 50%">{{ job_card.product}}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Model</th>
-                                                        <th style="width: 50%">{{ job_card_detail.model_name }}</th>
+                                                        <th style="width: 50%">{{ job_card.model_name }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Contact person name</th>
-                                                        <th style="width: 50%">{{ job_card_detail.contact_person_name }}</th>
+                                                        <th style="width: 50%">{{ job_card.contact_person_name }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Call By</th>
-                                                        <th style="width: 50%">{{ job_card_detail.call_type }}</th>
+                                                        <th style="width: 50%">{{ job_card.call_type }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Service Type</th>
-                                                        <th style="width: 50%">{{ job_card_detail.service_type }}</th>
+                                                        <th style="width: 50%">{{ job_card.service_type }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Service Income</th>
-                                                        <th style="width: 50%">{{ job_card_detail.service_income }}</th>
+                                                        <th style="width: 50%">{{ job_card.service_income }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Service wanted date</th>
-                                                        <th style="width: 50%">{{ job_card_detail.service_wanted_at }}</th>
+                                                        <th style="width: 50%">{{ job_card.service_wanted_at }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Service Start date</th>
-                                                        <th style="width: 50%">{{ job_card_detail.service_start_at }}</th>
+                                                        <th style="width: 50%">{{ job_card.service_start_at }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Service End date</th>
-                                                        <th style="width: 50%">{{ job_card_detail.service_end_at }}</th>
+                                                        <th style="width: 50%">{{ job_card.service_end_at }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Installation date</th>
-                                                        <th style="width: 50%">{{ job_card_detail.installation_date }}</th>
+                                                        <th style="width: 50%">{{ job_card.installation_date }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Buy Date</th>
-                                                        <th style="width: 50%">{{ job_card_detail.buy_date }}</th>
+                                                        <th style="width: 50%">{{ job_card.buy_date }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Visited Date</th>
-                                                        <th style="width: 50%">{{ job_card_detail.visited_date }}</th>
+                                                        <th style="width: 50%">{{ job_card.visited_date }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Service Request No</th>
-                                                        <th style="width: 50%">{{ job_card_detail.job_card_detail_no }}</th>
+                                                        <th style="width: 50%">{{ job_card.job_card_no }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Service Request Status</th>
-                                                        <th style="width: 50%">{{ job_card_detail.job_card_detail_status }}</th>
+                                                        <th style="width: 50%">{{ job_card.job_card_status }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Hour</th>
-                                                        <th style="width: 50%">{{ job_card_detail.hour }}</th>
+                                                        <th style="width: 50%">{{ job_card.hour }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Remarks</th>
-                                                        <th style="width: 50%">{{ job_card_detail.remarks }}</th>
+                                                        <th style="width: 50%">{{ job_card.remarks }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Service Income</th>
-                                                        <th style="width: 50%">{{ job_card_detail.service_income }}</th>
+                                                        <th style="width: 50%">{{ job_card.service_income }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Address</th>
-                                                        <th style="width: 50%">{{ job_card_detail.address }}</th>
+                                                        <th style="width: 50%">{{ job_card.address }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Chassis Number</th>
-                                                        <th style="width: 50%">{{ job_card_detail.chassis_number }}</th>
+                                                        <th style="width: 50%">{{ job_card.chassis_number }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Running Hour</th>
-                                                        <th style="width: 50%">{{ job_card_detail.running_houre }}</th>
+                                                        <th style="width: 50%">{{ job_card.running_houre }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Section</th>
-                                                        <th style="width: 50%">{{ job_card_detail.section }}</th>
+                                                        <th style="width: 50%">{{ job_card.section }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Total Receviable Amount</th>
-                                                        <th style="width: 50%">{{ job_card_detail.total_receviable }}</th>
+                                                        <th style="width: 50%">{{ job_card.total_receviable }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Discount Amount</th>
-                                                        <th style="width: 50%">{{ job_card_detail.discount_amount }}</th>
+                                                        <th style="width: 50%">{{ job_card.discount_amount }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Total Service Cost/th>
-                                                        <th style="width: 50%">{{ job_card_detail.total_service_cost }}</th>
+                                                        <th style="width: 50%">{{ job_card.total_service_cost }}</th>
                                                     </tr> <tr>
                                                         <th style="width: 50%">Invoice Number</th>
-                                                        <th style="width: 50%">{{ job_card_detail.invoice_number }}</th>
+                                                        <th style="width: 50%">{{ job_card.invoice_number }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Spare Parts</th>
-                                                        <th style="width: 50%">{{ job_card_detail.spare_parts_sale }}</th>
+                                                        <th style="width: 50%">{{ job_card.spare_parts_sale }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">App Time</th>
-                                                        <th style="width: 50%">{{ job_card_detail_detail.time_app }}</th>
+                                                        <th style="width: 50%">{{ job_card.time_app }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Service Date</th>
-                                                        <th style="width: 50%">{{ job_card_detail_detail.service_date }}</th>
+                                                        <th style="width: 50%">{{ job_card.service_date }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Created At</th>
-                                                        <th style="width: 50%">{{ job_card_detail_detail.created_at }}</th>
+                                                        <th style="width: 50%">{{ job_card.created_at }}</th>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -177,7 +173,7 @@
             </div>
         </div>
     </div>
-    </div>
+
 </template>
 
 <script>
@@ -186,7 +182,7 @@ export default {
     name: "List",
     data() {
         return {
-            job_card_detail_detail_details: [],
+            job_card: [],
             technicians: [],
             service_types: [],
             pagination: {
@@ -245,7 +241,7 @@ export default {
             this.isLoading = true;
             axios.get(`/api/service-request-details/${this.$route.params.id}`).then((response)=>{
                 console.log(response.data);
-                this.job_card_detail = response.data.job_card_detail_detail
+                this.job_card = response.data.data
                 this.isLoading = false;
             }).catch((error)=>{
 
