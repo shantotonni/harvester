@@ -92,8 +92,6 @@ export default {
     data() {
         return {
             job_cards: [],
-            technitian: [],
-            service_types: [],
             pagination: {
                 current_page: 1
             },
@@ -129,8 +127,7 @@ export default {
         document.title = 'Service Request List | Harvester';
         this. getAllPendingServiceRequestList();
         this. getAllSections();
-        this. getAllServiceType();
-        this. getAllTechnician();
+
     },
     methods: {
         getAllPendingServiceRequestList() {
@@ -159,13 +156,6 @@ export default {
         },
 
 
-        getAllTechnician(){
-            axios.get('/api/get-all-technician').then((response)=>{
-                this.technicians = response.data.data;
-            }).catch((error)=>{
-
-            })
-        },
         getAllSections(){
             axios.get('/api/get-all-sections').then((response)=>{
                 console.log(response)
@@ -174,14 +164,14 @@ export default {
 
             })
         },
-        getAllServiceType(){
-            axios.get('/api/get-all-service-type').then((response)=>{
-                console.log(response)
-                this.service_types = response.data.service_types;
-            }).catch((error)=>{
-
-            })
-        },
+        // getAllServiceType(){
+        //     axios.get('/api/get-all-service-type').then((response)=>{
+        //         console.log(response)
+        //         this.service_types = response.data.service_types;
+        //     }).catch((error)=>{
+        //
+        //     })
+        // },
         destroy(id) {
             Swal.fire({
                 title: 'Are you sure?',

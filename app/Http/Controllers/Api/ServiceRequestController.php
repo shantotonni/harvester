@@ -6,20 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ServiceRequest\ServiceRequestStoreRequest;
 use App\Http\Requests\ServiceRequest\ServiceRequestUpdateRequest;
 use App\Http\Resources\ServiceRequest\ServiceRequestJobCardCollection;
+use App\Http\Resources\ServiceRequest\ServiceRequestJobCardResource;
 use App\Models\ApprovedChassis;
 use App\Models\Area;
 use App\Models\CallType;
 use App\Models\ChassisImage;
 use App\Models\JobCard;
 use App\Models\Products;
-use App\Models\ServiceRequest;
 use App\Models\ServiceRequestDetails;
 use App\Models\ServiceType;
 use App\Models\Territory;
 use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -199,8 +198,8 @@ class ServiceRequestController extends Controller
     }
 
     public function serviceRequestDetails($id){
-        $job_card = JobCard::find($id);
-        return $job_card;
+        $job_cards = JobCard::with(['area', 'territory', 'engineer', 'technitian', 'participant', 'call_type', 'service_types', 'products', 'model'])->find($id);
+        return new ServiceRequestJobCardResource($job_cards);
     }
 
     public function create()

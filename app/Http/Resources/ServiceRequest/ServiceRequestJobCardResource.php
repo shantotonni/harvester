@@ -64,8 +64,13 @@ class ServiceRequestJobCardResource extends JsonResource
             'total_service_cost'=>$this->total_service_cost,
             'discount_amount'=>$this->discount_amount,
             'total_receviable'=>$this->total_receviable,
-            'service_income_details' => new ServiceIncomeDetailsCollection($this->service_income_details),
-            'service_income_amount' => $this->service_income_amount,
+
+
+            'technitian_id'=>$this->technitian_id,
+            'district_name'=>isset($this->district)? $this->district->name:'',
+            'upazila_name'=>isset($this->upazila)? $this->upazila->name:'',
+            'section_name'=>isset($this->section)? $this->section->name:'',
+            'name'=>isset($this->product)? $this->product->name:'',
         ];
     }
 }

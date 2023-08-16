@@ -93,8 +93,6 @@ export default {
     data() {
         return {
             job_cards: [],
-            technitians: [],
-            service_type: [],
             pagination: {
                 current_page: 1
             },

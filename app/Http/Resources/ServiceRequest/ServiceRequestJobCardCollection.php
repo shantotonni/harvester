@@ -26,6 +26,7 @@ class ServiceRequestJobCardCollection extends ResourceCollection
                     'area' =>isset($job_card->area) ? $job_card->area->name : '',
                     'engineer_id' => $job_card->engineer_id,
                     'engineer' =>isset($job_card->engineer) ? $job_card->engineer->name : '',
+                    'technitian_id' => $job_card->technitian_id,
                     'technitian' =>isset($job_card->technitian) ? $job_card->technitian->name : '',
                     'creator_name' =>$job_card->job_creator,
                     'participant_id' =>$job_card->participant_id,
@@ -67,6 +68,16 @@ class ServiceRequestJobCardCollection extends ResourceCollection
                     'total_service_cost'=>$job_card->total_service_cost,
                     'discount_amount'=>$job_card->discount_amount,
                     'total_receviable'=>$job_card->total_receviable,
+
+                    'name'=>isset($job_card->product)? $job_card->product->name:'',
+                    'district_name'=>isset($job_card->district)? $job_card->district->name:'',
+                    'upazila_name'=>isset($job_card->upazila)? $job_card->upazila->name:'',
+                    'customer_id'=>$job_card->customer_id,
+                    'job_creator'=>$job_card->job_creator,
+                    'section_name'=>isset($job_card->section)? $job_card->section->name:'',
+                    'service_wanted_date'=> $job_card->service_wanted_at,
+                    'technitian_name'=> isset($job_card->technician) ? $job_card->technician->name: '',
+                    'technitian_mobile'=> isset($job_card->technician) ? $job_card->technician->mobile: '',
                 ];
             })
         ];
