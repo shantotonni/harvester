@@ -17,8 +17,7 @@ use App\Http\Controllers\Api\SeasonalCropsController;
 use App\Http\Controllers\Api\SectionController;
 use App\Http\Controllers\Api\ServiceCenterController;
 use App\Http\Controllers\Api\ServiceEngineerController;
-use App\Http\Controllers\Api\ServiceRequestDetailController;
-use App\Http\Controllers\Api\ServiceRequestDetailsController;
+
 use App\Http\Controllers\Api\ServiceTipsController;
 use App\Http\Controllers\Api\ServiceTypeController;
 use App\Http\Controllers\Api\ServicingTypeController;
@@ -199,7 +198,7 @@ Route::group(['middleware' => 'CustomerAuth'], function () {
     Route::post('customer-service-request', [App\Http\Controllers\Api\Mobile\ServiceRequestController::class, 'customerServiceRequest']);
     //District wise seasonal crops
 
-    //Route::apiResource('service-request', ServiceRequestController::class);
+    Route::post('/harvester-warranty-parts', [App\Http\Controllers\Api\Mobile\CustomerController::class,'warrantyParts']);
 
 });
 

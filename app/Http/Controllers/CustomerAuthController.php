@@ -32,8 +32,8 @@ class CustomerAuthController extends Controller
         ]);
 
         if ($token = JWTAuth::attempt(['mobile' => $request->mobile, 'password' => $request->password])) {
-            $user = Auth::user();
-            $customer = Customer::where('id',$user->id)->with('customer_chassis')->first();
+            //$user = Auth::user();
+            $customer = Customer::where('mobile',$request->mobile)->where('customer_type','harvester')->with('customer_chassis')->first();
             //$chassis = CustomerChassis::where('customer_id',$user->id)->select('id','customer_id','chassis_no','model')->get();
             return response()->json([
                 'status' => 'success',
@@ -257,6 +257,5 @@ class CustomerAuthController extends Controller
         //print_r($response); exit();
         return json_decode($response);
     }
-
 
 }

@@ -90,8 +90,6 @@ class CustomerController extends Controller
         return response()->json(['message'=>'Customer Updated Successfully'],200);
     }
 
-
-
     public function search($query)
     {
         $customers = Customer::where('CustomerName','LIKE',"%$query%")
