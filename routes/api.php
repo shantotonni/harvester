@@ -151,15 +151,16 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('search/service-engineer/{query}', [ServiceEngineerController::class, 'search']);
 
     //	Pending Service List
-    Route::get('pending-service-request-list	', [ServiceRequestController::class,'pendingJobCard'])->name('pendingRequest');
+    Route::get('pending-service-request-list', [ServiceRequestController::class,'pendingJobCard'])->name('pendingRequest');
     Route::get('search/pending-service-request-list	/{query}', [ServiceRequestController::class, 'search']);
 
     //	Completed Service List
     Route::get('completed-service-request-list', [ServiceRequestController::class,'approveJobCard'])->name('completeRequest');
-    Route::get('search/	completed-service-request-list/{query}', [ServiceRequestController::class, 'search']);
+    Route::get('search/completed-service-request-list/{query}', [ServiceRequestController::class, 'search']);
 
-    //	Completed Service List
-    Route::apiResource('/service-request-details', ServiceRequestDetailController::class);
+    //	Service Details
+    Route::get('/service-request-details/{id}', [ServiceRequestController::class,'serviceRequestDetails']);
+
 //Section
     Route::apiResource('section-list', SectionController::class);
     Route::get('search/section-list/{query}', [SectionController::class, 'search']);

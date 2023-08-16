@@ -55,9 +55,9 @@
                                                 <span class="badge badge-warning" v-if="job_card.job_status == ''">pending</span>
                                             </td>
                                             <td class="text-center">
-                                                <router-link :to="`/harvester/service-request-details/${job_card.id}`" class="btn btn-primary btn-sm btn-xs"><i class="far fa-eye"></i></router-link>
-                                                <!--                                                <button type="button" @click="edit(delivery)" class="btn btn-success btn-sm btn-xs"><i class="far fa-edit"></i></button>-->
-                                                <!--                                                <button type="button" @click="destroy(delivery.id)" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>-->
+                                                <router-link :to="`service-request-details/${job_card.id}`" class="btn btn-primary btn-sm btn-xs"><i class="far fa-eye"></i></router-link>
+                                                <!--<button type="button" @click="edit(delivery)" class="btn btn-success btn-sm btn-xs"><i class="far fa-edit"></i></button>-->
+                                                <!--<button type="button" @click="destroy(delivery.id)" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>-->
                                             </td>
                                         </tr>
                                         <tr v-else>

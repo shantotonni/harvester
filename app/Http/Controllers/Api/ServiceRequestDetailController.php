@@ -15,7 +15,6 @@ class ServiceRequestDetailController extends Controller{
        $this->middleware('auth');
     }
 
-
     public function index(){
         $job_cards = ServiceRequestDetails::orderBy('id','Desc')->paginate(20);
         return new ServiceRequestDetailsCollection($job_cards);

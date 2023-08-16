@@ -31,9 +31,7 @@ class ServiceRequestController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Request $request)
-    {
-
+    public function index(Request $request){
 
         $from_date = $request->from_date ? date('Y-m-d', strtotime($request->from_date)) : date('Y-m-01', strtotime(date('Y-m-01') . ' -1 month'));
         $to_date = $request->to_date ? date('Y-m-d', strtotime($request->to_date)) : date('Y-m-d');
@@ -143,38 +141,6 @@ class ServiceRequestController extends Controller
         return new ServiceRequestJobCardCollection($job_cards);
     }
 
-//    public function sameDayChassisCheck($job_cards)
-//    {
-//        foreach ($job_cards as $job) {
-//            if (!empty($job->chassis_number)) {
-//                $same_day_chessis_job = $job_cards->filter(function ($item) use ($job) {
-//                    return \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') === Carbon::parse($job->created_at)->format('Y-m-d') && $item->chassis_number === $job->chassis_number;
-//                });
-//                $same_month_chessis_job = $job_cards->filter(function ($item) use ($job) {
-//                    return Carbon::parse($item->created_at)->format('Y-m') === Carbon::parse($job->created_at)->format('Y-m') && $item->chassis_number === $job->chassis_number;
-//                });
-//
-//                if (count($job->image) > 0) {
-//                    $has_image = 1;
-//                } else {
-//                    $has_image = 0;
-//                }
-//
-//                if ($same_day_chessis_job->count() > 1) {
-//                    $job->color = '#CB2D2D';
-//                    $job->flag = 'hide';
-//                } elseif ($same_month_chessis_job->count() > 1) {
-//                    $job->color = '#FFFF00';
-//                } elseif ($has_image == 1) {
-//                    $job->color = '#aa95b1';
-//                } else {
-//                    $job->color = '';
-//                }
-//            }
-//        }
-//        return $job_cards;
-//    }
-
     public function approveJobCard(Request $request)
     {
 
@@ -230,6 +196,11 @@ class ServiceRequestController extends Controller
         }
 
         return new ServiceRequestJobCardCollection($job_cards);
+    }
+
+    public function serviceRequestDetails($id){
+        $job_card = JobCard::find($id);
+        return $job_card;
     }
 
     public function create()
@@ -327,18 +298,6 @@ class ServiceRequestController extends Controller
         Session::flash("success", "Edited Successfully !");
         return redirect("/pending_job_card");
     }
-
-    public function show($id)
-    {
-        $job_card = JobCard::find($id);
-        $chassisImage = ChassisImage::whereNotNull('image_url')->where('job_card_id', $id)->first();
-        // dd($chassisImage);
-        return new ServiceRequestJobCardCollection($job_card);
-    }
-//    public function show($id){
-//        $job_card = JobCard::find($id);
-//        return new ServiceRequestJobCardCollection($job_card);
-//    }
 
     public function jobCardChassisUpdate(Request $request)
     {
