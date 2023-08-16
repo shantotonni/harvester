@@ -99,7 +99,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Service Request Status</th>
-                                                        <th style="width: 50%">{{ job_card.job_card_status }}</th>
+                                                        <th style="width: 50%">{{ job_card.job_status }}</th>
                                                     </tr>
                                                     <tr>
                                                         <th style="width: 50%">Hour</th>
