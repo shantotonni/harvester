@@ -311,6 +311,18 @@
         'prefix' => '',
         'strict' => false,
       ),
+      'WarrantyMonitoringProcess' => 
+      array (
+        'driver' => 'sqlsrv',
+        'host' => '192.168.100.62',
+        'port' => '1433',
+        'database' => 'WarrantyMonitoringProcess',
+        'username' => 'sa',
+        'password' => 'dataport',
+        'charset' => 'utf8',
+        'prefix' => '',
+        'strict' => false,
+      ),
       'pgsql' => 
       array (
         'driver' => 'pgsql',
