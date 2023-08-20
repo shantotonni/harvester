@@ -43,7 +43,6 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('user-by-user-id', [UserController::class, 'getUserByUserId']);
     Route::post('user-profile-update', [UserController::class, 'updateProfile']);
 
-
     //menu resource route
     Route::apiResource('menu', MenuController::class);
     Route::get('search/menu/{query}', [MenuController::class, 'search']);
@@ -98,8 +97,6 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-service-request-details-list', [CommonController::class, 'getAllServiceRequestDetailsList']);
     Route::get('get-all-technician', [CommonController::class, 'getAllTechnician']);
     Route::get('get-all-engineer', [CommonController::class, 'getAllEngineer']);
-
-
     Route::get('get-all-section', [CommonController::class, 'getAllSectionList']);
 
     //get dashboard data route
@@ -133,7 +130,6 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::apiResource('harvester-parts', HarvesterPartsController::class);
     Route::get('search/harvester-parts{query}', [HarvesterPartsController::class, 'search']);
 
-
     //District wise seasonal crops
     Route::apiResource('district-wise-seasonal-crops', SeasonalCropsController::class);
     Route::get('search/district-wise-seasonal-crops/{query}', [SeasonalCropsController::class, 'search']);
@@ -150,21 +146,21 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::apiResource('service-engineer', ServiceEngineerController::class);
     Route::get('search/service-engineer/{query}', [ServiceEngineerController::class, 'search']);
 
-    //	Pending Service List
+    //Pending Service List
     Route::get('pending-service-request-list', [ServiceRequestController::class,'pendingJobCard'])->name('pendingRequest');
     Route::get('search/pending-service-request-list	/{query}', [ServiceRequestController::class, 'search']);
 
-    //	Completed Service List
+    //Completed Service List
     Route::get('completed-service-request-list', [ServiceRequestController::class,'approveJobCard'])->name('completeRequest');
     Route::get('search/completed-service-request-list/{query}', [ServiceRequestController::class, 'search']);
 
-    //	Service Details
+    //Service Details
     Route::get('/service-request-details/{id}', [ServiceRequestController::class,'serviceRequestDetails']);
 
-//Section
+    //Section
     Route::apiResource('section-list', SectionController::class);
     Route::get('search/section-list/{query}', [SectionController::class, 'search']);
-    //Section
+    //product model
     Route::apiResource('product-model', ProductModelController::class);
     Route::get('search/product-model/{query}', [ProductModelController::class, 'search']);
 
