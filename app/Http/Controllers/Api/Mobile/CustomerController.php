@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Mobile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ServiceRequest\ServiceRequestCollection;
+use App\Http\Resources\WarrantyPartsCollection;
 use App\Models\Customer;
 use App\Models\PartsDetail;
 use App\Models\ServiceRequest;
@@ -29,13 +30,10 @@ class CustomerController extends Controller
     public function warrantyParts(Request $request){
         $chassis = $request->ChassisNumber;
         //$customer_warranty_parts = WarrantyClaimInfo::where('ChassisNumber',$request->ChassisNumber)->where('Status','Approved')->get();
-        $parts = PartsDetail::whereHas('warranty_claim', function($query) use ($chassis){
+        $parts = PartsDetail::with('warranty_claim')->whereHas('warranty_claim', function($query) use ($chassis){
             $query->where('ChassisNumber', $chassis);
             $query->where('Status', 'Approved');
         })->get();
-        return response()->json([
-            'status'=>'success',
-            'parts'=>$parts
-        ]);
+        return new WarrantyPartsCollection($parts);
     }
 }
