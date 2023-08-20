@@ -33,6 +33,7 @@ use App\Models\Crop;
 use App\Models\Customer;
 use App\Models\District;
 use App\Models\Doctor;
+use App\Models\Engineer;
 use App\Models\HarvesterInfo;
 use App\Models\HarvesterParts;
 use App\Models\HarvesterService;
@@ -54,6 +55,7 @@ use App\Models\ServiceType;
 use App\Models\ServicingType;
 use App\Models\Shop;
 use App\Models\Showroom;
+use App\Models\Technician;
 use App\Models\Upazila;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -173,9 +175,16 @@ class CommonController extends Controller
     }
     public function getAllTechnician()
     {
-        $technitians = Section::OrderBy('id', 'asc')->get();
+        $technitians = User::OrderBy('id', 'asc')->get();
         return response()->json([
             'technitians' => $technitians
+        ]);
+    }
+    public function getAllEngineer()
+    {
+        $engineers = User::OrderBy('id', 'asc')->get();
+        return response()->json([
+            'engineers' => $engineers
         ]);
     }
     public function getAllPriceByMirror($ProductCode)
@@ -300,7 +309,7 @@ class CommonController extends Controller
     {
         $job_cards = JobCard::orderBy('created_at', 'asc')->get();
         return response()->json([
-            'job_cards' => new ServiceRequestJobCardCollection($job_cards)
+            'job_card' => new ServiceRequestJobCardCollection($job_cards)
         ]);
     }
 

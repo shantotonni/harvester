@@ -17,8 +17,7 @@ use App\Http\Controllers\Api\SeasonalCropsController;
 use App\Http\Controllers\Api\SectionController;
 use App\Http\Controllers\Api\ServiceCenterController;
 use App\Http\Controllers\Api\ServiceEngineerController;
-use App\Http\Controllers\Api\ServiceRequestDetailController;
-use App\Http\Controllers\Api\ServiceRequestDetailsController;
+
 use App\Http\Controllers\Api\ServiceTipsController;
 use App\Http\Controllers\Api\ServiceTypeController;
 use App\Http\Controllers\Api\ServicingTypeController;
@@ -98,6 +97,7 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-completed-service-request-list', [CommonController::class, 'getAllCompletedServiceRequestList']);
     Route::get('get-all-service-request-details-list', [CommonController::class, 'getAllServiceRequestDetailsList']);
     Route::get('get-all-technician', [CommonController::class, 'getAllTechnician']);
+    Route::get('get-all-engineer', [CommonController::class, 'getAllEngineer']);
 
 
     Route::get('get-all-section', [CommonController::class, 'getAllSectionList']);

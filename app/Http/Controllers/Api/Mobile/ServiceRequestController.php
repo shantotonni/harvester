@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Mobile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ServiceRequest\ServiceRequestCollection;
+use App\Http\Resources\ServiceRequest\ServiceRequestJobCardCollection;
 use App\Models\Customer;
 use App\Models\JobCard;
 use App\Models\ProductModel;
@@ -28,8 +29,8 @@ class ServiceRequestController extends Controller
     public function getAllCustomerServiceRequest()
     {
         $user = JWTAuth::parseToken()->authenticate();
-        $service_requests = JobCard::where('customer_id',$user->id)->with('model','product','district','upazila','section','technician')->paginate(15);
-        return new ServiceRequestCollection($service_requests);
+        $job_cards = JobCard::where('customer_id',$user->id)->with('model','products','district','upazila','section','technitian')->paginate(15);
+        return new ServiceRequestJobCardCollection($job_cards);
     }
 
     public function customerServiceRequest(Request $request)
