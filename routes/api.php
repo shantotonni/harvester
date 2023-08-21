@@ -194,7 +194,7 @@ Route::group(['middleware' => 'CustomerAuth'], function () {
     Route::get('get-all-customer-service-request', [App\Http\Controllers\Api\Mobile\ServiceRequestController::class,'getAllCustomerServiceRequest']);
 
     Route::post('auth/profile-update', [CustomerAuthController::class, 'updateProfile']);
-    Route::post('change-password', [CustomerAuthController::class, 'changePassword']);
+    Route::post('customer-password-change', [CustomerAuthController::class, 'changePassword']);
 
     Route::post('customer-service-request', [App\Http\Controllers\Api\Mobile\ServiceRequestController::class, 'customerServiceRequest']);
     //District wise seasonal crops

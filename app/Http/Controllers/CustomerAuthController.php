@@ -284,10 +284,9 @@ class CustomerAuthController extends Controller
 
     public function changePassword(Request $request)
     {
-
         $this->validate($request, [
-            'previous_password' => 'required|min:6',
-            'password' => 'required|min:6|confirmed',
+            'previous_password' => 'required',
+            'password' => 'required',
         ]);
 
         $current_password = Auth::User()->password;
