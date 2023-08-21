@@ -8,6 +8,7 @@ use App\Http\Resources\WarrantyPartsCollection;
 use App\Models\Customer;
 use App\Models\PartsDetail;
 use App\Models\ServiceRequest;
+use App\Models\SmartAssist;
 use App\Models\User;
 use App\Models\WarrantyClaimInfo;
 use Carbon\Carbon;
@@ -35,5 +36,20 @@ class CustomerController extends Controller
             $query->where('Status', 'Approved');
         })->get();
         return new WarrantyPartsCollection($parts);
+    }
+
+    public function harvesterSmartAssist(Request $request){
+        $smart_assist = SmartAssist::where('chassis_no',$request->chassis_no)->where('password',$request->password)->first();
+        if ($smart_assist){
+            return response()->json([
+                'status'=>'success',
+                'message'=>'Match Successfully'
+            ]);
+        }else{
+            return response()->json([
+                'status'=>'error',
+                'message'=>'Not Match'
+            ]);
+        }
     }
 }

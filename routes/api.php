@@ -180,6 +180,11 @@ Route::post('verify-chassis-number', [CustomerAuthController::class, 'findChassi
 Route::post('find-mobile', [CustomerAuthController::class, 'findMobile']);
 Route::get('get_districts_upazilla', [CommonController::class, 'getAllDistrictsUpazilla']);
 
+Route::post('send-otp-for-forgot-password', [CustomerAuthController::class, 'sendOtpForForgotPassword']);
+Route::post('verify-otp-for-forgot-password', [CustomerAuthController::class, 'verifyOtpForForgotPassword']);
+Route::post('customer-forgot-password', [CustomerAuthController::class, 'customerForgotPassword']);
+
+
 Route::group(['middleware' => 'CustomerAuth'], function () {
     //get data
     Route::get('get-all-problem-section', [CommonController::class, 'getAllProblemSection']);
@@ -190,14 +195,12 @@ Route::group(['middleware' => 'CustomerAuth'], function () {
 
     Route::post('auth/profile-update', [CustomerAuthController::class, 'updateProfile']);
     Route::post('change-password', [CustomerAuthController::class, 'changePassword']);
-    Route::post('send-otp-for-forgot-password', [CustomerAuthController::class, 'sendOtpForForgotPassword']);
-    Route::post('verify-otp-for-forgot-password', [CustomerAuthController::class, 'verifyOtpForForgotPassword']);
-    Route::post('customer-forgot-password', [CustomerAuthController::class, 'customerForgotPassword']);
 
     Route::post('customer-service-request', [App\Http\Controllers\Api\Mobile\ServiceRequestController::class, 'customerServiceRequest']);
     //District wise seasonal crops
 
     Route::post('/harvester-warranty-parts', [App\Http\Controllers\Api\Mobile\CustomerController::class,'warrantyParts']);
+    Route::post('/harvester-smart-assist', [App\Http\Controllers\Api\Mobile\CustomerController::class,'harvesterSmartAssist']);
 
 });
 
