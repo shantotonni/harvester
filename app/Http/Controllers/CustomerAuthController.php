@@ -309,14 +309,12 @@ class CustomerAuthController extends Controller
         }
     }
 
-    public function me()
-    {
+    public function me(){
         $user = JWTAuth::parseToken()->authenticate();
         return response()->json($user);
     }
 
-    public function logout(): \Illuminate\Http\JsonResponse
-    {
+    public function logout(): \Illuminate\Http\JsonResponse{
         try {
             $this->guard()->logout();
         } catch (\Exception $exception) {
@@ -328,12 +326,9 @@ class CustomerAuthController extends Controller
         ], 200);
     }
 
-    public function sendsms($ip, $userid, $password, $smstext, $receipient)
-    {
+    public function sendsms($ip, $userid, $password, $smstext, $receipient){
         $smsUrl = "http://{$ip}/httpapi/sendsms?userId={$userid}&password={$password}&smsText=" . $smstext . "&commaSeperatedReceiverNumbers=" . $receipient;
-        //echo $smsUrl; exit();
         $response = file_get_contents($smsUrl);
-        //print_r($response); exit();
         return json_decode($response);
     }
 
