@@ -167,9 +167,6 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //Section
     Route::apiResource('product-model', ProductModelController::class);
     Route::get('search/product-model/{query}', [ProductModelController::class, 'search']);
-
-
-
   //  Route::get('get-all-district-wise-seasonal-crops/{id}', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
 
 });
