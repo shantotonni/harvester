@@ -218,12 +218,23 @@ class CommonController extends Controller
             'product_list' => new HarvesterInfoCollection($harvester_infos)
         ]);
     }
-    public function getAllHarvesterParts()
+    public function getAllHarvesterParts(Request $request)
     {
-        $harvester_parts = HarvesterParts::orderBy('created_at', 'desc')->paginate(15);
-        return response()->json([
-            'harvester_parts' => new HarvesterPartsCollection($harvester_parts)
-        ]);
+        $product_model_id = $request->product_model_id;
+        $section_id = $request->section_id;
+        $query = $request->search;
+        $harvester_parts = HarvesterParts::query()->with('MirrorProducts');
+        if (!empty($product_model_id)){
+            $harvester_parts = $harvester_parts->where('product_model_id',$product_model_id);
+        }
+        if (!empty($section_id)){
+            $harvester_parts = $harvester_parts->where('section_id',$section_id);
+        }
+        if (!empty($query)){
+            $harvester_parts = $harvester_parts->where('ProductCode','like','%'.$query.'%');
+        }
+        $harvester_parts = $harvester_parts->orderBy('created_at', 'desc')->get();
+        return new HarvesterPartsCollection($harvester_parts);
     }
 
     public function getAllDistrictWiseSeasonalCrops(Request $request)
@@ -294,7 +305,7 @@ class CommonController extends Controller
             'job_cards' => new ServiceRequestJobCardCollection($job_cards)
         ]);
     }
-   public function getAllServiceRequestDetailsList()
+    public function getAllServiceRequestDetailsList()
     {
         $job_cards = JobCard::orderBy('created_at', 'asc')->get();
         return response()->json([

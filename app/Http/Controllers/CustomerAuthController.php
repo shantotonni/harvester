@@ -31,7 +31,7 @@ class CustomerAuthController extends Controller
             'password' => 'required',
         ]);
 
-        if ($token = JWTAuth::attempt(['mobile' => $request->mobile, 'password' => $request->password])) {
+        if ($token = JWTAuth::attempt(['mobile' => $request->mobile, 'password' => $request->password,'customer_type'=>'harvester'])) {
             //$user = Auth::user();
             $customer = Customer::where('mobile',$request->mobile)->where('customer_type','harvester')->with('customer_chassis')->first();
             //$chassis = CustomerChassis::where('customer_id',$user->id)->select('id','customer_id','chassis_no','model')->get();
@@ -203,13 +203,92 @@ class CustomerAuthController extends Controller
         ], 200);
     }
 
+    public function sendOtpForForgotPassword(Request $request){
+        $mobile = $request->mobile;
+        $exist_customer = Customer::where('mobile', $mobile)->where('customer_type', 'harvester')->exists();
+        if ($exist_customer){
+            try {
+                $six_digit_random_number = random_int(100000, 999999);
+                $smscontent = 'Otp Code - ' . $six_digit_random_number;
+
+                $this->sendsms($ip = '192.168.100.213', $userid = 'motors', $password = 'Asdf1234', $smstext = urlencode($smscontent), $receipient = urlencode($mobile));
+
+                $otp = new Otp();
+                $otp->otp_code = $six_digit_random_number;
+                $otp->mobile = $mobile;
+                $otp->status = 0;
+                $otp->save();
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Successfully Otp Send'
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => 401,
+                    'error' => $e
+                ]);
+            }
+        }else{
+            return response()->json([
+                'status' => 'error',
+                'error' => 'Mobile Number Not Found'
+            ]);
+        }
+    }
+
+    public function verifyOtpForForgotPassword(Request $request){
+        $otp = $request->otp_code;
+        $mobile = $request->mobile;
+
+        $check_otp = Otp::where('mobile', $mobile)->where('otp_code', $otp)->where('status', 0)->orderBy('created_at', 'desc')->first();
+
+        if ($check_otp) {
+            $check_otp->status = 1;
+            $check_otp->save();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Otp Match Successfully'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Otp Not Match'
+            ]);
+        }
+    }
+
+    public function customerForgotPassword(Request $request){
+        $this->validate($request, [
+            'password' => 'required',
+        ]);
+        $mobile = $request->mobile;
+        $password = $request->password;
+
+        $customer = Customer::where('mobile', $mobile)->where('customer_type', 'harvester')->first();
+
+        if ($customer){
+            $customer->password = bcrypt($password);
+            $customer->save();
+            return response()->json([
+                'status'=>'success',
+                'message' => 'Password Change successfully :)'
+            ]);
+        }else{
+            return response()->json([
+                'status'=>'error',
+                'message' => 'Something Went Wrong'
+            ]);
+        }
+    }
+
     public function changePassword(Request $request)
     {
-
         $this->validate($request, [
-            'previous_password' => 'required|min:6',
-            'password' => 'required|min:6|confirmed',
+            'previous_password' => 'required',
+            'password' => 'required',
         ]);
+
         $current_password = Auth::User()->password;
 
         $customer = JWTAuth::parseToken()->authenticate();
@@ -230,14 +309,12 @@ class CustomerAuthController extends Controller
         }
     }
 
-    public function me()
-    {
+    public function me(){
         $user = JWTAuth::parseToken()->authenticate();
         return response()->json($user);
     }
 
-    public function logout(): \Illuminate\Http\JsonResponse
-    {
+    public function logout(): \Illuminate\Http\JsonResponse{
         try {
             $this->guard()->logout();
         } catch (\Exception $exception) {
@@ -249,12 +326,9 @@ class CustomerAuthController extends Controller
         ], 200);
     }
 
-    public function sendsms($ip, $userid, $password, $smstext, $receipient)
-    {
+    public function sendsms($ip, $userid, $password, $smstext, $receipient){
         $smsUrl = "http://{$ip}/httpapi/sendsms?userId={$userid}&password={$password}&smsText=" . $smstext . "&commaSeperatedReceiverNumbers=" . $receipient;
-        //echo $smsUrl; exit();
         $response = file_get_contents($smsUrl);
-        //print_r($response); exit();
         return json_decode($response);
     }
 
