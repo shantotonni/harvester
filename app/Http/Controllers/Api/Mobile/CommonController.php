@@ -37,6 +37,7 @@ use App\Models\Engineer;
 use App\Models\HarvesterInfo;
 use App\Models\HarvesterParts;
 use App\Models\HarvesterService;
+use App\Models\HarvestingCost;
 use App\Models\JobCard;
 use App\Models\Menu;
 use App\Models\MOInfo;
@@ -157,6 +158,15 @@ class CommonController extends Controller
         return response()->json([
             'service_types'=>$service_types
         ]);
+    }
+
+    public function getAllHarvesterCost(){
+        $harvesting_cost = HarvestingCost::all();
+        $data = [];
+        foreach ($harvesting_cost as $key => $value){
+            $data [$value->cost_title]= $value->price;
+        }
+        return $data;
     }
 
     public function getAllServicingType()

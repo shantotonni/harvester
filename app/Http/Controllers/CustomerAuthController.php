@@ -32,7 +32,6 @@ class CustomerAuthController extends Controller
         ]);
 
         if ($token = JWTAuth::attempt(['mobile' => $request->mobile, 'password' => $request->password,'customer_type'=>'harvester'])) {
-            //$user = Auth::user();
             $customer = Customer::where('mobile',$request->mobile)->where('customer_type','harvester')->with('customer_chassis')->first();
             //$chassis = CustomerChassis::where('customer_id',$user->id)->select('id','customer_id','chassis_no','model')->get();
             return response()->json([
@@ -301,11 +300,17 @@ class CustomerAuthController extends Controller
                 $customer->password = bcrypt($request->password);
 
                 $customer->save();
-                return response()->json(['message' => 'Password Change successfully :)']);
+                return response()->json([
+                    'status'=>'success',
+                    'message' => 'Password Change successfully :)'
+                ]);
             }
 
         } else {
-            return response()->json(['message' => 'Previous Password Not Correct :)']);
+            return response()->json([
+                'status'=>'error',
+                'message' => 'Previous Password Not Correct :)'
+            ]);
         }
     }
 

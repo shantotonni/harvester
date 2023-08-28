@@ -43,7 +43,7 @@ class CustomerController extends Controller
         if ($smart_assist){
             return response()->json([
                 'status'=>'success',
-                'message'=>'Match Successfully'
+                'smart_assist'=>$smart_assist
             ]);
         }else{
             return response()->json([
