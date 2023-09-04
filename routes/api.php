@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\HarvesterInfoController;
 use App\Http\Controllers\Api\HarvesterPartsController;
 use App\Http\Controllers\Api\HarvesterServiceController;
+use App\Http\Controllers\Api\HarvestingCostController;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\MenuPermissionController;
 use App\Http\Controllers\Api\Mobile\CommonController;
@@ -163,12 +164,15 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //product model
     Route::apiResource('product-model', ProductModelController::class);
     Route::get('search/product-model/{query}', [ProductModelController::class, 'search']);
+
+    //harvesting cost
+    Route::apiResource('harvesting-cost', HarvestingCostController::class);
+    Route::get('search/harvesting-cost/{query}', [HarvestingCostController::class, 'search']);
   //  Route::get('get-all-district-wise-seasonal-crops/{id}', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
 
 });
 
-//For Customer
-//Customer Login
+//For Customer Login
 Route::post('customer-login', [CustomerAuthController::class, 'login']);
 Route::post('send-otp-for-registration', [CustomerAuthController::class, 'sendOtp']);
 Route::post('check-otp-for-registration', [CustomerAuthController::class, 'checkOtp']);
@@ -185,6 +189,7 @@ Route::post('customer-forgot-password', [CustomerAuthController::class, 'custome
 Route::group(['middleware' => 'CustomerAuth'], function () {
     //get data
     Route::get('get-all-problem-section', [CommonController::class, 'getAllProblemSection']);
+    Route::get('get-all-harvester-cost', [CommonController::class, 'getAllHarvesterCost']);
 
     //service request
     Route::post('customer-service-request', [App\Http\Controllers\Api\Mobile\ServiceRequestController::class,'customerServiceRequest']);

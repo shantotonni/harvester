@@ -53,6 +53,7 @@ import ServiceRequestDetails from '../views/service_request/Details.vue'
 import SectionList from '../views/section/List'
 import CustomerInfo from '../views/customer_info/List'
 import ProductModel from '../views/product_model/List'
+import HarvestingCostList from '../views/harvesting_cost/List'
 
 const routes = [
     {
@@ -168,6 +169,10 @@ const routes = [
             //Product model list
             {
                     path: base_url + '/product-model', name: 'ProductModel', component: ProductModel
+            },
+            //harvesting cost list
+            {
+                    path: base_url + '/harvesting-cost-list', name: 'HarvestingCostList', component: HarvestingCostList
             },
         ],
         beforeEnter(to, from, next) {
