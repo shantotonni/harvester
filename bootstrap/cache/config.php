@@ -4,13 +4,13 @@
     'name' => 'Laravel',
     'env' => 'local',
     'debug' => true,
-    'url' => 'http://localhost/harvester/',
+    'url' => 'http://localhost/degs/',
     'asset_url' => NULL,
     'timezone' => 'Asia/Dhaka',
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:eusNHjfw5I3owra0rKTbiY/uNO++KIsGfouL+RTvjrA=',
+    'key' => 'base64:gNtPBpAZM5wbPpDw/Qoc+YZPW2u7SVJIcDYAqbnY9xo=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -504,7 +504,7 @@
       array (
         'driver' => 'local',
         'root' => 'D:\\xampp\\htdocs\\harvester\\storage\\app/public',
-        'url' => 'http://localhost/harvester//storage',
+        'url' => 'http://localhost/degs//storage',
         'visibility' => 'public',
       ),
       's3' => 
@@ -544,7 +544,7 @@
   ),
   'jwt' => 
   array (
-    'secret' => 'cuHD5o5Lyp9q4jwua8nAHX3PWDB345fOyUq2XIB47cLVtKrEqIpuQani5K8OJx77',
+    'secret' => 'V84QfGS070pXSbNViljWt7AFSomPKcXF4CQsqC5kAoib6coTmDsyFe4McnxBYRdf',
     'keys' => 
     array (
       'public' => NULL,
