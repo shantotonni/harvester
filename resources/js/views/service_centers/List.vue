@@ -22,7 +22,6 @@
                     <div class="card">
                         <div class="datatable" v-if="!isLoading">
                             <div class="card-body">
-
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
                                         <div class="row">
@@ -44,7 +43,7 @@
                                         </div>
                                     </div>
                                     <div class="card-tools">
-                                        <input v-model="query" type="text" class="form-control" placeholder="Search">
+                                        <input v-model="query" type="text" class="form-control" placeholder="Search by address">
                                     </div>
 
                                 </div>

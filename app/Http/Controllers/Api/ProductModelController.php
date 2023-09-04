@@ -92,9 +92,8 @@ class ProductModelController extends Controller
 
     public function search($query)
     {
-        return new ProductModelCollection(ProductModel::Where('product_model.model_name', 'like', "%$query%")
-            ->join('product_model', 'product_model.id', 'harvester_service_details.model_id')
-            ->paginate(10));
+        return new ProductModelCollection(ProductModel::Where('model_name', 'like', "%$query%")
+          ->paginate(10));
     }
 
 

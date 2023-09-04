@@ -30,7 +30,7 @@
                                         </div>
                                     </div>
                                     <div class="card-tools">
-                                        <input v-model="query" type="text" class="form-control" placeholder="Search">
+                                        <input v-model="query" type="text" class="form-control" placeholder="Search by model name">
                                     </div>
 
                                 </div>

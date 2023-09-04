@@ -44,7 +44,7 @@
                                         </div>
                                     </div>
                                     <div class="card-tools">
-                                        <input v-model="query" type="text" class="form-control" placeholder="Search">
+                                        <input v-model="query" type="text" class="form-control" placeholder="Search by model">
                                     </div>
 
                                 </div>
@@ -63,6 +63,7 @@
                                             <th class="text-left">Parts Code</th>
                                             <th class="text-left">Price</th>
                                             <th class="text-left">Quantity</th>
+                                            <th class="text-left">Servicing Status</th>
                                             <th class="text-left">Action</th>
                                         </tr>
                                         </thead>
@@ -75,11 +76,12 @@
                                             <td class="text-left">{{ harvester_service.servicing_name }}</td>
                                             <td class="text-right">{{ harvester_service.from_hr }}</td>
                                             <td class="text-right">{{ harvester_service.to_hr }}</td>
-                                            <td class="text-left">{{ harvester_service.fix_hour }}</td>
+                                            <td class="text-right">{{ harvester_service.fix_hour }}</td>
                                             <td class="text-left">{{ harvester_service.parts_name }}</td>
-                                            <td class="text-right">{{ harvester_service.parts_code }}</td>
+                                            <td class="text-left">{{ harvester_service.parts_code }}</td>
                                             <td class="text-right">{{ harvester_service.price }}</td>
                                             <td class="text-right">{{ harvester_service.quantity }}</td>
+                                            <td class="text-right">{{ harvester_service.servicing_status }}</td>
                                             <td class="text-center">
                                                 <button @click="edit(harvester_service)" class="btn btn-success btn-sm">
                                                     <i
@@ -239,20 +241,55 @@
                                                  v-html="form.errors.get('ProductCode')"/>
                                         </div>
                                     </div>
+
+
+<!--                                    <form action="/action_page.php">-->
+<!--                                        <label for="cars">Choose a car:</label>-->
+<!--                                        <select name="cars" id="cars">-->
+<!--                                            <option value="volvo">Volvo</option>-->
+<!--                                            <option value="saab">Saab</option>-->
+<!--                                            <option value="opel">Opel</option>-->
+<!--                                            <option value="audi">Audi</option>-->
+<!--                                        </select>-->
+<!--                                        <br><br>-->
+<!--                                        <input type="submit" value="Submit">-->
+<!--                                    </form>-->
+
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Price</label>
-                                            <div name="UnitPrice" id="UnitPrice" class="form-control"
-                                                 v-model="form.UnitPrice"
-                                                 :class="{ 'is-invalid': form.errors.has('UnitPrice') }"
-                                                 v-for="(prices , index) in prices" :key="index">
-                                                {{ prices.UnitPrice }}
-
-                                            </div>
-                                            <div class="error" v-if="form.errors.has('UnitPrice')"
-                                                 v-html="form.errors.get('UnitPrice')"/>
+                                            <label>Servicing Status</label>
+                                            <select type="number" name="servicing_status" v-model="form.servicing_status"
+                                                    class="form-control"
+                                                    :class="{ 'is-invalid': form.errors.has('servicing_status') }">
+                                                <option disabled value="">Select Service Status</option>
+                                                <option >
+                                                    Combination
+                                                </option>
+                                                <option >
+                                                    Changable
+                                                </option>
+                                            </select>
+                                            <div class="error" v-if="form.errors.has('servicing_status')"
+                                                 v-html="form.errors.get('servicing_status')"/>
                                         </div>
-                                    </div>
+                                   </div>
+
+
+
+<!--                 <div class="col-md-6">&ndash;&gt;-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>Price</label>-->
+<!--                                            <div name="UnitPrice" id="UnitPrice" class="form-control"-->
+<!--                                                 v-model="form.UnitPrice"-->
+<!--                                                 :class="{ 'is-invalid': form.errors.has('UnitPrice') }"-->
+<!--                                                 v-for="(prices , index) in prices" :key="index">-->
+<!--                                                {{ prices.UnitPrice }}-->
+
+<!--                                            </div>-->
+<!--                                            <div class="error" v-if="form.errors.has('UnitPrice')"-->
+<!--                                                 v-html="form.errors.get('UnitPrice')"/>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
 
                                 </div>
 
@@ -304,6 +341,7 @@ export default {
                 parts_code: '',
                 price: '',
                 quantity: '',
+                servicing_status: '',
             }),
         }
     },
@@ -319,8 +357,7 @@ export default {
     mounted() {
         document.title = 'Harvester Service Details | Harvester';
         this.getAllHarvesterServiceDetails();
-        this.getAllMirrorProduct();
-        this.getAllPriceByMirror();
+        this.getAllProductModel();
     },
     methods: {
         getAllHarvesterServiceDetails() {
@@ -378,6 +415,7 @@ export default {
             this.getAllMirrorProduct();
             this.getAllProductModel();
             this.getAllServicingType();
+
         },
         update() {
             this.form.busy = true;

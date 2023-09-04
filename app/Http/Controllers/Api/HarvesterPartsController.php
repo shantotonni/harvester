@@ -76,15 +76,25 @@ class HarvesterPartsController extends Controller
 
     public function destroy($parts_id)
     {
+        $HarvesterParts = HarvesterParts::where('parts_id', $parts_id)->first();
+        if ($HarvesterParts->image) {
+            $destinationPath = 'images/HarvesterParts/';
 
-
-        HarvesterParts::where('parts_id', $parts_id)->delete();
+            $file = public_path('/') . $destinationPath . $HarvesterParts->image;
+            if (file_exists($file)) {
+                unlink($file);
+            }
+        }
+        $HarvesterParts->delete();
         return response()->json(['message' => 'Harvester Part Deleted Successfully']);
     }
 
+
+
+
     public function search($query)
     {
-        return new HarvesterPartsCollection(HarvesterParts::Where('custom_name', 'like', "%$query%")->latest()->paginate(10));
+        return new HarvesterPartsCollection(HarvesterParts::Where('custom_name', 'like', "%$query%")
+            ->paginate(10));
     }
-
 }

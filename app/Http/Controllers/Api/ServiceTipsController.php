@@ -74,7 +74,17 @@ class ServiceTipsController extends Controller
 
     public function destroy($id)
     {
-        ServiceTips::where('id',$id)->delete();
+        $service_tip = ServiceTips::where('id',$id)->first();
+        if ($service_tip->image) {
+            $destinationPath = 'images/ServiceTips/';
+
+            $file = public_path('/') . $destinationPath . $service_tip->image;
+            if (file_exists($file)) {
+                unlink($file);
+            }
+        }
+        $service_tip->delete();
+
         return response()->json(['message'=>'Service Tips Deleted Successfully']);
     }
     public function search($query)

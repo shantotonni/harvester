@@ -41,7 +41,7 @@
                                         </div>
                                     </div>
                                     <div class="card-tools">
-                                        <input v-model="query" type="text" class="form-control" placeholder="Search">
+                                        <input v-model="query" type="text" class="form-control" placeholder="Search by owner name">
                                     </div>
 
                                 </div>
@@ -250,6 +250,7 @@ export default {
     mounted() {
         document.title = 'Showroom List | Harvester';
         this.getAllShowroom();
+        this.getAllDistricts();
     },
     methods: {
         getAllShowroom() {

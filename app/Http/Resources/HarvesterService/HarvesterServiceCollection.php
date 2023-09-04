@@ -30,6 +30,7 @@ class HarvesterServiceCollection extends ResourceCollection
                     'price' => isset($harvester_service->MirrorProducts) ? $harvester_service->MirrorProducts->UnitPrice: '',
                     'ProductCode'=>isset($harvester_service->MirrorProducts) ? $harvester_service->MirrorProducts->ProductCode:'',
                     'quantity' => $harvester_service->quantity,
+                    'servicing_status' => $harvester_service->servicing_status,
                 ];
             })
         ];

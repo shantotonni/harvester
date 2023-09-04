@@ -81,23 +81,23 @@ class HarvesterInfoController extends Controller
 
     public function destroy(Request $request, $id)
     {
+        $harvester_info = HarvesterInfo::where('id', $id)->first();
+        if ($harvester_info->image) {
+            $destinationPath = 'images/HarvesterInfo/';
 
-        $harvester_info = HarvesterInfo::where('id', $id);
-        if ($request->has('image')) {
-            $image = $request->image;
-            if (file_exists($image)) {
-                unlink($image);
+            $file = public_path('/') . $destinationPath . $harvester_info->image;
+            if (file_exists($file)) {
+                unlink($file);
             }
         }
-
         $harvester_info->delete();
         return response()->json(['message' => 'Harvester Info Deleted Successfully']);
     }
 
+
     public function search($query)
     {
-        return new HarvesterInfoCollection(HarvesterInfo::Where('product_model.model_name', 'like', "%$query%")
-            ->join('product_model', 'product_model.id', 'harvester_service_details.model_id')
+        return new HarvesterInfoCollection(HarvesterInfo::Where('product_name', 'like', "%$query%")
             ->paginate(10));
     }
 

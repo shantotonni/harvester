@@ -12,7 +12,7 @@
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <input v-model="query" type="text" class="form-control"
-                                                       placeholder="Search">
+                                                       placeholder="Search by name">
                                             </div>
                                         </div>
                                     </div>

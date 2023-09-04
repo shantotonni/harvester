@@ -41,7 +41,7 @@
                                         </div>
                                     </div>
                                     <div class="card-tools">
-                                        <input v-model="query" type="text" class="form-control" placeholder="Search">
+                                        <input v-model="query" type="text" class="form-control" placeholder="Search by Enginner name">
                                     </div>
 
                                 </div>
@@ -210,6 +210,7 @@ export default {
     mounted() {
         document.title = 'Service Engineers List | Harvester';
         this.getAllServiceEngineer();
+        this.getAllDistricts();
     },
     methods: {
         getAllServiceEngineer() {
