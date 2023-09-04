@@ -168,15 +168,11 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //harvesting cost
     Route::apiResource('harvesting-cost', HarvestingCostController::class);
     Route::get('search/harvesting-cost/{query}', [HarvestingCostController::class, 'search']);
-
-
-
   //  Route::get('get-all-district-wise-seasonal-crops/{id}', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
 
 });
 
-//For Customer
-//Customer Login
+//For Customer Login
 Route::post('customer-login', [CustomerAuthController::class, 'login']);
 Route::post('send-otp-for-registration', [CustomerAuthController::class, 'sendOtp']);
 Route::post('check-otp-for-registration', [CustomerAuthController::class, 'checkOtp']);

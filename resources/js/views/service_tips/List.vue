@@ -30,7 +30,7 @@
                                         </div>
                                     </div>
                                     <div class="card-tools">
-                                        <input v-model="query" type="text" class="form-control" placeholder="Search">
+                                        <input v-model="query" type="text" class="form-control" placeholder="Search by name">
                                     </div>
 
                                 </div>
@@ -40,7 +40,7 @@
                                         <thead>
                                         <tr>
                                             <th class="text-left">SN</th>
-                                            <th class="text-left">Title</th>
+                                            <th class="text-left">Name</th>
                                             <th class="text-left">Type</th>
                                             <th class="text-left">Description</th>
                                             <th class="text-left">Video link</th>

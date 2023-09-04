@@ -12,7 +12,7 @@
                                     <div class="flex-grow-1">
                                         <div class="row">
                                             <div class="col-md-2">
-                                                <input v-model="query" type="text" class="form-control" placeholder="Search">
+                                                <input v-model="query" type="text" class="form-control" placeholder="Search by name">
                                             </div>
                                         </div>
                                     </div>

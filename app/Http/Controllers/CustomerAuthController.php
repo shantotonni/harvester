@@ -48,6 +48,7 @@ class CustomerAuthController extends Controller
 
     public function findChassisNumber(Request $request)
     {
+        DB::connection('MotorBrInvoiceMirror');
         $chassis = $request->chassis;
         $chassis = StockBatch::where('BatchNo', $chassis)->with('product')->first();
         if ($chassis) {

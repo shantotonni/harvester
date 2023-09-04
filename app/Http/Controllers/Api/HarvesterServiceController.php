@@ -36,6 +36,7 @@ class HarvesterServiceController extends Controller
         $harvester_service->parts_name = $request->parts_name;
         $harvester_service->parts_code = $request->ProductCode;
         $harvester_service->quantity = $request->quantity;
+        $harvester_service->servicing_status = $request->servicing_status;
         //$harvester_service->price = $request->UnitPrice;
         $harvester_service->save();
         return response()->json(['message' => 'Harvester Service Details created Successfully', 200]);
@@ -53,6 +54,7 @@ class HarvesterServiceController extends Controller
         $harvester_service->parts_name = $request->parts_name;
         $harvester_service->parts_code = $request->ProductCode;
         $harvester_service->quantity = $request->quantity;
+        $harvester_service->servicing_status = $request->servicing_status;
         //$harvester_service->price = $request->UnitPrice;
         $harvester_service->save();
         return response()->json(['message' => 'Harvester Service Details  updated Successfully', 200]);

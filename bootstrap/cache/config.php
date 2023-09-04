@@ -299,30 +299,6 @@
         array (
         ),
       ),
-      'MotorSparePartsMirror' => 
-      array (
-        'driver' => 'sqlsrv',
-        'host' => '192.168.100.25',
-        'port' => '1433',
-        'database' => 'MotorSparePartsMirror',
-        'username' => 'sa',
-        'password' => 'dataport',
-        'charset' => 'utf8',
-        'prefix' => '',
-        'strict' => false,
-      ),
-      'WarrantyMonitoringProcess' => 
-      array (
-        'driver' => 'sqlsrv',
-        'host' => '192.168.100.62',
-        'port' => '1433',
-        'database' => 'WarrantyMonitoringProcess',
-        'username' => 'sa',
-        'password' => 'dataport',
-        'charset' => 'utf8',
-        'prefix' => '',
-        'strict' => false,
-      ),
       'pgsql' => 
       array (
         'driver' => 'pgsql',
@@ -350,6 +326,30 @@
         'charset' => 'utf8',
         'prefix' => '',
         'prefix_indexes' => true,
+      ),
+      'MotorBrInvoiceMirror' => 
+      array (
+        'driver' => 'sqlsrv',
+        'host' => '192.168.100.25',
+        'port' => '1433',
+        'database' => 'MotorBrInvoiceMirror',
+        'username' => 'sa',
+        'password' => 'dataport',
+        'charset' => 'utf8',
+        'prefix' => '',
+        'strict' => false,
+      ),
+      'WarrantyMonitoringProcess' => 
+      array (
+        'driver' => 'sqlsrv',
+        'host' => '192.168.100.62',
+        'port' => '1433',
+        'database' => 'WarrantyMonitoringProcess',
+        'username' => 'sa',
+        'password' => 'dataport',
+        'charset' => 'utf8',
+        'prefix' => '',
+        'strict' => false,
       ),
     ),
     'migrations' => 'migrations',

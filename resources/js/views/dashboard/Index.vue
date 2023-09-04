@@ -17,12 +17,12 @@
                         <div class="card-body" style="padding: 10px">
                             <div class="mb-4">
                                 <div class="float-left mini-stat-img mr-4"><img :src="`${mainOrigin}assets/images/services-icon/01.png`" alt=""/></div>
-                                <h5 class="font-12 text-uppercase mt-0 text-white-50">Total Generator</h5>
-                                <h4 class="font-500">{{ allData.total_generator }} <i class="mdi mdi-arrow-up text-success ml-2"></i></h4>
+                                <h5 class="font-12 text-uppercase mt-0 text-white-50"></h5>
+                                <h4 class="font-500"> <i class="mdi mdi-arrow-up text-success ml-2"></i></h4>
                             </div>
                             <div class="pt-2">
                                 <div class="float-right">
-                                    <router-link :to="{name : 'GeneratorInfoList'}" class="text-white-50"><i class="mdi mdi-arrow-right h5"></i></router-link>
+<!--                                    <router-link :to="{name : 'GeneratorInfoList'}" class="text-white-50"><i class="mdi mdi-arrow-right h5"></i></router-link>-->
                                 </div>
                                 <p class="text-white-50 mb-0">Go</p>
                             </div>
@@ -34,13 +34,13 @@
                         <div class="card-body" style="padding: 10px">
                             <div class="mb-4">
                                 <div class="float-left mini-stat-img mr-4"><img :src="`${mainOrigin}assets/images/services-icon/02.png`" alt=""/></div>
-                                <h5 class="font-12 text-uppercase mt-0 text-white-50">Total Pending Delivery</h5>
-                                <h4 class="font-500">{{ allData.total_pending_delivery }} <i class="mdi mdi-arrow-down text-danger ml-2"></i>
+                                <h5 class="font-12 text-uppercase mt-0 text-white-50"></h5>
+                                <h4 class="font-500"> <i class="mdi mdi-arrow-down text-danger ml-2"></i>
                                 </h4>
                             </div>
                             <div class="pt-2">
                                 <div class="float-right">
-                                    <router-link :to="{name : 'DeliveryInfoList'}" class="text-white-50"><i class="mdi mdi-arrow-right h5"></i></router-link>
+<!--                                    <router-link :to="{name : 'DeliveryInfoList'}" class="text-white-50"><i class="mdi mdi-arrow-right h5"></i></router-link>-->
                                 </div>
                                 <p class="text-white-50 mb-0">Go</p>
                             </div>
@@ -52,13 +52,13 @@
                         <div class="card-body" style="padding: 10px">
                             <div class="mb-4">
                                 <div class="float-left mini-stat-img mr-4"><img :src="`${mainOrigin}assets/images/services-icon/03.png`" alt=""/></div>
-                                <h5 class="font-12 text-uppercase mt-0 text-white-50">Total Completed Delivery</h5>
-                                <h4 class="font-500">{{ allData.total_completed_delivery }} <i class="mdi mdi-arrow-up text-success ml-2"></i>
+                                <h5 class="font-12 text-uppercase mt-0 text-white-50"></h5>
+                                <h4 class="font-500"> <i class="mdi mdi-arrow-up text-success ml-2"></i>
                                 </h4>
                             </div>
                             <div class="pt-2">
                                 <div class="float-right">
-                                    <router-link :to="{name : 'DeliveryInfoList'}" class="text-white-50"><i class="mdi mdi-arrow-right h5"></i></router-link>
+<!--                                    <router-link :to="{name : 'DeliveryInfoList'}" class="text-white-50"><i class="mdi mdi-arrow-right h5"></i></router-link>-->
                                 </div>
                                 <p class="text-white-50 mb-0">Go</p>
                             </div>
@@ -70,13 +70,13 @@
                         <div class="card-body" style="padding: 10px">
                             <div class="mb-4">
                                 <div class="float-left mini-stat-img mr-4"><img :src="`${mainOrigin}assets/images/services-icon/04.png`" alt=""/></div>
-                                <h5 class="font-12 text-uppercase mt-0 text-white-50">Total Pending Service</h5>
-                                <h4 class="font-500">{{ allData.total_pending_service_request }} <i class="mdi mdi-arrow-up text-success ml-2"></i>
+                                <h5 class="font-12 text-uppercase mt-0 text-white-50"></h5>
+                                <h4 class="font-500"><i class="mdi mdi-arrow-up text-success ml-2"></i>
                                 </h4>
                             </div>
                             <div class="pt-2">
                                 <div class="float-right">
-                                    <router-link :to="{name : 'PendingServiceRequestList'}" class="text-white-50"><i class="mdi mdi-arrow-right h5"></i></router-link>
+<!--                                    <router-link :to="{name : 'PendingServiceRequestList'}" class="text-white-50"><i class="mdi mdi-arrow-right h5"></i></router-link>-->
                                 </div>
                                 <p class="text-white-50 mb-0">Go</p>
                             </div>
@@ -88,13 +88,13 @@
                         <div class="card-body" style="padding: 10px">
                             <div class="mb-4">
                                 <div class="float-left mini-stat-img mr-4"><img :src="`${mainOrigin}assets/images/services-icon/04.png`" alt=""/></div>
-                                <h5 class="font-12 text-uppercase mt-0 text-white-50">Total Completed Service</h5>
-                                <h4 class="font-500">{{ allData.total_completed_service_request }} <i class="mdi mdi-arrow-up text-success ml-2"></i>
+                                <h5 class="font-12 text-uppercase mt-0 text-white-50"></h5>
+                                <h4 class="font-500"><i class="mdi mdi-arrow-up text-success ml-2"></i>
                                 </h4>
                             </div>
                             <div class="pt-2">
                                 <div class="float-right">
-                                    <router-link :to="{name : 'CompletedServiceRequestList'}" class="text-white-50"><i class="mdi mdi-arrow-right h5"></i></router-link>
+<!--                                    <router-link :to="{name : 'CompletedServiceRequestList'}" class="text-white-50"><i class="mdi mdi-arrow-right h5"></i></router-link>-->
                                 </div>
                                 <p class="text-white-50 mb-0">Go</p>
                             </div>

@@ -281,7 +281,7 @@ class CommonController extends Controller
     }
     public function getAllSections()
     {
-        $sections = Section::orderBy('created_at', 'asc')->get();
+        $sections = Section::orderBy('created_at', 'asc')->where('product_id',4)->get();
         return response()->json([
             'sections' => $sections
         ]);

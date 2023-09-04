@@ -92,9 +92,10 @@ class CustomerController extends Controller
 
     public function search($query)
     {
-        $customers = Customer::where('CustomerName','LIKE',"%$query%")
-            ->orWhere('CustomerCode', 'like', '%' . $query . '%')
-            ->orderBy('CustomerID','desc')->paginate(10);
+        $customers = Customer::where('name','LIKE',"%$query%")
+//            ->orWhere('CustomerCode', 'like', '%' . $query . '%')
+//            ->orderBy('CustomerID','desc')
+            ->paginate(10);
         return new CustomerCollection($customers);
     }
 }
