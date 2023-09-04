@@ -179,7 +179,7 @@ class CustomerAuthController extends Controller
             $customer->customer_type = 'harvester';
 
             if ($customer->save()) {
-                if ($token = JWTAuth::attempt(['mobile' => $request->mobile, 'password' => $request->password])) {
+                if ($token = JWTAuth::attempt(['mobile' => $request->mobile, 'password' => $request->password,'customer_type'=>'harvester'])) {
                     $customer_chassis = new CustomerChassis();
                     $customer_chassis->customer_id = $customer->id;
                     $customer_chassis->model = $model;
