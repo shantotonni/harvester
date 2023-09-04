@@ -48,14 +48,37 @@ class CustomerAuthController extends Controller
 
     public function findChassisNumber(Request $request)
     {
-        DB::connection('MotorBrInvoiceMirror');
         $chassis = $request->chassis;
         $chassis = StockBatch::where('BatchNo', $chassis)->with('product')->first();
         if ($chassis) {
+            $productName = '';
+            if ($chassis->product){
+                if ($chassis->product->ProductCode == 'W051'){
+                    $productName = 'লিউলিন কম্বাইন হারভেস্টার';
+                }elseif ($chassis->product->ProductCode == 'W098'){
+                    $productName = 'মিনি কম্বাইন হারভেস্টার';
+                }elseif ($chassis->product->ProductCode == 'W112'){
+                    $productName = 'ইয়ানমার AG600 কম্বাইন হারভেস্টার';
+                }elseif ($chassis->product->ProductCode == 'W127'){
+                    $productName = 'ইয়ানমার AG600 কম্বাইন হারভেস্টার';
+                }elseif ($chassis->product->ProductCode == 'W133'){
+                    $productName = 'লিউলিন কম্বাইন হারভেস্টার';
+                }elseif ($chassis->product->ProductCode == 'W146'){
+                    $productName = 'লোভল RG108 কম্বাইন হারভেস্টার';
+                }elseif ($chassis->product->ProductCode == 'W148'){
+                    $productName = 'ইয়ানমার YH700 কম্বাইন হারভেস্টার';
+                }elseif ($chassis->product->ProductCode == 'W150'){
+                    $productName = 'ইয়ানমার AG600 কম্বাইন হারভেস্টার';
+                }elseif ($chassis->product->ProductCode == 'W151'){
+                    $productName = 'ইয়ানমার AG600 কম্বাইন হারভেস্টার';
+                }else{
+                    $productName = $chassis->product->ProductName;
+                }
+            }
             return response()->json([
                 'status' => 'success',
                 'chassis' => $chassis->BatchNo,
-                'model' => isset($chassis->product) ? $chassis->product->Model : '',
+                'model' => $productName,
             ]);
         } else {
             return response()->json([
@@ -140,7 +163,13 @@ class CustomerAuthController extends Controller
         DB::beginTransaction();
 
         try {
-
+            $exist_customer = Customer::where('mobile', $request->mobile)->where('customer_type', 'harvester')->exists();
+            if ($exist_customer) {
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Mobile number Already Exists'
+                ], 200);
+            }
             $customer = new Customer();
             $customer->name = $request->name;
             $customer->mobile = $request->mobile;
@@ -151,18 +180,19 @@ class CustomerAuthController extends Controller
 
             if ($customer->save()) {
                 if ($token = JWTAuth::attempt(['mobile' => $request->mobile, 'password' => $request->password])) {
-                    $user = Auth::user();
                     $customer_chassis = new CustomerChassis();
                     $customer_chassis->customer_id = $customer->id;
                     $customer_chassis->model = $model;
                     $customer_chassis->chassis_no = $chassis;
                     $customer_chassis->save();
 
+                    $customer = Customer::where('mobile',$request->mobile)->where('customer_type','harvester')->with('customer_chassis')->first();
+
                     DB::commit();
                     return response()->json([
                         'status' => "success",
                         'token' => $token,
-                        'user' => $user,
+                        'user' => $customer,
                     ], 200);
                 } else {
                     return response()->json([

@@ -195,7 +195,6 @@ export default {
             this.form.reset();
             this.form.clear();
             $("#sectionModal").modal("show");
-            this.getAllSectionList();
         },
         store() {
             this.form.busy = true;
@@ -211,7 +210,6 @@ export default {
             this.form.reset();
             this.form.clear();
             this.form.fill(section);
-            this.getAllSectionList();
             $("#sectionModal").modal("show");
         },
         update() {
