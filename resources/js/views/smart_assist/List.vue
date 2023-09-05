@@ -24,7 +24,7 @@
                             <div class="card-body">
                                 <div class="d-flex">
                                     <div class="card-tools">
-                                        <input v-model="query" type="text" class="form-control" placeholder="Search by address">
+                                        <input v-model="query" type="text" class="form-control" placeholder="Search by chassis">
                                     </div>
 
                                 </div>
