@@ -263,7 +263,7 @@
                                                     :class="{ 'is-invalid': form.errors.has('servicing_status') }">
                                                 <option disabled value="">Select Service Status</option>
                                                 <option >
-                                                    Combination
+                                                    Adjustable
                                                 </option>
                                                 <option >
                                                     Changable

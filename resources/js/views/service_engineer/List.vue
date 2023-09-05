@@ -246,7 +246,6 @@ export default {
             this.form.reset();
             this.form.clear();
             $("#engineerModal").modal("show");
-            this.getAllServiceEngineer();
             this.getAllDistricts();
 
 
@@ -265,7 +264,6 @@ export default {
             this.form.reset();
             this.form.clear();
             this.form.fill(service_engineer);
-            this.getAllServiceEngineer();
             this.getAllDistricts();
             $("#engineerModal").modal("show");
         },

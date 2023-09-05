@@ -283,7 +283,6 @@ export default {
             this.form.clear();
             this.form.fill(model);
             this.getAllProduct();
-            this.getAllModelByProduct();
             $("#productmodelModal").modal("show");
         },
         update() {
