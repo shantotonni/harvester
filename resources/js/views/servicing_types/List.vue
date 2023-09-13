@@ -196,7 +196,6 @@ export default {
             this.form.reset();
             this.form.clear();
             $("#servicingtypeModal").modal("show");
-            this.getAllServicingType();
         },
         store() {
             this.form.busy = true;
@@ -212,7 +211,6 @@ export default {
             this.form.reset();
             this.form.clear();
             this.form.fill(servicing_type);
-            this.getAllServicingType();
             $("#servicingtypeModal").modal("show");
         },
         update() {

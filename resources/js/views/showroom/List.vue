@@ -286,7 +286,7 @@ export default {
             this.form.reset();
             this.form.clear();
             $("#showroomModal").modal("show");
-            this.getAllShowroom();
+
             this.getAllDistricts();
 
 
@@ -305,7 +305,7 @@ export default {
             this.form.reset();
             this.form.clear();
             this.form.fill(showroom);
-            this.getAllShowroom();
+
             this.getAllDistricts();
             $("#showroomModal").modal("show");
         },

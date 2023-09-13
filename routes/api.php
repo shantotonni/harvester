@@ -24,6 +24,7 @@ use App\Http\Controllers\Api\ServiceTypeController;
 use App\Http\Controllers\Api\ServicingTypeController;
 use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\ShowroomController;
+use App\Http\Controllers\Api\SmartAssistController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerAuthController;
@@ -168,6 +169,10 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //harvesting cost
     Route::apiResource('harvesting-cost', HarvestingCostController::class);
     Route::get('search/harvesting-cost/{query}', [HarvestingCostController::class, 'search']);
+
+    //Smart Assist
+    Route::apiResource('smart-assist-list', SmartAssistController::class);
+    Route::get('search/smart-assist-list/{query}', [SmartAssistController::class, 'search']);
   //  Route::get('get-all-district-wise-seasonal-crops/{id}', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
 
 });
@@ -202,6 +207,7 @@ Route::group(['middleware' => 'CustomerAuth'], function () {
     //District wise seasonal crops
 
     Route::post('/harvester-warranty-parts', [App\Http\Controllers\Api\Mobile\CustomerController::class,'warrantyParts']);
+
     Route::post('/harvester-smart-assist', [App\Http\Controllers\Api\Mobile\CustomerController::class,'harvesterSmartAssist']);
 
 });

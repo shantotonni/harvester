@@ -11,6 +11,7 @@ class SmartAssist extends Model
 
     protected $table = 'smart_assist';
     public $primaryKey = 'chassis_no';
-
+    protected $guarded = [];
+    public $timestamps = false;
     protected $keyType = 'string';
 }

@@ -279,7 +279,6 @@ export default {
             this.form.reset();
             this.form.clear();
             $("#servicecenterModal").modal("show");
-            this.getAllServiceCenter();
             this.getAllArea();
 
 
@@ -298,7 +297,6 @@ export default {
             this.form.reset();
             this.form.clear();
             this.form.fill(service_center);
-            this.getAllServiceCenter();
             this.getAllArea();
             $("#servicecenterModal").modal("show");
         },
@@ -308,6 +306,7 @@ export default {
                 $("#servicecenterModal").modal("hide");
                 this.getAllServiceCenter();
             }).catch(e => {
+
                 this.isLoading = false;
             });
         },

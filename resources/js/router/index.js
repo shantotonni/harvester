@@ -54,6 +54,7 @@ import SectionList from '../views/section/List'
 import CustomerInfo from '../views/customer_info/List'
 import ProductModel from '../views/product_model/List'
 import HarvestingCostList from '../views/harvesting_cost/List'
+import SmartAssisList from '../views/smart_assist/List'
 
 const routes = [
     {
@@ -173,6 +174,10 @@ const routes = [
             //harvesting cost list
             {
                     path: base_url + '/harvesting-cost-list', name: 'HarvestingCostList', component: HarvestingCostList
+            },
+            //Smart assist list
+            {
+                    path: base_url + '/smart-assist-list', name: 'SmartAssisList', component: SmartAssisList
             },
         ],
         beforeEnter(to, from, next) {
