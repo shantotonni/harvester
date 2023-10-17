@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ServiceEngineer extends Model
 {
     use HasFactory;
-    protected $table='service_engineer';
+    protected $table='users';
     public $primaryKey = 'id';
     protected $guarded=[];
     const CREATED_AT = 'created_at';

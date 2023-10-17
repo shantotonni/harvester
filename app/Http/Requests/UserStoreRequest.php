@@ -24,11 +24,11 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'username'=>'required|unique:UserManager,username',
-            'name'=>'required|min:3',
-            'Password'=>'required|min:6',
+            'username'=>'required',
+            'name'=>'required',
             'email'=>'required',
             'mobile'=>'required',
+            'image'=>'required',
         ];
     }
 }

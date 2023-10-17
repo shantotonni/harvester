@@ -54,8 +54,8 @@ class HarvesterInfoController extends Controller
         $image = $request->image;
         if ($image != $harvester_info->image) {
             if ($request->has('image')) {
-                $destinationPath = 'images/HarvesterInfo/';
-                $file_old = public_path('/') . $destinationPath . $harvester_info->image;
+                $destinationPath = 'images\HarvesterInfo';
+                $file_old = public_path() . $destinationPath . $harvester_info->image;
                 if (file_exists($file_old)) {
                     unlink($file_old);
                 }
