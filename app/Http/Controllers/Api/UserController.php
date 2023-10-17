@@ -15,7 +15,7 @@ class UserController extends Controller
 {
 
     public function index(){
-        $users = User::with('role')->where('role_id','2')->paginate(15);
+        $users = User::with('role')->paginate(15);
         return new UserCollection($users);
     }
 
@@ -55,14 +55,15 @@ class UserController extends Controller
         ]);
 
         $user = User::where('id',$id)->first();
-
         $image = $request->image;
         if ($image != $user->image) {
             if ($request->has('image')) {
                 $destinationPath = 'images/user/';
-                $file_old = public_path('/').$destinationPath.$user->image;
-                if (file_exists($file_old)){
-                    unlink($file_old);
+                if ($user->image){
+                    $file_old = public_path('/').$destinationPath.$user->image;
+                    if (file_exists($file_old)){
+                        unlink($file_old);
+                    }
                 }
                 $name = uniqid() . time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
                 Image::make($image)->save(public_path('images/user/') . $name);

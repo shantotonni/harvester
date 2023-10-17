@@ -11,13 +11,12 @@ use App\Http\Resources\User\UserCollection;
 use App\Models\ServiceEngineer;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Intervention\Image\Image;
+use Intervention\Image\Facades\Image;
 
 class ServiceEngineerController extends Controller
 {
-    public function index()
-    {
-        $users = User::with('role')->paginate(15);
+    public function index(){
+        $users = User::with('role')->where('role_id','2')->paginate(15);
         return new UserCollection($users);
     }
 
@@ -25,7 +24,6 @@ class ServiceEngineerController extends Controller
         $this->validate($request, [
             'image' => 'required|min:jpeg,jpg,png,svg'
         ]);
-
         if ($request->has('image')) {
             $image = $request->image;
             $name = uniqid().time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
@@ -48,21 +46,24 @@ class ServiceEngineerController extends Controller
 
         $user->save();
 
-        return response()->json(['message'=>'Service Engineer Created Successfully'],200);
+        return response()->json(['message'=>'User Created Successfully'],200);
     }
 
     public function update(UserUpdateRequest $request, $id){
-        $this->validate($request,[
+        $this->validate($request, [
             'image' => 'required|min:jpeg,jpg,png,svg'
         ]);
+
         $user = User::where('id',$id)->first();
         $image = $request->image;
         if ($image != $user->image) {
             if ($request->has('image')) {
                 $destinationPath = 'images/user/';
-                $file_old = public_path('/').$destinationPath.$user->image;
-                if (file_exists($file_old)){
-                    unlink($file_old);
+                if ($user->image){
+                    $file_old = public_path('/').$destinationPath.$user->image;
+                    if (file_exists($file_old)){
+                        unlink($file_old);
+                    }
                 }
                 $name = uniqid() . time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
                 Image::make($image)->save(public_path('images/user/') . $name);
@@ -77,16 +78,15 @@ class ServiceEngineerController extends Controller
         $user->name = $request->name;
         $user->username = $request->username;
         $user->address = $request->address;
-        $user->role_id =$request->role_id;
+        $user->role_id = $request->role_id;
         $user->designation = $request->designation;
         $user->email = $request->email;
         $user->mobile = $request->mobile;
         $user->image = $name;
         $user->company_id = '1';
         $user->save();
-        return response()->json(['message'=>'Service Engineer Updated Successfully'],200);
+        return response()->json(['message'=>'User Updated Successfully'],200);
     }
-
     public function destroy($id)
     {
         User::where('id', $id)->delete();

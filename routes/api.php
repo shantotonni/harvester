@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AdminDashboardController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\FuelPumpController;
 use App\Http\Controllers\Api\HarvesterInfoController;
 use App\Http\Controllers\Api\HarvesterPartsController;
 use App\Http\Controllers\Api\HarvesterServiceController;
@@ -173,7 +174,9 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //Smart Assist
     Route::apiResource('smart-assist-list', SmartAssistController::class);
     Route::get('search/smart-assist-list/{query}', [SmartAssistController::class, 'search']);
-  //  Route::get('get-all-district-wise-seasonal-crops/{id}', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
+    //fuel pump Assist
+    Route::apiResource('fuel-pump-list', FuelPumpController::class);
+    Route::get('search/fuel-pump-list/{query}', [FuelPumpController::class, 'search']);
 
 });
 

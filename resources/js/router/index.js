@@ -55,6 +55,7 @@ import CustomerInfo from '../views/customer_info/List'
 import ProductModel from '../views/product_model/List'
 import HarvestingCostList from '../views/harvesting_cost/List'
 import SmartAssisList from '../views/smart_assist/List'
+import FuelPumpList from '../views/fuel_pump/List'
 
 const routes = [
     {
@@ -178,6 +179,10 @@ const routes = [
             //Smart assist list
             {
                     path: base_url + '/smart-assist-list', name: 'SmartAssisList', component: SmartAssisList
+            },
+            //pump list
+            {
+                    path: base_url + '/fuel-pump-list', name: 'FuelPumpList', component: FuelPumpList
             },
         ],
         beforeEnter(to, from, next) {

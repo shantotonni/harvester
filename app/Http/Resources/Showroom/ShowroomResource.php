@@ -24,7 +24,8 @@ class ShowroomResource extends JsonResource
             'address' => $this->address,
             'mobile' => $this->mobile,
             'lat' => $this->lat,
-            'long' => $this->long
+            'long' => $this->long,
+            'image' => $this->image
         ];
     }
 }

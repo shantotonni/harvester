@@ -90,7 +90,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title mt-0" id="myLargeModalLabel">{{ editMode ? "Edit" : "Add" }} User</h5>
+                        <h5 class="modal-title mt-0" id="myLargeModalLabel">{{ editMode ? "Edit" : "Add" }} Service Engineer</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="closeModal">×</button>
                     </div>
                     <form @submit.prevent="editMode ? update() : store()" @keydown="form.onKeydown($event)" enctype="multipart/form-data">
@@ -212,7 +212,7 @@ export default {
     methods: {
         getAllUser(){
             this.isLoading = true;
-            axios.get('/api/user?page='+ this.pagination.current_page).then((response)=>{
+            axios.get('/api/service-engineer?page='+ this.pagination.current_page).then((response)=>{
                 console.log(response.data.data)
                 this.users = response.data.data;
                 this.pagination = response.data.meta;
@@ -222,7 +222,7 @@ export default {
             })
         },
         searchData(){
-            axios.get("/api/search/user/" + this.query + "?page=" + this.pagination.current_page).then(response => {
+            axios.get("/api/search/service-engineer/" + this.query + "?page=" + this.pagination.current_page).then(response => {
                 this.users = response.data.data;
                 this.pagination = response.data.meta;
             }).catch(e => {
@@ -246,7 +246,7 @@ export default {
 
         store(){
             this.form.busy = true;
-            this.form.post("/api/user").then(response => {
+            this.form.post("/api/service-engineer").then(response => {
                 $("#userModal").modal("hide");
                 this.getAllUser();
             }).catch(e => {
@@ -262,7 +262,7 @@ export default {
         },
         update(){
             this.form.busy = true;
-            this.form.put("/api/user/" + this.form.id).then(response => {
+            this.form.put("/api/service-engineer/" + this.form.id).then(response => {
                 $("#userModal").modal("hide");
                 this.getAllUser();
             }).catch(e => {
@@ -299,7 +299,7 @@ export default {
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.delete('api/user/'+ id).then((response)=>{
+                    axios.delete('api/service-engineer/'+ id).then((response)=>{
                         this.getAllUser();
                         Swal.fire(
                             'Deleted!',

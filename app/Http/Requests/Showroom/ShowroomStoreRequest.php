@@ -30,7 +30,7 @@ class ShowroomStoreRequest extends FormRequest
             'address'=>'required',
             'mobile'=>'required',
             'lat'=>'required',
-            'long'=>'required'
+            'long'=>'required',
         ];
     }
 }

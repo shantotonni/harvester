@@ -24,7 +24,6 @@ class ServiceCenterStoreRequest extends FormRequest
     public function rules()
     {
         return [
-
             'address'=>'required',
             'responsible_person'=>'required',
             'mobile'=>'required',

@@ -56,6 +56,7 @@ use App\Models\ServiceType;
 use App\Models\ServicingType;
 use App\Models\Shop;
 use App\Models\Showroom;
+use App\Models\SparePartsMirror;
 use App\Models\Technician;
 use App\Models\Upazila;
 use App\Models\User;
@@ -142,7 +143,7 @@ class CommonController extends Controller
     }
     public function getAllMirrorProduct(){
 
-        $mirror_products = MirrorProduct::OrderBy('ProductCode','desc')
+        $mirror_products = SparePartsMirror::OrderBy('ProductCode','desc')
             ->select('ProductCode','ProductName','UnitPrice')
             ->where('Business','W')
             ->where('Active','Y')
@@ -152,6 +153,7 @@ class CommonController extends Controller
         ]);
 
     }
+
 
     public function getAllServiceType(){
         $service_types = ServiceType::OrderBy('id','asc')->paginate(15);

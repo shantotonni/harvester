@@ -226,19 +226,30 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Parts Code</label>
-                                            <select name="ProductCode" id="ProductCode" class="form-control"
-                                                    v-model="form.ProductCode"
-                                                    :class="{ 'is-invalid': form.errors.has('ProductCode') }"
-                                                    @change="getAllPriceByMirror()">
-                                                <option disabled value="">Select Parts Code</option>
-                                                <option :value="mirror_product.ProductCode"
-                                                        v-for="(mirror_product , index) in mirror_products"
-                                                        :key="index">{{ mirror_product.ProductCode }} -
-                                                    {{ mirror_product.ProductName }}
-                                                </option>
-                                            </select>
-                                            <div class="error" v-if="form.errors.has('ProductCode')"
-                                                 v-html="form.errors.get('ProductCode')"/>
+<!--                                            <select name="ProductCode" id="ProductCode" class="form-control"-->
+<!--                                                    v-model="form.ProductCode"-->
+<!--                                                    :class="{ 'is-invalid': form.errors.has('ProductCode') }"-->
+<!--                                                    @change="getAllPriceByMirror()">-->
+<!--                                                <option disabled value="">Select Parts Code</option>-->
+<!--                                                <option :value="mirror_product.ProductCode"-->
+<!--                                                        v-for="(mirror_product , index) in mirror_products"-->
+<!--                                                        :key="index">{{ mirror_product.ProductCode }} - -->
+<!--                                                    {{ mirror_product.ProductName }}-->
+<!--                                                </option>-->
+<!--                                            </select>-->
+                                            <multiselect
+                                                v-model="form.ProductCode"
+                                                :options="mirror_products"
+                                                :multiple="false"
+                                                :searchable="true"
+                                                :close-on-select="true"
+                                                :show-labels="true"
+                                                label="ProductName"
+                                                track-by="ProductCode"
+                                                @change="getAllPriceByMirror()"
+                                                placeholder="Pick a parts"></multiselect>
+<!--                                            <div class="error" v-if="form.errors.has('ProductCode')"-->
+<!--                                                 v-html="form.errors.get('ProductCode')"/>-->
                                         </div>
                                     </div>
 
@@ -313,8 +324,11 @@
 </template>
 
 <script>
-
+import Multiselect from 'vue-multiselect'
 export default {
+    components: {
+        Multiselect
+    },
     name: "List",
     data() {
         return {
@@ -342,6 +356,8 @@ export default {
                 price: '',
                 quantity: '',
                 servicing_status: '',
+                ProductCode: '',
+
             }),
         }
     },
@@ -427,7 +443,6 @@ export default {
             });
         },
         getAllPriceByMirror() {
-
             axios.get('/api/get-all-mirror-price/' + this.form.ProductCode).then((response) => {
                 console.log(response)
                 this.prices = response.data.prices;
