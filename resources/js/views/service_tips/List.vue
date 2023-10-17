@@ -46,6 +46,7 @@
                                             <th class="text-left">Video link</th>
                                             <th class="text-left">Image</th>
                                             <th class="text-left">Status</th>
+                                            <th class="text-left">Post Date</th>
                                             <th class="text-left">Action</th>
                                         </tr>
                                         </thead>
@@ -65,6 +66,7 @@
                                                 <span class="badge badge-success" v-if="service_tip.active == 'Y'">Active</span>
                                                 <span class="badge badge-success" v-else>InActive</span>
                                             </td>
+                                            <td class="text-left">{{ service_tip.post_date }}</td>
                                             <td class="text-left">
                                                 <button @click="edit(service_tip)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>

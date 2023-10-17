@@ -14,7 +14,7 @@ class ServiceTipsController extends Controller
 
     public function index()
     {
-        $service_tips = ServiceTips::paginate(10);
+        $service_tips = ServiceTips::orderBy('id','desc')->paginate(10);
         return new ServiceTipsCollection($service_tips);
     }
 

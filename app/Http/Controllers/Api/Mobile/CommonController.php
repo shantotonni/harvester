@@ -288,7 +288,7 @@ class CommonController extends Controller
     }
     public function getAllServiceTips()
     {
-        $service_tips = ServiceTips::orderBy('created_at', 'asc')->get();
+        $service_tips = ServiceTips::orderBy('created_at', 'desc')->get();
         return response()->json([
             'service_tips' => new ServiceTipsCollection($service_tips)
         ]);

@@ -18,7 +18,7 @@ class ServiceEngineerCollection extends ResourceCollection
            return[
               'id'=>$service_engineer->id,
               'district_id'=>$service_engineer->district_id,
-               'district_name'=>isset($service_engineer->District)? $service_engineer->District->name:'',
+              'district_name'=>isset($service_engineer->District)? $service_engineer->District->name:'',
               'engineer_name'=>$service_engineer->engineer_name,
               'mobile'=>$service_engineer->mobile,
               'address'=>$service_engineer->address,
