@@ -258,7 +258,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Servicing Status</label>
-                                            <select type="number" name="servicing_status" v-model="form.servicing_status"
+                                            <select type="text" name="servicing_status" v-model="form.servicing_status"
                                                     class="form-control"
                                                     :class="{ 'is-invalid': form.errors.has('servicing_status') }">
                                                 <option disabled value="">Select Service Status</option>

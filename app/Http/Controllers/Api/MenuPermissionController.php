@@ -46,7 +46,6 @@ class MenuPermissionController extends Controller
 
     public function getSidebarAllUserMenu(){
         $user = JWTAuth::parseToken()->authenticate();
-
         $menuId = MenuItem::join('UserMenu', 'UserMenu.MenuItemId', 'MenuItem.Id')
             ->where('UserMenu.UserId', $user->username)
             ->pluck('MenuItem.MenuID');
