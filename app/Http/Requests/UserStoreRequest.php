@@ -28,10 +28,10 @@ class UserStoreRequest extends FormRequest
             'name'=>'required',
             'email'=>'required',
             'mobile'=>'required',
-            'image'=>'required',
             'Password'=>'required',
             'address'=>'required',
             'designation'=>'required',
+            'image' => 'required|min:jpeg,jpg,png,svg'
         ];
     }
 }

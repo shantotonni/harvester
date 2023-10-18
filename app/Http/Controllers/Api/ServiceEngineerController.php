@@ -3,14 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ServiceEngineer\ServiceEngineerStoreRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
-use App\Http\Resources\ServiceEngineer\ServiceEngineerCollection;
 use App\Http\Resources\User\UserCollection;
-use App\Models\ServiceEngineer;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
 class ServiceEngineerController extends Controller
@@ -43,9 +39,7 @@ class ServiceEngineerController extends Controller
         $user->image = $name;
         $user->company_id = '1';
         $user->Password = bcrypt($request->Password);
-
         $user->save();
-
         return response()->json(['message'=>'User Created Successfully'],200);
     }
 
@@ -70,7 +64,6 @@ class ServiceEngineerController extends Controller
             } else {
                 $name = $user->image;
             }
-
         }
         else{
             $name = $user->image;
@@ -95,7 +88,11 @@ class ServiceEngineerController extends Controller
 
     public function search($query)
     {
-        return new ServiceEngineerCollection(ServiceEngineer::Where('name', 'like', "%$query%")->latest()->paginate(10));
+        $users = User::where(function ($q) use ($query){
+            $q->where('name', 'like', "%$query%");
+            $q->orWhere('username', 'like', "%$query%");
+        })->latest()->paginate(15);
+        return new UserCollection($users);
     }
 
 }

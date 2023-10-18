@@ -13,16 +13,12 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends Controller
 {
-
     public function index(){
         $users = User::with('role')->paginate(15);
         return new UserCollection($users);
     }
 
     public function store(UserStoreRequest $request){
-        $this->validate($request, [
-            'image' => 'required|min:jpeg,jpg,png,svg'
-        ]);
         if ($request->has('image')) {
             $image = $request->image;
             $name = uniqid().time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
@@ -30,9 +26,7 @@ class UserController extends Controller
         } else {
             $name = 'not_found.jpg';
         }
-
         $user = new User();
-
         $user->name = $request->name;
         $user->username = $request->username;
         $user->address = $request->address;
@@ -43,17 +37,11 @@ class UserController extends Controller
         $user->image = $name;
         $user->company_id = '1';
         $user->Password = bcrypt($request->Password);
-
         $user->save();
-
         return response()->json(['message'=>'User Created Successfully'],200);
     }
 
     public function update(UserUpdateRequest $request, $id){
-        $this->validate($request, [
-            'image' => 'required|min:jpeg,jpg,png,svg'
-        ]);
-
         $user = User::where('id',$id)->first();
         $image = $request->image;
         if ($image != $user->image) {
