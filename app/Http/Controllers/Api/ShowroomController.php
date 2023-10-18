@@ -27,9 +27,6 @@ class ShowroomController extends Controller
 
     public function store(ShowroomStoreRequest $request)
     {
-        $this->validate($request, [
-            'image' => 'required|min:jpeg,jpg,png,svg'
-        ]);
         if ($request->has('image')) {
             $image = $request->image;
             $name = uniqid().time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
@@ -55,9 +52,6 @@ class ShowroomController extends Controller
     public function update(Request $request, $id)
     {
         $showroom = Showroom::where('showroom_id', $id)->first();
-        $this->validate($request, [
-            'image' => 'required|min:jpeg,jpg,png,svg'
-        ]);
 
         $image = $request->image;
         if ($image != $showroom->image) {

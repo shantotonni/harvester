@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\HarvesterInfo;
+namespace App\Http\Requests\HarvesterCost;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class HarvesterInfoStoreRequest extends FormRequest
+class HarvesterCostStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,9 @@ class HarvesterInfoStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_name'=>'required',
-            'details'=>'required',
-            'horse_power'=>'required',
-            'product_id'=>'required',
-            'model_id'=>'required',
-            'image' => 'required|min:jpeg,jpg,png,svg'
-
+            'cost_title'=>'required',
+            'cost_measurement'=>'required',
+            'price'=>'required',
         ];
     }
 }

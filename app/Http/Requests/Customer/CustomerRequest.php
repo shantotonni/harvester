@@ -27,7 +27,17 @@ class CustomerRequest extends FormRequest
             'name'=>'required|min:3',
             'mobile'=>'required',
             'email'=>'required',
+            'model_id'=>'required',
+            'product_id'=>'required',
+            'service_hour'=>'required',
+            'date_of_purchase'=>'required',
+            'area_id'=>'required',
+            'district_id'=>'required',
+            'customer_type'=>'required',
+            'chassis'=>'required',
             'password'=>'required',
+            'Image'=>'required',
+            'address'=>'required',
 
         ];
     }

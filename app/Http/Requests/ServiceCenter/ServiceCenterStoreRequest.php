@@ -29,6 +29,7 @@ class ServiceCenterStoreRequest extends FormRequest
             'mobile'=>'required',
             'lat'=>'required',
             'lon'=>'required',
+            'area_id'=>'required',
             ];
     }
 }

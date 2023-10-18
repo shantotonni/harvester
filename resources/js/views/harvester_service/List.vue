@@ -216,6 +216,7 @@
                                         <div class="form-group">
                                             <label>Parts Code</label>
                                             <multiselect
+
                                                 v-model="form.ProductCode"
                                                 :options="mirror_products"
                                                 :multiple="false"
@@ -421,7 +422,6 @@ export default {
         },
         getAllPriceByMirror() {
             axios.get('/api/get-all-mirror-price/' + this.form.ProductCode).then((response) => {
-                console.log(response)
                 this.prices = response.data.prices;
             }).catch((error) => {
 

@@ -21,9 +21,6 @@ class HarvesterInfoController extends Controller
 
     public function store(HarvesterInfoStoreRequest $request)
     {
-        $this->validate($request, [
-            'image' => 'required|min:jpeg,jpg,png,svg'
-        ]);
 
         if ($request->has('image')) {
             $image = $request->image;
@@ -47,9 +44,7 @@ class HarvesterInfoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'image' => 'required|min:jpeg,jpg,png,svg'
-        ]);
+
         $harvester_info = HarvesterInfo::where('id', $id)->first();
         $image = $request->image;
         if ($image != $harvester_info->image) {

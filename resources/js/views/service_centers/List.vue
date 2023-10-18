@@ -262,7 +262,6 @@ export default {
         getAllServiceCenter() {
             this.isLoading = true;
             axios.get('/api/service-centers?page=' + this.pagination.current_page + "&area_id=" + this.area_id).then((response) => {
-                console.log('data', response.data.data)
                 this.service_centers = response.data.data;
                 this.pagination = response.data.meta;
                 this.isLoading = false;
@@ -325,7 +324,6 @@ export default {
         },
         getAllArea() {
             axios.get('/api/get-all-areas').then((response) => {
-                console.log('areas', response.data.areas)
                 this.areas = response.data.areas;
             }).catch((error) => {
 

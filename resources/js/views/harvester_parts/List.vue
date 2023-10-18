@@ -52,7 +52,7 @@
                                         <tr v-for="( harvester_part, i) in harvester_parts" :key=" harvester_part.parts_id"
                                             v-if=" harvester_parts.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
-                                            <td class="text-left">{{ harvester_part.ProductName }}</td>
+                                            <td class="text-left">{{ harvester_part.ProductCode }} - {{ harvester_part.ProductName }}</td>
                                             <td class="text-left">{{ harvester_part.custom_name }}</td>
                                             <td class="text-left">{{ harvester_part.section_name }}</td>
                                             <td class="text-left">{{ harvester_part.model_name}}</td>
@@ -106,7 +106,7 @@
                         <div class="modal-body">
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Parts Code</label>
                                             <multiselect
@@ -216,7 +216,6 @@ export default {
                 ProductCode: '',
                 ProductName: '',
                 section_id: '',
-                UnitPrice: '',
                 image: '',
             }),
         }
