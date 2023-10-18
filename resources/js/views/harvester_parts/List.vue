@@ -39,9 +39,7 @@
                                         <thead>
                                         <tr>
                                             <th class="text-left">SN</th>
-                                            <th class="text-left">Code</th>
-                                            <th class="text-left">Product Name</th>
-                                            <th class="text-left">Unit Price</th>
+                                            <th class="text-left">Parts Code</th>
                                             <th class="text-left">Custom Name</th>
                                             <th class="text-left">section</th>
                                             <th class="text-left">Model</th>
@@ -54,9 +52,7 @@
                                         <tr v-for="( harvester_part, i) in harvester_parts" :key=" harvester_part.parts_id"
                                             v-if=" harvester_parts.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
-                                            <td class="text-left">{{ harvester_part.ProductCode }}</td>
                                             <td class="text-left">{{ harvester_part.ProductName }}</td>
-                                            <td class="text-right">{{ harvester_part.UnitPrice }}</td>
                                             <td class="text-left">{{ harvester_part.custom_name }}</td>
                                             <td class="text-left">{{ harvester_part.section_name }}</td>
                                             <td class="text-left">{{ harvester_part.model_name}}</td>
@@ -112,15 +108,22 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Code</label>
-                                            <select name="ProductCode" id="ProductCode" class="form-control" v-model="form.ProductCode" :class="{ 'is-invalid': form.errors.has('ProductCode') }">
-                                                <option disabled value="">Select Product Code</option>
-                                                <option :value="mirror_product.ProductCode" v-for="(mirror_product , index) in mirror_products" :key="index">{{ mirror_product.ProductName }}
-                                                </option>
-                                            </select>
+                                            <label>Parts Code</label>
+                                            <multiselect
+                                                v-model="form.ProductCode"
+                                                :options="mirror_products"
+                                                :multiple="false"
+                                                :searchable="true"
+                                                :close-on-select="true"
+                                                :show-labels="true"
+                                                label="ProductName"
+                                                track-by="ProductCode"
+                                                @change="getAllPriceByMirror($event)"
+                                                placeholder="Pick a parts"></multiselect>
                                             <div class="error" v-if="form.errors.has('ProductCode')" v-html="form.errors.get('ProductCode')"/>
                                         </div>
                                     </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Custom Name</label>
@@ -186,10 +189,12 @@
 
 <script>
 import {VueEditor} from "vue2-editor";
+import Multiselect from "vue-multiselect";
 
 export default {
     components: {
-        VueEditor
+        VueEditor,
+        Multiselect
     },
     name: "List",
     data() {
@@ -316,6 +321,14 @@ export default {
         getAllProductModel() {
             axios.get('/api/get-all-product-model').then((response) => {
                 this.models = response.data.models;
+            }).catch((error) => {
+
+            })
+        },
+        getAllPriceByMirror(event) {
+            axios.get('/api/get-all-mirror-price/' + this.form.ProductCode).then((response) => {
+                console.log(response)
+                this.prices = response.data.prices;
             }).catch((error) => {
 
             })

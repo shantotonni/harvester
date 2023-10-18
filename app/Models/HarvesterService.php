@@ -19,7 +19,7 @@ class HarvesterService extends Model
     public function ProductModel(){
         return $this->belongsTo(ProductModel::class,'model_id','id');
     }
-    public function MirrorProducts(){
+    public function SparePartsMirror(){
         return $this->belongsTo(MirrorProduct::class,'parts_code','ProductCode');
     }
 }

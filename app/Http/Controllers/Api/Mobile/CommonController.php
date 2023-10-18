@@ -153,7 +153,18 @@ class CommonController extends Controller
         ]);
 
     }
+    public function getAllPriceByMirror($ProductCode)
+    {
+        $prices = SparePartsMirror::select('UnitPrice','ProductCode','ProductName')
+            ->where('Business', 'W')
+            ->where('Active', 'Y')
+            ->where('ProductCode', $ProductCode)
+            ->get();
 
+        return response()->json([
+            'prices' => $prices
+        ]);
+    }
 
     public function getAllServiceType(){
         $service_types = ServiceType::OrderBy('id','asc')->paginate(15);
@@ -199,18 +210,7 @@ class CommonController extends Controller
             'engineers' => $engineers
         ]);
     }
-    public function getAllPriceByMirror($ProductCode)
-    {
-        $prices = MirrorProduct::where('ProductCode', $ProductCode)
-            ->where('Business', 'W')
-            ->where('Active', 'Y')
-            ->select('UnitPrice','ProductCode')
-            ->get();
 
-        return response()->json([
-            'prices' => $prices
-        ]);
-    }
     public function getAllHarvesterServiceDetails(Request $request)
     {
         $hour = $request->hour;

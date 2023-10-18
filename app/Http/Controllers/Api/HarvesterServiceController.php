@@ -15,7 +15,7 @@ class HarvesterServiceController extends Controller
     {
         $model_id = $request->model_id;
 
-        $harvester_services = HarvesterService::query()->with(['ProductModel','MirrorProducts']);
+        $harvester_services = HarvesterService::query()->with(['ProductModel','SparePartsMirror']);
         if (!empty($model_id)){
             $harvester_services = $harvester_services->where('model_id',$model_id);
 

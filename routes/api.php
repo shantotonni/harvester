@@ -83,7 +83,7 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-product-model', [CommonController::class, 'getAllProductModel']);
     Route::get('get-all-products', [CommonController::class, 'getAllProducts']);
     Route::get('get-all-mirror-product', [CommonController::class, 'getAllMirrorProduct']);
-    Route::get('get-all-mirror-price/{ProductCode}', [CommonController::class, 'getAllPriceByMirror']);
+    Route::post('get-all-mirror-price/{ProductCode}', [CommonController::class, 'getAllPriceByMirror']);
     Route::get('get-all-sections', [CommonController::class, 'getAllSections']);
     Route::get('get-all-harvester-service-details', [CommonController::class, 'getAllHarvesterServiceDetails']);
     Route::get('get-all-harvester-info', [CommonController::class, 'getAllHarvesterInfo']);

@@ -13,7 +13,7 @@ class HarvesterPartsController extends Controller
 {
     public function index()
     {
-        $harvester_parts = HarvesterParts::with('ProductModel', 'MirrorProducts', 'section')->paginate(10);
+        $harvester_parts = HarvesterParts::with('ProductModel', 'SparePartsMirror', 'section')->paginate(10);
         return new HarvesterPartsCollection($harvester_parts);
     }
 
@@ -32,7 +32,7 @@ class HarvesterPartsController extends Controller
 
         $harvester_part = new HarvesterParts();
         $harvester_part->custom_name = $request->custom_name;
-        $harvester_part->ProductCode = $request->ProductCode;
+        $harvester_part->ProductCode = $request['ProductCode']['ProductCode'];
         $harvester_part->product_model_id = $request->product_model_id;
         $harvester_part->section_id = $request->section_id;
         $harvester_part->image = $name;
@@ -66,7 +66,7 @@ class HarvesterPartsController extends Controller
         }
 
         $harvester_part->custom_name = $request->custom_name;
-        $harvester_part->ProductCode = $request->ProductCode;
+        $harvester_part->ProductCode =  $request['ProductCode']['ProductCode'];
         $harvester_part->product_model_id = $request->product_model_id;
         $harvester_part->section_id = $request->section_id;
         $harvester_part->image = $name;
