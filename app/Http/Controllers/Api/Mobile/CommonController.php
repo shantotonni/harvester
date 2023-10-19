@@ -8,6 +8,7 @@ use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\District\DistrictCollection;
 use App\Http\Resources\Doctor\DoctorCollection;
 use App\Http\Resources\Doctor\DoctorResource;
+use App\Http\Resources\FuelPump\FuelPumpCollection;
 use App\Http\Resources\HarvesterInfo\HarvesterInfoCollection;
 use App\Http\Resources\HarvesterParts\HarvesterPartsCollection;
 use App\Http\Resources\HarvesterService\HarvesterServiceCollection;
@@ -25,6 +26,7 @@ use App\Http\Resources\ServiceRequest\ServiceRequestJobCardResource;
 use App\Http\Resources\ServiceTips\ServiceTipsCollection;
 use App\Http\Resources\Shop\ShopCollection;
 use App\Http\Resources\Upazila\UpazilaCollection;
+use App\Http\Resources\User\UserCollection;
 use App\Models\Area;
 use App\Models\Banner;
 use App\Models\Brand;
@@ -34,6 +36,7 @@ use App\Models\Customer;
 use App\Models\District;
 use App\Models\Doctor;
 use App\Models\Engineer;
+use App\Models\FuelPump;
 use App\Models\HarvesterInfo;
 use App\Models\HarvesterParts;
 use App\Models\HarvesterService;
@@ -205,10 +208,15 @@ class CommonController extends Controller
     }
     public function getAllEngineer()
     {
-        $engineers = User::OrderBy('id', 'asc')->get();
+        $engineers = User::OrderBy('id', 'asc')->where('role_id',2)->get();
         return response()->json([
             'engineers' => $engineers
         ]);
+    }
+    public function getAllFuelPump()
+    {
+        $fule_pump = FuelPump::OrderBy('fuel_pump_id', 'asc')->get();
+        return new FuelPumpCollection($fule_pump);
     }
 
     public function getAllHarvesterServiceDetails(Request $request)
@@ -297,9 +305,9 @@ class CommonController extends Controller
     }
     public function getAllServiceEngineer()
     {
-        $service_engineers = ServiceEngineer::orderBy('created_at', 'asc')->get();
+        $service_engineers = User::orderBy('created_at', 'asc')->where('role_id',2)->get();
         return response()->json([
-            'service_engineers' => new ServiceEngineerCollection($service_engineers)
+            'service_engineers' => new UserCollection($service_engineers)
         ]);
     }
 

@@ -39,7 +39,9 @@ class CustomerController extends Controller
     }
 
     public function harvesterSmartAssist(Request $request){
-        $smart_assist = SmartAssist::where('chassis_no',$request->chassis_no)->where('password',$request->password)->first();
+        $smart_assist = SmartAssist::where('chassis_no',$request->chassis_no)
+            //->where('password',$request->password)
+            ->first();
         if ($smart_assist){
             return response()->json([
                 'status'=>'success',

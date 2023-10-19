@@ -26,7 +26,8 @@ class FuelPumpCollection extends ResourceCollection
                     'mobile' => $fuel->mobile,
                     'lat' => $fuel->lat,
                     'lon' => $fuel->lon,
-                    'image' => $fuel->image
+                    'image' => $fuel->image,
+                    'mobile_image' => url('/').'/images/fuel/'. $fuel->image
                 ];
             })
         ];

@@ -123,9 +123,10 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Type</label>
-                                            <input type="text" name="type" v-model="form.type"
-                                                   class="form-control"
-                                                   :class="{ 'is-invalid': form.errors.has('type') }">
+                                            <select name="name" id="name" class="form-control" v-model="form.type">
+                                                <option value="video">Video</option>
+                                                <option value="image">Image</option>
+                                            </select>
                                             <div class="error" v-if="form.errors.has('type')"
                                                  v-html="form.errors.get('type')"/>
                                         </div>
@@ -203,7 +204,7 @@ export default {
             form: new Form({
                 id: '',
                 title: '',
-                type:'',
+                type:'video',
                 description: '',
                 video_link: '',
                 active: '',

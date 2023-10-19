@@ -20,7 +20,7 @@ class FuelPumpController extends Controller
             $fuels=$fuels->where('district_id',$district_id);
 
         }
-        $fuels = $fuels->paginate();
+        $fuels = $fuels->paginate(15);
 
         return new FuelPumpCollection($fuels);
     }
@@ -48,7 +48,7 @@ class FuelPumpController extends Controller
         $fuel->lon = $request->lon;
         $fuel->image =$name;
         $fuel->save();
-        return response()->json(['message' => 'Showroom created Successfully', 200]);
+        return response()->json(['message' => 'Fuel Pump created Successfully', 200]);
     }
 
 
