@@ -59,6 +59,7 @@
                                             <th class="text-left">Mobile</th>
                                             <th class="text-left">Lat</th>
                                             <th class="text-left">Lon</th>
+                                            <th class="text-left">Image</th>
                                             <th class="text-left">Action</th>
                                         </tr>
                                         </thead>
@@ -72,6 +73,10 @@
                                             <td class="text-right">{{ service_center.mobile }}</td>
                                             <td class="text-right">{{ service_center.lat }}</td>
                                             <td class="text-right">{{ service_center.lon }}</td>
+                                            <td class="text-left">
+                                                <img v-if="service_center.image" height="40" width="40"
+                                                     :src="tableImage(service_center.image)" alt="">
+                                            </td>
                                             <td class="text-center">
                                                 <button @click="edit(service_center)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>
@@ -182,7 +187,14 @@
                                                  v-html="form.errors.get('area_id')"/>
                                         </div>
                                     </div>
-
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Image</label>
+                                            <input @change="changeImage($event)" required type="file" name="image" class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
+                                            <div class="error" v-if="form.errors.has('image')" v-html="form.errors.get('image')" />
+                                            <img v-if="form.image" :src="showImage(form.image)" alt="" height="40px" width="40px">
+                                        </div>
+                                    </div>
                                 </div>
 
 
@@ -228,6 +240,7 @@ export default {
                 mobile: '',
                 lat: '',
                 lon: '',
+                image: '',
             }),
         }
     },
@@ -249,7 +262,6 @@ export default {
         getAllServiceCenter() {
             this.isLoading = true;
             axios.get('/api/service-centers?page=' + this.pagination.current_page + "&area_id=" + this.area_id).then((response) => {
-                console.log('data', response.data.data)
                 this.service_centers = response.data.data;
                 this.pagination = response.data.meta;
                 this.isLoading = false;
@@ -312,11 +324,29 @@ export default {
         },
         getAllArea() {
             axios.get('/api/get-all-areas').then((response) => {
-                console.log('areas', response.data.areas)
                 this.areas = response.data.areas;
             }).catch((error) => {
 
             })
+        },
+        changeImage(event) {
+            let file = event.target.files[0];
+            let reader = new FileReader();
+            reader.onload = event => {
+                this.form.image = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+        showImage() {
+            let img = this.form.image;
+            if (img.length > 100) {
+                return this.form.image;
+            } else {
+                return window.location.origin + "/harvester/public/images/service_center/" + this.form.image;
+            }
+        },
+        tableImage(image) {
+            return window.location.origin + "/harvester/public/images/service_center/" + image;
         },
         destroy(id) {
             Swal.fire({

@@ -23,6 +23,7 @@ class ServiceCenterResource extends JsonResource
             'mobile' => $this->mobile,
             'lat' => $this->lat,
             'lon' => $this->lon,
+            'image' => $this->image,
         ];
     }
 }

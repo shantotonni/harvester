@@ -58,6 +58,7 @@
                                             <th class="text-left">Mobile</th>
                                             <th class="text-left">Lat</th>
                                             <th class="text-left">Long</th>
+                                            <th class="text-left">Image</th>
                                             <th class="text-left">Action</th>
                                         </tr>
                                         </thead>
@@ -73,12 +74,17 @@
                                             <td class="text-right">{{ showroom.lat }}</td>
                                             <td class="text-right">{{ showroom.long }}</td>
                                             <td class="text-left">
+                                                <img v-if="showroom.image" height="40" width="40"
+                                                     :src="tableImage(showroom.image)" alt="">
+                                            </td>
+                                            <td class="text-left">
                                                 <button @click="edit(showroom)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>
                                                 <button @click="destroy(showroom.id)"
                                                         class="btn btn-danger btn-sm"><i class="fas fa-trash"></i>
                                                 </button>
                                             </td>
+
                                         </tr>
                                         </tbody>
                                     </table>
@@ -191,6 +197,14 @@
                                                  v-html="form.errors.get('long')"/>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Image</label>
+                                            <input @change="changeImage($event)" required type="file" name="image" class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
+                                            <div class="error" v-if="form.errors.has('image')" v-html="form.errors.get('image')" />
+                                            <img v-if="form.image" :src="showImage(form.image)" alt="" height="40px" width="40px">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -235,6 +249,7 @@ export default {
                 mobile: '',
                 lat: '',
                 long: '',
+                image: '',
             }),
         }
     },
@@ -326,7 +341,25 @@ export default {
 
             })
         },
-
+        changeImage(event) {
+            let file = event.target.files[0];
+            let reader = new FileReader();
+            reader.onload = event => {
+                this.form.image = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+        showImage() {
+            let img = this.form.image;
+            if (img.length > 100) {
+                return this.form.image;
+            } else {
+                return window.location.origin + "/harvester/public/images/showroom/" + this.form.image;
+            }
+        },
+        tableImage(image) {
+            return window.location.origin + "/harvester/public/images/showroom/" + image;
+        },
         destroy(id) {
             Swal.fire({
                 title: 'Are you sure?',

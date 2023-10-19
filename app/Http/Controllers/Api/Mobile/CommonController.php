@@ -56,6 +56,7 @@ use App\Models\ServiceType;
 use App\Models\ServicingType;
 use App\Models\Shop;
 use App\Models\Showroom;
+use App\Models\SparePartsMirror;
 use App\Models\Technician;
 use App\Models\Upazila;
 use App\Models\User;
@@ -142,7 +143,7 @@ class CommonController extends Controller
     }
     public function getAllMirrorProduct(){
 
-        $mirror_products = MirrorProduct::OrderBy('ProductCode','desc')
+        $mirror_products = SparePartsMirror::OrderBy('ProductCode','desc')
             ->select('ProductCode','ProductName','UnitPrice')
             ->where('Business','W')
             ->where('Active','Y')
@@ -151,6 +152,18 @@ class CommonController extends Controller
             'mirror_products'=>$mirror_products
         ]);
 
+    }
+    public function getAllPriceByMirror($ProductCode)
+    {
+        $prices = SparePartsMirror::select('UnitPrice','ProductCode','ProductName')
+            ->where('Business', 'W')
+            ->where('Active', 'Y')
+            ->where('ProductCode', $ProductCode)
+            ->get();
+
+        return response()->json([
+            'prices' => $prices
+        ]);
     }
 
     public function getAllServiceType(){
@@ -197,18 +210,7 @@ class CommonController extends Controller
             'engineers' => $engineers
         ]);
     }
-    public function getAllPriceByMirror($ProductCode)
-    {
-        $prices = MirrorProduct::where('ProductCode', $ProductCode)
-            ->where('Business', 'W')
-            ->where('Active', 'Y')
-            ->select('UnitPrice','ProductCode')
-            ->get();
 
-        return response()->json([
-            'prices' => $prices
-        ]);
-    }
     public function getAllHarvesterServiceDetails(Request $request)
     {
         $hour = $request->hour;

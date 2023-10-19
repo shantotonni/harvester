@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\HarvesterCost\HarvesterCostStoreRequest;
 use App\Http\Resources\HarvestingCostCollection;
 use App\Models\HarvestingCost;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class HarvestingCostController extends Controller
         return new HarvestingCostCollection($harvesting_cost);
     }
 
-    public function store(Request $request)
+    public function store(HarvesterCostStoreRequest $request)
     {
         $harvesting_cost = new HarvestingCost();
         $harvesting_cost->cost_title = $request->cost_title;
@@ -27,7 +28,7 @@ class HarvestingCostController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(HarvesterCostStoreRequest $request, $id)
     {
         $harvesting_cost = HarvestingCost::where('id', $id)->first();
         $harvesting_cost->cost_title = $request->cost_title;

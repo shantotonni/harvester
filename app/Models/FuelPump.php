@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ServiceEngineer extends Model
+class FuelPump extends Model
 {
     use HasFactory;
-    protected $table='service_engineer';
-    public $primaryKey = 'id';
-    protected $guarded=[];
+    protected $table = 'fuel_pump';
+    public $primaryKey = 'fuel_pump_id';
+    protected $guarded =[];
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 

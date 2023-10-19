@@ -14,6 +14,7 @@
     <link href="{{asset('assets/css/metismenu.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('assets/css/icons.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('assets/css/style.css')}}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.6/dist/vue-multiselect.min.css">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
         .loader {

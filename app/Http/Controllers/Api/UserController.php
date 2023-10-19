@@ -13,7 +13,6 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends Controller
 {
-
     public function index(){
         $users = User::with('role')->paginate(15);
         return new UserCollection($users);
@@ -27,54 +26,52 @@ class UserController extends Controller
         } else {
             $name = 'not_found.jpg';
         }
-
         $user = new User();
-
         $user->name = $request->name;
         $user->username = $request->username;
+        $user->address = $request->address;
         $user->role_id = $request->role_id;
         $user->designation = $request->designation;
         $user->email = $request->email;
         $user->mobile = $request->mobile;
         $user->image = $name;
+        $user->company_id = '1';
         $user->Password = bcrypt($request->Password);
-        $user->Active = 'Y';
         $user->save();
-
         return response()->json(['message'=>'User Created Successfully'],200);
     }
 
     public function update(UserUpdateRequest $request, $id){
-
         $user = User::where('id',$id)->first();
-        $image = $request->Image;
-
-        if ($image != $user->Image) {
-            if ($request->has('Image')) {
-                //code for remove old file
-                if ($user->Image != '' && $user->Image != null) {
-                    $destinationPath = 'images/user/';
-                    $file_old = $destinationPath . $user->Image;
-                    if (file_exists($file_old)) {
+        $image = $request->image;
+        if ($image != $user->image) {
+            if ($request->has('image')) {
+                $destinationPath = 'images/user/';
+                if ($user->image){
+                    $file_old = public_path('/').$destinationPath.$user->image;
+                    if (file_exists($file_old)){
                         unlink($file_old);
                     }
                 }
                 $name = uniqid() . time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-                Image::make($image)->resize(1600,1000)->save(public_path('images/user/') . $name);
+                Image::make($image)->save(public_path('images/user/') . $name);
             } else {
-                $name = $user->Image;
+                $name = $user->image;
             }
-        }else{
-            $name = $user->Image;
-        }
 
+        }
+        else{
+            $name = $user->image;
+        }
         $user->name = $request->name;
         $user->username = $request->username;
+        $user->address = $request->address;
         $user->role_id = $request->role_id;
         $user->designation = $request->designation;
         $user->email = $request->email;
         $user->mobile = $request->mobile;
         $user->image = $name;
+        $user->company_id = '1';
         $user->save();
         return response()->json(['message'=>'User Updated Successfully'],200);
     }

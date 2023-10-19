@@ -45,7 +45,6 @@ class CustomerController extends Controller
         $customer->customer_type = $request->customer_type;
         $customer->chassis = $request->chassis;
         $customer->password = bcrypt($request->password);
-        $customer->date_of_purchase = $request->date_of_purchase;
         $customer->image = $name;
         $customer->save();
         return response()->json(['message'=>'Customer Created Successfully'],200);

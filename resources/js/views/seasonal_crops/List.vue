@@ -138,8 +138,8 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>From Hour</label>
-                                            <datepicker name="From hour"
+                                            <label>From Date</label>
+                                            <datepicker name="From Date"
                                                         placeholder="Enter To Date"
                                                         :format="customFormatter"
                                                         v-model="form.date_from"
@@ -151,8 +151,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>To Hour</label>
-                                            <datepicker name="To Hour" v-model="form.date_to"
+                                            <label>To Date</label>
+                                            <datepicker name="To Date" v-model="form.date_to"
                                                         :format="customFormatter"
                                                         placeholder="Enter To Date"
                                                         :class="{ 'is-invalid': form.errors.has('date_to') }"> </datepicker>

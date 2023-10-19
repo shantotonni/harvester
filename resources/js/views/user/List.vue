@@ -36,7 +36,9 @@
                                             <th class="text-left">Role</th>
                                             <th class="text-left">Designation</th>
                                             <th class="text-left">Mobile</th>
+                                            <th class="text-left">Address</th>
                                             <th class="text-left">Email</th>
+                                            <th class="text-left">Image</th>
                                             <th class="text-left">Status</th>
                                             <th class="text-left">Action</th>
                                         </tr>
@@ -46,17 +48,22 @@
                                             <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ user.name }}</td>
                                             <td class="text-left">{{ user.username }}</td>
-                                            <td class="text-left">{{ user.name }}</td>
+                                            <td class="text-left">{{ user.role_name }}</td>
                                             <td class="text-left">{{ user.designation }}</td>
                                             <td class="text-right">{{ user.mobile }}</td>
                                             <td class="text-left">{{ user.email }}</td>
+                                            <td class="text-left">{{ user.address }}</td>
+                                            <td class="text-left">
+                                                <img v-if="user.image" height="40" width="40"
+                                                     :src="tableImage(user.image)" alt="">
+                                            </td>
                                             <td class="text-left">
                                                 <span class="badge badge-success" v-if="user.Active == 1">Active</span>
                                                 <span class="badge badge-success" v-else>InActive</span>
                                             </td>
                                             <td class="text-left">
                                                 <button @click="edit(user)" class="btn btn-success btn-sm"><i class="far fa-edit"></i></button>
-                                                <button @click="destroy(user.id)" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+<!--                                                <button @click="destroy(user.id)" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>-->
                                             </td>
                                         </tr>
                                         </tbody>
@@ -107,7 +114,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Designation</label>
-                                            <input type="text" name="designation" v-model="form.Designation" class="form-control" :class="{ 'is-invalid': form.errors.has('designation') }">
+                                            <input type="text" name="designation" v-model="form.designation" class="form-control" :class="{ 'is-invalid': form.errors.has('designation') }">
                                             <div class="error" v-if="form.errors.has('designation')" v-html="form.errors.get('designation')" />
                                         </div>
                                     </div>
@@ -123,6 +130,13 @@
                                             <label>Email</label>
                                             <input type="text" name="email" v-model="form.email" class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
                                             <div class="error" v-if="form.errors.has('email')" v-html="form.errors.get('email')" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Address</label>
+                                            <input type="text" name="address" v-model="form.address" class="form-control" :class="{ 'is-invalid': form.errors.has('address') }">
+                                            <div class="error" v-if="form.errors.has('address')" v-html="form.errors.get('address')" />
                                         </div>
                                     </div>
                                     <div class="col-md-6" v-if="!editMode">
@@ -183,10 +197,12 @@ export default {
                 name:'',
                 username: '',
                 role_id: '',
+                role_name: '',
                 email:'',
                 designation: '',
                 mobile: '',
                 image: '',
+                address: '',
             }),
         }
     },
@@ -264,28 +280,31 @@ export default {
         },
         update(){
             this.form.busy = true;
-            this.form.put("/api/user/" + this.form.ID).then(response => {
+            this.form.put("/api/user/" + this.form.id).then(response => {
                 $("#userModal").modal("hide");
                 this.getAllUser();
             }).catch(e => {
                 this.isLoading = false;
             });
         },
-        changeImage(event){
+        changeImage(event) {
             let file = event.target.files[0];
             let reader = new FileReader();
             reader.onload = event => {
-                this.form.Image = event.target.result;
+                this.form.image = event.target.result;
             };
             reader.readAsDataURL(file);
         },
-        showImage(){
-            let img = this.form.Image;
-            if (img.length > 100){
-                return this.form.Image;
-            }else{
-                return window.location.origin + "/DEGS/images/user/" + this.form.Image;
+        showImage() {
+            let img = this.form.image;
+            if (img.length > 100) {
+                return this.form.image;
+            } else {
+                return window.location.origin + "/harvester/public/images/user/" + this.form.image;
             }
+        },
+        tableImage(image) {
+            return window.location.origin + "/harvester/public/images/user/" + image;
         },
         destroy(id){
             Swal.fire({

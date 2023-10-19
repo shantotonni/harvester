@@ -19,7 +19,8 @@ class ServiceCenterCollection extends ResourceCollection
                     'responsible_person' => $service_center->responsible_person,
                     'mobile' => $service_center->mobile,
                     'lat' => $service_center->lat,
-                    'lon' => $service_center->lon
+                    'lon' => $service_center->lon,
+                    'image' => $service_center->image
                 ];
             })
         ];

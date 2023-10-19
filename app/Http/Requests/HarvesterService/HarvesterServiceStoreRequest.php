@@ -24,11 +24,16 @@ class HarvesterServiceStoreRequest extends FormRequest
     public function rules()
     {
         return [
-           'model_id'=>'required',
-            'servicing_type_id'=>'required',
-            'from_hr'=>'required',
-            'to_hr'=>'required',
-            'servicing_status'=>'required',
+            'model_id' => 'required',
+            'servicing_type_id' => 'required',
+            'from_hr' => 'required',
+            'to_hr' => 'required',
+            'fix_hour' => 'required',
+            'ProductCode' => 'required',
+            'parts_name' => 'required',
+            'quantity' => 'required',
+            'servicing_status' => 'required',
+            'parts_id' => 'required',
         ];
     }
 }

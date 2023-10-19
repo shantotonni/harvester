@@ -26,7 +26,10 @@ class HarvesterInfoStoreRequest extends FormRequest
         return [
             'product_name'=>'required',
             'details'=>'required',
-            'horse_power'=>'required'
+            'horse_power'=>'required',
+            'product_id'=>'required',
+            'model_id'=>'required',
+            'image' => 'required|min:jpeg,jpg,png,svg'
 
         ];
     }

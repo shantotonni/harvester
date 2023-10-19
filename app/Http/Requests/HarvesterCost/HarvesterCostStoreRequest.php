@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\ServiceEngineer;
+namespace App\Http\Requests\HarvesterCost;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ServiceEngineerStoreRequest extends FormRequest
+class HarvesterCostStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,9 @@ class ServiceEngineerStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'district_id'=>'required',
-            'engineer_name'=>'required',
-            'mobile'=>'required',
-            'address'=>'required'
+            'cost_title'=>'required',
+            'cost_measurement'=>'required',
+            'price'=>'required',
         ];
     }
 }
