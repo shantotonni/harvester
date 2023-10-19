@@ -49,6 +49,14 @@ class CustomerAuthController extends Controller
     public function findChassisNumber(Request $request)
     {
         $chassis = $request->chassis;
+        $exiats = CustomerChassis::where('chassis_no',$chassis)->exists();
+        if ($exiats){
+            return response()->json([
+                'message' => 'Chassis Already Registered',
+                'status' => 'success'
+            ], 200);
+        }
+
         $chassis = StockBatch::where('BatchNo', $chassis)->with('product')->first();
         if ($chassis) {
             $productName = '';
