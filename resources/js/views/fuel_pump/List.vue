@@ -200,7 +200,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Image</label>
-                                            <input @change="changeImage($event)" required type="file" name="image" class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
+                                            <input @change="changeImage($event)" type="file" name="image" class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
                                             <div class="error" v-if="form.errors.has('image')" v-html="form.errors.get('image')" />
                                             <img v-if="form.image" :src="showImage(form.image)" alt="" height="40px" width="40px">
                                         </div>

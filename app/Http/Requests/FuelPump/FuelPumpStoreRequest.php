@@ -29,8 +29,8 @@ class FuelPumpStoreRequest extends FormRequest
             'fuel_pump_name'=>'required',
             'address'=>'required',
             'mobile'=>'required',
-            'lat'=>'required',
-            'lon'=>'required',
+            //'lat'=>'required',
+            //'lon'=>'required',
         ];
     }
 }

@@ -95,6 +95,7 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-model-by-product/{id}', [CommonController::class, 'getAllModelByProduct']);
     Route::get('get-all-service-tips', [CommonController::class, 'getAllServiceTips']);
     Route::get('get-all-service-engineer', [CommonController::class, 'getAllServiceEngineer']);
+    Route::get('get-all-fuel-pump', [CommonController::class, 'getAllFuelPump']);
     Route::get('get-all-pending-service-request-list', [CommonController::class, 'getAllPendingServiceRequestList']);
     Route::get('get-all-completed-service-request-list', [CommonController::class, 'getAllCompletedServiceRequestList']);
     Route::get('get-all-service-request-details-list', [CommonController::class, 'getAllServiceRequestDetailsList']);
