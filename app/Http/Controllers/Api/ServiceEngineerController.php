@@ -30,12 +30,14 @@ class ServiceEngineerController extends Controller
 
         $user = new User();
         $user->name = $request->name;
+        $user->name_bn = $request->name_bn;
         $user->username = $request->username;
         $user->address = $request->address;
         $user->role_id = $request->role_id;
         $user->designation = $request->designation;
         $user->email = $request->email;
         $user->mobile = $request->mobile;
+        $user->mobile_bn = $request->mobile_bn;
         $user->image = $name;
         $user->company_id = '1';
         $user->Password = bcrypt($request->Password);
@@ -69,12 +71,14 @@ class ServiceEngineerController extends Controller
             $name = $user->image;
         }
         $user->name = $request->name;
+        $user->name_bn = $request->name_bn;
         $user->username = $request->username;
         $user->address = $request->address;
         $user->role_id = $request->role_id;
         $user->designation = $request->designation;
         $user->email = $request->email;
         $user->mobile = $request->mobile;
+        $user->mobile_bn = $request->mobile_bn;
         $user->image = $name;
         $user->company_id = '1';
         $user->save();

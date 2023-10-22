@@ -32,10 +32,12 @@
                                         <tr>
                                             <th class="text-left">SN</th>
                                             <th class="text-left">Name</th>
+                                            <th class="text-left">Name Bangla</th>
                                             <th class="text-left">User ID</th>
                                             <th class="text-left">Role</th>
                                             <th class="text-left">Designation</th>
                                             <th class="text-left">Mobile</th>
+                                            <th class="text-left">Mobile Bangla</th>
                                             <th class="text-left">Address</th>
                                             <th class="text-left">Email</th>
                                             <th class="text-left">Image</th>
@@ -47,10 +49,12 @@
                                         <tr v-for="(user, i) in users" :key="user.id" v-if="users.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ user.name }}</td>
+                                            <td class="text-left">{{ user.name_bn }}</td>
                                             <td class="text-left">{{ user.username }}</td>
                                             <td class="text-left">{{ user.role_name }}</td>
                                             <td class="text-left">{{ user.designation }}</td>
                                             <td class="text-right">{{ user.mobile }}</td>
+                                            <td class="text-right">{{ user.mobile_bn }}</td>
                                             <td class="text-left">{{ user.email }}</td>
                                             <td class="text-left">{{ user.address }}</td>
                                             <td class="text-left">
@@ -99,14 +103,21 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>User Name</label>
+                                            <label>Service Engineer Name</label>
                                             <input type="text" name="name" v-model="form.name" class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
                                             <div class="error" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>UserID</label>
+                                            <label>Name Bangla</label>
+                                            <input type="text" name="name_bn" v-model="form.name_bn" class="form-control" :class="{ 'is-invalid': form.errors.has('name_bn') }">
+                                            <div class="error" v-if="form.errors.has('name_bn')" v-html="form.errors.get('name_bn')" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Engineer UserID</label>
                                             <input type="text" name="username" v-model="form.username" class="form-control" :class="{ 'is-invalid': form.errors.has('username') }">
                                             <div class="error" v-if="form.errors.has('username')" v-html="form.errors.get('username')" />
                                         </div>
@@ -120,9 +131,16 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Mobile</label>
+                                            <label>Mobile No.</label>
                                             <input type="text" name="mobile" v-model="form.mobile" class="form-control" :class="{ 'is-invalid': form.errors.has('mobile') }">
                                             <div class="error" v-if="form.errors.has('mobile')" v-html="form.errors.get('mobile')" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Mobile No. Bangla</label>
+                                            <input type="text" name="mobile_bn" v-model="form.mobile_bn" class="form-control" :class="{ 'is-invalid': form.errors.has('mobile_bn') }">
+                                            <div class="error" v-if="form.errors.has('mobile_bn')" v-html="form.errors.get('mobile_bn')" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -150,7 +168,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Image</label>
-                                            <input @change="changeImage($event)" required type="file" name="image" class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
+                                            <input @change="changeImage($event)" type="file" name="image" class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
                                             <div class="error" v-if="form.errors.has('image')" v-html="form.errors.get('image')" />
                                             <img v-if="form.image" :src="showImage(form.image)" alt="" height="40px" width="40px">
                                         </div>
@@ -186,11 +204,13 @@ export default {
             form: new Form({
                 id:'',
                 name:'',
+                name_bn:'',
                 role_id:'2',
                 username: '',
                 email:'',
                 designation: '',
                 mobile: '',
+                mobile_bn: '',
                 image: '',
                 address: '',
             }),
