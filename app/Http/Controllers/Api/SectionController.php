@@ -13,7 +13,7 @@ class SectionController extends Controller
 {
    public function index(){
 
-       $sections = Section::where('product_id',4)->paginate(15);
+       $sections = Section::where('type','Harvester')->orwhere('type','Both')->paginate(15);
 
        return new SectionCollection($sections);
    }
@@ -23,8 +23,7 @@ class SectionController extends Controller
         $section = new Section();
         $section->name = $request->section_name;
         $section->code = $request->code;
-        $section->product_id = '4';
-
+        $section->type = $request->type;
         $section->save();
         return response()->json(['message' => 'Section created Successfully', 200]);
     }
@@ -35,7 +34,7 @@ class SectionController extends Controller
         $section = Section::where('id', $id)->first();
         $section->name = $request->section_name;
         $section->code = $request->code;
-        $section->product_id = '4';
+        $section->type = $request->type;
         $section->save();
         return response()->json(['message' => 'Section updated Successfully', 200]);
     }

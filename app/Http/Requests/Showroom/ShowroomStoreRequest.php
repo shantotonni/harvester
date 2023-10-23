@@ -24,8 +24,7 @@ class ShowroomStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'owner_name'=>'required',
-            'district_id'=>'required',
+            'area_id'=>'required',
             'showroom_name'=>'required',
             'address'=>'required',
             'mobile'=>'required',

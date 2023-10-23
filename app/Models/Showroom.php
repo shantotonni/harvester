@@ -8,15 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Showroom extends Model
 {
     use HasFactory;
-    protected $table = 'showroom';
-    public $primaryKey = 'showroom_id';
+    protected $table = 'showroom_centre';
+    public $primaryKey = 'id';
     protected $guarded =[];
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-    public function District()
+    public function area()
     {
-        return $this->belongsTo(District::class,'district_id','id');
+        return $this->belongsTo(Area::class,'area_id','id');
 
     }
 }

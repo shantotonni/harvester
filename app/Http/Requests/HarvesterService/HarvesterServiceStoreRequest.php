@@ -25,7 +25,7 @@ class HarvesterServiceStoreRequest extends FormRequest
     {
         return [
             'model_id' => 'required',
-            'servicing_type_id' => 'required',
+//            'servicing_type_id' => 'required',
             'from_hr' => 'required',
             'to_hr' => 'required',
             'fix_hour' => 'required',

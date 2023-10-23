@@ -40,7 +40,7 @@
                                         <thead>
                                         <tr>
                                             <th class="text-left">SN</th>
-                                            <th class="text-left">Product Name </th>
+<!--                                            <th class="text-left">Product Name </th>-->
                                             <th class="text-left">Product Category</th>
                                             <th class="text-left">Model Name</th>
                                             <th class="text-left">Horse Power</th>
@@ -53,7 +53,7 @@
                                         <tr v-for="( harvester_info, i) in harvester_infos" :key=" harvester_info.id"
                                             v-if=" harvester_infos.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
-                                            <td class="text-left">{{ harvester_info.product_name }}</td>
+<!--                                            <td class="text-left">{{ harvester_info.product_name }}</td>-->
                                             <td class="text-left">{{ harvester_info.name }}</td>
                                             <td class="text-left">{{ harvester_info.model_name }}</td>
                                             <td class="text-right">{{ harvester_info.horse_power }}</td>
@@ -106,16 +106,16 @@
                         <div class="modal-body">
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Product Name</label>
-                                            <input type="text" name="product_name" v-model="form.product_name"
-                                                   class="form-control"
-                                                   :class="{ 'is-invalid': form.errors.has('product_name') }">
-                                            <div class="error" v-if="form.errors.has('product_name')"
-                                                 v-html="form.errors.get('product_name')"/>
-                                        </div>
-                                    </div>
+<!--                                    <div class="col-md-6">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>Product Name</label>-->
+<!--                                            <input type="text" name="product_name" v-model="form.product_name"-->
+<!--                                                   class="form-control"-->
+<!--                                                   :class="{ 'is-invalid': form.errors.has('product_name') }">-->
+<!--                                            <div class="error" v-if="form.errors.has('product_name')"-->
+<!--                                                 v-html="form.errors.get('product_name')"/>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Product Category</label>
@@ -219,7 +219,7 @@ export default {
             isLoading: false,
             form: new Form({
                 id: '',
-                product_name: '',
+                // product_name: '',
                 model_id: '',
                 product_id: '',
                 details: '',

@@ -17,15 +17,15 @@ class ShowroomCollection extends ResourceCollection
         return [
             'data'=>$this->collection->transform(function ($showroom){
                 return [
-                    'id' => $showroom->showroom_id,
-                    'district_id' => $showroom->district_id,
-                    'district_name' => isset($showroom->District) ? $showroom->District->name : '',
-                    'owner_name' => $showroom->owner_name,
-                    'showroom_name' => $showroom->showroom_name,
+                    'id' => $showroom->id,
+                    'area_id' => $showroom->area_id,
+                    'area_name' => isset($showroom->Area) ? $showroom->Area->areaname : '',
+                    'area_name_bn' => isset($showroom->Area) ? $showroom->Area->name_bn : '',
+                    'showroom_name' => $showroom->name,
                     'address' => $showroom->address,
-                    'mobile' => $showroom->mobile,
+                    'mobile' => $showroom->mobile_number,
                     'lat' => $showroom->lat,
-                    'long' => $showroom->long,
+                    'long' => $showroom->lon,
                     'image' => $showroom->image
                 ];
             })

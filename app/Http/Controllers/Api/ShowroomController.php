@@ -14,10 +14,10 @@ class ShowroomController extends Controller
     public function index(Request $request)
     {
 
-        $district_id =$request->district_id;
-        $showrooms = Showroom::query()->with('District');
-        if (!empty($district_id)){
-            $showrooms=$showrooms->where('district_id',$district_id);
+        $area_id =$request->area_id;
+        $showrooms = Showroom::query()->with('Area');
+        if (!empty($area_id)){
+            $showrooms=$showrooms->where('area_id',$area_id);
 
         }
         $showrooms = $showrooms->paginate();
@@ -36,13 +36,12 @@ class ShowroomController extends Controller
         }
 
         $showroom = new Showroom();
-        $showroom->owner_name = $request->owner_name;
-        $showroom->district_id = $request->district_id;
+        $showroom->area_id = $request->area_id;
         $showroom->address = $request->address;
-        $showroom->showroom_name = $request->showroom_name;
-        $showroom->mobile = $request->mobile;
+        $showroom->name = $request->showroom_name;
+        $showroom->mobile_number = $request->mobile;
         $showroom->lat = $request->lat;
-        $showroom->long = $request->long;
+        $showroom->lon = $request->long;
         $showroom->image =$name;
         $showroom->save();
         return response()->json(['message' => 'Showroom created Successfully', 200]);
@@ -51,7 +50,8 @@ class ShowroomController extends Controller
 
     public function update(Request $request, $id)
     {
-        $showroom = Showroom::where('showroom_id', $id)->first();
+
+        $showroom = Showroom::where('id', $id)->first();
 
         $image = $request->image;
         if ($image != $showroom->image) {
@@ -73,13 +73,12 @@ class ShowroomController extends Controller
         else{
             $name = $showroom->image;
         }
-        $showroom->owner_name = $request->owner_name;
-        $showroom->district_id = $request->district_id;;
+        $showroom->area_id = $request->area_id;;
         $showroom->address = $request->address;
-        $showroom->showroom_name = $request->showroom_name;
-        $showroom->mobile = $request->mobile;
+        $showroom->name = $request->showroom_name;
+        $showroom->mobile_number = $request->mobile;
         $showroom->lat = $request->lat;
-        $showroom->long = $request->long;
+        $showroom->lon = $request->long;
         $showroom->image =$name;
         $showroom->save();
         return response()->json(['message' => 'Showroom updated Successfully', 200]);
@@ -87,7 +86,7 @@ class ShowroomController extends Controller
 
     public function destroy($id)
     {
-        Showroom::where('showroom_id', $id)->delete();
+        Showroom::where('id', $id)->delete();
         return response()->json(['message' => 'Showroom Deleted Successfully', 200]);
     }
 

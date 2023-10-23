@@ -19,7 +19,8 @@ class SectionCollection extends ResourceCollection
                 return[
                   'section_id'=>$section->id,
                     'section_name'=>$section->name,
-                    'code'=>$section->code
+                    'code'=>$section->code,
+                    'type'=>$section->type
                 ];
             })
         ];

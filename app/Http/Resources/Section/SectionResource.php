@@ -17,7 +17,8 @@ class SectionResource extends JsonResource
         return[
             'section_id'=>$this->id,
             'section_name'=>$this->name,
-            'code'=>$this->code
+            'code'=>$this->code,
+            'type'=>$this->type
         ];
     }
 }

@@ -27,9 +27,9 @@
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <select name="" id="" v-model="district_id" class="form-control">
-                                                        <option disabled value="">Select District</option>
-                                                        <option :value="district.id" v-for="(district , index) in districts" :key="index">{{ district.name }}
+                                                    <select name="" id="" v-model="area_id" class="form-control">
+                                                        <option disabled value="">Select Area</option>
+                                                        <option :value="area.id" v-for="(area , index) in areas" :key="index">{{ area.name_bn }}
                                                         </option>
                                                     </select>
                                                 </div>
@@ -41,7 +41,7 @@
                                         </div>
                                     </div>
                                     <div class="card-tools">
-                                        <input v-model="query" type="text" class="form-control" placeholder="Search by owner name">
+                                        <input v-model="query" type="text" class="form-control" placeholder="Search by showroom name">
                                     </div>
 
                                 </div>
@@ -51,8 +51,7 @@
                                         <thead>
                                         <tr>
                                             <th class="text-left">SN</th>
-                                            <th class="text-left">District</th>
-                                            <th class="text-left">Owner name</th>
+                                            <th class="text-left">Area</th>
                                             <th class="text-left">Showroom</th>
                                             <th class="text-left">Address</th>
                                             <th class="text-left">Mobile</th>
@@ -66,8 +65,7 @@
                                         <tr v-for="(showroom, i) in showrooms" :key="showroom.id"
                                             v-if="showrooms.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
-                                            <td class="text-left">{{ showroom.district_name }}</td>
-                                            <td class="text-left">{{ showroom.owner_name }}</td>
+                                            <td class="text-left">{{ showroom.area_name_bn }}</td>
                                             <td class="text-left">{{ showroom.showroom_name }}</td>
                                             <td class="text-left">{{ showroom.address }}</td>
                                             <td class="text-right">{{ showroom.mobile }}</td>
@@ -123,26 +121,15 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>District</label>
-                                            <select name="text" id="district_id" class="form-control" v-model="form.district_id"
-                                                    :class="{ 'is-invalid': form.errors.has('district_id') }">
-                                                <option disabled value="">Select District</option>
-                                                <option :value="district.id" v-for="(district , index) in districts" :key="index">{{ district.name}}
+                                            <label>Area</label>
+                                            <select name="text" id="area_id" class="form-control" v-model="form.area_id"
+                                                    :class="{ 'is-invalid': form.errors.has('area_id') }">
+                                                <option disabled value="">Select Area</option>
+                                                <option :value="area.id" v-for="(area , index) in areas" :key="index">{{ area.name_bn}}
                                                 </option>
                                             </select>
-                                            <div class="error" v-if="form.errors.has('district_id')"
-                                                 v-html="form.errors.get('district_id')"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Owner Name</label>
-                                            <input type="text" name="owner_name"
-                                                   v-model="form.owner_name"
-                                                   class="form-control"
-                                                   :class="{ 'is-invalid': form.errors.has('owner_name') }">
-                                            <div class="error" v-if="form.errors.has('owner_name')"
-                                                 v-html="form.errors.get('owner_name')"/>
+                                            <div class="error" v-if="form.errors.has('area_id')"
+                                                 v-html="form.errors.get('area_id')"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -200,7 +187,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Image</label>
-                                            <input @change="changeImage($event)" required type="file" name="image" class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
+                                            <input @change="changeImage($event)" type="file" name="image" class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
                                             <div class="error" v-if="form.errors.has('image')" v-html="form.errors.get('image')" />
                                             <img v-if="form.image" :src="showImage(form.image)" alt="" height="40px" width="40px">
                                         </div>
@@ -232,18 +219,17 @@ export default {
     data() {
         return {
             showrooms: [],
-            districts: [],
+            areas: [],
             pagination: {
                 current_page: 1
             },
             query: "",
-            district_id:'',
+            area_id:'',
             editMode: false,
             isLoading: false,
             form: new Form({
                 id: '',
-                district_id: '',
-                owner_name: '',
+                area_id: '',
                 address: '',
                 showroom_name: '',
                 mobile: '',
@@ -265,12 +251,12 @@ export default {
     mounted() {
         document.title = 'Showroom List | Harvester';
         this.getAllShowroom();
-        this.getAllDistricts();
+        this.getAllAreas();
     },
     methods: {
         getAllShowroom() {
             this.isLoading = true;
-            axios.get('/api/showroom-list?page=' + this.pagination.current_page +"&district_id="+ this.district_id ).then((response) => {
+            axios.get('/api/showroom-list?page=' + this.pagination.current_page +"&area_id="+ this.area_id ).then((response) => {
                 // console.log('data', response.data.data)
                 this.showrooms = response.data.data;
                 this.pagination = response.data.meta;
@@ -289,7 +275,7 @@ export default {
         },
         reload() {
             this.getAllShowroom();
-            this.district_id="";
+            this.area_id="";
             this.query = "";
             this.$toaster.success('Data Successfully Refresh');
         },
@@ -302,7 +288,7 @@ export default {
             this.form.clear();
             $("#showroomModal").modal("show");
 
-            this.getAllDistricts();
+            this.getAllAreas();
 
 
         },
@@ -321,7 +307,7 @@ export default {
             this.form.clear();
             this.form.fill(showroom);
 
-            this.getAllDistricts();
+            this.getAllAreas();
             $("#showroomModal").modal("show");
         },
         update() {
@@ -333,10 +319,10 @@ export default {
                 this.isLoading = false;
             });
         },
-        getAllDistricts() {
-            axios.get('/api/get-all-districts').then((response) => {
+        getAllAreas() {
+            axios.get('/api/get-all-areas').then((response) => {
               console.log(response)
-                this.districts = response.data.districts;
+                this.areas = response.data.areas;
             }).catch((error) => {
 
             })

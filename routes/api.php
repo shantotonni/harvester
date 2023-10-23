@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AdminDashboardController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\DealerController;
 use App\Http\Controllers\Api\FuelPumpController;
 use App\Http\Controllers\Api\HarvesterInfoController;
 use App\Http\Controllers\Api\HarvesterPartsController;
@@ -13,13 +14,12 @@ use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\MenuPermissionController;
 use App\Http\Controllers\Api\Mobile\CommonController;
 use App\Http\Controllers\Api\ProductModelController;
-use App\Http\Controllers\Api\ServiceRequestController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SeasonalCropsController;
 use App\Http\Controllers\Api\SectionController;
 use App\Http\Controllers\Api\ServiceCenterController;
 use App\Http\Controllers\Api\ServiceEngineerController;
-
+use App\Http\Controllers\Api\ServiceRequestController;
 use App\Http\Controllers\Api\ServiceTipsController;
 use App\Http\Controllers\Api\ServiceTypeController;
 use App\Http\Controllers\Api\ServicingTypeController;
@@ -175,9 +175,12 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //Smart Assist
     Route::apiResource('smart-assist-list', SmartAssistController::class);
     Route::get('search/smart-assist-list/{query}', [SmartAssistController::class, 'search']);
-    //fuel pump Assist
+    //fuel pump
     Route::apiResource('fuel-pump-list', FuelPumpController::class);
     Route::get('search/fuel-pump-list/{query}', [FuelPumpController::class, 'search']);
+    //dealer
+    Route::apiResource('dealer-list', DealerController::class);
+    Route::get('search/dealer-list/{query}', [DealerController::class, 'search']);
 
 });
 
