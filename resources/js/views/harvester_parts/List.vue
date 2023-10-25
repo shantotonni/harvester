@@ -116,7 +116,7 @@
                                                 :searchable="true"
                                                 :close-on-select="true"
                                                 :show-labels="true"
-                                                label="ProductName"
+                                                label="ProductCode"
                                                 track-by="ProductCode"
                                                 @change="getAllPriceByMirror($event)"
                                                 placeholder="Pick a parts"></multiselect>
