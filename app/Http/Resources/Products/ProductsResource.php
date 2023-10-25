@@ -14,9 +14,10 @@ class ProductsResource extends JsonResource
             'name'=>$this->name,
             'name_bn'=>$this->name_bn,
             'code'=>$this->code,
-            'product_image'=>$this->product_image,
             'details'=>$this->details,
-            'type'=>$this->type
+            'type'=>$this->type,
+            'product_image'=>$this->product_image,
+            'image'=>url('/').'/images/ProductModel/'.$this->image,
         ];
     }
 }

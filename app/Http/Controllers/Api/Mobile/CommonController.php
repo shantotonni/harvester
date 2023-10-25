@@ -28,6 +28,7 @@ use App\Http\Resources\ServiceRequest\ServiceRequestJobCardCollection;
 use App\Http\Resources\ServiceRequest\ServiceRequestJobCardResource;
 use App\Http\Resources\ServiceTips\ServiceTipsCollection;
 use App\Http\Resources\Shop\ShopCollection;
+use App\Http\Resources\Showroom\ShowroomCollection;
 use App\Http\Resources\Upazila\UpazilaCollection;
 use App\Http\Resources\User\UserCollection;
 use App\Models\Area;
@@ -119,9 +120,7 @@ class CommonController extends Controller
     public function getAllShowroom()
     {
         $showrooms = Showroom::orderBy('created_at', 'desc')->get();
-        return response()->json([
-            'showrooms' => $showrooms
-        ]);
+        return new showroomCollection($showrooms);
     }
 
     public function getAllArea(){
@@ -132,17 +131,13 @@ class CommonController extends Controller
     }
 
     public function getAllProductModel(){
-        $models = ProductModel::OrderBy('id','asc')->where('product_id',4)->select('id','product_id','model_name','model_name_bn')->with('Products')->get();
-        return response()->json([
-            'models'=>$models
-        ]);
-    }
+        $models = ProductModel::OrderBy('id','asc')->where('product_id',4)->get();
+        return new ProductModelCollection($models);
 
+    }
     public function getAllProducts(){
         $products = Products::OrderBy('id','asc')->where('id',4)->get();
-        return response()->json([
-            'products'=>$products
-        ]);
+        return new ProductsCollection($products);
     }
     public function getAllMirrorProduct(){
 
@@ -209,9 +204,7 @@ class CommonController extends Controller
     public function getAllEngineer()
     {
         $engineers = User::OrderBy('id', 'asc')->where('role_id',2)->get();
-        return response()->json([
-            'engineers' => $engineers
-        ]);
+        return new UserCollection($engineers);
     }
     public function getAllFuelPump()
     {
@@ -233,9 +226,6 @@ class CommonController extends Controller
             ->where('model_id',$request->model_id)->get();
        return new HarvesterServiceDetailsCollection($harvester_services);
     }
-
-
-
     public function getAllHarvesterInfo()
     {
         $harvester_infos = HarvesterInfo::orderBy('created_at', 'desc')->paginate(15);
@@ -311,9 +301,8 @@ class CommonController extends Controller
     public function getAllServiceEngineer()
     {
         $service_engineers = User::orderBy('created_at', 'asc')->where('role_id',2)->get();
-        return response()->json([
-            'service_engineers' => new UserCollection($service_engineers)
-        ]);
+        return new UserCollection($service_engineers);
+
     }
 
     public function getAllPendingServiceRequestList()

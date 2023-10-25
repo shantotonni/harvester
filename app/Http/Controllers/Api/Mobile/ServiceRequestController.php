@@ -38,11 +38,12 @@ class ServiceRequestController extends Controller
         $this->validate($request,[
             'customer_mobile'=>'required',
             'section_id'=>'required',
-            'customer_id'=>'required',
             'model_id'=>'required',
         ]);
 
       $user = JWTAuth::parseToken()->authenticate();
+
+
       $product_model = ProductModel::where('id',$request->model_id)->first();
 
       $job_card = new JobCard();
@@ -56,7 +57,8 @@ class ServiceRequestController extends Controller
       $job_card->upazila_id = $request->upazila_id;
       $job_card->remarks = $request->remarks;
       $job_card->chassis_number = $request->chassis_number;
-      $job_card->customer_id = $request->customer_id;
+      $job_card->customer_id = $user->id;
+
       $job_card->service_wanted_at = Carbon::now();
       $job_card->service_date = Carbon::now();
       $job_card->job_creator = 'customer';

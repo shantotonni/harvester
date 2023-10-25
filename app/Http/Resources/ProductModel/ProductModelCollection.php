@@ -23,8 +23,9 @@ class ProductModelCollection extends ResourceCollection
                     'model_name'=>$model->model_name,
                     'model_name_bn'=>$model->model_name_bn,
                     'model_code'=>$model->model_code,
-                    'image'=>$model->model_image,
                     'details'=>$model->model_details,
+                    'image'=>$model->model_image,
+                    'model_image'=>url('/').'/images/ProductModel/'.$model->image,
 
                 ];
             })

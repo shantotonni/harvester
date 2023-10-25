@@ -20,9 +20,10 @@ class ProductsCollection extends ResourceCollection
                   'name'=>$product->name,
                    'name_bn'=>$product->name_bn,
                     'code'=>$product->code,
-                    'product_image'=>$product->product_image,
                     'details'=>$product->details,
-                    'type'=>$product->type
+                    'type'=>$product->type,
+                    'product_image'=>$product->product_image,
+                    'image'=>url('/').'/images/ProductModel/'.$product->image,
                 ];
             })
         ];

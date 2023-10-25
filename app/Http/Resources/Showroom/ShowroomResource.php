@@ -14,7 +14,6 @@ class ShowroomResource extends JsonResource
      */
     public function toArray($request)
     {
-
         return [
             'id' => $this->id,
             'area_id' => $this->area_id,
@@ -25,7 +24,8 @@ class ShowroomResource extends JsonResource
             'mobile' => $this->mobile_number,
             'lat' => $this->lat,
             'long' => $this->lon,
-            'image' => $this->image
+            'image' => $this->image,
+             'showroom_image'=>url('/').'/images/showroom/'.$this->image,
         ];
     }
 }

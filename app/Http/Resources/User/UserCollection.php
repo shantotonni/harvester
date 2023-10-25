@@ -24,8 +24,9 @@ class UserCollection extends ResourceCollection
                     'address'=>$user->address,
                     'email'=>$user->email,
                     'Active'=>$user->Active,
-                    'image'=>$user->image,
                     'device_token'=>$user->device_token,
+                    'image'=>$user->image,
+                    'user_image'=>url('/').'/images/user/'.$user->image,
                 ];
             })
         ];
