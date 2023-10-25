@@ -25,12 +25,8 @@ class CustomerRequest extends FormRequest
     {
         return [
             'name'=>'required|min:3',
-            'mobile'=>'required',
+            'mobile' => 'required|min:11|max:11',
             'email'=>'required',
-            'model_id'=>'required',
-            'product_id'=>'required',
-            'service_hour'=>'required',
-            'date_of_purchase'=>'required',
             'area_id'=>'required',
             'district_id'=>'required',
             'customer_type'=>'required',
@@ -38,7 +34,6 @@ class CustomerRequest extends FormRequest
             'password'=>'required',
             'Image'=>'required',
             'address'=>'required',
-
         ];
     }
 }

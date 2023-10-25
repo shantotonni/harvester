@@ -26,7 +26,8 @@ class SectionStoreRequest extends FormRequest
         return [
 
             'code'=>'required',
-            'section_name'=>'required'
+            'section_name'=>'required',
+            'type'=>'required'
         ];
     }
 }

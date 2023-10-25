@@ -24,7 +24,9 @@ class FuelPumpResource extends JsonResource
             'mobile' => $this->mobile,
             'lat' => $this->lat,
             'lon' => $this->lon,
-            'image' => $this->image
+            'image' => $this->image,
+            'mobile_image' => url('/').'/images/fuel/'. $this->image
+
         ];
     }
 }

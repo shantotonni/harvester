@@ -6,60 +6,95 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\CustomerRequest;
 use App\Http\Resources\Customer\CustomerCollection;
 use App\Models\Customer;
+use App\Models\CustomerChassis;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CustomerController extends Controller
 {
     public function index()
     {
-        $customers = Customer::with('ProductModel', 'Products','area','District')->orderBy('id','desc')
-            ->where('customer_type','harvester')
+        $customers = Customer::with('ProductModel', 'Products', 'area', 'District', 'Customer_chassis')->orderBy('id', 'desc')
+            ->where('customer_type', 'harvester')
             ->paginate(15);
         return new CustomerCollection($customers);
     }
 
     public function store(CustomerRequest $request)
     {
-
-        if ($request->has('Image')) {
-            $image = $request->Image;
-            $name = uniqid().time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-            Image::make($image)->save(public_path('images/customer/').$name);
+        if ($request->has('image')) {
+            $image = $request->image;
+            $name = uniqid() . time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+            Image::make($image)->save(public_path('images/customer/') . $name);
         } else {
             $name = 'not_found.jpg';
         }
-        $customer = new Customer();
-        $customer->name = $request->name;
-        $customer->model_id = $request->model_id;
-        $customer->product_id = $request->product_id;
-        $customer->mobile = $request->mobile;
-        $customer->email = $request->email;
-        $customer->service_hour = $request->service_hour;
-        $customer->date_of_purchase = $request->date_of_purchase;
-        $customer->area_id = $request->area_id;
-        $customer->district_id = $request->district_id;
-        $customer->address = $request->address;
-        $customer->customer_type = $request->customer_type;
-        $customer->chassis = $request->chassis;
-        $customer->password = bcrypt($request->password);
-        $customer->image = $name;
-        $customer->save();
-        return response()->json(['message'=>'Customer Created Successfully'],200);
+        DB::beginTransaction();
+
+        try {
+            $exist_customer = Customer::where('mobile', $request->mobile)->where('customer_type', 'harvester')->exists();
+            if ($exist_customer) {
+                return response()->json([
+                    'message' => 'Mobile number Already Exists'
+                ], 200);
+            }
+
+            $customer = new Customer();
+            $customer->name = $request->name;
+            $customer->mobile = $request->mobile;
+            $customer->email = $request->email;
+            $customer->image = $name;
+            $customer->address = $request->address;
+            $customer->service_hour = $request->service_hour;
+            $customer->district_id = $request->district_id;
+            $customer->date_of_purchase = $request->date_of_purchase;
+            $customer->area_id = $request->area_id;
+            $customer->product_id = $request->product_id;
+            $customer->password = bcrypt($request->password);
+            $customer->customer_type = 'harvester';
+            if ($customer->save()) {
+                $customer_chassis = new CustomerChassis();
+                $customer_chassis->customer_id = $request->id;
+                $customer_chassis->model = $request->model;
+                $customer_chassis->chassis_no = $request->chassis;
+                $customer_chassis->save();
+                DB::commit();
+                return response()->json([
+                    'message' => 'Customer Created Successfully',
+                    'user' => $customer,
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => "error",
+                    'message' => 'Something went wrong!',
+                ], 200);
+            }
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'status' => "error",
+                'message' => $e->getMessage()
+            ], 200);
+        }
     }
 
-    public function update(CustomerRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $customer = Customer::where('id',$id)->first();
-        $image = $request->Image;
 
+
+        DB::beginTransaction();
+        $customer = Customer::where('id', $id)->where('mobile', $request->mobile)->first();
+        $image = $request->Image;
         if ($request->has('Image')) {
             //code for remove old file
             if ($customer->image != '' && $customer->image != null) {
                 $destinationPath = 'images/customer/';
-                $file_old = public_path('/').$destinationPath . $customer->image;
+                $file_old = public_path('/') . $destinationPath . $customer->image;
                 if (file_exists($file_old)) {
                     unlink($file_old);
                 }
@@ -69,29 +104,41 @@ class CustomerController extends Controller
         } else {
             $name = $customer->image;
         }
-
         $customer->name = $request->name;
-        $customer->model_id = $request->model_id;
-        $customer->product_id = $request->product_id;
         $customer->mobile = $request->mobile;
         $customer->email = $request->email;
+        $customer->image = $name;
+        $customer->address = $request->address;
         $customer->service_hour = $request->service_hour;
+        $customer->district_id = $request->district_id;
         $customer->date_of_purchase = $request->date_of_purchase;
         $customer->area_id = $request->area_id;
-        $customer->district_id = $request->district_id;
-        $customer->address = $request->address;
-        $customer->customer_type = $request->customer_type;
-        $customer->chassis = $request->chassis;
+        $customer->product_id = $request->product_id;
         $customer->password = bcrypt($request->password);
-        $customer->date_of_purchase = $request->date_of_purchase;
-        $customer->image = $name;
-        $customer->save();
-        return response()->json(['message'=>'Customer Updated Successfully'],200);
+        $customer->customer_type = 'harvester';
+
+        if ($customer->save()) {
+            $customer_chassis = CustomerChassis::where('customer_id', $request->id)->first();
+            $customer_chassis->model = $request->model;
+            $customer_chassis->chassis_no = $request->chassis;
+            $customer_chassis->save();
+
+            DB::commit();
+            return response()->json([
+                'message' => 'Customer Updated Successfully',
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => "error",
+                'message' => 'Something went wrong!',
+            ], 200);
+        }
+
     }
 
     public function search($query)
     {
-        $customers = Customer::where('name','LIKE',"%$query%")
+        $customers = Customer::where('name', 'LIKE', "%$query%")
 //            ->orWhere('CustomerCode', 'like', '%' . $query . '%')
 //            ->orderBy('CustomerID','desc')
             ->paginate(10);

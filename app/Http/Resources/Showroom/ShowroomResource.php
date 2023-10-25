@@ -16,15 +16,15 @@ class ShowroomResource extends JsonResource
     {
 
         return [
-            'id' => $this->showroom_id,
-            'district_id' => $this->district_id,
-            'district_name' => isset($this->District) ? $this->District->name : '',
-            'owner_name' => $this->owner_name,
-            'showroom_name' => $this->showroom_name,
+            'id' => $this->id,
+            'area_id' => $this->area_id,
+            'area_name' => isset($this->Area) ? $this->Area->areaname : '',
+            'area_name_bn' => isset($this->Area) ? $this->Area->name_bn : '',
+            'showroom_name' => $this->name,
             'address' => $this->address,
-            'mobile' => $this->mobile,
+            'mobile' => $this->mobile_number,
             'lat' => $this->lat,
-            'long' => $this->long,
+            'long' => $this->lon,
             'image' => $this->image
         ];
     }

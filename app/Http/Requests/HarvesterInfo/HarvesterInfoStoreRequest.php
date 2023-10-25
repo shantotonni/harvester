@@ -24,7 +24,6 @@ class HarvesterInfoStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_name'=>'required',
             'details'=>'required',
             'horse_power'=>'required',
             'product_id'=>'required',

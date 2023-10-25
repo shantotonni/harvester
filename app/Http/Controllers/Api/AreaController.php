@@ -13,12 +13,5 @@ public function index(){
     $areas = Area::all();
     return new AreaCollection($areas);
 }
-    public function getAllArea(Request $request){
-        $areas = Area::OrderBy('id','asc')->get();
-        return response()->json([
-            'areas'=>$areas
-        ]);
-
-    }
 
 }

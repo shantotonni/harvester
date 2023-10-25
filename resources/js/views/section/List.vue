@@ -35,6 +35,7 @@
                                             <th class="text-left">SN</th>
                                             <th class="text-left">Name</th>
                                             <th class="text-left">Code</th>
+                                            <th class="text-left">Type</th>
                                             <th class="text-left">Action</th>
                                         </tr>
                                         </thead>
@@ -44,6 +45,7 @@
                                             <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ section.section_name }}</td>
                                             <td class="text-left">{{ section.code }}</td>
+                                            <td class="text-left">{{ section.type }}</td>
                                             <td class="text-center">
                                                 <button @click="edit(section)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>
@@ -108,6 +110,27 @@
                                                  v-html="form.errors.get('code')"/>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Type</label>
+                                            <select type="text" name="type" v-model="form.type"
+                                                    class="form-control"
+                                                    :class="{ 'is-invalid': form.errors.has('type') }">
+                                                <option disabled value="">Select type</option>
+                                                <option>
+                                                    Harvester
+                                                </option>
+                                                <option>
+                                                    Tractor
+                                                </option>
+                                                <option>
+                                                    Both
+                                                </option>
+                                            </select>
+                                            <div class="error" v-if="form.errors.has('type')"
+                                                 v-html="form.errors.get('type')"/>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -146,6 +169,7 @@ export default {
                 section_id: '',
                 section_name: '',
                 code: '',
+                type: '',
             }),
         }
     },

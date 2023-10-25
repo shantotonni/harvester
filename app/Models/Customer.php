@@ -35,8 +35,8 @@ class Customer extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function customer_chassis(){
-        return $this->hasMany('App\Models\CustomerChassis','customer_id','id');
+    public function Customer_chassis(){
+        return $this->hasOne('App\Models\CustomerChassis','customer_id','id');
     }
     public function ProductModel(){
         return $this->belongsTo(ProductModel::class,'model_id','id');
