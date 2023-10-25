@@ -26,7 +26,9 @@ class DealerCollection extends ResourceCollection
                     'mobile' => $dealer->mobile,
                     'lat' => $dealer->lat,
                     'long' => $dealer->lon,
-                    'image' => $dealer->image
+                    'image' => $dealer->image,
+                    'mobile_image' => url('/').'/images/dealer/'. $dealer->image
+
                 ];
             })
         ];

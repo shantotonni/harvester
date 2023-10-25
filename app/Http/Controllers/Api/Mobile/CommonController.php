@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\Mobile;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Banner\BannerCollection;
 use App\Http\Resources\Category\CategoryCollection;
+use App\Http\Resources\Customer\CustomerCollection;
+use App\Http\Resources\Dealer\DealerCollection;
 use App\Http\Resources\District\DistrictCollection;
 use App\Http\Resources\Doctor\DoctorCollection;
 use App\Http\Resources\Doctor\DoctorResource;
@@ -20,6 +22,7 @@ use App\Http\Resources\Product\ProductCollection;
 use App\Http\Resources\ProductModel\ProductModelCollection;
 use App\Http\Resources\Products\ProductsCollection;
 use App\Http\Resources\SeasonalCrops\SeasonalCropsCollection;
+use App\Http\Resources\ServiceCenter\ServiceCenterCollection;
 use App\Http\Resources\ServiceEngineer\ServiceEngineerCollection;
 use App\Http\Resources\ServiceRequest\ServiceRequestJobCardCollection;
 use App\Http\Resources\ServiceRequest\ServiceRequestJobCardResource;
@@ -33,6 +36,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Crop;
 use App\Models\Customer;
+use App\Models\Dealer;
 use App\Models\District;
 use App\Models\Doctor;
 use App\Models\Engineer;
@@ -88,9 +92,7 @@ class CommonController extends Controller
     public function getAllCustomer()
     {
         $customers = Customer::where('customer_type','harvester')->orderBy('id', 'asc')->get();
-        return response()->json([
-            'customers' => $customers
-        ]);
+        return new CustomerCollection($customers);
     }
 
     public function getAllMenu()
@@ -112,9 +114,7 @@ class CommonController extends Controller
     public function getAllServiceCenter()
     {
         $service_centers = ServiceCenter::orderBy('created_at', 'desc')->get();
-        return response()->json([
-            'service_centers' => $service_centers
-        ]);
+        return new ServiceCenterCollection($service_centers);
     }
     public function getAllShowroom()
     {
@@ -132,7 +132,7 @@ class CommonController extends Controller
     }
 
     public function getAllProductModel(){
-        $models = ProductModel::OrderBy('id','asc')->where('product_id',4)->select('id','product_id','model_name','model_name_bn')->get();
+        $models = ProductModel::OrderBy('id','asc')->where('product_id',4)->select('id','product_id','model_name','model_name_bn')->with('Products')->get();
         return response()->json([
             'models'=>$models
         ]);
@@ -218,11 +218,16 @@ class CommonController extends Controller
         $fule_pump = FuelPump::OrderBy('fuel_pump_id', 'asc')->get();
         return new FuelPumpCollection($fule_pump);
     }
+    public function getAllDealer()
+    {
+        $dealer = Dealer::OrderBy('id', 'asc')->get();
+        return new DealerCollection($dealer);
+    }
 
     public function getAllHarvesterServiceDetails(Request $request)
     {
         $hour = $request->hour;
-        $harvester_services = HarvesterService::orderBy('created_at', 'desc')->with('ServicingType','ProductModel','MirrorProducts')
+        $harvester_services = HarvesterService::orderBy('created_at', 'desc')->with('ServicingType','ProductModel','SparePartsMirror')
             ->where('from_hr','<=', $hour)
             ->where('to_hr','>=', $hour)
             ->where('model_id',$request->model_id)->get();
@@ -243,7 +248,7 @@ class CommonController extends Controller
         $product_model_id = $request->product_model_id;
         $section_id = $request->section_id;
         $query = $request->search;
-        $harvester_parts = HarvesterParts::query()->with('MirrorProducts');
+        $harvester_parts = HarvesterParts::query()->with('SparePartsMirror');
         if (!empty($product_model_id)){
             $harvester_parts = $harvester_parts->where('product_model_id',$product_model_id);
         }

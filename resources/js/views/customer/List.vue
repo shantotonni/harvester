@@ -49,17 +49,17 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(customer, i) in customers" :key="customer.CustomerID"
+                                        <tr v-for="(customer, i) in customers" :key="customer.id"
                                             v-if="customers.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ customer.name }}</td>
                                             <td class="text-left">{{ customer.address }}</td>
                                             <td class="text-right">{{ customer.mobile }}</td>
-                                            <td class="text-left">{{ customer.product_name }}</td>
-                                            <td class="text-left">{{ customer.model_name }}</td>
+                                            <td class="text-left">{{ customer.product_name_bn }}</td>
+                                            <td class="text-left">{{ customer.model}}</td>
                                             <td class="text-left">{{ customer.service_hour }}</td>
-                                            <td class="text-left">{{ customer.area_name }}</td>
-                                            <td class="text-left">{{ customer.district_name }}</td>
+                                            <td class="text-left">{{ customer.area_name_bn }}</td>
+                                            <td class="text-left">{{ customer.district_name_bn }}</td>
                                             <td class="text-left">{{ customer.address }}</td>
                                             <td class="text-left">{{ customer.chassis }}</td>
                                             <td class="text-left">
@@ -184,7 +184,7 @@
                                                     @change="getAllModelByProduct()">
                                                 <option disabled value="">Select Product Category</option>
                                                 <option :value="product.id" v-for="(product , index) in products"
-                                                        :key="index">{{ product.name }}
+                                                        :key="index">{{ product.name_bn }}
                                                 </option>
                                             </select>
                                             <div class="error" v-if="form.errors.has('product_id')"
@@ -195,16 +195,16 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Model</label>
-                                            <select name="text" id="model_id" class="form-control"
-                                                    v-model="form.model_id"
-                                                    :class="{ 'is-invalid': form.errors.has('model_id') }">
+                                            <select name="text" id="model" class="form-control"
+                                                    v-model="form.model"
+                                                    :class="{ 'is-invalid': form.errors.has('model') }">
                                                 <option disabled value="">Select Model</option>
-                                                <option :value="model.id" v-for="(model , index) in models"
-                                                        :key="index">{{ model.model_name }}
+                                                <option :value="model.model_name_bn" v-for="(model , index) in models"
+                                                        :key="index">{{ model.model_name_bn }}
                                                 </option>
                                             </select>
-                                            <div class="error" v-if="form.errors.has('model_id')"
-                                                 v-html="form.errors.get('model_id')"/>
+                                            <div class="error" v-if="form.errors.has('model')"
+                                                 v-html="form.errors.get('model')"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -263,18 +263,18 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Purchase Date</label>
-                                            <datepicker name="To Hour" v-model="form.date_of_purchase"
-                                                        :format="customFormatter"
-                                                        placeholder="Enter To Date"
-                                                        :class="{ 'is-invalid': form.errors.has('date_of_purchase') }"
-                                                        style="width: 100%;height: 32px"></datepicker>
-                                            <div class="error" v-if="form.errors.has('date_of_purchase')"
-                                                 v-html="form.errors.get('date_of_purchase')"/>
-                                        </div>
-                                    </div>
+<!--                                    <div class="col-md-6">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>Purchase Date</label>-->
+<!--                                            <datepicker name="To Hour" v-model="form.date_of_purchase"-->
+<!--                                                        :format="customFormatter"-->
+<!--                                                        placeholder="Enter To Date"-->
+<!--                                                        :class="{ 'is-invalid': form.errors.has('date_of_purchase') }"-->
+<!--                                                        style="width: 100%;height: 32px"></datepicker>-->
+<!--                                            <div class="error" v-if="form.errors.has('date_of_purchase')"-->
+<!--                                                 v-html="form.errors.get('date_of_purchase')"/>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                 </div>
 
                             </div>
@@ -328,11 +328,11 @@ export default {
                 password: '',
                 product_id: '',
                 customer_type: '',
-                date_of_purchase: '',
+                // date_of_purchase: '',
                 chassis_image: '',
                 service_hour: '',
                 district_id: '',
-                model_id: '',
+                model: '',
                 area_id: '',
                 address: '',
                 chassis: '',
@@ -351,7 +351,6 @@ export default {
     },
     mounted() {
         this.getAllCustomer();
-
     },
     methods: {
         getAllCustomer() {

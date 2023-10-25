@@ -24,7 +24,8 @@ class DealerResource extends JsonResource
             'mobile' => $this->mobile,
             'lat' => $this->lat,
             'long' => $this->lon,
-            'image' => $this->image
+            'image' => $this->image,
+            'mobile_image' => url('/').'/images/dealer/'. $this->image
         ];
     }
 }

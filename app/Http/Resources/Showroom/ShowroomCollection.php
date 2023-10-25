@@ -26,7 +26,8 @@ class ShowroomCollection extends ResourceCollection
                     'mobile' => $showroom->mobile_number,
                     'lat' => $showroom->lat,
                     'long' => $showroom->lon,
-                    'image' => $showroom->image
+                    'image' => $showroom->image,
+                    'showroom_image'=>url('/').'/images/showroom/'.$showroom->image,
                 ];
             })
         ];

@@ -24,6 +24,7 @@ class ServiceCenterResource extends JsonResource
             'lat' => $this->lat,
             'lon' => $this->lon,
             'image' => $this->image,
+            'serviceCenter_image'=>url('/').'/images/service_center/'.$this->image,
         ];
     }
 }

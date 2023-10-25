@@ -20,7 +20,8 @@ class ServiceCenterCollection extends ResourceCollection
                     'mobile' => $service_center->mobile,
                     'lat' => $service_center->lat,
                     'lon' => $service_center->lon,
-                    'image' => $service_center->image
+                    'image' => $service_center->image,
+                    'serviceCenter_image'=>url('/').'/images/service_center/'.$service_center->image,
                 ];
             })
         ];
