@@ -6,9 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ServiceRequest\ServiceRequestCollection;
 use App\Http\Resources\ServiceRequest\ServiceRequestJobCardCollection;
 use App\Models\Customer;
+use App\Models\CustomerChassis;
+use App\Models\District;
 use App\Models\JobCard;
 use App\Models\ProductModel;
 use App\Models\ServiceRequest;
+use App\Models\User;
+use App\Models\UserArea;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +33,8 @@ class ServiceRequestController extends Controller
     public function getAllCustomerServiceRequest()
     {
         $user = JWTAuth::parseToken()->authenticate();
-        $job_cards = JobCard::where('customer_id',$user->id)->with('model','products','district','upazila','section','technitian')->paginate(15);
+        $customer_chassis = CustomerChassis::where('customer_id',$user->id)->pluck('chassis_no');
+        $job_cards = JobCard::whereIn('chassis_number',$customer_chassis)->with('model','products','district','upazila','section','technitian')->paginate(15);
         return new ServiceRequestJobCardCollection($job_cards);
     }
 
@@ -43,11 +48,14 @@ class ServiceRequestController extends Controller
 
       $user = JWTAuth::parseToken()->authenticate();
 
-
       $product_model = ProductModel::where('id',$request->model_id)->first();
+      $district = District::query()->where('id',$request->district_id)->first();
+      $user_area = UserArea::query()->where('area_id', $district->area_id)->first();
 
       $job_card = new JobCard();
       $job_card->technitian_id = '';
+      $job_card->engineer_id = $user_area->user_id;
+      $job_card->area_id = $user_area->area_id;
       $job_card->product_id = $product_model->product_id;
       $job_card->model_id = $product_model->id;
       $job_card->section_id = $request->section_id;

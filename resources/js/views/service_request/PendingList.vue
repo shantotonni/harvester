@@ -56,8 +56,8 @@
                                             </td>
                                             <td class="text-center">
                                                 <router-link :to="`service-request-details/${job_card.id}`" class="btn btn-primary btn-sm btn-xs"><i class="far fa-eye"></i></router-link>
-                                                <button type="button" @click="edit(delivery)" class="btn btn-success btn-sm btn-xs"><i class="far fa-edit"></i></button>
-                                                <button type="button" @click="destroy(delivery.id)" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                                <button type="button" @click="edit(job_card)" class="btn btn-success btn-sm btn-xs">Assign</button>
+<!--                                                <button type="button" @click="destroy(job_card.id)" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>-->
                                             </td>
                                         </tr>
                                         <tr v-else>
@@ -82,6 +82,48 @@
                 </div>
             </div>
         </div>
+
+        <!--  Modal content for the above example -->
+        <div class="modal fade" id="fuelModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0" id="myLargeModalLabel">Assign</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="closeModal">
+                            ×
+                        </button>
+                    </div>
+                    <form @submit.prevent="assign()" @keydown="form.onKeydown($event)"
+                          enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Technician</label>
+                                            <select name="text" id="technician_id" class="form-control" v-model="form.technician_id" :class="{ 'is-invalid': form.errors.has('technician_id') }">
+                                                <option disabled value="">Select Technician</option>
+                                                <option :value="technician.id" v-for="(technician , index) in technicians" :key="index">{{ technician.name}}
+                                                </option>
+                                            </select>
+                                            <div class="error" v-if="form.errors.has('technician_id')" v-html="form.errors.get('technician_id')"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="closeModal">Close</button>
+                            <button :disabled="form.busy" type="submit" class="btn btn-primary">
+                                Assign
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -92,6 +134,7 @@ export default {
     data() {
         return {
             job_cards: [],
+            technicians: [],
             pagination: {
                 current_page: 1
             },
@@ -101,16 +144,7 @@ export default {
             isLoading: false,
             form: new Form({
                 id: '',
-                technitian_id: '',
-                customer_id: '',
-                engineer_id: '',
-                customer_name: '',
-                remarks: '',
-                service_wanted_at: '',
-                service_start_at: '',
-                service_end_at: '',
-                job_status: '',
-                service_type_id: '',
+                technician_id: '',
             }),
         }
     },
@@ -124,10 +158,9 @@ export default {
         }
     },
     mounted() {
-        document.title = 'Service Request List | Harvester';
+        document.title = 'Pending Service Request List | Harvester';
         this. getAllPendingServiceRequestList();
         this. getAllSections();
-
     },
     methods: {
         getAllPendingServiceRequestList() {
@@ -140,6 +173,35 @@ export default {
             }).catch((error) => {
 
             })
+        },
+        edit(fuel) {
+            this.editMode = true;
+            this.form.reset();
+            this.form.clear();
+            this.form.id = fuel.id
+            this.getAllTechnician();
+            $("#fuelModal").modal("show");
+        },
+        getAllTechnician(){
+            axios.get('/api/get-all-technician').then((response)=>{
+                console.log(response.data)
+                this.technicians = response.data.technitians;
+            }).catch((error)=>{
+
+            })
+        },
+        assign(){
+            this.form.busy = true;
+            this.form.post("/api/assign-technician").then(response => {
+                $("#fuelModal").modal("hide");
+                this.$toaster.success('Assigned Successfully');
+                this.getAllPendingServiceRequestList();
+            }).catch(e => {
+                this.isLoading = false;
+            });
+        },
+        closeModal() {
+            $("#fuelModal").modal("hide");
         },
         searchData() {
             axios.get("/api/search/pending-service-request-list/" + this.query + "?page=" + this.pagination.current_page).then(response => {
@@ -154,8 +216,6 @@ export default {
             this.query = "";
             this.$toaster.success('Data Successfully Refresh');
         },
-
-
         getAllSections(){
             axios.get('/api/get-all-sections').then((response)=>{
                 console.log(response)
@@ -164,14 +224,6 @@ export default {
 
             })
         },
-        // getAllServiceType(){
-        //     axios.get('/api/get-all-service-type').then((response)=>{
-        //         console.log(response)
-        //         this.service_types = response.data.service_types;
-        //     }).catch((error)=>{
-        //
-        //     })
-        // },
         destroy(id) {
             Swal.fire({
                 title: 'Are you sure?',

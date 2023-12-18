@@ -14,7 +14,7 @@ class CustomerChassis extends Model
     const CREATED_AT = 'created_at';
     const UPDATED_AT  = 'updated_at';
 
-    public function Customer(){
-        return $this->belongsTo(Crop::class,'customer_id','id');
+    public function invoice_details(){
+        return $this->hasOne('App\Models\InvoiceDetails','ChassisNo','chassis_no');
     }
 }

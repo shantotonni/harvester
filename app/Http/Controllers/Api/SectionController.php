@@ -13,8 +13,7 @@ class SectionController extends Controller
 {
    public function index(){
 
-       $sections = Section::where('type','Harvester')->orwhere('type','Both')->paginate(15);
-
+       $sections = Section::where('product_id',4)->paginate(15);
        return new SectionCollection($sections);
    }
 

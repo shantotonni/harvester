@@ -196,7 +196,7 @@ class CommonController extends Controller
     }
     public function getAllTechnician()
     {
-        $technitians = User::OrderBy('id', 'asc')->get();
+        $technitians = User::OrderBy('id', 'asc')->where('role_id',3)->get();
         return response()->json([
             'technitians' => $technitians
         ]);

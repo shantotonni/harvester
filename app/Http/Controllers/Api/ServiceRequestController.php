@@ -52,7 +52,6 @@ class ServiceRequestController extends Controller
                 $job_cards = $job_cards->where('product_id', $product_id);
             }
 
-
             $job_cards = $job_cards->whereDate('service_date', ">=", $from_date)
                 ->whereDate('service_date', "<=", $to_date)
                 ->Where('product_type', 'Harvester')
@@ -80,17 +79,13 @@ class ServiceRequestController extends Controller
         return new ServiceRequestJobCardCollection($job_cards);
     }
 
-    public function pendingJobCard(Request $request)
-    {
+    public function pendingJobCard(Request $request){
 
         $from_date = $request->from_date ? date('Y-m-d', strtotime($request->from_date)) : date('Y-m-01', strtotime(date('Y-m-01') . ' -1 month'));
         $to_date = $request->to_date ? date('Y-m-d', strtotime($request->to_date)) : date('Y-m-d');
         $searchId = $request->search ? $request->search : 0;
         $chassis_number = $request->chassis_number;
-        $products = Products::all();
         $product_id = $request->product_id;
-        $product_type = 'Harvester';
-
 
         if (Auth::user()->role_id == 1) {
             $job_cards = JobCard::query()->with(['area', 'territory', 'engineer', 'technitian', 'participant', 'call_type', 'service_types', 'products', 'model', 'image']);
@@ -104,16 +99,14 @@ class ServiceRequestController extends Controller
             if ($product_id) {
                 $job_cards = $job_cards->where('product_id', 'Harvester');
             }
-            $job_cards = $job_cards->Where('product_type', 'Harvester')
-                ->whereDate('service_date', ">=", $from_date)
-                ->whereDate('service_date', "<=", $to_date)
-                ->Where('job_status', 'started')
-                //->where('id','263607')
+            $job_cards = $job_cards->where('product_type', 'Harvester')
+                //->whereDate('service_date', ">=", $from_date)
+                //->whereDate('service_date', "<=", $to_date)
+                ->where('job_status', 'started')
                 ->orderBy('id', 'desc');
         } else {
 
             $user_id = Auth::user()->id;
-
             $job_cards = JobCard::query()->with(['area', 'territory', 'engineer', 'technitian', 'participant', 'call_type', 'service_types', 'products', 'model', 'image']);
 
             if ($searchId) {
@@ -125,11 +118,11 @@ class ServiceRequestController extends Controller
             }
 
             $job_cards = $job_cards
-                ->Where('product_type', 'Harvester')
+                ->where('product_type', 'Harvester')
                 ->where('engineer_id', $user_id)
-                ->whereDate('service_date', ">=", $from_date)
-                ->whereDate('service_date', "<=", $to_date)
-                ->Where('job_status', 'started')->latest()->orderBy('id', 'desc');
+                //->whereDate('service_date', ">=", $from_date)
+                //->whereDate('service_date', "<=", $to_date)
+                ->where('job_status', 'started')->latest()->orderBy('id', 'desc');
         }
 
         $job_cards = $job_cards->paginate(50);
@@ -140,8 +133,15 @@ class ServiceRequestController extends Controller
         return new ServiceRequestJobCardCollection($job_cards);
     }
 
-    public function approveJobCard(Request $request)
-    {
+    public function assignTechnician(Request $request){
+        $job_card = JobCard::query()->where('id',$request->id)->first();
+        $job_card->technitian_id = $request->technician_id;
+        $job_card->save();
+        return response()->json(['message' => 'Assigned Successfully', 200]);
+
+    }
+
+    public function approveJobCard(Request $request){
 
         $from_date = $request->from_date ? date('Y-m-d', strtotime($request->from_date)) : date('Y-m-01', strtotime(date('Y-m-01') . ' -1 month'));
         $to_date = $request->to_date ? date('Y-m-d', strtotime($request->to_date)) : date('Y-m-d');
@@ -174,7 +174,6 @@ class ServiceRequestController extends Controller
         } else {
 
             $user_id = Auth::user()->id;
-
             $job_cards = JobCard::query()->with(['area', 'territory', 'engineer', 'technitian', 'participant', 'call_type', 'service_types', 'products', 'model']);
 
             if ($searchId) {
@@ -202,8 +201,7 @@ class ServiceRequestController extends Controller
         return new ServiceRequestJobCardResource($job_cards);
     }
 
-    public function create()
-    {
+    public function create(){
 
         $territories = Territory::all();
         $areas = Area::all();
@@ -220,8 +218,7 @@ class ServiceRequestController extends Controller
             ->with("service_types", $service_types);
     }
 
-    public function store(ServiceRequestStoreRequest $request)
-    {
+    public function store(ServiceRequestStoreRequest $request){
 
         $job_card = new JobCard;
         $job_card->territory_id = $request->territory_id;
