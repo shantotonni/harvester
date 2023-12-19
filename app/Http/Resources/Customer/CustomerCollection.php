@@ -6,12 +6,6 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class CustomerCollection extends ResourceCollection
 {
-    /**
-     * Transform the resource collection into an array.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-     */
     public function toArray($request)
     {
         return [
@@ -37,7 +31,7 @@ class CustomerCollection extends ResourceCollection
                     'district_name_bn' => isset($customer->District) ? $customer->District->name_bn : '',
                     'address' => $customer->address,
                     'chassis' =>  isset($customer->chassis_one) ? $customer->chassis_one->chassis_no : '',
-                    'chassis_image' => $customer->chassis_image,
+                     'chassis_image' => $customer->chassis_image,
                     'customer_type' => $customer->customer_type,
                     'image' => $customer->image,
                     'customer_image'=>url('/').'/images/customer/'.$customer->image,

@@ -219,7 +219,6 @@ export default {
             isLoading: false,
             form: new Form({
                 id: '',
-                // product_name: '',
                 model_id: '',
                 product_id: '',
                 details: '',

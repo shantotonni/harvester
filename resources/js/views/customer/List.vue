@@ -114,7 +114,7 @@
                                         <div class="form-group">
                                             <label>Customer Name</label>
                                             <input v-model="form.name" type="text" name="name" class="form-control"
-                                                   :class="{ 'is-invalid': form.errors.has('name') }">
+                                                   :class="{ 'is-invalid': form.errors.has('name') }" >
                                             <div class="error" v-if="form.errors.has('name')"
                                                  v-html="form.errors.get('name')"/>
                                         </div>
@@ -211,13 +211,13 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Image</label>
-                                            <input @change="changeImage($event)" type="file" name="Image"
+                                            <label>Image <small>(Image type:jpeg,jpg,png,svg)</small></label>
+                                            <input @change="changeImage($event)" type="file" name="image"
                                                    class="form-control"
-                                                   :class="{ 'is-invalid': form.errors.has('Image') }">
-                                            <div class="error" v-if="form.errors.has('Image')"
-                                                 v-html="form.errors.get('Image')"/>
-                                            <img v-if="form.Image" :src="showImage(form.Image)" alt="" height="40px"
+                                                   :class="{ 'is-invalid': form.errors.has('image') }">
+                                            <div class="error" v-if="form.errors.has('image')"
+                                                 v-html="form.errors.get('image')"/>
+                                            <img v-if="form.image" :src="showImage(form.image)" alt="" height="40px"
                                                  width="40px">
                                         </div>
                                     </div>
@@ -330,8 +330,6 @@ export default {
                 password: '',
                 product_id: '',
                 customer_type: '',
-                // date_of_purchase: '',
-                chassis_image: '',
                 service_hour: '',
                 district_id: '',
                 model: '',
@@ -403,6 +401,7 @@ export default {
             });
         },
         edit(customer) {
+            console.log('sdsd',customer)
             this.getAllCompany();
             this.getAllDistricts();
             this.getAllArea();
@@ -428,16 +427,16 @@ export default {
             let file = event.target.files[0];
             let reader = new FileReader();
             reader.onload = event => {
-                this.form.Image = event.target.result;
+                this.form.image = event.target.result;
             };
             reader.readAsDataURL(file);
         },
         showImage() {
-            let img = this.form.Image;
+            let img = this.form.image;
             if (img.length > 100) {
-                return this.form.Image;
+                return this.form.image;
             } else {
-                return window.location.origin + "/Harvester/images/customer/" + this.form.Image;
+                return window.location.origin + "/harvester/public/images/customer/" + this.form.image;
             }
         },
         tableImage(image) {
@@ -445,7 +444,6 @@ export default {
         },
         getAllProductModel() {
             axios.get('/api/get-all-product-model').then((response) => {
-
                 this.models = response.data.data;
             }).catch((error) => {
 

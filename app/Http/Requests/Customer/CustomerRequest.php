@@ -32,7 +32,7 @@ class CustomerRequest extends FormRequest
             'customer_type'=>'required',
             'chassis'=>'required',
             'password'=>'required',
-            'Image'=>'required',
+            'image'=>'required',
             'address'=>'required',
         ];
     }

@@ -40,6 +40,7 @@ class CustomerController extends Controller
             $exist_customer = Customer::where('mobile', $request->mobile)->where('customer_type', 'harvester')->exists();
             if ($exist_customer) {
                 return response()->json([
+                    'status' => "error",
                     'message' => 'Mobile number Already Exists'
                 ], 200);
             }
@@ -57,9 +58,13 @@ class CustomerController extends Controller
             $customer->product_id = $request->product_id;
             $customer->password = bcrypt($request->password);
             $customer->customer_type = 'harvester';
+
+
+            $customer->save();
+
             if ($customer->save()) {
                 $customer_chassis = new CustomerChassis();
-                $customer_chassis->customer_id = $request->id;
+                $customer_chassis->customer_id = $customer->id;
                 $customer_chassis->model = $request->model;
                 $customer_chassis->chassis_no = $request->chassis;
                 $customer_chassis->save();
@@ -86,12 +91,11 @@ class CustomerController extends Controller
 
     public function update(Request $request, $id)
     {
-
-
         DB::beginTransaction();
-        $customer = Customer::where('id', $id)->where('mobile', $request->mobile)->first();
-        $image = $request->Image;
-        if ($request->has('Image')) {
+        $customer = Customer::where('id', $id)->first();
+        $image = $request->image;
+
+        if ($request->image) {
             //code for remove old file
             if ($customer->image != '' && $customer->image != null) {
                 $destinationPath = 'images/customer/';
@@ -119,6 +123,7 @@ class CustomerController extends Controller
         $customer->customer_type = 'harvester';
 
         if ($customer->save()) {
+
             $customer_chassis = CustomerChassis::where('customer_id', $request->id)->first();
             $customer_chassis->model = $request->model;
             $customer_chassis->chassis_no = $request->chassis;
