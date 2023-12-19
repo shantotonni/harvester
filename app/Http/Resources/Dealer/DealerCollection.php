@@ -6,12 +6,6 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class DealerCollection extends ResourceCollection
 {
-    /**
-     * Transform the resource collection into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-     */
     public function toArray($request)
     {
         return [
@@ -22,6 +16,8 @@ class DealerCollection extends ResourceCollection
                     'area_name' => isset($dealer->Area) ? $dealer->Area->areaname : '',
                     'area_name_bn' => isset($dealer->Area) ? $dealer->Area->name_bn : '',
                     'dealer_name' => $dealer->responsible_person,
+                    'dealer_code' => $dealer->dealer_code,
+                    'dealer_type' => $dealer->dealer_type,
                     'address' => $dealer->address,
                     'mobile' => $dealer->mobile,
                     'lat' => $dealer->lat,

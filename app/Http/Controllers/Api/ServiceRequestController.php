@@ -357,5 +357,4 @@ class ServiceRequestController extends Controller
         return redirect()->back();
     }
 
-
 }
