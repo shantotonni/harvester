@@ -34,17 +34,18 @@
                                         <tr>
                                             <th class="text-left">SN</th>
                                             <th class="text-left">Customer Name</th>
-                                            <th class="text-left">Customer Address</th>
+<!--                                            <th class="text-left">Customer Address</th>-->
                                             <th class="text-left">Mobile Number</th>
                                             <th class="text-left">Product Name</th>
                                             <th class="text-left">Model Name</th>
                                             <th class="text-left">Service Hour</th>
-                                            <th class="text-left">Area</th>
+<!--                                            <th class="text-left">Area</th>-->
                                             <th class="text-left">District</th>
-                                            <th class="text-left">Address</th>
+<!--                                            <th class="text-left">Address</th>-->
                                             <th class="text-left">Chassis no</th>
                                             <th class="text-left"> Image</th>
                                             <th class="text-left"> Customer Type</th>
+                                            <th class="text-left"> Registration Date</th>
                                             <th class="text-left">Action</th>
                                         </tr>
                                         </thead>
@@ -53,19 +54,20 @@
                                             v-if="customers.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ customer.name }}</td>
-                                            <td class="text-left">{{ customer.address }}</td>
-                                            <td class="text-right">{{ customer.mobile }}</td>
+<!--                                            <td class="text-left">{{ customer.address }}</td>-->
+                                            <td>{{ customer.mobile }}</td>
                                             <td class="text-left">{{ customer.product_name_bn }}</td>
                                             <td class="text-left">{{ customer.model}}</td>
                                             <td class="text-left">{{ customer.service_hour }}</td>
-                                            <td class="text-left">{{ customer.area_name_bn }}</td>
+<!--                                            <td class="text-left">{{ customer.area_name_bn }}</td>-->
                                             <td class="text-left">{{ customer.district_name_bn }}</td>
-                                            <td class="text-left">{{ customer.address }}</td>
+<!--                                            <td class="text-left">{{ customer.address }}</td>-->
                                             <td class="text-left">{{ customer.chassis }}</td>
                                             <td class="text-left">
                                                 <img v-if="customer.image" height="40" width="40"
                                                                           :src="tableImage(customer.image)" alt=""></td>
                                             <td class="text-left">{{ customer.customer_type }}</td>
+                                            <td class="text-left">{{ customer.RDate }}</td>
                                             <td class="text-left">
                                                 <button @click="edit(customer)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>
@@ -444,7 +446,7 @@ export default {
         getAllProductModel() {
             axios.get('/api/get-all-product-model').then((response) => {
 
-                this.models = response.data.models;
+                this.models = response.data.data;
             }).catch((error) => {
 
             })
@@ -452,7 +454,7 @@ export default {
         getAllProduct() {
             axios.get('/api/get-all-products').then((response) => {
 
-                this.products = response.data.products;
+                this.products = response.data.data;
             }).catch((error) => {
 
             })

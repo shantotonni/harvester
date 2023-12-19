@@ -9,8 +9,8 @@ class MirrorProduct extends Model
 {
     use HasFactory;
 
-    protected $connection= 'MotorBrInvoiceMirror';
-    protected $table = 'product';
+    protected $connection= 'MotorSparePartsMirror';
+    protected $table = 'Product';
     public $primaryKey = 'ProductCode';
     protected $keyType = 'string';
 

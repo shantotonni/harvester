@@ -332,12 +332,13 @@ export default {
         getAllProduct() {
             axios.get('/api/get-all-products').then((response) => {
                 console.log(response)
-                this.products = response.data.products;
+                this.products = response.data.data;
             }).catch((error) => {
 
             })
         },
         getAllModelByProduct() {
+            console.log(this.form.product_id)
             axios.get( '/api/get-all-model-by-product/' + this.form.product_id).then((response) => {
                 console.log(response)
                 this.models = response.data.data;

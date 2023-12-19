@@ -154,6 +154,7 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //Pending Service List
     Route::get('pending-service-request-list', [ServiceRequestController::class,'pendingJobCard'])->name('pendingRequest');
     Route::get('search/pending-service-request-list	/{query}', [ServiceRequestController::class, 'search']);
+    Route::post('assign-technician', [ServiceRequestController::class, 'assignTechnician']);
 
     //Completed Service List
     Route::get('completed-service-request-list', [ServiceRequestController::class,'approveJobCard'])->name('completeRequest');

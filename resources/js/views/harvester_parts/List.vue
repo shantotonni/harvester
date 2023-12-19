@@ -319,7 +319,7 @@ export default {
         },
         getAllProductModel() {
             axios.get('/api/get-all-product-model').then((response) => {
-                this.models = response.data.models;
+                this.models = response.data.data;
             }).catch((error) => {
 
             })
@@ -341,6 +341,7 @@ export default {
         },
         getAllSections() {
             axios.get('/api/get-all-sections').then((response) => {
+                console.log(response)
                 this.sections = response.data.sections;
             }).catch((error) => {
 
@@ -352,7 +353,6 @@ export default {
                 text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,
-
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, delete it!'

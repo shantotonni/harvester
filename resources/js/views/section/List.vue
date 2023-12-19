@@ -190,7 +190,7 @@ export default {
         getAllSectionList() {
             this.isLoading = true;
             axios.get('/api/section-list?page=' + this.pagination.current_page).then((response) => {
-                console.log('data', response.data.data)
+                console.log('data', response.data)
                 this.sections = response.data.data;
                 this.pagination = response.data.meta;
                 this.isLoading = false;

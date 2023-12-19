@@ -39,6 +39,8 @@ class DealerController extends Controller
         $dealer->area_id = $request->area_id;
         $dealer->address = $request->address;
         $dealer->responsible_person = $request->dealer_name;
+        $dealer->dealer_code = $request->dealer_code;
+        $dealer->dealer_type = $request->dealer_type;
         $dealer->mobile = $request->mobile;
         $dealer->lat = $request->lat;
         $dealer->lon = $request->long;
@@ -76,6 +78,8 @@ class DealerController extends Controller
         $dealer->area_id = $request->area_id;;
         $dealer->address = $request->address;
         $dealer->responsible_person = $request->dealer_name;
+        $dealer->dealer_code = $request->dealer_code;
+        $dealer->dealer_type = $request->dealer_type;
         $dealer->mobile = $request->mobile;
         $dealer->lat = $request->lat;
         $dealer->lon = $request->long;

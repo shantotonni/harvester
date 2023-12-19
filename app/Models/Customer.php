@@ -36,7 +36,7 @@ class Customer extends Authenticatable implements JWTSubject
     }
 
     public function Customer_chassis(){
-        return $this->hasOne('App\Models\CustomerChassis','customer_id','id');
+        return $this->hasMany('App\Models\CustomerChassis','customer_id','id');
     }
     public function ProductModel(){
         return $this->belongsTo(ProductModel::class,'model_id','id');
@@ -47,9 +47,11 @@ class Customer extends Authenticatable implements JWTSubject
     public function District()
     {
         return $this->belongsTo(District::class,'district_id','id');
-
     }
     public function area(){
         return $this->belongsTo(Area::class,'area_id','id');
+    }
+    public function chassis_one(){
+        return $this->hasOne('App\Models\CustomerChassis','customer_id','id');
     }
 }

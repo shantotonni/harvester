@@ -59,6 +59,7 @@
                                             <th class="text-left">From hour</th>
                                             <th class="text-left">To hour</th>
                                             <th class="text-left">Fixed Hour</th>
+                                            <th class="text-left">Parts Name(Customize)</th>
                                             <th class="text-left">Parts Name</th>
                                             <th class="text-left">Parts Code</th>
                                             <th class="text-left">Quantity</th>
@@ -71,12 +72,13 @@
                                             :key="harvester_service.id"
                                             v-if="harvester_services.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
-                                            <td class="text-left">{{ harvester_service.model_name }}</td>
+                                            <td class="text-left">{{ harvester_service.model_name_bn }}</td>
 <!--                                            <td class="text-left">{{ harvester_service.servicing_name }}</td>-->
                                             <td class="text-right">{{ harvester_service.from_hr }}</td>
                                             <td class="text-right">{{ harvester_service.to_hr }}</td>
                                             <td class="text-right">{{ harvester_service.fix_hour }}</td>
                                             <td class="text-left">{{ harvester_service.parts_name }}</td>
+                                            <td class="text-left">{{ harvester_service.ProductName }}</td>
                                             <td class="text-left">{{ harvester_service.parts_code }}</td>
                                             <td class="text-right">{{ harvester_service.quantity }}</td>
                                             <td class="text-right">{{ harvester_service.servicing_status }}</td>
@@ -134,7 +136,7 @@
                                                     :class="{ 'is-invalid': form.errors.has('model_id') }">
                                                 <option disabled value="">Select Model</option>
                                                 <option :value="model.id" v-for="(model , index) in models"
-                                                        :key="index">{{ model.model_name }}
+                                                        :key="index">{{ model.model_name_bn }}
                                                 </option>
                                             </select>
                                             <div class="error" v-if="form.errors.has('model_id')"
@@ -216,14 +218,13 @@
                                         <div class="form-group">
                                             <label>Parts Code</label>
                                             <multiselect
-
                                                 v-model="form.ProductCode"
                                                 :options="mirror_products"
                                                 :multiple="true"
                                                 :searchable="true"
                                                 :close-on-select="true"
                                                 :show-labels="true"
-                                                label="ProductName"
+                                                label="ProductCode"
                                                 track-by="ProductCode"
                                                 placeholder="Pick a parts"></multiselect>
                                             <div class="error" v-if="form.errors.has('ProductCode')"
@@ -429,7 +430,8 @@ export default {
         },
         getAllProductModel() {
             axios.get('/api/get-all-product-model').then((response) => {
-                this.models = response.data.models;
+                console.log(response)
+                this.models = response.data.data;
             }).catch((error) => {
 
             })

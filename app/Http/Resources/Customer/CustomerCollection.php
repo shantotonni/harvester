@@ -21,10 +21,11 @@ class CustomerCollection extends ResourceCollection
                     'product_id' => $customer->product_id,
                     'product_name' => isset($customer->Products) ? $customer->Products->name : '',
                     'product_name_bn' => isset($customer->Products) ? $customer->Products->name_bn : '',
-                    'model' => isset($customer->Customer_chassis) ? $customer->Customer_chassis->model: '',
+                    'model' => isset($customer->chassis_one) ? $customer->chassis_one->model: '',
                     'name' => $customer->name,
                     'email' => $customer->email,
                     'mobile' => $customer->mobile,
+                    'RDate' => date('Y-m-d',strtotime($customer->created_at)),
                     'password' => $customer->password,
                     'service_hour' => $customer->service_hour,
                     'date_of_purchase' => $customer->date_of_purchase,
@@ -35,11 +36,12 @@ class CustomerCollection extends ResourceCollection
                     'district_name' => isset($customer->District) ? $customer->District->name : '',
                     'district_name_bn' => isset($customer->District) ? $customer->District->name_bn : '',
                     'address' => $customer->address,
-                    'chassis' =>  isset($customer->Customer_chassis) ? $customer->Customer_chassis->chassis_no : '',
+                    'chassis' =>  isset($customer->chassis_one) ? $customer->chassis_one->chassis_no : '',
                     'chassis_image' => $customer->chassis_image,
                     'customer_type' => $customer->customer_type,
                     'image' => $customer->image,
                     'customer_image'=>url('/').'/images/customer/'.$customer->image,
+                    //'customerData' => isset($customer->chassis_one->invoice_details->invoice) ? $customer->chassis_one->invoice_details->invoice : '',
                 ];
             })
         ];

@@ -55,8 +55,8 @@
                                             <td class="text-left">{{ user.designation }}</td>
                                             <td class="text-right">{{ user.mobile }}</td>
                                             <td class="text-right">{{ user.mobile_bn }}</td>
-                                            <td class="text-left">{{ user.email }}</td>
                                             <td class="text-left">{{ user.address }}</td>
+                                            <td class="text-left">{{ user.email }}</td>
                                             <td class="text-left">
                                                 <img v-if="user.image" height="40" width="40"
                                                      :src="tableImage(user.image)" alt="">
