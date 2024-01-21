@@ -207,7 +207,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Quantity</label>
-                                            <input type="number" name="quantity" v-model="form.quantity"
+                                            <input type="text" name="quantity" v-model="form.quantity"
                                                    class="form-control"
                                                    :class="{ 'is-invalid': form.errors.has('quantity') }">
                                             <div class="error" v-if="form.errors.has('quantity')"
@@ -402,6 +402,7 @@ export default {
             });
         },
         edit(harvester_service) {
+            console.log(harvester_service)
             this.editMode = true;
             this.form.reset();
             this.form.clear();
