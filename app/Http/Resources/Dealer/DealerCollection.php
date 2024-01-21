@@ -17,6 +17,7 @@ class DealerCollection extends ResourceCollection
                     'area_name_bn' => isset($dealer->Area) ? $dealer->Area->name_bn : '',
                     'dealer_name' => $dealer->responsible_person,
                     'dealer_code' => $dealer->dealer_code,
+                    'store_name' => $dealer->store_name,
                     'dealer_type' => $dealer->dealer_type,
                     'address' => $dealer->address,
                     'mobile' => $dealer->mobile,

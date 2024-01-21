@@ -13,15 +13,12 @@ class DealerController extends Controller
 {
     public function index(Request $request)
     {
-
         $area_id =$request->area_id;
         $dealers = Dealer::query()->with('Area');
         if (!empty($area_id)){
             $dealers=$dealers->where('area_id',$area_id);
-
         }
         $dealers = $dealers->paginate();
-
         return new DealerCollection($dealers);
     }
 
@@ -40,6 +37,7 @@ class DealerController extends Controller
         $dealer->address = $request->address;
         $dealer->responsible_person = $request->dealer_name;
         $dealer->dealer_code = $request->dealer_code;
+        $dealer->store_name = $request->store_name;
         $dealer->dealer_type = $request->dealer_type;
         $dealer->mobile = $request->mobile;
         $dealer->lat = $request->lat;
@@ -50,11 +48,8 @@ class DealerController extends Controller
     }
 
 
-    public function update(Request $request, $id)
-    {
-
+    public function update(Request $request, $id){
         $dealer = Dealer::where('id', $id)->first();
-
         $image = $request->image;
         if ($image != $dealer->image) {
             if ($request->has('image')) {
@@ -70,15 +65,14 @@ class DealerController extends Controller
             } else {
                 $name = $dealer->image;
             }
-
-        }
-        else{
+        } else{
             $name = $dealer->image;
         }
         $dealer->area_id = $request->area_id;;
         $dealer->address = $request->address;
         $dealer->responsible_person = $request->dealer_name;
         $dealer->dealer_code = $request->dealer_code;
+        $dealer->store_name = $request->store_name;
         $dealer->dealer_type = $request->dealer_type;
         $dealer->mobile = $request->mobile;
         $dealer->lat = $request->lat;

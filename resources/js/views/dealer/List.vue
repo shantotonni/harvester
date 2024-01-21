@@ -54,6 +54,7 @@
                                             <th class="text-left">Area</th>
                                             <th class="text-left">Responsible person</th>
                                             <th class="text-left">Dealer Code</th>
+                                            <th class="text-left">Store Name</th>
                                             <th class="text-left">Address</th>
                                             <th class="text-left">Mobile</th>
                                             <th class="text-left">Lat</th>
@@ -69,6 +70,7 @@
                                             <td class="text-left">{{ dealer.area_name_bn }}</td>
                                             <td class="text-left">{{ dealer.dealer_name }}</td>
                                             <td class="text-left">{{ dealer.dealer_code }}</td>
+                                            <td class="text-left">{{ dealer.store_name }}</td>
                                             <td class="text-left">{{ dealer.address }}</td>
                                             <td class="text-right">{{ dealer.mobile }}</td>
                                             <td class="text-right">{{ dealer.lat }}</td>
@@ -147,6 +149,13 @@
                                             <label>Dealer Code</label>
                                             <input type="text" name="dealer_code" v-model="form.dealer_code" class="form-control" :class="{ 'is-invalid': form.errors.has('dealer_code') }">
                                             <div class="error" v-if="form.errors.has('dealer_code')" v-html="form.errors.get('dealer_code')"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Store Name</label>
+                                            <input type="text" name="store_name" v-model="form.store_name" class="form-control" :class="{ 'is-invalid': form.errors.has('store_name') }">
+                                            <div class="error" v-if="form.errors.has('store_name')" v-html="form.errors.get('store_name')"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -245,6 +254,7 @@ export default {
                 area_id: '',
                 address: '',
                 dealer_name: '',
+                store_name: '',
                 dealer_code: '',
                 mobile: '',
                 lat: '',
