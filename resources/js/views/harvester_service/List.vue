@@ -351,7 +351,7 @@ export default {
             this.form.clear();
             this.form.fill(harvester_service);
             $("#harvesterserviceModal").modal("show");
-            this.getAllMirrorProduct();
+            this.getAllMirrorProduct(harvester_service.parts_code);
             this.getAllProductModel();
 
         },
