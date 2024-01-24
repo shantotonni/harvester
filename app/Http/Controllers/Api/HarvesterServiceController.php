@@ -19,10 +19,8 @@ class HarvesterServiceController extends Controller
         $harvester_services = HarvesterService::query()->with(['ProductModel','SparePartsMirror']);
         if (!empty($model_id)){
             $harvester_services = $harvester_services->where('model_id',$model_id);
-
         }
         $harvester_services = $harvester_services->paginate(10);
-
         return new HarvesterServiceCollection($harvester_services);
     }
 
