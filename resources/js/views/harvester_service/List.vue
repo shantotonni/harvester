@@ -333,8 +333,7 @@ export default {
             $("#harvesterserviceModal").modal("show");
             this.getAllMirrorProduct();
             this.getAllProductModel();
-            this.getAllServicingType();
-        },
+         },
         store() {
             this.form.busy = true;
             this.form.post("/api/harvester-service-details").then(response => {
@@ -354,7 +353,6 @@ export default {
             $("#harvesterserviceModal").modal("show");
             this.getAllMirrorProduct();
             this.getAllProductModel();
-            this.getAllServicingType();
 
         },
         update() {
