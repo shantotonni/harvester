@@ -44,7 +44,7 @@
                                             <th class="text-left">section</th>
                                             <th class="text-left">Model</th>
                                             <th class="text-left">Image</th>
-<!--                                            <th class="text-left">Status</th>-->
+
                                             <th class="text-left">Action</th>
                                         </tr>
                                         </thead>
@@ -52,17 +52,13 @@
                                         <tr v-for="( harvester_part, i) in harvester_parts" :key=" harvester_part.parts_id"
                                             v-if=" harvester_parts.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
-                                            <td class="text-left">{{ harvester_part.ProductCode }} - {{ harvester_part.ProductName }}</td>
+                                            <td class="text-left">{{ harvester_part.parts }} - {{ harvester_part.ProductName }}</td>
                                             <td class="text-left">{{ harvester_part.custom_name }}</td>
                                             <td class="text-left">{{ harvester_part.section_name }}</td>
                                             <td class="text-left">{{ harvester_part.model_name}}</td>
                                             <td class="text-left">
                                                 <img v-if="harvester_part.image" height="40" width="40" :src="tableImage(harvester_part.image)" alt="">
                                             </td>
-<!--                                            <td class="text-left">-->
-<!--                                                <span class="badge badge-success" v-if="harvester_part.Active == 1">Active</span>-->
-<!--                                                <span class="badge badge-success" v-else>InActive</span>-->
-<!--                                            </td>-->
                                             <td class="text-center">
                                                 <button @click="edit(harvester_part)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>
@@ -207,14 +203,14 @@ export default {
                 current_page: 1
             },
             query: "",
+            parts: "",
             editMode: false,
             isLoading: false,
             form: new Form({
-                parts_id : '',
+                parts_id:'',
                 custom_name: '',
                 product_model_id: '',
                 ProductCode: '',
-                ProductName: '',
                 section_id: '',
                 image: '',
             }),
@@ -326,7 +322,6 @@ export default {
         },
         getAllPriceByMirror(event) {
             axios.get('/api/get-all-mirror-price/' + this.form.ProductCode).then((response) => {
-                console.log(response)
                 this.prices = response.data.prices;
             }).catch((error) => {
 

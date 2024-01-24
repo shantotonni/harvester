@@ -28,7 +28,6 @@ class HarvesterPartsStoreRequest extends FormRequest
             'custom_name' => 'required',
             'section_id' => 'required',
             'product_model_id' => 'required',
-            'parts_id' => 'required',
             'image' => 'required|min:jpeg,jpg,png,svg',
         ];
     }

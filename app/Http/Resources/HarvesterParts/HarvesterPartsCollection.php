@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\HarvesterParts;
 
+use App\Models\SparePartsMirror;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class HarvesterPartsCollection extends ResourceCollection
@@ -17,10 +18,16 @@ class HarvesterPartsCollection extends ResourceCollection
 
         return [
             'data' => $this->collection->transform(function ($harvester_part) {
+                $mirror_products = SparePartsMirror::select('ProductCode','ProductName','UnitPrice')
+                    ->where('Business','W')
+                    ->where('ProductCode',$harvester_part->ProductCode)
+                    ->where('Active','Y')
+                    ->first();
                 return [
                     'parts_id' => $harvester_part->parts_id,
                     'ProductName'=>isset($harvester_part->SparePartsMirror) ? $harvester_part->SparePartsMirror->ProductName:'',
-                    'ProductCode' => $harvester_part->ProductCode,
+                    'parts' => $harvester_part->ProductCode,
+                    'ProductCode' => $mirror_products,
                     'UnitPrice'=>isset($harvester_part->SparePartsMirror) ? $harvester_part->SparePartsMirror->UnitPrice:'',
                     'product_model_id' => $harvester_part->product_model_id,
                     'model_name'=>isset($harvester_part->ProductModel) ? $harvester_part->ProductModel->model_name:'',
