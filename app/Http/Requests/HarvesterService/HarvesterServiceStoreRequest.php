@@ -33,7 +33,7 @@ class HarvesterServiceStoreRequest extends FormRequest
             'parts_name' => 'required',
             'quantity' => 'required',
             'servicing_status' => 'required',
-            'parts_id' => 'required',
+            //'parts_id' => 'required',
         ];
     }
 }
