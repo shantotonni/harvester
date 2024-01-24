@@ -55,7 +55,6 @@
                                         <tr>
                                             <th class="text-left">SN</th>
                                             <th class="text-left">Model</th>
-<!--                                            <th class="text-left">Servicing Type</th>-->
                                             <th class="text-left">From hour</th>
                                             <th class="text-left">To hour</th>
                                             <th class="text-left">Fixed Hour</th>
@@ -73,7 +72,6 @@
                                             v-if="harvester_services.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ harvester_service.model_name_bn }}</td>
-<!--                                            <td class="text-left">{{ harvester_service.servicing_name }}</td>-->
                                             <td class="text-right">{{ harvester_service.from_hr }}</td>
                                             <td class="text-right">{{ harvester_service.to_hr }}</td>
                                             <td class="text-right">{{ harvester_service.fix_hour }}</td>
@@ -143,22 +141,6 @@
                                                  v-html="form.errors.get('model_id')"/>
                                         </div>
                                     </div>
-<!--                                    <div class="col-md-6">-->
-<!--                                        <div class="form-group">-->
-<!--                                            <label>Servicing Type</label>-->
-<!--                                            <select name="text" id="servicing_type_id" class="form-control"-->
-<!--                                                    v-model="form.servicing_type_id"-->
-<!--                                                    :class="{ 'is-invalid': form.errors.has('servicing_type_id') }">-->
-<!--                                                <option disabled value="">Select Service Type</option>-->
-<!--                                                <option :value="servicing_type.id"-->
-<!--                                                        v-for="(servicing_type , index) in servicing_types"-->
-<!--                                                        :key="index">{{ servicing_type.name }}-->
-<!--                                                </option>-->
-<!--                                            </select>-->
-<!--                                            <div class="error" v-if="form.errors.has('servicing_type_id')"-->
-<!--                                                 v-html="form.errors.get('servicing_type_id')"/>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
 
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -220,7 +202,7 @@
                                             <multiselect
                                                 v-model="form.ProductCode"
                                                 :options="mirror_products"
-                                                :multiple="true"
+                                                :multiple="false"
                                                 :searchable="true"
                                                 :close-on-select="true"
                                                 :show-labels="true"
@@ -231,19 +213,6 @@
                                                  v-html="form.errors.get('ProductCode')"/>
                                         </div>
                                     </div>
-
-
-<!--                                    <form action="/action_page.php">-->
-<!--                                        <label for="cars">Choose a car:</label>-->
-<!--                                        <select name="cars" id="cars">-->
-<!--                                            <option value="volvo">Volvo</option>-->
-<!--                                            <option value="saab">Saab</option>-->
-<!--                                            <option value="opel">Opel</option>-->
-<!--                                            <option value="audi">Audi</option>-->
-<!--                                        </select>-->
-<!--                                        <br><br>-->
-<!--                                        <input type="submit" value="Submit">-->
-<!--                                    </form>-->
 
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -263,27 +232,7 @@
                                                  v-html="form.errors.get('servicing_status')"/>
                                         </div>
                                    </div>
-
-
-
-<!--                 <div class="col-md-6">&ndash;&gt;-->
-<!--                                        <div class="form-group">-->
-<!--                                            <label>Price</label>-->
-<!--                                            <div name="UnitPrice" id="UnitPrice" class="form-control"-->
-<!--                                                 v-model="form.UnitPrice"-->
-<!--                                                 :class="{ 'is-invalid': form.errors.has('UnitPrice') }"-->
-<!--                                                 v-for="(prices , index) in prices" :key="index">-->
-<!--                                                {{ prices.UnitPrice }}-->
-
-<!--                                            </div>-->
-<!--                                            <div class="error" v-if="form.errors.has('UnitPrice')"-->
-<!--                                                 v-html="form.errors.get('UnitPrice')"/>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-
                                 </div>
-
-
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -314,9 +263,7 @@ export default {
 
             harvester_services: [],
             models: [],
-            servicing_types: [],
             mirror_products: [],
-            prices: [],
             pagination: {
                 current_page: 1
             },
@@ -327,7 +274,6 @@ export default {
             form: new Form({
                 id: '',
                 model_id: '',
-                // servicing_type_id: '',
                 from_hr: '',
                 to_hr: '',
                 fix_hour: '',
@@ -336,7 +282,6 @@ export default {
                 quantity: '',
                 servicing_status: '',
                 ProductCode: [],
-
             }),
         }
     },
@@ -402,7 +347,7 @@ export default {
             });
         },
         edit(harvester_service) {
-            console.log(harvester_service)
+            console.log('edit',harvester_service)
             this.editMode = true;
             this.form.reset();
             this.form.clear();
@@ -422,16 +367,8 @@ export default {
                 this.isLoading = false;
             });
         },
-        getAllPriceByMirror() {
-            axios.get('/api/get-all-mirror-price/' + this.form.ProductCode).then((response) => {
-                this.prices = response.data.prices;
-            }).catch((error) => {
-
-            })
-        },
         getAllProductModel() {
             axios.get('/api/get-all-product-model').then((response) => {
-                console.log(response)
                 this.models = response.data.data;
             }).catch((error) => {
 
@@ -440,13 +377,6 @@ export default {
         getAllMirrorProduct() {
             axios.get('/api/get-all-mirror-product').then((response) => {
                 this.mirror_products = response.data.mirror_products;
-            }).catch((error) => {
-
-            })
-        },
-        getAllServicingType() {
-            axios.get('/api/get-all-servicing-type').then((response) => {
-                this.servicing_types = response.data.servicing_types;
             }).catch((error) => {
 
             })

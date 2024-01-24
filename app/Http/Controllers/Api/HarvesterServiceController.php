@@ -6,6 +6,7 @@ use App\Http\Requests\HarvesterService\HarvesterServiceStoreRequest;
 use App\Http\Requests\HarvesterService\HarvesterServiceUpdateRequest;
 use App\Http\Resources\HarvesterService\HarvesterServiceCollection;
 use App\Models\HarvesterService;
+use App\Models\SparePartsMirror;
 use Illuminate\Http\Request;
 
 
@@ -27,6 +28,7 @@ class HarvesterServiceController extends Controller
 
     public function store(HarvesterServiceStoreRequest $request)
     {
+        return $request;
         $harvester_service = new HarvesterService();
         $harvester_service->model_id = $request->model_id;
         $harvester_service->servicing_type_id = $request->servicing_type_id;
