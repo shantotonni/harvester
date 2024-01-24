@@ -202,7 +202,6 @@
                                             <multiselect
                                                 v-model="form.ProductCode"
                                                 :options="mirror_products"
-                                                :multiple="false"
                                                 :searchable="true"
                                                 :close-on-select="true"
                                                 :show-labels="true"

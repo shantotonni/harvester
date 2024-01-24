@@ -28,7 +28,7 @@ class HarvesterServiceController extends Controller
 
     public function store(HarvesterServiceStoreRequest $request)
     {
-        return $request;
+
         $harvester_service = new HarvesterService();
         $harvester_service->model_id = $request->model_id;
         $harvester_service->servicing_type_id = $request->servicing_type_id;
@@ -37,7 +37,7 @@ class HarvesterServiceController extends Controller
         $harvester_service->fix_hour = $request->fix_hour;
         $harvester_service->parts_name = $request->parts_name;
 //        $harvester_service->parts_code = $request['ProductCode']['ProductCode'];
-        $harvester_service->parts_code = $request->ProductCode;
+        $harvester_service->parts_code = $request['ProductCode']['ProductCode'];
         $harvester_service->quantity = $request->quantity;
         $harvester_service->servicing_status = $request->servicing_status;
         //$harvester_service->price = $request->UnitPrice;
@@ -56,7 +56,7 @@ class HarvesterServiceController extends Controller
         $harvester_service->fix_hour = $request->fix_hour;
         $harvester_service->parts_name = $request->parts_name;
 //        $harvester_service->parts_code = $request['ProductCode']['ProductCode'];
-        $harvester_service->parts_code = $request['ProductCode'];
+        $harvester_service->parts_code = $request['ProductCode']['ProductCode'];
         $harvester_service->quantity = $request->quantity;
         $harvester_service->servicing_status = $request->servicing_status;
         //$harvester_service->price = $request->UnitPrice;
