@@ -171,11 +171,8 @@
                                     <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Details</label>
-                                        <vue-editor  name="details"
-                                                     v-model="form.details"
-                                                     :class="{ 'is-invalid': form.errors.has('details') }"></vue-editor>
-                                        <div class="error" v-if="form.errors.has('details')"
-                                             v-html="form.errors.get('details')"/>
+                                        <vue-editor  name="details" v-model="form.details" :class="{ 'is-invalid': form.errors.has('details') }"></vue-editor>
+                                        <div class="error" v-if="form.errors.has('details')" v-html="form.errors.get('details')"/>
                                     </div>
                                 </div>
                                 </div>
