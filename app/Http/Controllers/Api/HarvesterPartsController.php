@@ -19,7 +19,6 @@ class HarvesterPartsController extends Controller
 
     public function store(HarvesterPartsStoreRequest $request)
     {
-        dd($request->all());
         if ($request->has('image')) {
             $image = $request->image;
             $name = uniqid() . time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];

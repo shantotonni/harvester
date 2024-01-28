@@ -44,6 +44,7 @@
                                             <th class="text-left">section</th>
                                             <th class="text-left">Model</th>
                                             <th class="text-left">Unit Price</th>
+                                            <th class="text-left">Parts Type</th>
                                             <th class="text-left">Image</th>
 
                                             <th class="text-left">Action</th>
@@ -57,6 +58,7 @@
                                             <td class="text-left">{{ harvester_part.section_name }}</td>
                                             <td class="text-left">{{ harvester_part.model_name}}</td>
                                             <td class="text-left">{{ harvester_part.UnitPrice}}</td>
+                                            <td class="text-left">{{ harvester_part.parts_type}}</td>
                                             <td class="text-left">
                                                 <img v-if="harvester_part.image" height="40" width="40" :src="tableImage(harvester_part.image)" alt="">
                                             </td>
@@ -157,6 +159,20 @@
                                             <img v-if="form.image" :src="showImage(form.image)" alt="" height="40px" width="40px">
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Parts Type</label>
+                                            <select name="text" id="parts_type" class="form-control"
+                                                    v-model="form.parts_type"
+                                                    :class="{ 'is-invalid': form.errors.has('parts_type') }">
+                                                <option disabled value="">Select Parts Type</option>
+                                                <option :value="Classic">Classic</option>
+                                                <option :value="Premium">Premium</option>
+                                            </select>
+                                            <div class="error" v-if="form.errors.has('parts_type')"
+                                                 v-html="form.errors.get('parts_type')"/>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -207,6 +223,7 @@ export default {
                 ProductCode: '',
                 section_id: '',
                 image: '',
+                parts_type: '',
             }),
         }
     },
