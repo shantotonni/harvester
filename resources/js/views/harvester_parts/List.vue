@@ -49,8 +49,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="( harvester_part, i) in harvester_parts" :key=" harvester_part.parts_id"
-                                            v-if=" harvester_parts.length">
+                                        <tr v-for="( harvester_part, i) in harvester_parts" :key=" harvester_part.parts_id" v-if=" harvester_parts.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ harvester_part.ProductCode }} - {{ harvester_part.ProductName }}</td>
                                             <td class="text-left">{{ harvester_part.custom_name }}</td>
@@ -136,8 +135,7 @@
                                             <label>Section</label>
                                             <select name="text" id="section_id" class="form-control" v-model="form.section_id" :class="{ 'is-invalid': form.errors.has('section_id') }">
                                                 <option disabled value="">Select Section</option>
-                                                <option :value="section.id" v-for="(section , index) in sections" :key="index">{{ section.name }}
-                                                </option>
+                                                <option :value="section.id" v-for="(section , index) in sections" :key="index">{{ section.name }}</option>
                                             </select>
                                             <div class="error" v-if="form.errors.has('section_id')" v-html="form.errors.get('section_id')"/>
                                         </div>
@@ -147,24 +145,18 @@
                                             <label>Model</label>
                                             <select name="text" id="product_model_id" class="form-control" v-model="form.product_model_id" :class="{ 'is-invalid': form.errors.has('product_model_id') }">
                                                 <option disabled value="">Select Model</option>
-                                                <option :value="model.id" v-for="(model , index) in models" :key="index">{{ model.model_name }}
-                                                </option>
+                                                <option :value="model.id" v-for="(model , index) in models" :key="index">{{ model.model_name }}</option>
                                             </select>
-                                            <div class="error" v-if="form.errors.has('product_model_id')"
-                                                 v-html="form.errors.get('product_model_id')"/>
+                                            <div class="error" v-if="form.errors.has('product_model_id')" v-html="form.errors.get('product_model_id')"/>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Image <small>(Image type:jpeg,jpg,png,svg)</small></label>
-                                            <input @change="changeImage($event)" type="file" name="image"
-                                                   class="form-control"
-                                                   :class="{ 'is-invalid': form.errors.has('image') }">
-                                            <div class="error" v-if="form.errors.has('image')"
-                                                 v-html="form.errors.get('image')"/>
-                                            <img v-if="form.image" :src="showImage(form.image)" alt="" height="40px"
-                                                 width="40px">
+                                            <input @change="changeImage($event)" type="file" name="image" class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
+                                            <div class="error" v-if="form.errors.has('image')" v-html="form.errors.get('image')"/>
+                                            <img v-if="form.image" :src="showImage(form.image)" alt="" height="40px" width="40px">
                                         </div>
                                     </div>
                                 </div>

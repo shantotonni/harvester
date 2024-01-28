@@ -20,7 +20,7 @@ class HarvesterServiceController extends Controller
         if (!empty($model_id)){
             $harvester_services = $harvester_services->where('model_id',$model_id);
         }
-        $harvester_services = $harvester_services->paginate(10);
+        $harvester_services = $harvester_services->orderBy('id','desc')->paginate(10);
         return new HarvesterServiceCollection($harvester_services);
     }
 
