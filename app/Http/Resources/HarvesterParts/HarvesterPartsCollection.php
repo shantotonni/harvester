@@ -34,6 +34,7 @@ class HarvesterPartsCollection extends ResourceCollection
                     'section_id' => $harvester_part->section_id,
                     'section_name'=>isset($harvester_part->section) ? $harvester_part->section->name:'',
                     'custom_name' => $harvester_part->custom_name,
+                    'parts_type' => $harvester_part->parts_type,
                     'image' => $harvester_part->image,
                     'harvesterParts_image'=>url('/').'/images/HarvesterParts/'.$harvester_part->image,
                 ];

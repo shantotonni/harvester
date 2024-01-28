@@ -166,8 +166,8 @@
                                                     v-model="form.parts_type"
                                                     :class="{ 'is-invalid': form.errors.has('parts_type') }">
                                                 <option disabled value="">Select Parts Type</option>
-                                                <option :value="Classic">Classic</option>
-                                                <option :value="Premium">Premium</option>
+                                                <option value="Classic">Classic</option>
+                                                <option value="Premium">Premium</option>
                                             </select>
                                             <div class="error" v-if="form.errors.has('parts_type')"
                                                  v-html="form.errors.get('parts_type')"/>
