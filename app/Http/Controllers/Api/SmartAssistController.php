@@ -7,6 +7,7 @@ use App\Http\Requests\SmartAssist\SmartAssistStoreRequest;
 use App\Http\Requests\SmartAssist\SmartAssistUpdateRequest;
 use App\Http\Resources\SmartAssist\SmartAssistCollection;
 use App\Models\SmartAssist;
+use Dotenv\Validator;
 use http\Env\Request;
 use phpDocumentor\Reflection\Types\Collection;
 
@@ -22,7 +23,10 @@ class SmartAssistController extends Controller
         $smart_assist->SARID = $request->sarid;
         $smart_assist->password = $request->password;
         $smart_assist->save();
-        return response()->json(['message'=>'Successfully stored'],200);
+        return response()->json([
+            'status'=>'success',
+            'message'=>'Successfully stored'
+        ],200);
     }
     public function update(SmartAssistUpdateRequest $request, $chassis_no ){
 
@@ -30,12 +34,16 @@ class SmartAssistController extends Controller
         $smart_assist->SARID = $request->sarid;
         $smart_assist->password = $request->password;
         $smart_assist->save();
-        return response()->json(['message'=>'Successfully updated',200]);
+        return response()->json([
+            'status'=>'success',
+            'message'=>'Successfully updated',200]);
     }
     public function destroy($chassis_no)
     {
         SmartAssist::where('chassis_no', $chassis_no)->delete();
-        return response()->json(['message' => ' Deleted Successfully', 200]);
+        return response()->json([
+            'status'=>'success',
+            'message' => ' Deleted Successfully', 200]);
     }
     public function search($query)
     {

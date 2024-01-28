@@ -38,13 +38,17 @@ class ShowroomController extends Controller
         $showroom = new Showroom();
         $showroom->area_id = $request->area_id;
         $showroom->address = $request->address;
-        $showroom->name = $request->showroom_name;
+        $showroom->name = $request->responsible_person;
+        $showroom->showroom_name = $request->showroom_name;
         $showroom->mobile_number = $request->mobile;
         $showroom->lat = $request->lat;
         $showroom->lon = $request->long;
         $showroom->image =$name;
         $showroom->save();
-        return response()->json(['message' => 'Showroom created Successfully', 200]);
+        return response()->json([
+            'status'=>'success',
+            'message' => 'Showroom created Successfully', 200
+        ]);
     }
 
 
@@ -75,13 +79,17 @@ class ShowroomController extends Controller
         }
         $showroom->area_id = $request->area_id;;
         $showroom->address = $request->address;
-        $showroom->name = $request->showroom_name;
+        $showroom->name = $request->responsible_person;
+        $showroom->showroom_name = $request->showroom_name;
         $showroom->mobile_number = $request->mobile;
         $showroom->lat = $request->lat;
         $showroom->lon = $request->long;
         $showroom->image =$name;
         $showroom->save();
-        return response()->json(['message' => 'Showroom updated Successfully', 200]);
+        return response()->json([
+            'status'=>'success',
+            'message' => 'Showroom updated Successfully', 200
+        ]);
     }
 
     public function destroy($id)
@@ -92,7 +100,7 @@ class ShowroomController extends Controller
 
     public function search($query)
     {
-        return new ShowroomCollection(Showroom::Where('showroom_name', 'like', "%$query%")->latest()->paginate(10));
+        return new ShowroomCollection(Showroom::Where('responsible_person', 'like', "%$query%")->latest()->paginate(10));
     }
 
 }

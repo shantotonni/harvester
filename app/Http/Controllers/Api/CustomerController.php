@@ -46,6 +46,7 @@ class CustomerController extends Controller
             }
 
             $customer = new Customer();
+            $customer->code = $request->code;
             $customer->name = $request->name;
             $customer->mobile = $request->mobile;
             $customer->email = $request->email;
@@ -58,10 +59,7 @@ class CustomerController extends Controller
             $customer->product_id = $request->product_id;
             $customer->password = bcrypt($request->password);
             $customer->customer_type = 'harvester';
-
-
             $customer->save();
-
             if ($customer->save()) {
                 $customer_chassis = new CustomerChassis();
                 $customer_chassis->customer_id = $customer->id;
@@ -89,30 +87,35 @@ class CustomerController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(CustomerRequest $request, $id)
     {
         DB::beginTransaction();
         $customer = Customer::where('id', $id)->first();
         $image = $request->image;
-
-        if ($request->image) {
-            //code for remove old file
-            if ($customer->image != '' && $customer->image != null) {
+        if ($image != $customer->image) {
+            if ($request->has('image')) {
                 $destinationPath = 'images/customer/';
-                $file_old = public_path('/') . $destinationPath . $customer->image;
-                if (file_exists($file_old)) {
-                    unlink($file_old);
+                if ($customer->image){
+                    $file_old = public_path('/').$destinationPath.$customer->image;
+                    if (file_exists($file_old)){
+                        unlink($file_old);
+                    }
                 }
+                $name = uniqid() . time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+                Image::make($image)->save(public_path('images/customer/') . $name);
+            } else {
+                $name = $customer->image;
             }
-            $name = uniqid() . time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-            Image::make($image)->save(public_path('images/customer/') . $name);
-        } else {
+
+        }
+        else{
             $name = $customer->image;
         }
+
+        $customer->code = $request->code;
         $customer->name = $request->name;
         $customer->mobile = $request->mobile;
         $customer->email = $request->email;
-        $customer->image = $name;
         $customer->address = $request->address;
         $customer->service_hour = $request->service_hour;
         $customer->district_id = $request->district_id;
@@ -121,7 +124,7 @@ class CustomerController extends Controller
         $customer->product_id = $request->product_id;
         $customer->password = bcrypt($request->password);
         $customer->customer_type = 'harvester';
-
+        $customer->image = $name ;
         if ($customer->save()) {
 
             $customer_chassis = CustomerChassis::where('customer_id', $request->id)->first();

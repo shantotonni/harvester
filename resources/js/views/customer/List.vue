@@ -33,15 +33,14 @@
                                         <thead>
                                         <tr>
                                             <th class="text-left">SN</th>
+                                            <th class="text-left">Customer code</th>
                                             <th class="text-left">Customer Name</th>
-<!--                                            <th class="text-left">Customer Address</th>-->
                                             <th class="text-left">Mobile Number</th>
+                                            <th class="text-left">Email</th>
                                             <th class="text-left">Product Name</th>
                                             <th class="text-left">Model Name</th>
                                             <th class="text-left">Service Hour</th>
-<!--                                            <th class="text-left">Area</th>-->
                                             <th class="text-left">District</th>
-<!--                                            <th class="text-left">Address</th>-->
                                             <th class="text-left">Chassis no</th>
                                             <th class="text-left"> Image</th>
                                             <th class="text-left"> Customer Type</th>
@@ -53,19 +52,16 @@
                                         <tr v-for="(customer, i) in customers" :key="customer.id"
                                             v-if="customers.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
+                                            <td class="text-left">{{ customer.code }}</td>
                                             <td class="text-left">{{ customer.name }}</td>
-<!--                                            <td class="text-left">{{ customer.address }}</td>-->
                                             <td>{{ customer.mobile }}</td>
+                                            <td>{{ customer.email }}</td>
                                             <td class="text-left">{{ customer.product_name_bn }}</td>
                                             <td class="text-left">{{ customer.model}}</td>
-                                            <td class="text-left">{{ customer.service_hour }}</td>
-<!--                                            <td class="text-left">{{ customer.area_name_bn }}</td>-->
+                                            <td class="text-right">{{ customer.service_hour }}</td>
                                             <td class="text-left">{{ customer.district_name_bn }}</td>
-<!--                                            <td class="text-left">{{ customer.address }}</td>-->
                                             <td class="text-left">{{ customer.chassis }}</td>
-                                            <td class="text-left">
-                                                <img v-if="customer.image" height="40" width="40"
-                                                                          :src="tableImage(customer.image)" alt=""></td>
+                                            <td class="text-left"><img v-if="customer.image" height="40" width="40" :src="tableImage(customer.image)" alt=""></td>
                                             <td class="text-left">{{ customer.customer_type }}</td>
                                             <td class="text-left">{{ customer.RDate }}</td>
                                             <td class="text-left">
@@ -110,6 +106,16 @@
                         <div class="modal-body">
                             <div class="col-md-12">
                                 <div class="row">
+                                    <div class="col-md-6" >
+                                        <div class="form-group">
+                                            <label>Customer Code</label>
+                                            <input type="text" name="code" v-model="form.code"
+                                                   class="form-control"
+                                                   :class="{ 'is-invalid': form.errors.has('code') }">
+                                            <div class="error" v-if="form.errors.has('code')"
+                                                 v-html="form.errors.get('code')"/>
+                                        </div>
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Customer Name</label>
@@ -253,30 +259,6 @@
                                                  v-html="form.errors.get('chassis')"/>
                                         </div>
                                     </div>
-<!--                                    <div class="col-md-6" v-if="!editMode"> this helps to hide the option-->
-                                    <div class="col-md-6" >
-                                        <div class="form-group">
-                                            <label>Customer Type</label>
-                                            <input type="text" name="customer_type" v-model="form.customer_type"
-                                                   class="form-control"
-                                                   :class="{ 'is-invalid': form.errors.has('customer_type') }">
-                                            <div class="error" v-if="form.errors.has('customer_type')"
-                                                 v-html="form.errors.get('customer_type')"/>
-                                        </div>
-                                    </div>
-
-<!--                                    <div class="col-md-6">-->
-<!--                                        <div class="form-group">-->
-<!--                                            <label>Purchase Date</label>-->
-<!--                                            <datepicker name="To Hour" v-model="form.date_of_purchase"-->
-<!--                                                        :format="customFormatter"-->
-<!--                                                        placeholder="Enter To Date"-->
-<!--                                                        :class="{ 'is-invalid': form.errors.has('date_of_purchase') }"-->
-<!--                                                        style="width: 100%;height: 32px"></datepicker>-->
-<!--                                            <div class="error" v-if="form.errors.has('date_of_purchase')"-->
-<!--                                                 v-html="form.errors.get('date_of_purchase')"/>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
                                 </div>
 
                             </div>
@@ -329,7 +311,6 @@ export default {
                 mobile: '',
                 password: '',
                 product_id: '',
-                customer_type: '',
                 service_hour: '',
                 district_id: '',
                 model: '',
@@ -337,6 +318,8 @@ export default {
                 address: '',
                 chassis: '',
                 image: '',
+                code: '',
+                email: '',
             }),
         }
     },
@@ -351,6 +334,10 @@ export default {
     },
     mounted() {
         this.getAllCustomer();
+        this.getAllDistricts();
+        this.getAllArea();
+        this.getAllModelByProduct();
+        this.getAllProduct();
     },
     methods: {
         getAllCustomer() {
@@ -380,12 +367,6 @@ export default {
             $("#customerModal").modal("hide");
         },
         createCustomer() {
-            this.getAllCompany();
-            this.getAllDistricts();
-            this.getAllArea();
-            this.getAllModelByProduct();
-            this.getAllProduct();
-            this.getAllProductModel();
             this.editMode = false;
             this.form.reset();
             this.form.clear();
@@ -401,13 +382,9 @@ export default {
             });
         },
         edit(customer) {
-            console.log('sdsd',customer)
-            this.getAllCompany();
-            this.getAllDistricts();
-            this.getAllArea();
             this.getAllModelByProduct();
-            this.getAllProduct();
             this.getAllProductModel();
+            this.getAllProduct();
             this.editMode = true;
             this.form.reset();
             this.form.clear();
@@ -451,7 +428,6 @@ export default {
         },
         getAllProduct() {
             axios.get('/api/get-all-products').then((response) => {
-
                 this.products = response.data.data;
             }).catch((error) => {
 
@@ -459,7 +435,6 @@ export default {
         },
         getAllModelByProduct() {
             axios.get('/api/get-all-model-by-product/' + this.form.product_id).then((response) => {
-
                 this.models = response.data.data;
             }).catch((error) => {
 
@@ -477,13 +452,6 @@ export default {
             axios.get('/api/get-all-districts').then((response) => {
 
                 this.districts = response.data.districts;
-            }).catch((error) => {
-
-            })
-        },
-        getAllCompany() {
-            axios.get('/api/get-company').then((response) => {
-                this.companies = response.data.data;
             }).catch((error) => {
 
             })

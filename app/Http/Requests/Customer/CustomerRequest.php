@@ -29,9 +29,10 @@ class CustomerRequest extends FormRequest
             'email'=>'required',
             'area_id'=>'required',
             'district_id'=>'required',
-            'customer_type'=>'required',
+            'code'=>'required',
             'chassis'=>'required',
             'password'=>'required',
+            'product_id'=>'required',
             'image'=>'required',
             'address'=>'required',
         ];
