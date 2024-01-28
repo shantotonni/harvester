@@ -23,6 +23,7 @@ class HarvesterPartsResource extends JsonResource
             'section_id' => $this->section_id,
             'section_name'=>isset($this->section) ? $this->section->name:'',
             'custom_name' => $this->custom_name,
+            'parts_type' => $this->parts_type,
             'image' => $this->image,
             'harvesterParts_image'=>url('/').'/images/HarvesterParts/'.$this->image,
         ];

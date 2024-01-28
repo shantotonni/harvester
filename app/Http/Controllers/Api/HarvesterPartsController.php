@@ -33,6 +33,7 @@ class HarvesterPartsController extends Controller
         $harvester_part->product_model_id = $request->product_model_id;
         $harvester_part->section_id = $request->section_id;
         $harvester_part->image = $name;
+        $harvester_part->parts_type = $request->parts_type;
         $harvester_part->save();
         return response()->json(['message' => 'Successfully Harvester Part Created', 200]);
 
@@ -40,6 +41,7 @@ class HarvesterPartsController extends Controller
 
     public function update(Request $request, $parts_id)
     {
+
         $this->validate($request, [
             'image' => 'required|min:jpeg,jpg,png,svg'
         ]);
@@ -67,6 +69,7 @@ class HarvesterPartsController extends Controller
         $harvester_part->product_model_id = $request->product_model_id;
         $harvester_part->section_id = $request->section_id;
         $harvester_part->image = $name;
+        $harvester_part->parts_type = $request->parts_type;
         $harvester_part->save();
         return response()->json(['message' => 'Harvester Part Successfully Updated '], 200);
     }
