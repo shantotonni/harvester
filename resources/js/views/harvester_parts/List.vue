@@ -43,6 +43,7 @@
                                             <th class="text-left">Custom Name</th>
                                             <th class="text-left">section</th>
                                             <th class="text-left">Model</th>
+                                            <th class="text-left">Unit Price</th>
                                             <th class="text-left">Image</th>
 
                                             <th class="text-left">Action</th>
@@ -56,6 +57,7 @@
                                             <td class="text-left">{{ harvester_part.custom_name }}</td>
                                             <td class="text-left">{{ harvester_part.section_name }}</td>
                                             <td class="text-left">{{ harvester_part.model_name}}</td>
+                                            <td class="text-left">{{ harvester_part.UnitPrice}}</td>
                                             <td class="text-left">
                                                 <img v-if="harvester_part.image" height="40" width="40" :src="tableImage(harvester_part.image)" alt="">
                                             </td>
