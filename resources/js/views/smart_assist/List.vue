@@ -80,8 +80,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title mt-0" id="myLargeModalLabel">{{ editMode ? "Edit" : "Add" }} Service
-                            Center</h5>
+                        <h5 class="modal-title mt-0" id="myLargeModalLabel">{{ editMode ? "Edit" : "Add" }} Smart Assist</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="closeModal">
                             ×
                         </button>
@@ -177,7 +176,6 @@ export default {
         getAllSmartAssist() {
             this.isLoading = true;
             axios.get('/api/smart-assist-list?page=' + this.pagination.current_page).then((response) => {
-                console.log('data', response.data.data)
                 this.smart_assists = response.data.data;
                 this.pagination = response.data.meta;
                 this.isLoading = false;
@@ -212,9 +210,13 @@ export default {
         store() {
             this.form.busy = true;
             this.form.post("/api/smart-assist-list").then(response => {
+                console.log(response)
                 $("#smartassistModal").modal("hide");
                 this.getAllSmartAssist();
             }).catch(e => {
+                if (e.response.status === 500) {
+                    this.$toaster.error(e.response.data.message);
+                }
                 this.isLoading = false;
             });
         },

@@ -106,16 +106,6 @@
                         <div class="modal-body">
                             <div class="col-md-12">
                                 <div class="row">
-<!--                                    <div class="col-md-6">-->
-<!--                                        <div class="form-group">-->
-<!--                                            <label>Product Name</label>-->
-<!--                                            <input type="text" name="product_name" v-model="form.product_name"-->
-<!--                                                   class="form-control"-->
-<!--                                                   :class="{ 'is-invalid': form.errors.has('product_name') }">-->
-<!--                                            <div class="error" v-if="form.errors.has('product_name')"-->
-<!--                                                 v-html="form.errors.get('product_name')"/>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Product Category</label>
@@ -129,7 +119,6 @@
                                                  v-html="form.errors.get('product_id')"/>
                                         </div>
                                     </div>
-
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Model</label>
@@ -171,8 +160,14 @@
                                     <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Details</label>
-                                        <vue-editor  name="details" v-model="form.details" :class="{ 'is-invalid': form.errors.has('details') }"></vue-editor>
-                                        <div class="error" v-if="form.errors.has('details')" v-html="form.errors.get('details')"/>
+<!--                                        <vue-editor  name="details" v-model="form.details" :class="{ 'is-invalid': form.errors.has('details') }"></vue-editor>-->
+<!--                                        <div class="error" v-if="form.errors.has('details')" v-html="form.errors.get('details')"/>-->
+
+                                        <vue-editor name="details"
+                                                     v-model="form.details"
+                                                     :class="{ 'is-invalid': form.errors.has('details') }"></vue-editor>
+                                        <div class="error" v-if="form.errors.has('details')"
+                                             v-html="form.errors.get('details')"/>
                                     </div>
                                 </div>
                                 </div>

@@ -52,7 +52,8 @@
                                         <tr>
                                             <th class="text-left">SN</th>
                                             <th class="text-left">Area</th>
-                                            <th class="text-left">Showroom</th>
+                                            <th class="text-left">Responsible Person</th>
+                                            <th class="text-left">Showroom Name</th>
                                             <th class="text-left">Address</th>
                                             <th class="text-left">Mobile</th>
                                             <th class="text-left">Lat</th>
@@ -66,6 +67,7 @@
                                             v-if="showrooms.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ showroom.area_name_bn }}</td>
+                                            <td class="text-left">{{ showroom.responsible_person }}</td>
                                             <td class="text-left">{{ showroom.showroom_name }}</td>
                                             <td class="text-left">{{ showroom.address }}</td>
                                             <td class="text-right">{{ showroom.mobile }}</td>
@@ -130,6 +132,17 @@
                                             </select>
                                             <div class="error" v-if="form.errors.has('area_id')"
                                                  v-html="form.errors.get('area_id')"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Responsible Person</label>
+                                            <input type="text" name="responsible_person"
+                                                   v-model="form.responsible_person"
+                                                   class="form-control"
+                                                   :class="{ 'is-invalid': form.errors.has('responsible_person') }">
+                                            <div class="error" v-if="form.errors.has('responsible_person')"
+                                                 v-html="form.errors.get('responsible_person')"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -231,6 +244,7 @@ export default {
                 id: '',
                 area_id: '',
                 address: '',
+                responsible_person: '',
                 showroom_name: '',
                 mobile: '',
                 lat: '',
@@ -287,10 +301,7 @@ export default {
             this.form.reset();
             this.form.clear();
             $("#showroomModal").modal("show");
-
             this.getAllAreas();
-
-
         },
         store() {
             this.form.busy = true;
