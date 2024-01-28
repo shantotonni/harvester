@@ -40,7 +40,6 @@
                                         <thead>
                                         <tr>
                                             <th class="text-left">SN</th>
-<!--                                            <th class="text-left">Product Name </th>-->
                                             <th class="text-left">Product Category</th>
                                             <th class="text-left">Model Name</th>
                                             <th class="text-left">Horse Power</th>
@@ -53,7 +52,6 @@
                                         <tr v-for="( harvester_info, i) in harvester_infos" :key=" harvester_info.id"
                                             v-if=" harvester_infos.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
-<!--                                            <td class="text-left">{{ harvester_info.product_name }}</td>-->
                                             <td class="text-left">{{ harvester_info.name }}</td>
                                             <td class="text-left">{{ harvester_info.model_name }}</td>
                                             <td class="text-right">{{ harvester_info.horse_power }}</td>
