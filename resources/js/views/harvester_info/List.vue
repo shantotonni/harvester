@@ -55,7 +55,7 @@
                                             <td class="text-left">{{ harvester_info.name }}</td>
                                             <td class="text-left">{{ harvester_info.model_name }}</td>
                                             <td class="text-right">{{ harvester_info.horse_power }}</td>
-                                            <td class="text-left" v-html="harvester_info.details "></td>
+                                            <td class="text-left" v-html="harvester_info.details"></td>
                                             <td class="text-left">
                                                 <img v-if="harvester_info.image" height="40" width="40"
                                                      :src="tableImage(harvester_info.image)" alt="">
@@ -211,7 +211,8 @@ export default {
                 id: '',
                 model_id: '',
                 product_id: '',
-                details: '',
+                details: '<p>If you choose to use the custom image handler, an event is emitted when a a photo is selected. You can see below that 3 parameters are passed.It passes the file to be handled however you needThe Editor instanceThe cursor position at the time of upload so the image can be inserted at the correct position on successNOTE&nbsp;In addition to this example,</p><p><br></p><p>I have created a&nbsp;example repo&nbsp;demonstrating this new feature with an actual server.\n' +
+                    '</p>',
                 image: '',
                 horse_power: '',
             }),
