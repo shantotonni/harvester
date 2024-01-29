@@ -207,8 +207,7 @@ export default {
                 id: '',
                 model_id: '',
                 product_id: '',
-                details: '<p>If you choose to use the custom image handler, an event is emitted when a a photo is selected. You can see below that 3 parameters are passed.It passes the file to be handled however you needThe Editor instanceThe cursor position at the time of upload so the image can be inserted at the correct position on successNOTE&nbsp;In addition to this example,</p><p><br></p><p>I have created a&nbsp;example repo&nbsp;demonstrating this new feature with an actual server.\n' +
-                    '</p>',
+                details: '',
                 image: '',
                 horse_power: '',
             }),
