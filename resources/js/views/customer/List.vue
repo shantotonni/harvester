@@ -33,7 +33,6 @@
                                         <thead>
                                         <tr>
                                             <th class="text-left">SN</th>
-                                            <th class="text-left">Customer code</th>
                                             <th class="text-left">Customer Name</th>
                                             <th class="text-left">Mobile Number</th>
                                             <th class="text-left">Email</th>
@@ -52,7 +51,6 @@
                                         <tr v-for="(customer, i) in customers" :key="customer.id"
                                             v-if="customers.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
-                                            <td class="text-left">{{ customer.code }}</td>
                                             <td class="text-left">{{ customer.name }}</td>
                                             <td>{{ customer.mobile }}</td>
                                             <td>{{ customer.email }}</td>
@@ -106,16 +104,6 @@
                         <div class="modal-body">
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-6" >
-                                        <div class="form-group">
-                                            <label>Customer Code</label>
-                                            <input type="text" name="code" v-model="form.code"
-                                                   class="form-control"
-                                                   :class="{ 'is-invalid': form.errors.has('code') }">
-                                            <div class="error" v-if="form.errors.has('code')"
-                                                 v-html="form.errors.get('code')"/>
-                                        </div>
-                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Customer Name</label>
@@ -318,7 +306,6 @@ export default {
                 address: '',
                 chassis: '',
                 image: '',
-                code: '',
                 email: '',
             }),
         }

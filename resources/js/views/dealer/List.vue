@@ -29,19 +29,22 @@
                                                 <div class="form-group">
                                                     <select name="" id="" v-model="area_id" class="form-control">
                                                         <option disabled value="">Select Area</option>
-                                                        <option :value="area.id" v-for="(area , index) in areas" :key="index">{{ area.name_bn }}
+                                                        <option :value="area.id" v-for="(area , index) in areas"
+                                                                :key="index">{{ area.name_bn }}
                                                         </option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 col-sm-3">
-                                                <button type="submit" @click="getAllDealer" class="btn btn-success"><i class="mdi mdi-filter"></i>Filter
+                                                <button type="submit" @click="getAllDealer" class="btn btn-success"><i
+                                                    class="mdi mdi-filter"></i>Filter
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-tools">
-                                        <input v-model="query" type="text" class="form-control" placeholder="Search by Dealer name">
+                                        <input v-model="query" type="text" class="form-control"
+                                               placeholder="Search by Dealer name">
                                     </div>
 
                                 </div>
@@ -52,11 +55,12 @@
                                         <tr>
                                             <th class="text-left">SN</th>
                                             <th class="text-left">Area</th>
-                                            <th class="text-left">Responsible person</th>
-                                            <th class="text-left">Dealer Code</th>
                                             <th class="text-left">Store Name</th>
+                                            <th class="text-left">Dealer Code</th>
+                                            <th class="text-left">Responsible person</th>
                                             <th class="text-left">Address</th>
                                             <th class="text-left">Mobile</th>
+                                            <th class="text-left">Dealer Type</th>
                                             <th class="text-left">Lat</th>
                                             <th class="text-left">Long</th>
                                             <th class="text-left">Image</th>
@@ -73,6 +77,7 @@
                                             <td class="text-left">{{ dealer.store_name }}</td>
                                             <td class="text-left">{{ dealer.address }}</td>
                                             <td class="text-right">{{ dealer.mobile }}</td>
+                                            <td class="text-right">{{ dealer.dealer_type }}</td>
                                             <td class="text-right">{{ dealer.lat }}</td>
                                             <td class="text-right">{{ dealer.long }}</td>
                                             <td class="text-left">
@@ -129,35 +134,47 @@
                                             <select name="text" id="area_id" class="form-control" v-model="form.area_id"
                                                     :class="{ 'is-invalid': form.errors.has('area_id') }">
                                                 <option disabled value="">Select Area</option>
-                                                <option :value="area.id" v-for="(area , index) in areas" :key="index">{{ area.name_bn}}
+                                                <option :value="area.id" v-for="(area , index) in areas" :key="index">
+                                                    {{ area.name_bn }}
                                                 </option>
                                             </select>
                                             <div class="error" v-if="form.errors.has('area_id')"
                                                  v-html="form.errors.get('area_id')"/>
                                         </div>
                                     </div>
+<!--                                    for some reason we have exchange the dealer and shop name-->
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Dealer Name</label>
-                                            <input type="text" name="dealer_name" v-model="form.dealer_name" class="form-control" :class="{ 'is-invalid': form.errors.has('dealer_name') }">
+                                            <label>Store Name</label>
+                                            <input type="text" name="dealer_name" v-model="form.dealer_name"
+                                                   class="form-control"
+                                                   :class="{ 'is-invalid': form.errors.has('dealer_name') }">
                                             <div class="error" v-if="form.errors.has('dealer_name')"
                                                  v-html="form.errors.get('dealer_name')"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Dealer Code</label>
-                                            <input type="text" name="dealer_code" v-model="form.dealer_code" class="form-control" :class="{ 'is-invalid': form.errors.has('dealer_code') }">
-                                            <div class="error" v-if="form.errors.has('dealer_code')" v-html="form.errors.get('dealer_code')"/>
+                                            <label>Responsible person</label>
+                                            <input type="text" name="store_name" v-model="form.store_name"
+                                                   class="form-control"
+                                                   :class="{ 'is-invalid': form.errors.has('store_name') }">
+                                            <div class="error" v-if="form.errors.has('store_name')"
+                                                 v-html="form.errors.get('store_name')"/>
                                         </div>
                                     </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Store Name</label>
-                                            <input type="text" name="store_name" v-model="form.store_name" class="form-control" :class="{ 'is-invalid': form.errors.has('store_name') }">
-                                            <div class="error" v-if="form.errors.has('store_name')" v-html="form.errors.get('store_name')"/>
+                                            <label>Dealer Code</label>
+                                            <input type="text" name="dealer_code" v-model="form.dealer_code"
+                                                   class="form-control"
+                                                   :class="{ 'is-invalid': form.errors.has('dealer_code') }">
+                                            <div class="error" v-if="form.errors.has('dealer_code')"
+                                                 v-html="form.errors.get('dealer_code')"/>
                                         </div>
                                     </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Mobile</label>
@@ -200,20 +217,26 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Dealer Type</label>
-                                            <select name="dealer_type" id="dealer_type" v-model="form.dealer_type" class="form-control">
+                                            <select name="dealer_type" id="dealer_type" v-model="form.dealer_type"
+                                                    class="form-control">
                                                 <option value="">Select Type</option>
                                                 <option value="harvester">Harvester</option>
                                                 <option value="both">Both</option>
                                             </select>
-                                            <div class="error" v-if="form.errors.has('dealer_type')" v-html="form.errors.get('dealer_type')"/>
+                                            <div class="error" v-if="form.errors.has('dealer_type')"
+                                                 v-html="form.errors.get('dealer_type')"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Image</label>
-                                            <input @change="changeImage($event)" type="file" name="image" class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
-                                            <div class="error" v-if="form.errors.has('image')" v-html="form.errors.get('image')" />
-                                            <img v-if="form.image" :src="showImage(form.image)" alt="" height="40px" width="40px">
+                                            <input @change="changeImage($event)" type="file" name="image"
+                                                   class="form-control"
+                                                   :class="{ 'is-invalid': form.errors.has('image') }">
+                                            <div class="error" v-if="form.errors.has('image')"
+                                                 v-html="form.errors.get('image')"/>
+                                            <img v-if="form.image" :src="showImage(form.image)" alt="" height="40px"
+                                                 width="40px">
                                         </div>
                                     </div>
                                 </div>
@@ -246,7 +269,7 @@ export default {
                 current_page: 1
             },
             query: "",
-            area_id:'',
+            area_id: '',
             editMode: false,
             isLoading: false,
             form: new Form({
@@ -281,7 +304,7 @@ export default {
     methods: {
         getAllDealer() {
             this.isLoading = true;
-            axios.get('/api/dealer-list?page=' + this.pagination.current_page +"&area_id="+ this.area_id ).then((response) => {
+            axios.get('/api/dealer-list?page=' + this.pagination.current_page + "&area_id=" + this.area_id).then((response) => {
                 // console.log('data', response.data.data)
                 this.dealers = response.data.data;
                 this.pagination = response.data.meta;
@@ -300,7 +323,7 @@ export default {
         },
         reload() {
             this.getAllDealer();
-            this.area_id="";
+            this.area_id = "";
             this.query = "";
             this.$toaster.success('Data Successfully Refresh');
         },
@@ -343,7 +366,7 @@ export default {
         },
         getAllAreas() {
             axios.get('/api/get-all-areas').then((response) => {
-              console.log(response)
+                console.log(response)
                 this.areas = response.data.areas;
             }).catch((error) => {
 
