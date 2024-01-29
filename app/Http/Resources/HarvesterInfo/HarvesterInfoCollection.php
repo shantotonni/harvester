@@ -17,7 +17,8 @@ class HarvesterInfoCollection extends ResourceCollection
                     'model_id' => $harvester_info->model_id,
                     'model_name'=>isset($harvester_info->ProductModel) ? $harvester_info->ProductModel->model_name:'',
                     'horse_power' => $harvester_info->horse_power,
-                    'details' => strip_tags($harvester_info->details),
+                    'details' => $harvester_info->details,
+                    'details2' => strip_tags($harvester_info->details),
                     'image' => $harvester_info->image,
                     'harvesterInfo_image'=>url('/').'/images/HarvesterInfo/'.$harvester_info->image,
                 ];

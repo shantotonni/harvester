@@ -34,7 +34,9 @@ class ServiceRequestController extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         $customer_chassis = CustomerChassis::where('customer_id',$user->id)->pluck('chassis_no');
-        $job_cards = JobCard::whereIn('chassis_number',$customer_chassis)->with('model','products','district','upazila','section','technitian')->paginate(15);
+        $job_cards = JobCard::whereIn('chassis_number',$customer_chassis)->with('model','products','district','upazila','section','technitian')
+            ->orderBy('id','desc')
+            ->paginate(15);
         return new ServiceRequestJobCardCollection($job_cards);
     }
 

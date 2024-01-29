@@ -57,15 +57,11 @@
                                             <td class="text-right">{{ harvester_info.horse_power }}</td>
                                             <td class="text-left" v-html="harvester_info.details"></td>
                                             <td class="text-left">
-                                                <img v-if="harvester_info.image" height="40" width="40"
-                                                     :src="tableImage(harvester_info.image)" alt="">
+                                                <img v-if="harvester_info.image" height="40" width="40" :src="tableImage(harvester_info.image)" alt="">
                                             </td>
                                             <td class="text-center">
-                                                <button @click="edit(harvester_info)" class="btn btn-success btn-sm"><i
-                                                    class="far fa-edit"></i></button>
-                                                <button @click="destroy(harvester_info.id)"
-                                                        class="btn btn-danger btn-sm"><i class="fas fa-trash"></i>
-                                                </button>
+                                                <button @click="edit(harvester_info)" class="btn btn-success btn-sm"><i class="far fa-edit"></i></button>
+                                                <button @click="destroy(harvester_info.id)" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -158,14 +154,14 @@
                                     <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Details</label>
-<!--                                        <vue-editor  name="details" v-model="form.details" :class="{ 'is-invalid': form.errors.has('details') }"></vue-editor>-->
-<!--                                        <div class="error" v-if="form.errors.has('details')" v-html="form.errors.get('details')"/>-->
+                                        <vue-editor name="details" v-model="form.details" :class="{ 'is-invalid': form.errors.has('details') }"></vue-editor>
+                                        <div class="error" v-if="form.errors.has('details')" v-html="form.errors.get('details')"/>
 
-                                        <vue-editor name="details"
-                                                     v-model="form.details"
-                                                     :class="{ 'is-invalid': form.errors.has('details') }"></vue-editor>
-                                        <div class="error" v-if="form.errors.has('details')"
-                                             v-html="form.errors.get('details')"/>
+<!--                                        <vue-editor name="details"-->
+<!--                                                     v-model="form.details"-->
+<!--                                                     :class="{ 'is-invalid': form.errors.has('details') }"></vue-editor>-->
+<!--                                        <div class="error" v-if="form.errors.has('details')"-->
+<!--                                             v-html="form.errors.get('details')"/>-->
                                     </div>
                                 </div>
                                 </div>
