@@ -22,7 +22,6 @@ class CustomerResource extends JsonResource
             'product_name_bn' => isset($this->product) ? $this->product->name_bn : '',
             'model' => isset($this->Customer_chassis) ? $this->Customer_chassis->model: '',
             'name' => $this->name,
-            'code' => $this->code,
             'email' => $this->email,
             'mobile' => $this->mobile,
             'password' => $this->password,

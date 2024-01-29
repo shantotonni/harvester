@@ -112,7 +112,6 @@ class CustomerController extends Controller
             $name = $customer->image;
         }
 
-        $customer->code = $request->code;
         $customer->name = $request->name;
         $customer->mobile = $request->mobile;
         $customer->email = $request->email;

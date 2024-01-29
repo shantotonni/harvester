@@ -17,7 +17,6 @@ class CustomerCollection extends ResourceCollection
                     'product_name_bn' => isset($customer->Products) ? $customer->Products->name_bn : '',
                     'model' => isset($customer->chassis_one) ? $customer->chassis_one->model: '',
                     'name' => $customer->name,
-                    'code' => $customer->code,
                     'email' => $customer->email,
                     'mobile' => $customer->mobile,
                     'RDate' => date('Y-m-d',strtotime($customer->created_at)),
