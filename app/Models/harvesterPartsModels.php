@@ -16,6 +16,6 @@ class harvesterPartsModels extends Model
         return $this->belongsTo(HarvesterParts::class,'parts_id','parts_id');
     }
     public function ProductModel(){
-        return $this->hasMany(ProductModel::class,'model_id','model_id');
+        return $this->belongsTo(ProductModel::class,'model_id','id');
     }
 }

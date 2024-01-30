@@ -58,7 +58,7 @@
                                             <td class="text-left">{{ harvester_part.section_name }}</td>
 <!--                                            <td class="text-left">{{ harvester_part.model_name}}</td>-->
                                             <td class="text-left" >
-                                                    <li v-for="( model, i) in harvester_part.harvester_model">
+                                                    <li v-for="( model, i) in harvester_part.product_model">
                                                         {{model.model_name}}
                                                     </li>
                                             </td>
@@ -149,7 +149,7 @@
                                         <div class="form-group">
                                             <label> Models</label>
                                             <multiselect
-                                                v-model="form.product_model_id"
+                                                v-model="form.product_model"
                                                 :options="models"
                                                 :multiple="true"
                                                 :searchable="true"
@@ -241,12 +241,12 @@ export default {
             form: new Form({
                 parts_id:'',
                 custom_name: '',
-                product_model_id: '',
+                //product_model_id: '',
                 ProductCode: '',
                 section_id: '',
                 image: '',
                 parts_type: '',
-                harvester_model: [],
+                product_model: [],
             }),
         }
     },
@@ -302,9 +302,10 @@ export default {
         },
         store() {
             this.form.busy = true;
-            this.form.post("/api/harvester-parts").then(response => {
-                $("#harvesterpartsModal").modal("hide");
-                this.getAllHarvesterPart()
+            this.form.post("/api/harvester-parts").then($request => {
+                console.log($request)
+                //$("#harvesterpartsModal").modal("hide");
+                //this.getAllHarvesterPart()
             }).catch(e => {
                 this.isLoading = false;
             });

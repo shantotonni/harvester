@@ -15,7 +15,6 @@ class HarvesterPartsController extends Controller
     public function index()
     {
         $harvester_parts = HarvesterParts::with('ProductModel', 'SparePartsMirror', 'section','HarvesterPartsModels')->paginate(10);
-
         return new HarvesterPartsCollection($harvester_parts);
     }
 
@@ -38,8 +37,8 @@ class HarvesterPartsController extends Controller
         $harvester_part->image = $name;
         $harvester_part->parts_type = $request->parts_type;
         if ($harvester_part->save()){
-            $product_model_id = $request->product_model_id;
-            foreach ($product_model_id as $model ){
+            $product_model = $request->product_model;
+            foreach ($product_model as $model ){
                 $partsmodel = new HarvesterPartsModels();
                 $partsmodel->parts_id = $harvester_part->parts_id;
                 $partsmodel->model_id = $model['id'];

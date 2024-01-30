@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\HarvesterParts;
 
+use App\Models\ProductModel;
 use App\Models\SparePartsMirror;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\DB;
@@ -25,12 +26,22 @@ class HarvesterPartsCollection extends ResourceCollection
                     ->where('Active','Y')
                     ->first();
 
-                $models = DB::select("
-                     Select hp.id, p.model_name from harvester_parts h
-                      join harvester_parts_models hp on h.parts_id = hp.parts_id
-                      join product_model p on p.id = hp.model_id
-                     where h.parts_id ='$harvester_part->parts_id'
-                    ");
+                $prudtModel = [];
+                foreach ($harvester_part->HarvesterPartsModels as $item){
+                    $model = ProductModel::query()->where('id',$item->model_id)->first();
+                    $prudtModel [] = [
+                        'id'=>$model->id,
+                        'product_id'=>$model->product_id,
+                        'name'=>isset($model->Products) ? $model->Products->name:'',
+                        'model_name'=>$model->model_name,
+                        'model_name_bn'=>$model->model_name_bn,
+                        'model_code'=>$model->model_code,
+                        'details'=>$model->model_details,
+                        'image'=>$model->model_image,
+                        'model_image'=>url('/').'/images/ProductModel/'.$model->image,
+                    ];
+                }
+
                 return [
                     'parts_id' => $harvester_part->parts_id,
                     'ProductName'=>isset($harvester_part->SparePartsMirror) ? $harvester_part->SparePartsMirror->ProductName:'',
@@ -40,7 +51,7 @@ class HarvesterPartsCollection extends ResourceCollection
 //                    'product_model_id' => $harvester_part->product_model_id,
 //                    'model_name'=>isset($harvester_part->ProductModel) ? $harvester_part->ProductModel->model_name:'',
                     'section_id' => $harvester_part->section_id,
-                    'harvester_model' => $models,
+                    'product_model' => $prudtModel,
                     'section_name'=>isset($harvester_part->section) ? $harvester_part->section->name:'',
                     'custom_name' => $harvester_part->custom_name,
                     'parts_type' => $harvester_part->parts_type,
