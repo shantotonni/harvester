@@ -21,7 +21,7 @@ class ServiceTipsCollection extends ResourceCollection
                 'title' => $service_tip->title,
                 'type' => $service_tip->type,
                 'active' => $service_tip->active,
-                'description' => strip_tags($service_tip->description),
+                'description' => $service_tip->description,
                 'post_date' => date('Y-m-d',strtotime($service_tip->created_at)),
                 'video_link' => $service_tip->video_link,
                 'image' => $service_tip->image,

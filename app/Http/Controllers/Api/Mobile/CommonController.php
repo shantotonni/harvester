@@ -213,7 +213,7 @@ class CommonController extends Controller
     }
     public function getAllDealer()
     {
-        $dealer = Dealer::OrderBy('id', 'asc')->get();
+        $dealer = Dealer::OrderBy('id', 'asc')->paginate(15);
         return new DealerCollection($dealer);
     }
 
@@ -228,7 +228,7 @@ class CommonController extends Controller
     }
     public function getAllHarvesterInfo()
     {
-        $harvester_infos = HarvesterInfo::orderBy('created_at', 'desc')->paginate(15);
+        $harvester_infos = HarvesterInfo::with('ProductModel','Products')->orderBy('created_at', 'desc')->paginate(15);
         return response()->json([
             'product_list' => new HarvesterInfoCollection($harvester_infos)
         ]);

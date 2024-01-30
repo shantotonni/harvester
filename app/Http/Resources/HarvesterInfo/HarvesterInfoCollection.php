@@ -11,11 +11,13 @@ class HarvesterInfoCollection extends ResourceCollection
         return $this->collection->transform(function ($harvester_info) {
                 return [
                     'id' => $harvester_info->id,
-                    'product_name' => $harvester_info->product_name,
-                    'product_id' => $harvester_info->product_id,
+                    'product_name' => isset($harvester_info->Products) ? $harvester_info->Products->name:'',
+                    'product_name_bn' => isset($harvester_info->Products) ? $harvester_info->Products->name_bn:'',
+//                    'product_id' => $harvester_info->product_id,
                     'name'=>isset($harvester_info->Products) ? $harvester_info->Products->name:'',
-                    'model_id' => $harvester_info->model_id,
+                    //'model_id' => $harvester_info->model_id,
                     'model_name'=>isset($harvester_info->ProductModel) ? $harvester_info->ProductModel->model_name:'',
+                    'model_name_bn'=>isset($harvester_info->ProductModel) ? $harvester_info->ProductModel->model_name_bn:'',
                     'horse_power' => $harvester_info->horse_power,
                     'details' => $harvester_info->details,
                     'details2' => strip_tags($harvester_info->details),
