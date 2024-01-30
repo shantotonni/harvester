@@ -19,12 +19,21 @@ class HarvesterPartsController extends Controller
 
     public function store(HarvesterPartsStoreRequest $request)
     {
+
+
         if ($request->has('image')) {
             $image = $request->image;
             $name = uniqid() . time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
             Image::make($image)->resize('800', '700')->save(public_path('images/HarvesterParts/') . $name);
         } else {
             $name = 'not_found.jpg';
+        }
+        $product_model_id = $request->product_model_id;
+        foreach ($product_model_id as $p ){
+            $partsmodel = new HarvesterPartsModels();
+
+
+            dd($p['id']);
         }
 
         $harvester_part = new HarvesterParts();
@@ -34,7 +43,7 @@ class HarvesterPartsController extends Controller
         $harvester_part->section_id = $request->section_id;
         $harvester_part->image = $name;
         $harvester_part->parts_type = $request->parts_type;
-        $harvester_part->save();
+//        $harvester_part->save();
         return response()->json(['message' => 'Successfully Harvester Part Created', 200]);
 
     }

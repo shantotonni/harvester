@@ -42,7 +42,7 @@
                                             <th class="text-left">Parts Code</th>
                                             <th class="text-left">Custom Name</th>
                                             <th class="text-left">section</th>
-                                            <th class="text-left">Model</th>
+<!--                                            <th class="text-left">Model</th>-->
                                             <th class="text-left">Unit Price</th>
                                             <th class="text-left">Parts Type</th>
                                             <th class="text-left">Image</th>
@@ -56,9 +56,8 @@
                                             <td class="text-left">{{ harvester_part.parts }} - {{ harvester_part.ProductName }}</td>
                                             <td class="text-left">{{ harvester_part.custom_name }}</td>
                                             <td class="text-left">{{ harvester_part.section_name }}</td>
-                                            <td class="text-left">{{ harvester_part.model_name}}</td>
-                                            <td class="text-left">{{ harvester_part.UnitPrice}}</td>
-                                            <td class="text-left">{{ harvester_part.parts_type}}</td>
+<!--                                            <td class="text-left">{{ harvester_part.model_name}}</td>-->
+                                            <td class="text-left">{{ harvester_part.UnitPrice}}</td><td class="text-left">{{ harvester_part.parts_type}}</td>
                                             <td class="text-left">
                                                 <img v-if="harvester_part.image" height="40" width="40" :src="tableImage(harvester_part.image)" alt="">
                                             </td>
@@ -142,14 +141,30 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Model</label>
-                                            <select name="text" id="product_model_id" class="form-control" v-model="form.product_model_id" :class="{ 'is-invalid': form.errors.has('product_model_id') }">
-                                                <option disabled value="">Select Model</option>
-                                                <option :value="model.id" v-for="(model , index) in models" :key="index">{{ model.model_name }}</option>
-                                            </select>
-                                            <div class="error" v-if="form.errors.has('product_model_id')" v-html="form.errors.get('product_model_id')"/>
+                                            <label> Models</label>
+                                            <multiselect
+                                                v-model="form.product_model_id"
+                                                :options="models"
+                                                :multiple="true"
+                                                :searchable="true"
+                                                :close-on-select="true"
+                                                :show-labels="false"
+                                                label="model_name"
+                                                track-by="model_name"
+                                                placeholder="Pick a value"></multiselect>
+                                            <div class="error" v-if="form.errors.has('model_name')" v-html="form.errors.get('model_name')"/>
                                         </div>
                                     </div>
+<!--                                    <div class="col-md-6">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>Model</label>-->
+<!--                                            <select name="text" id="product_model_id" class="form-control" v-model="form.product_model_id" :class="{ 'is-invalid': form.errors.has('product_model_id') }">-->
+<!--                                                <option disabled value="">Select Model</option>-->
+<!--                                                <option :value="model.id" v-for="(model , index) in models" :key="index">{{ model.model_name }}</option>-->
+<!--                                            </select>-->
+<!--                                            <div class="error" v-if="form.errors.has('product_model_id')" v-html="form.errors.get('product_model_id')"/>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
 
                                     <div class="col-md-6">
                                         <div class="form-group">
