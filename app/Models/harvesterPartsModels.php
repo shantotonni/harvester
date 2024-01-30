@@ -11,8 +11,11 @@ class harvesterPartsModels extends Model
     protected  $table = 'harvester_parts_models';
     public $primaryKey = 'id';
     protected $guarded=[];
-
+    public $timestamps = false;
     public function HarvesterParts(){
         return $this->belongsTo(HarvesterParts::class,'parts_id','parts_id');
+    }
+    public function ProductModel(){
+        return $this->hasMany(ProductModel::class,'model_id','model_id');
     }
 }

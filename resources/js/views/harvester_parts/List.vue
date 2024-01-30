@@ -42,7 +42,7 @@
                                             <th class="text-left">Parts Code</th>
                                             <th class="text-left">Custom Name</th>
                                             <th class="text-left">section</th>
-<!--                                            <th class="text-left">Model</th>-->
+                                            <th class="text-left">Model</th>
                                             <th class="text-left">Unit Price</th>
                                             <th class="text-left">Parts Type</th>
                                             <th class="text-left">Image</th>
@@ -57,7 +57,13 @@
                                             <td class="text-left">{{ harvester_part.custom_name }}</td>
                                             <td class="text-left">{{ harvester_part.section_name }}</td>
 <!--                                            <td class="text-left">{{ harvester_part.model_name}}</td>-->
-                                            <td class="text-left">{{ harvester_part.UnitPrice}}</td><td class="text-left">{{ harvester_part.parts_type}}</td>
+                                            <td class="text-left" >
+                                                    <li v-for="( model, i) in harvester_part.harvester_model">
+                                                        {{model.model_name}}
+                                                    </li>
+                                            </td>
+                                            <td class="text-left">{{ harvester_part.UnitPrice}}</td>
+                                            <td class="text-left">{{ harvester_part.parts_type}}</td>
                                             <td class="text-left">
                                                 <img v-if="harvester_part.image" height="40" width="40" :src="tableImage(harvester_part.image)" alt="">
                                             </td>
@@ -223,6 +229,7 @@ export default {
             harvester_parts: [],
             models: [],
             sections: [],
+            harvester_model: [],
             mirror_products: [],
             pagination: {
                 current_page: 1
@@ -239,6 +246,7 @@ export default {
                 section_id: '',
                 image: '',
                 parts_type: '',
+                harvester_model: [],
             }),
         }
     },
@@ -302,6 +310,7 @@ export default {
             });
         },
         edit(harvester_part) {
+            console.log(harvester_part)
             this.editMode = true;
             this.form.reset();
             this.form.clear();

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\HarvesterParts\HarvesterPartsStoreRequest;
 use App\Http\Resources\HarvesterParts\HarvesterPartsCollection;
 use App\Models\HarvesterParts;
+use App\Models\harvesterPartsModels;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
@@ -13,14 +14,13 @@ class HarvesterPartsController extends Controller
 {
     public function index()
     {
-        $harvester_parts = HarvesterParts::with('ProductModel', 'SparePartsMirror', 'section')->paginate(10);
+        $harvester_parts = HarvesterParts::with('ProductModel', 'SparePartsMirror', 'section','HarvesterPartsModels')->paginate(10);
+
         return new HarvesterPartsCollection($harvester_parts);
     }
 
     public function store(HarvesterPartsStoreRequest $request)
     {
-
-
         if ($request->has('image')) {
             $image = $request->image;
             $name = uniqid() . time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
@@ -28,29 +28,30 @@ class HarvesterPartsController extends Controller
         } else {
             $name = 'not_found.jpg';
         }
-        $product_model_id = $request->product_model_id;
-        foreach ($product_model_id as $p ){
-            $partsmodel = new HarvesterPartsModels();
 
-
-            dd($p['id']);
-        }
 
         $harvester_part = new HarvesterParts();
         $harvester_part->custom_name = $request->custom_name;
         $harvester_part->ProductCode = $request['ProductCode']['ProductCode'];
-        $harvester_part->product_model_id = $request->product_model_id;
+//        $harvester_part->product_model_id = $request->product_model_id;
         $harvester_part->section_id = $request->section_id;
         $harvester_part->image = $name;
         $harvester_part->parts_type = $request->parts_type;
-//        $harvester_part->save();
+        if ($harvester_part->save()){
+            $product_model_id = $request->product_model_id;
+            foreach ($product_model_id as $model ){
+                $partsmodel = new HarvesterPartsModels();
+                $partsmodel->parts_id = $harvester_part->parts_id;
+                $partsmodel->model_id = $model['id'];
+                $partsmodel->save();
+        }
+        }
         return response()->json(['message' => 'Successfully Harvester Part Created', 200]);
 
     }
 
     public function update(Request $request, $parts_id)
     {
-
         $this->validate($request, [
             'image' => 'required|min:jpeg,jpg,png,svg'
         ]);
@@ -68,18 +69,26 @@ class HarvesterPartsController extends Controller
             } else {
                 $name = $harvester_part->image;
             }
-
         } else {
             $name = $harvester_part->image;
         }
 
         $harvester_part->custom_name = $request->custom_name;
         $harvester_part->ProductCode =  $request['ProductCode']['ProductCode'];
-        $harvester_part->product_model_id = $request->product_model_id;
+//        $harvester_part->product_model_id = $request->product_model_id;
         $harvester_part->section_id = $request->section_id;
         $harvester_part->image = $name;
         $harvester_part->parts_type = $request->parts_type;
-        $harvester_part->save();
+        if ($harvester_part->save()){
+            $product_model_id = $request->product_model_id;
+            HarvesterPartsModels::where('parts_id',$harvester_part->parts_id)->delete();
+            foreach ($product_model_id as $model ){
+                $partsmodel = new HarvesterPartsModels();
+                $partsmodel->parts_id = $harvester_part->parts_id;
+                $partsmodel->model_id = $model['id'];
+                $partsmodel->save();
+            }
+        }
         return response()->json(['message' => 'Harvester Part Successfully Updated '], 200);
     }
 
@@ -99,7 +108,12 @@ class HarvesterPartsController extends Controller
     }
 
 
+    public function getAllHarvesterModel($ProductCode){
+        dd($ProductCode);
+        $models = ProductModel::OrderBy('id','asc')->where('product_id',4)->get();
+        return new ProductModelCollection($models);
 
+    }
 
     public function search($query)
     {
