@@ -55,7 +55,7 @@
                                             <td class="text-left">{{ harvester_info.name }}</td>
                                             <td class="text-left">{{ harvester_info.model_name }}</td>
                                             <td class="text-right">{{ harvester_info.horse_power }}</td>
-                                            <td class="text-left" v-html="harvester_info.details "></td>
+                                            <td class="text-left" v-html="harvester_info.details"></td>
                                             <td class="text-left">
                                                 <img v-if="harvester_info.image" height="40" width="40" :src="tableImage(harvester_info.image)" alt="">
                                             </td>
