@@ -302,16 +302,14 @@ export default {
         },
         store() {
             this.form.busy = true;
-            this.form.post("/api/harvester-parts").then($request => {
-                console.log($request)
-                //$("#harvesterpartsModal").modal("hide");
-                //this.getAllHarvesterPart()
+            this.form.post("/api/harvester-parts").then(response => {
+                $("#harvesterpartsModal").modal("hide");
+                this.getAllHarvesterPart()
             }).catch(e => {
                 this.isLoading = false;
             });
         },
         edit(harvester_part) {
-            console.log(harvester_part)
             this.editMode = true;
             this.form.reset();
             this.form.clear();

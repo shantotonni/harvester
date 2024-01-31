@@ -79,9 +79,9 @@ class HarvesterPartsController extends Controller
         $harvester_part->image = $name;
         $harvester_part->parts_type = $request->parts_type;
         if ($harvester_part->save()){
-            $product_model_id = $request->product_model_id;
+            $product_model = $request->product_model;
             HarvesterPartsModels::where('parts_id',$harvester_part->parts_id)->delete();
-            foreach ($product_model_id as $model ){
+            foreach ($product_model as $model ){
                 $partsmodel = new HarvesterPartsModels();
                 $partsmodel->parts_id = $harvester_part->parts_id;
                 $partsmodel->model_id = $model['id'];
@@ -106,13 +106,6 @@ class HarvesterPartsController extends Controller
         return response()->json(['message' => 'Harvester Part Deleted Successfully']);
     }
 
-
-    public function getAllHarvesterModel($ProductCode){
-        dd($ProductCode);
-        $models = ProductModel::OrderBy('id','asc')->where('product_id',4)->get();
-        return new ProductModelCollection($models);
-
-    }
 
     public function search($query)
     {
