@@ -103,6 +103,7 @@ class HarvesterPartsController extends Controller
             }
         }
         $HarvesterParts->delete();
+        HarvesterPartsModels::where('parts_id',$parts_id)->delete();
         return response()->json(['message' => 'Harvester Part Deleted Successfully']);
     }
 
