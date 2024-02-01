@@ -62,7 +62,7 @@
                                                         {{model.model_name}}
                                                     </li>
                                             </td>
-                                            <td class="text-left">{{ harvester_part.UnitPrice}}</td>
+                                            <td class="text-right">{{ harvester_part.UnitPrice}}</td>
                                             <td class="text-left">{{ harvester_part.parts_type}}</td>
                                             <td class="text-left">
                                                 <img v-if="harvester_part.image" height="40" width="40" :src="tableImage(harvester_part.image)" alt="">
