@@ -166,7 +166,6 @@ export default {
         getAllPendingServiceRequestList() {
             this.isLoading = true;
             axios.get('/api/pending-service-request-list?page=' + this.pagination.current_page).then((response) => {
-                console.log( response)
                 this.job_cards = response.data.data;
                 this.pagination = response.data.meta;
                 this.isLoading = false;
@@ -184,7 +183,6 @@ export default {
         },
         getAllTechnician(){
             axios.get('/api/get-all-technician').then((response)=>{
-                console.log(response.data)
                 this.technicians = response.data.technitians;
             }).catch((error)=>{
 
@@ -218,7 +216,6 @@ export default {
         },
         getAllSections(){
             axios.get('/api/get-all-sections').then((response)=>{
-                console.log(response)
                 this.problem_section = response.data.data;
             }).catch((error)=>{
 

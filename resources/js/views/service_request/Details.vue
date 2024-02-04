@@ -242,7 +242,6 @@ export default {
         getServiceRequestDetailsList(){
             this.isLoading = true;
             axios.get(`/api/service-request-details/${this.$route.params.id}`).then((response)=>{
-                console.log(response.data);
                 this.job_cards = response.data.data
                 this.isLoading = false;
             }).catch((error)=>{

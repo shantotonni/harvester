@@ -59,7 +59,6 @@ export default {
             this.isLoading = false;
             this.permission = [];
             axios.get(`/api/get-user-menu-details/${this.userId}`).then((response)=>{
-                console.log(response.data.data)
                 this.treeList = response.data.data.menu;
                 response.data.data.usermenu.forEach((item) => {
                     this.permission[item] = true;
@@ -102,7 +101,6 @@ export default {
         },
         addUserMenuPermission() {
             this.form.post("/api/menu-permission-store").then(response => {
-                console.log(response)
                 this.$toaster.success('Data Successfully Updated');
             }).catch(e => {
                 this.isLoading = false;

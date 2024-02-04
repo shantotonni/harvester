@@ -315,7 +315,6 @@ export default {
         },
         getAllProduct() {
             axios.get('/api/get-all-products').then((response) => {
-                console.log(response)
                 this.products = response.data.products;
             }).catch((error) => {
 

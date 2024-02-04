@@ -243,7 +243,6 @@ export default {
         getAllUser(){
             this.isLoading = true;
             axios.get('/api/user?page='+ this.pagination.current_page).then((response)=>{
-                console.log(response.data.data)
                 this.users = response.data.data;
                 this.pagination = response.data.meta;
                 this.isLoading = false;

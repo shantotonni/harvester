@@ -129,7 +129,6 @@ export default {
         getAllCompletedServiceRequestList() {
             this.isLoading = true;
             axios.get('/api/completed-service-request-list?page=' + this.pagination.current_page).then((response) => {
-                // console.log('data', response.data.data)
                 this.job_cards = response.data.data;
                 this.pagination = response.data.meta;
                 this.isLoading = false;
