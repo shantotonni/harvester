@@ -230,6 +230,7 @@ class CustomerAuthController extends Controller
         $filename = $this->uploadFile($request->file('image'));
 
         $user =JWTAuth::parseToken()->authenticate();
+
         $customer = Customer::where('id', $user->id)->first();
         $customer->name = $request->name;
         $customer->mobile = $request->mobile;
@@ -238,9 +239,12 @@ class CustomerAuthController extends Controller
         $customer->district_id = $request->district_id;
         $customer->save();
 
+        //$customer = Customer::where('id',$user->id)->where('customer_type','harvester')->with('customer_chassis','District')->first();
+
         return response()->json([
-            'status' => 200,
-            'message' => 'success'
+            'status' => 'success',
+            'message' => 'Successfully updated',
+            'user' => new CustomerInfoResource($customer),
         ], 200);
     }
 
