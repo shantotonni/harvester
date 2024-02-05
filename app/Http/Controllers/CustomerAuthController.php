@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Customer\CustomerInfoCollection;
+use App\Http\Resources\Customer\CustomerInfoResource;
 use App\Models\Customer;
 use App\Models\CustomerChassis;
 use App\Models\Otp;
@@ -12,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CustomerAuthController extends Controller
@@ -32,16 +35,14 @@ class CustomerAuthController extends Controller
         ]);
 
         if ($token = JWTAuth::attempt(['mobile' => $request->mobile, 'password' => $request->password,'customer_type'=>'harvester'])) {
-            $customer = Customer::where('mobile',$request->mobile)
-                ->where('customer_type','harvester')
+            $customer = Customer::where('mobile',$request->mobile)->where('customer_type','harvester')->with('customer_chassis','District')->first();
 
-                ->with('customer_chassis','District')->first();
 //            $customer = Customer::where('mobile',$request->mobile)->where('customer_type','harvester')->with('customer_chassis','District')->first();
             //$chassis = CustomerChassis::where('customer_id',$user->id)->select('id','customer_id','chassis_no','model')->get();
             return response()->json([
                 'status' => 'success',
                 'token' => $token,
-                'user' => $customer,
+                'user' => new CustomerInfoResource($customer),
             ], 200);
         }
         return response()->json([
@@ -223,18 +224,15 @@ class CustomerAuthController extends Controller
         }
     }
 
-    public function updateProfile(Request $request)
+    public function updateProfileMobile(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-//            'Division' => 'required',
-//            'District' => 'required',
-//            'Upazilla' => 'required',
-        ]);
 
-        $customer = Customer::where('id', $request->id)->first();
+        $filename = $this->uploadFile($request->file('image'));
+        $user =JWTAuth::parseToken()->authenticate();
+        $customer = Customer::where('id', $user->id)->first();
         $customer->name = $request->name;
         $customer->mobile = $request->mobile;
+        $customer->image = $filename;
         $customer->email = $request->email;
         $customer->district_id = $request->district_id;
         $customer->save();
@@ -244,6 +242,13 @@ class CustomerAuthController extends Controller
             'message' => 'success'
         ], 200);
     }
+    public function uploadFile($file) {
+        $image = md5(uniqid(rand(), true)) . '.' .str_replace(" ", "-", $file->getClientOriginalName());
+        $destinationPath = public_path('/images/customer');
+        $file->move($destinationPath,$image);
+        return $image;
+    }
+
 
     public function sendOtpForForgotPassword(Request $request){
         $mobile = $request->mobile;
@@ -379,5 +384,7 @@ class CustomerAuthController extends Controller
         $response = file_get_contents($smsUrl);
         return json_decode($response);
     }
+
+
 
 }
