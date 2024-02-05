@@ -32,7 +32,11 @@ class CustomerAuthController extends Controller
         ]);
 
         if ($token = JWTAuth::attempt(['mobile' => $request->mobile, 'password' => $request->password,'customer_type'=>'harvester'])) {
-            $customer = Customer::where('mobile',$request->mobile)->where('customer_type','harvester')->with('customer_chassis','District')->first();
+            $customer = Customer::where('mobile',$request->mobile)
+                ->where('customer_type','harvester')
+
+                ->with('customer_chassis','District')->first();
+//            $customer = Customer::where('mobile',$request->mobile)->where('customer_type','harvester')->with('customer_chassis','District')->first();
             //$chassis = CustomerChassis::where('customer_id',$user->id)->select('id','customer_id','chassis_no','model')->get();
             return response()->json([
                 'status' => 'success',
