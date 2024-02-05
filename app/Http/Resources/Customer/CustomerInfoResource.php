@@ -30,6 +30,7 @@ class CustomerInfoResource extends JsonResource
             'chassis' =>  isset($this->chassis_one) ? $this->chassis_one->chassis_no : '',
             'image' => $this->image,
             'customer_image'=>url('/').'/images/customer/'.$this->image,
+            'customer_chassis' =>  $this->customer_chassis,
         ];
     }
 }

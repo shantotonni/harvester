@@ -228,6 +228,7 @@ class CustomerAuthController extends Controller
     {
 
         $filename = $this->uploadFile($request->file('image'));
+
         $user =JWTAuth::parseToken()->authenticate();
         $customer = Customer::where('id', $user->id)->first();
         $customer->name = $request->name;
@@ -242,6 +243,7 @@ class CustomerAuthController extends Controller
             'message' => 'success'
         ], 200);
     }
+
     public function uploadFile($file) {
         $image = md5(uniqid(rand(), true)) . '.' .str_replace(" ", "-", $file->getClientOriginalName());
         $destinationPath = public_path('/images/customer');
