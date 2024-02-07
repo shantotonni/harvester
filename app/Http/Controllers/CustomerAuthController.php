@@ -63,26 +63,27 @@ class CustomerAuthController extends Controller
         }
 
         $chassis = StockBatch::where('BatchNo', $chassis)->with('product')->first();
+        //return $chassis;
         if ($chassis) {
             $productName = '';
-            if ($chassis->product){
-                if ($chassis->product->ProductCode == 'W051'){
+            if ($chassis){
+                if ($chassis->ProductCode == 'W051'){
                     $productName = 'লিউলিন কম্বাইন হারভেস্টার';
-                }elseif ($chassis->product->ProductCode == 'W098'){
+                }elseif ($chassis->ProductCode == 'W098'){
                     $productName = 'মিনি কম্বাইন হারভেস্টার';
-                }elseif ($chassis->product->ProductCode == 'W112'){
+                }elseif ($chassis->ProductCode == 'W112'){
                     $productName = 'ইয়ানমার AG600 কম্বাইন হারভেস্টার';
-                }elseif ($chassis->product->ProductCode == 'W127'){
+                }elseif ($chassis->ProductCode == 'W127'){
                     $productName = 'ইয়ানমার AG600 কম্বাইন হারভেস্টার';
-                }elseif ($chassis->product->ProductCode == 'W133'){
+                }elseif ($chassis->ProductCode == 'W133'){
                     $productName = 'লিউলিন কম্বাইন হারভেস্টার';
-                }elseif ($chassis->product->ProductCode == 'W146'){
+                }elseif ($chassis->ProductCode == 'W146'){
                     $productName = 'লোভল RG108 কম্বাইন হারভেস্টার';
-                }elseif ($chassis->product->ProductCode == 'W148'){
+                }elseif ($chassis->ProductCode == 'W148'){
                     $productName = 'ইয়ানমার YH700 কম্বাইন হারভেস্টার';
-                }elseif ($chassis->product->ProductCode == 'W150'){
+                }elseif ($chassis->ProductCode == 'W150'){
                     $productName = 'ইয়ানমার AG600 কম্বাইন হারভেস্টার';
-                }elseif ($chassis->product->ProductCode == 'W151'){
+                }elseif ($chassis->ProductCode == 'W151'){
                     $productName = 'ইয়ানমার AG600 কম্বাইন হারভেস্টার';
                 }else{
                     $productName = $chassis->product->ProductName;
@@ -254,7 +255,6 @@ class CustomerAuthController extends Controller
         $file->move($destinationPath,$image);
         return $image;
     }
-
 
     public function sendOtpForForgotPassword(Request $request){
         $mobile = $request->mobile;

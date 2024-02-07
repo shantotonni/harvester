@@ -7,12 +7,6 @@ use function Symfony\Component\String\s;
 
 class ServiceRequestJobCardCollection extends ResourceCollection
 {
-    /**
-     * Transform the resource collection into an array.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-     */
     public function toArray($request)
     {
         return [
@@ -76,8 +70,8 @@ class ServiceRequestJobCardCollection extends ResourceCollection
                     'job_creator'=>$job_card->job_creator,
                     'section_name'=>isset($job_card->section)? $job_card->section->name:'',
                     'service_wanted_date'=> $job_card->service_wanted_at,
-                    'technitian_name'=> isset($job_card->technician) ? $job_card->technician->name: '',
-                    'technitian_mobile'=> isset($job_card->technician) ? $job_card->technician->mobile: '',
+                    'technitian_name'=> isset($job_card->technitian) ? $job_card->technitian->name: '',
+                    'technitian_mobile'=> isset($job_card->technitian) ? $job_card->technitian->mobile: '',
                 ];
             })
         ];
