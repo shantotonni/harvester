@@ -14,6 +14,7 @@ class CustomerCollection extends ResourceCollection
                 return [
                     'id' => $customer->id,
                     'name' => $customer->name,
+                    'code' => $customer->code,
                     'email' => $customer->email,
                     'mobile' => $customer->mobile,
                     'product_name' => isset($customer->Products) ? $customer->Products->name : '',

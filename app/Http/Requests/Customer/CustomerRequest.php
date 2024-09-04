@@ -29,11 +29,11 @@ class CustomerRequest extends FormRequest
             'email'=>'required',
             'area_id'=>'required',
             'district_id'=>'required',
-            'code'=>'required',
+            //'code'=>'required',
             'chassis'=>'required',
             'password'=>'required',
             'product_id'=>'required',
-            'image'=>'required',
+            //'image'=>'required',
             'address'=>'required',
         ];
     }

@@ -279,7 +279,7 @@ class CommonController extends Controller
 
     public function getAllDistricts()
     {
-        $districts = District::orderBy('created_at', 'desc')->get();
+        $districts = District::orderBy('name', 'asc')->get();
         return response()->json([
             'districts' => $districts
         ]);
