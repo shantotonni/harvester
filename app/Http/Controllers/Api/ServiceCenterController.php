@@ -41,6 +41,7 @@ class ServiceCenterController extends Controller
         }
         $service_center = new ServiceCenter();
         $service_center->area_id = $request->area_id;
+        $service_center->service_center_name = $request->service_center_name;
         $service_center->address = $request->address;
         $service_center->responsible_person = $request->responsible_person;
         $service_center->mobile = $request->mobile;
@@ -52,7 +53,7 @@ class ServiceCenterController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(ServiceCenterStoreRequest $request, $id)
     {
         $service_center = ServiceCenter::where('id', $id)->first();
         $this->validate($request, [
@@ -74,12 +75,12 @@ class ServiceCenterController extends Controller
             } else {
                 $name = $service_center->image;
             }
-
         }
         else{
             $name = $service_center->image;
         }
         $service_center->area_id = $request->area_id;
+        $service_center->service_center_name = $request->service_center_name;
         $service_center->address = $request->address;
         $service_center->responsible_person = $request->responsible_person;
         $service_center->mobile = $request->mobile;
@@ -101,6 +102,5 @@ class ServiceCenterController extends Controller
     {
         return new ServiceCenterCollection(ServiceCenter::Where('address', 'like', "%$query%")->latest()->paginate(10));
     }
-
 
 }

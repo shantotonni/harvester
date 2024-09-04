@@ -118,7 +118,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Customer Mobile</label>
-                                            <input v-model="form.mobile" type="number" name="mobile"
+                                            <input v-model="form.mobile" type="text" name="mobile"
                                                    class="form-control"
                                                    :class="{ 'is-invalid': form.errors.has('mobile') }">
                                             <div class="error" v-if="form.errors.has('mobile')"

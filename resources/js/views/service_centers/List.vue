@@ -54,8 +54,9 @@
                                         <tr>
                                             <th class="text-left">SN</th>
                                             <th class="text-left">Area</th>
-                                            <th class="text-left">Address</th>
+                                            <th class="text-left">Service Center Name</th>
                                             <th class="text-left">Responsible Person</th>
+                                            <th class="text-left">Address</th>
                                             <th class="text-left">Mobile</th>
                                             <th class="text-left">Lat</th>
                                             <th class="text-left">Lon</th>
@@ -68,8 +69,9 @@
                                             v-if="service_centers.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
                                             <td class="text-left">{{ service_center.areaname }}</td>
-                                            <td class="text-left">{{ service_center.address }}</td>
+                                            <td class="text-left">{{ service_center.service_center_name }}</td>
                                             <td class="text-left">{{ service_center.responsible_person }}</td>
+                                            <td class="text-left">{{ service_center.address }}</td>
                                             <td class="text-right">{{ service_center.mobile }}</td>
                                             <td class="text-right">{{ service_center.lat }}</td>
                                             <td class="text-right">{{ service_center.lon }}</td>
@@ -123,8 +125,19 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label>Service Center Name</label>
+                                            <input type="text" name="service_center_name"
+                                                   v-model="form.service_center_name"
+                                                   class="form-control"
+                                                   :class="{ 'is-invalid': form.errors.has('service_center_name') }">
+                                            <div class="error" v-if="form.errors.has('service_center_name')"
+                                                 v-html="form.errors.get('service_center_name')"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label>Responsible Person Name</label>
-                                            <input type="text" name="Responsible Person"
+                                            <input type="text" name="responsible_person"
                                                    v-model="form.responsible_person"
                                                    class="form-control"
                                                    :class="{ 'is-invalid': form.errors.has('responsible_person') }">
@@ -190,7 +203,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Image</label>
-                                            <input @change="changeImage($event)" required type="file" name="image" class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
+                                            <input @change="changeImage($event)" type="file" name="image" class="form-control" :class="{ 'is-invalid': form.errors.has('image') }">
                                             <div class="error" v-if="form.errors.has('image')" v-html="form.errors.get('image')" />
                                             <img v-if="form.image" :src="showImage(form.image)" alt="" height="40px" width="40px">
                                         </div>
@@ -236,6 +249,7 @@ export default {
                 id: '',
                 area_id: '',
                 address: '',
+                service_center_name: '',
                 responsible_person: '',
                 mobile: '',
                 lat: '',
