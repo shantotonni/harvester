@@ -16,10 +16,8 @@ class ServiceRequest extends Model
     public function section(){
         return $this->belongsTo(Section::class,'section_id','id');
     }
-    public function District()
-    {
+    public function District(){
         return $this->belongsTo(District::class,'district_id','id');
-
     }
     public function upazila(){
         return $this->belongsTo('App\Models\Upazila');

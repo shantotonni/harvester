@@ -7,6 +7,7 @@ use App\Http\Requests\Customer\CustomerRequest;
 use App\Http\Resources\Customer\CustomerCollection;
 use App\Models\Customer;
 use App\Models\CustomerChassis;
+use App\Models\JobCard;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +18,10 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class CustomerController extends Controller
 {
     public function index(){
-        $customers = Customer::with(['ProductModel', 'Products', 'area', 'District', 'chassis_one'])->orderBy('id', 'desc')
+        $customers = Customer::with(['ProductModel', 'Products', 'area', 'District', 'chassis_one','mirror_customer','mirror_customer.mirror_upazilla'])->orderBy('id', 'desc')
             ->where('customer_type', 'harvester')
             ->orderBy('created_at','desc')
+            //->where('code','B02903')
             ->paginate(15);
         return new CustomerCollection($customers);
     }
@@ -28,7 +30,6 @@ class CustomerController extends Controller
 
         DB::beginTransaction();
         try {
-
             if ($request->image) {
                 $image = $request->image;
                 $name = uniqid() . time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
@@ -36,17 +37,22 @@ class CustomerController extends Controller
             } else {
                 $name = 'not_found.jpg';
             }
-            $sdmsCustomerInfo = DB::connection('MotorBrInvoiceMirror')->table('InvoiceDetails')
-                ->select('InvoiceDetails.InvoiceNo','InvoiceDetails.ChassisNo','Invoice.CustomerCode')
-                ->join('Invoice','Invoice.InvoiceNo','=','InvoiceDetails.Invoiceno')
-                ->where('ChassisNo',$request->chassis)->first();
-            $CustomerCode = $sdmsCustomerInfo->CustomerCode;
 
-            if (empty($sdmsCustomerInfo)){
-                return response()->json([
-                    'status' => "error",
-                    'message' => 'Chassis Not Found'
-                ], 200);
+            $sdmsCustomerInfo = DB::connection('MotorBrInvoiceMirror')->table('InvoiceDetails')
+                ->select('InvoiceDetails.InvoiceNo','InvoiceDetails.ChassisNo','Invoice.CustomerCode','Customer.Address1')
+                ->join('Invoice','Invoice.InvoiceNo','=','InvoiceDetails.Invoiceno')
+                ->join('Customer','Customer.CustomerCode','=','Invoice.CustomerCode')
+                ->where('ChassisNo',$request->chassis)->first();
+
+            $CustomerCode = '';
+            $Address = '';
+
+            if ($sdmsCustomerInfo){
+                $CustomerCode = $sdmsCustomerInfo->CustomerCode;
+                $Address      = $sdmsCustomerInfo->Address1;
+            }else{
+                $CustomerCode = $request->code;
+                $Address = $request->address;
             }
 
             $exist_customer = Customer::where('mobile', $request->mobile)->where('customer_type', 'harvester')->exists();
@@ -57,14 +63,24 @@ class CustomerController extends Controller
                 ], 200);
             }
 
+            $getLastServiceHour = JobCard::query()->where('chassis_number',$request->chassis)
+                ->where('is_approved',1)
+                ->orderBy('created_at','desc')->first();
+            $hour = 0;
+            if ($getLastServiceHour){
+                $hour = $getLastServiceHour->hour;
+            }else{
+                $hour = null;
+            }
+
             $customer = new Customer();
-            $customer->code = $CustomerCode ? $CustomerCode : '';
+            $customer->code = $CustomerCode;
             $customer->name = $request->name;
             $customer->mobile = $request->mobile;
             $customer->email = $request->email;
             $customer->image = $name;
-            $customer->address = $request->address;
-            $customer->service_hour = $request->service_hour;
+            $customer->address = $Address;
+            $customer->service_hour = $hour;
             $customer->district_id = $request->district_id;
             $customer->date_of_purchase = $request->date_of_purchase;
             $customer->area_id = $request->area_id;
@@ -80,8 +96,8 @@ class CustomerController extends Controller
                 $customer_chassis->save();
                 DB::commit();
                 return response()->json([
+                    'status' => "success",
                     'message' => 'Customer Created Successfully',
-                    'user' => $customer,
                 ], 200);
             } else {
                 return response()->json([

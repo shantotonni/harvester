@@ -15,4 +15,8 @@ class MirrorCustomer extends Model
     public $primaryKey = 'CustomerCode';
     protected $guarded = [];
     protected $keyType = 'string';
+
+    public function mirror_upazilla(){
+        return $this->belongsTo('App\Models\MirrorUpazila','ThanaCode','UpazillaCode')->select('UpazillaCode','UpazillaName');
+    }
 }

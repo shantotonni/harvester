@@ -37,6 +37,7 @@
                                             <th class="text-left">Customer Name</th>
                                             <th class="text-left">Mobile Number</th>
                                             <th class="text-left">District</th>
+                                            <th class="text-left">Upazilla Name</th>
                                             <th class="text-left">Email</th>
                                             <th class="text-left">Product Name</th>
                                             <th class="text-left">Model Name</th>
@@ -56,11 +57,12 @@
                                             <td class="text-left">{{ customer.name }}</td>
                                             <td>{{ customer.mobile }}</td>
                                             <td class="text-left">{{ customer.district_name_bn }}</td>
+                                            <td class="text-left">{{ customer.UpazillaName }}</td>
                                             <td>{{ customer.email }}</td>
                                             <td class="text-left">{{ customer.product_name_bn }}</td>
                                             <td class="text-left">{{ customer.model}}</td>
                                             <td class="text-left">{{ customer.chassis }}</td>
-                                            <td class="text-left">{{ customer.RDate }}</td>
+                                            <td class="text-left">{{ customer.date }}</td>
                                             <td class="text-right">{{ customer.service_hour }}</td>
                                             <td class="text-left"><img v-if="customer.image" height="40" width="40" :src="tableImage(customer.image)" alt=""></td>
 <!--                                            <td class="text-left">{{ customer.customer_type }}</td>-->
@@ -106,6 +108,15 @@
                         <div class="modal-body">
                             <div class="col-md-12">
                                 <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Customer Code</label>
+                                            <input v-model="form.code" type="text" name="code" class="form-control"
+                                                   :class="{ 'is-invalid': form.errors.has('code') }" >
+                                            <div class="error" v-if="form.errors.has('code')"
+                                                 v-html="form.errors.get('code')"/>
+                                        </div>
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Customer Name</label>
@@ -309,6 +320,7 @@ export default {
                 chassis: '',
                 image: '',
                 email: '',
+                code: '',
             }),
         }
     },
@@ -364,9 +376,16 @@ export default {
         store() {
             this.form.busy = true;
             this.form.post("/api/customer").then(response => {
-                $("#customerModal").modal("hide");
-                this.getAllCustomer();
+                console.log(response.data)
+                if (response.data.status === 'success'){
+                    $("#customerModal").modal("hide");
+                    this.$toaster.success(response.data.message);
+                    this.getAllCustomer();
+                }else {
+                    this.$toaster.error(response.data.message);
+                }
             }).catch(e => {
+                this.$toaster.error(response.data.message);
                 this.isLoading = false;
             });
         },
@@ -431,7 +450,6 @@ export default {
         },
         getAllArea() {
             axios.get('/api/get-all-areas').then((response) => {
-
                 this.areas = response.data.areas;
             }).catch((error) => {
 
