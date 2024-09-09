@@ -25,6 +25,7 @@ class ServiceCenterStoreRequest extends FormRequest
     {
         return [
             'address'=>'required',
+            'service_center_name'=>'required',
             'responsible_person'=>'required',
             'mobile'=>'required',
             'lat'=>'required',

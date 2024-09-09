@@ -120,7 +120,16 @@ class CustomerAuthController extends Controller
                 $six_digit_random_number = random_int(100000, 999999);
                 $smscontent = 'Otp Code - ' . $six_digit_random_number;
                 $mobile = $request->mobile;
-                $this->sendsms($ip = '192.168.100.213', $userid = 'motors', $password = 'Asdf1234', $smstext = urlencode($smscontent), $receipient = urlencode($mobile));
+
+                $to = $mobile;
+                $sId = '8809617615000';
+                $applicationName = 'ACI PremioPlastics';
+                $moduleName = 'Registration';
+                $otherInfo = '';
+                $userId = '2845';
+                $vendor = 'smsq';
+                $message = $smscontent;
+                $this->sendSmsQ($to, $sId, $applicationName, $moduleName, $otherInfo, $userId, $vendor, $message);
 
                 $otp = new Otp();
                 $otp->otp_code = $six_digit_random_number;
@@ -177,6 +186,19 @@ class CustomerAuthController extends Controller
         DB::beginTransaction();
 
         try {
+            $sdmsCustomerInfo = DB::connection('MotorBrInvoiceMirror')->table('InvoiceDetails')
+                ->select('InvoiceDetails.InvoiceNo','InvoiceDetails.ChassisNo','Invoice.CustomerCode')
+                ->join('Invoice','Invoice.InvoiceNo','=','InvoiceDetails.Invoiceno')
+                ->where('ChassisNo',$request->chassis)->first();
+            $CustomerCode = $sdmsCustomerInfo->CustomerCode;
+
+            if (empty($sdmsCustomerInfo)){
+                return response()->json([
+                    'status' => "error",
+                    'message' => 'Chassis Not Found'
+                ], 200);
+            }
+
             $exist_customer = Customer::where('mobile', $request->mobile)->where('customer_type', 'harvester')->exists();
             if ($exist_customer) {
                 return response()->json([
@@ -185,19 +207,20 @@ class CustomerAuthController extends Controller
                 ], 200);
             }
             $customer = new Customer();
-            $customer->name = $request->name;
-            $customer->mobile = $request->mobile;
-            $customer->email = $request->email;
-            $customer->district_id = $request->district_id;
-            $customer->password = bcrypt($request->password);
-            $customer->customer_type = 'harvester';
+            $customer->code             = $CustomerCode ? $CustomerCode : '';
+            $customer->name             = $request->name;
+            $customer->mobile           = $request->mobile;
+            $customer->email            = $request->email;
+            $customer->district_id      = $request->district_id;
+            $customer->password         = bcrypt($request->password);
+            $customer->customer_type    = 'harvester';
 
             if ($customer->save()) {
                 if ($token = JWTAuth::attempt(['mobile' => $request->mobile, 'password' => $request->password,'customer_type'=>'harvester'])) {
-                    $customer_chassis = new CustomerChassis();
-                    $customer_chassis->customer_id = $customer->id;
-                    $customer_chassis->model = $model;
-                    $customer_chassis->chassis_no = $chassis;
+                    $customer_chassis               = new CustomerChassis();
+                    $customer_chassis->customer_id  = $customer->id;
+                    $customer_chassis->model        = $model;
+                    $customer_chassis->chassis_no   = $chassis;
                     $customer_chassis->save();
 
                     $customer = Customer::where('mobile',$request->mobile)->where('customer_type','harvester')->with('Customer_chassis')->first();
@@ -383,6 +406,31 @@ class CustomerAuthController extends Controller
             'status' => 200,
             'message' => 'Successfully logged out'
         ], 200);
+    }
+
+    public static function sendSmsQ($to, $sId, $applicationName, $moduleName, $otherInfo, $userId, $vendor, $message)
+    {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://192.168.102.10/apps/api/send-sms/sms-master',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => 'To='.$to.'&SID='.$sId.'&ApplicationName='.urlencode($applicationName).'&ModuleName='.urlencode($moduleName).'&OtherInfo='.urlencode($otherInfo).'&userID='.$userId.'&Message='.$message.'&SmsVendor='.$vendor,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/x-www-form-urlencoded'
+            ),
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false
+        ));
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        return $response;
     }
 
     public function sendsms($ip, $userid, $password, $smstext, $receipient){

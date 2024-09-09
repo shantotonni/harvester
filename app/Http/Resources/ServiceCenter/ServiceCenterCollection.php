@@ -16,6 +16,7 @@ class ServiceCenterCollection extends ResourceCollection
                     'area_id' => $service_center->area_id,
                     'areaname'=>isset($service_center->area) ? $service_center->area->name:'',
                     'address' => $service_center->address,
+                    'service_center_name' => $service_center->service_center_name,
                     'responsible_person' => $service_center->responsible_person,
                     'mobile' => $service_center->mobile,
                     'lat' => $service_center->lat,

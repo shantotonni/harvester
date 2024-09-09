@@ -54,4 +54,8 @@ class Customer extends Authenticatable implements JWTSubject
     public function chassis_one(){
         return $this->hasOne('App\Models\CustomerChassis','customer_id','id');
     }
+
+    public function mirror_customer(){
+        return $this->belongsTo('App\Models\MirrorCustomer','code','CustomerCode')->select('CustomerCode','ThanaCode');
+    }
 }

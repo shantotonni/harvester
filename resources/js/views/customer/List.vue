@@ -33,17 +33,19 @@
                                         <thead>
                                         <tr>
                                             <th class="text-left">SN</th>
+                                            <th class="text-left">Customer Code</th>
                                             <th class="text-left">Customer Name</th>
                                             <th class="text-left">Mobile Number</th>
+                                            <th class="text-left">District</th>
+                                            <th class="text-left">Upazilla Name</th>
                                             <th class="text-left">Email</th>
                                             <th class="text-left">Product Name</th>
                                             <th class="text-left">Model Name</th>
-                                            <th class="text-left">Service Hour</th>
-                                            <th class="text-left">District</th>
                                             <th class="text-left">Chassis no</th>
-                                            <th class="text-left"> Image</th>
-                                            <th class="text-left"> Customer Type</th>
-                                            <th class="text-left"> Registration Date</th>
+                                            <th class="text-left">Registration Date</th>
+                                            <th class="text-left">Last Service Hour</th>
+                                            <th class="text-left">Image</th>
+<!--                                            <th class="text-left"> Customer Type</th>-->
                                             <th class="text-left">Action</th>
                                         </tr>
                                         </thead>
@@ -51,17 +53,19 @@
                                         <tr v-for="(customer, i) in customers" :key="customer.id"
                                             v-if="customers.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
+                                            <td class="text-left">{{ customer.code }}</td>
                                             <td class="text-left">{{ customer.name }}</td>
                                             <td>{{ customer.mobile }}</td>
+                                            <td class="text-left">{{ customer.district_name_bn }}</td>
+                                            <td class="text-left">{{ customer.UpazillaName }}</td>
                                             <td>{{ customer.email }}</td>
                                             <td class="text-left">{{ customer.product_name_bn }}</td>
                                             <td class="text-left">{{ customer.model}}</td>
-                                            <td class="text-right">{{ customer.service_hour }}</td>
-                                            <td class="text-left">{{ customer.district_name_bn }}</td>
                                             <td class="text-left">{{ customer.chassis }}</td>
+                                            <td class="text-left">{{ customer.date }}</td>
+                                            <td class="text-right">{{ customer.service_hour }}</td>
                                             <td class="text-left"><img v-if="customer.image" height="40" width="40" :src="tableImage(customer.image)" alt=""></td>
-                                            <td class="text-left">{{ customer.customer_type }}</td>
-                                            <td class="text-left">{{ customer.RDate }}</td>
+<!--                                            <td class="text-left">{{ customer.customer_type }}</td>-->
                                             <td class="text-left">
                                                 <button @click="edit(customer)" class="btn btn-success btn-sm"><i
                                                     class="far fa-edit"></i></button>
@@ -106,6 +110,15 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label>Customer Code</label>
+                                            <input v-model="form.code" type="text" name="code" class="form-control"
+                                                   :class="{ 'is-invalid': form.errors.has('code') }" >
+                                            <div class="error" v-if="form.errors.has('code')"
+                                                 v-html="form.errors.get('code')"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label>Customer Name</label>
                                             <input v-model="form.name" type="text" name="name" class="form-control"
                                                    :class="{ 'is-invalid': form.errors.has('name') }" >
@@ -116,7 +129,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Customer Mobile</label>
-                                            <input v-model="form.mobile" type="number" name="mobile"
+                                            <input v-model="form.mobile" type="text" name="mobile"
                                                    class="form-control"
                                                    :class="{ 'is-invalid': form.errors.has('mobile') }">
                                             <div class="error" v-if="form.errors.has('mobile')"
@@ -307,6 +320,7 @@ export default {
                 chassis: '',
                 image: '',
                 email: '',
+                code: '',
             }),
         }
     },
@@ -362,9 +376,16 @@ export default {
         store() {
             this.form.busy = true;
             this.form.post("/api/customer").then(response => {
-                $("#customerModal").modal("hide");
-                this.getAllCustomer();
+                console.log(response.data)
+                if (response.data.status === 'success'){
+                    $("#customerModal").modal("hide");
+                    this.$toaster.success(response.data.message);
+                    this.getAllCustomer();
+                }else {
+                    this.$toaster.error(response.data.message);
+                }
             }).catch(e => {
+                this.$toaster.error(response.data.message);
                 this.isLoading = false;
             });
         },
@@ -429,7 +450,6 @@ export default {
         },
         getAllArea() {
             axios.get('/api/get-all-areas').then((response) => {
-
                 this.areas = response.data.areas;
             }).catch((error) => {
 
