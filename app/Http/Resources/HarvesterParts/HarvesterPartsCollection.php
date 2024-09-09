@@ -7,7 +7,7 @@ use App\Models\SparePartsMirror;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\DB;
 
-class HarvesterPartsCollection extends ResourceCollection
+class  HarvesterPartsCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.

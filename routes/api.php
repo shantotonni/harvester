@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\HarvestingCostController;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\MenuPermissionController;
 use App\Http\Controllers\Api\Mobile\CommonController;
+use App\Http\Controllers\Api\Mobile\NotificationController;
 use App\Http\Controllers\Api\ProductModelController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SeasonalCropsController;
@@ -193,6 +194,7 @@ Route::post('check-otp-for-registration', [CustomerAuthController::class, 'check
 Route::post('customer-registration', [CustomerAuthController::class, 'registration']);
 Route::post('verify-chassis-number', [CustomerAuthController::class, 'findChassisNumber']);
 Route::post('find-mobile', [CustomerAuthController::class, 'findMobile']);
+Route::post('customer-notify', [CustomerAuthController::class, 'notifyUser']);
 Route::get('get_districts_upazilla', [CommonController::class, 'getAllDistrictsUpazilla']);
 
 Route::post('send-otp-for-forgot-password', [CustomerAuthController::class, 'sendOtpForForgotPassword']);
@@ -200,10 +202,13 @@ Route::post('verify-otp-for-forgot-password', [CustomerAuthController::class, 'v
 Route::post('customer-forgot-password', [CustomerAuthController::class, 'customerForgotPassword']);
 
 
+
+
 Route::group(['middleware' => 'CustomerAuth'], function () {
     //get data
     Route::get('get-all-problem-section', [CommonController::class, 'getAllProblemSection']);
     Route::get('get-all-harvester-cost', [CommonController::class, 'getAllHarvesterCost']);
+
 
     //service request
     Route::post('customer-service-request', [App\Http\Controllers\Api\Mobile\ServiceRequestController::class,'customerServiceRequest']);
