@@ -17,12 +17,17 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CustomerController extends Controller
 {
-    public function index(){
-        $customers = Customer::with(['ProductModel', 'Products', 'area', 'District', 'chassis_one','mirror_customer','mirror_customer.mirror_upazilla'])->orderBy('id', 'desc')
+    public function index(Request $request){
+        $customers = Customer::with(['ProductModel', 'Products', 'area', 'District', 'chassis_one','mirror_customer','mirror_customer.mirror_upazilla'])
+            ->orderBy('id', 'desc')
             ->where('customer_type', 'harvester')
-            ->orderBy('created_at','desc')
-            //->where('code','B02903')
-            ->paginate(15);
+            ->orderBy('created_at','desc');
+            if ($request->isExport == 'Y'){
+                $customers = $customers->get();
+            }else{
+                $customers = $customers->paginate(10);
+            }
+
         return new CustomerCollection($customers);
     }
 

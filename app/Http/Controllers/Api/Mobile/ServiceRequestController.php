@@ -40,8 +40,7 @@ class ServiceRequestController extends Controller
         return new ServiceRequestJobCardCollection($job_cards);
     }
 
-    public function customerServiceRequest(Request $request)
-    {
+    public function customerServiceRequest(Request $request){
         $this->validate($request,[
             'customer_mobile'=>'required',
             'section_id'=>'required',
@@ -54,36 +53,32 @@ class ServiceRequestController extends Controller
       $district = District::query()->where('id',$request->district_id)->first();
       $user_area = UserArea::query()->where('area_id', $district->area_id)->first();
 
-      $job_card = new JobCard();
-      $job_card->technitian_id = '';
-      $job_card->engineer_id = $user_area->user_id;
-      $job_card->area_id = $user_area->area_id;
-      $job_card->product_id = $product_model->product_id;
-      $job_card->model_id = $product_model->id;
-      $job_card->section_id = $request->section_id;
-      $job_card->customer_name = $user->name;
-      $job_card->customer_moblie = $request->customer_mobile;
-      $job_card->district_id = $request->district_id;
-      $job_card->upazila_id = $request->upazila_id;
-      $job_card->remarks = $request->remarks;
-      $job_card->chassis_number = $request->chassis_number;
-      $job_card->customer_id = $user->id;
-
-      $job_card->service_wanted_at = Carbon::now();
-      $job_card->service_date = Carbon::now();
-      $job_card->job_creator = 'customer';
-      $job_card->job_status = 'started';
-      $job_card->is_approved = 0;
-      $job_card->approver_id = null;
-      $job_card->product_type = 'Harvester';
-      $job_card->job_card_no = 'MS'.$job_card->id;
-      $job_card->save();
-      $job_card->job_card_no = 'MS'.$job_card->id;
-      $job_card->save();
+      $service_request = new ServiceRequest();
+      $service_request->technitian_id = '';
+      $service_request->service_type_id = null;
+      $service_request->call_type_id = 1;
+      $service_request->engineer_id = $user_area->user_id;
+      $service_request->area_id = $user_area->area_id;
+      $service_request->product_id = $product_model->product_id;
+      $service_request->model_id = $product_model->id;
+      $service_request->section_id = $request->section_id;
+      $service_request->district_id = $request->district_id;
+      $service_request->upazila_id = $request->upazila_id;
+      $service_request->remarks = $request->remarks;
+      $service_request->customer_moblie = $request->customer_mobile;
+      $service_request->customer_name = $user->name;
+      $service_request->address = $user->address;
+      $service_request->chassis_number = $request->chassis_number;
+      $service_request->customer_id = $user->id;
+      $service_request->service_requested_at = Carbon::now();
+      $service_request->request_creator = 'customer';
+      $service_request->lat = $request->lat;
+      $service_request->lon = $request->lon;
+      $service_request->save();
 
       return response()->json([
           'status'=>'success',
-           'message'=>'Job Card Created Successfully'
+           'message'=>'Service Request Created Successfully'
           ], 200);
 
     }

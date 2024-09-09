@@ -16,7 +16,6 @@ class ServiceCenterController extends Controller
     public function index(Request $request)
     {
         $area_id = $request->area_id;
-
         $service_centers = ServiceCenter::query()->with('area');
         if (!empty($area_id)) {
 
@@ -39,15 +38,16 @@ class ServiceCenterController extends Controller
         } else {
             $name = 'not_found.jpg';
         }
-        $service_center = new ServiceCenter();
-        $service_center->area_id = $request->area_id;
-        $service_center->service_center_name = $request->service_center_name;
-        $service_center->address = $request->address;
-        $service_center->responsible_person = $request->responsible_person;
-        $service_center->mobile = $request->mobile;
-        $service_center->lat = $request->lat;
-        $service_center->lon = $request->lon;
-        $service_center->image = $name;
+
+        $service_center                         = new ServiceCenter();
+        $service_center->area_id                = $request->area_id;
+        $service_center->service_center_name    = $request->service_center_name;
+        $service_center->address                = $request->address;
+        $service_center->responsible_person     = $request->responsible_person;
+        $service_center->mobile                 = $request->mobile;
+        $service_center->lat                    = $request->lat;
+        $service_center->lon                    = $request->lon;
+        $service_center->image                  = $name;
         $service_center->save();
         return response()->json(['message' => 'Service Center created Successfully', 200]);
     }
@@ -72,22 +72,21 @@ class ServiceCenterController extends Controller
                 }
                 $name = uniqid() . time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
                 Image::make($image)->save(public_path('images/service_center/') . $name);
-            } else {
+            }else {
                 $name = $service_center->image;
             }
-        }
-        else{
+        }else{
             $name = $service_center->image;
         }
-        $service_center->area_id = $request->area_id;
-        $service_center->service_center_name = $request->service_center_name;
-        $service_center->address = $request->address;
-        $service_center->responsible_person = $request->responsible_person;
-        $service_center->mobile = $request->mobile;
-        $service_center->lat = $request->lat;
-        $service_center->lon = $request->lon;
-        $service_center->image = $name;
 
+        $service_center->area_id                = $request->area_id;
+        $service_center->service_center_name    = $request->service_center_name;
+        $service_center->address                = $request->address;
+        $service_center->responsible_person     = $request->responsible_person;
+        $service_center->mobile                 = $request->mobile;
+        $service_center->lat                    = $request->lat;
+        $service_center->lon                    = $request->lon;
+        $service_center->image                  = $name;
         $service_center->save();
         return response()->json(['message' => 'Service Center updated Successfully', 200]);
     }

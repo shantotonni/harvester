@@ -11,8 +11,7 @@
                                     <div class="flex-grow-1">
                                         <div class="row">
                                             <div class="col-md-2">
-                                                <input v-model="query" type="text" class="form-control"
-                                                       placeholder="Search by name">
+                                                <input v-model="query" type="text" class="form-control" placeholder="Search by name">
                                             </div>
                                         </div>
                                     </div>
@@ -20,6 +19,10 @@
                                         <button type="button" class="btn btn-success btn-sm" @click="createCustomer">
                                             <i class="fas fa-plus"></i>
                                             Add Customer
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-sm" @click="exportCustomer">
+                                            <i class="mdi mdi-calendar-export"></i>
+                                            Export
                                         </button>
                                         <button type="button" class="btn btn-primary btn-sm" @click="reload">
                                             <i class="fas fa-sync"></i>
@@ -89,6 +92,7 @@
                             <skeleton-loader :row="14"/>
                         </div>
                     </div>
+                    <data-export/>
                 </div>
             </div>
         </div>
@@ -284,11 +288,14 @@
 
 <script>
 import Datepicker from "vuejs-datepicker";
+import {Common} from "../../mixins/common";
+import {bus} from "../../app";
 import moment from "moment";
 
 document.title = 'Customer List | Harvester';
 export default {
     name: "List",
+    mixins: [Common],
     components: {
         Datepicker
     },
@@ -322,6 +329,7 @@ export default {
                 email: '',
                 code: '',
             }),
+            isExport : ''
         }
     },
     watch: {
@@ -337,7 +345,7 @@ export default {
         this.getAllCustomer();
         this.getAllDistricts();
         this.getAllArea();
-        this.getAllModelByProduct();
+        //this.getAllModelByProduct();
         this.getAllProduct();
     },
     methods: {
@@ -465,6 +473,26 @@ export default {
         },
         customFormatter(date) {
             return moment(date).format('MMMM Do YYYY');
+        },
+        exportCustomer(){
+            this.isExport = 'Y'
+            axios.get('/api/customer?page=' + this.pagination.current_page
+                + "&isExport=" + this.isExport
+            ).then((response)=>{
+                    let dataSets = response.data.data;
+                console.log(dataSets)
+                    if (dataSets.length > 0) {
+                        let columns = Object.keys(dataSets[0]);
+                        columns = columns.filter((item) => item !== 'row_num');
+                        let rex = /([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g;
+                        columns = columns.map((item) => {
+                            let title = item.replace(rex, '$1$4 $2$3$5')
+                            return {title, key: item}
+                        });
+                        bus.$emit('data-table-import', dataSets, columns, 'Invoice Export')
+                    }
+                }).catch((error)=>{
+            })
         },
     },
 }
