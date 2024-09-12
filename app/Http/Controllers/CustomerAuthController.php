@@ -201,11 +201,20 @@ class CustomerAuthController extends Controller
 
             $exist_customer = Customer::where('mobile', $request->mobile)->where('customer_type', 'harvester')->exists();
             if ($exist_customer) {
+                $customer = Customer::where('mobile',$request->mobile)->where('customer_type','harvester')->first();
+
+                $customer_chassis               = new CustomerChassis();
+                $customer_chassis->customer_id  = $customer->id;
+                $customer_chassis->model        = $model;
+                $customer_chassis->chassis_no   = $chassis;
+                $customer_chassis->save();
+
                 return response()->json([
                     'status' => 200,
-                    'message' => 'Mobile number Already Exists'
+                    'message' => 'Customer Successfully Added'
                 ], 200);
             }
+
             $customer = new Customer();
             $customer->code             = $CustomerCode ? $CustomerCode : '';
             $customer->name             = $request->name;
@@ -217,13 +226,14 @@ class CustomerAuthController extends Controller
 
             if ($customer->save()) {
                 if ($token = JWTAuth::attempt(['mobile' => $request->mobile, 'password' => $request->password,'customer_type'=>'harvester'])) {
-                    $existingChassisCheck = CustomerChassis::query()->where('chassis_no',$chassis)->exists();
-                    if ($existingChassisCheck){
-                        return response()->json([
-                            'status' => "success",
-                            'message' => 'Chassis Already Exist!',
-                        ], 200);
-                    }
+//                    $existingChassisCheck = CustomerChassis::query()->where('chassis_no',$chassis)->exists();
+//                    if ($existingChassisCheck){
+//                        return response()->json([
+//                            'status' => "success",
+//                            'message' => 'Chassis Already Exist!',
+//                        ], 200);
+//                    }
+
                     $customer_chassis               = new CustomerChassis();
                     $customer_chassis->customer_id  = $customer->id;
                     $customer_chassis->model        = $model;
