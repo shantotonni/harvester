@@ -123,7 +123,7 @@ class CustomerAuthController extends Controller
 
                 $to = $mobile;
                 $sId = '8809617615000';
-                $applicationName = 'ACI PremioPlastics';
+                $applicationName = 'Harvester';
                 $moduleName = 'Registration';
                 $otherInfo = '';
                 $userId = '2845';
@@ -134,7 +134,7 @@ class CustomerAuthController extends Controller
                 $otp = new Otp();
                 $otp->otp_code = $six_digit_random_number;
                 $otp->mobile = $mobile;
-                $otp->Status = 0;
+                $otp->status = 0;
                 $otp->save();
 
                 return response()->json([
@@ -293,8 +293,17 @@ class CustomerAuthController extends Controller
             try {
                 $six_digit_random_number = random_int(100000, 999999);
                 $smscontent = 'Otp Code - ' . $six_digit_random_number;
+                $mobile = $request->mobile;
 
-                $this->sendsms($ip = '192.168.100.213', $userid = 'motors', $password = 'Asdf1234', $smstext = urlencode($smscontent), $receipient = urlencode($mobile));
+                $to = $mobile;
+                $sId = '8809617615000';
+                $applicationName = 'Harvester';
+                $moduleName = 'Forgot Password';
+                $otherInfo = '';
+                $userId = '2845';
+                $vendor = 'smsq';
+                $message = $smscontent;
+                $this->sendSmsQ($to, $sId, $applicationName, $moduleName, $otherInfo, $userId, $vendor, $message);
 
                 $otp = new Otp();
                 $otp->otp_code = $six_digit_random_number;
