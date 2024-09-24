@@ -39,6 +39,7 @@
                                             <th class="text-left">Customer Code</th>
                                             <th class="text-left">Customer Name</th>
                                             <th class="text-left">Mobile Number</th>
+                                            <th class="text-left">Area</th>
                                             <th class="text-left">District</th>
                                             <th class="text-left">Upazilla Name</th>
                                             <th class="text-left">Email</th>
@@ -59,10 +60,11 @@
                                             <td class="text-left">{{ customer.code }}</td>
                                             <td class="text-left">{{ customer.name }}</td>
                                             <td>{{ customer.mobile }}</td>
-                                            <td class="text-left">{{ customer.district_name_bn }}</td>
+                                            <td class="text-left">{{ customer.area_name }}</td>
+                                            <td class="text-left">{{ customer.district_name }}</td>
                                             <td class="text-left">{{ customer.UpazillaName }}</td>
                                             <td>{{ customer.email }}</td>
-                                            <td class="text-left">{{ customer.product_name_bn }}</td>
+                                            <td class="text-left">{{ customer.product_name }}</td>
                                             <td class="text-left">{{ customer.model}}</td>
                                             <td class="text-left">{{ customer.chassis }}</td>
                                             <td class="text-left">{{ customer.date }}</td>
@@ -70,10 +72,9 @@
                                             <td class="text-left"><img v-if="customer.image" height="40" width="40" :src="tableImage(customer.image)" alt=""></td>
 <!--                                            <td class="text-left">{{ customer.customer_type }}</td>-->
                                             <td class="text-left">
-                                                <button @click="edit(customer)" class="btn btn-success btn-sm"><i
-                                                    class="far fa-edit"></i></button>
-                                                <!--                                                    <button @click="show(company)" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button>-->
-                                                <!--                                                    <button @click="destroy(customer)" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>-->
+                                                <button @click="edit(customer)" class="btn btn-success btn-sm"><i class="far fa-edit"></i></button>
+                                               <button @click="resetModalOpen(customer)" class="btn btn-primary btn-sm"><i class="mdi mdi-lock-reset"></i>Reset Password</button>
+<!--                                                <button @click="destroy(customer)" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>&ndash;&gt;-->
                                             </td>
                                         </tr>
                                         </tbody>
@@ -102,11 +103,8 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title mt-0" id="myLargeModalLabel">{{ editMode ? "Edit" : "Add" }}
-                            Customer</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                                @click.prevent="closeModal">×
-                        </button>
+                        <h5 class="modal-title mt-0" id="myLargeModalLabel">{{ editMode ? "Edit" : "Add" }} Customer</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click.prevent="closeModal">×</button>
                     </div>
                     <form @submit.prevent="editMode ? update() : store()" @keydown="form.onKeydown($event)">
                         <div class="modal-body">
@@ -143,10 +141,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Customer Email</label>
-                                            <input v-model="form.email" type="email" name="email" class="form-control"
-                                                   :class="{ 'is-invalid': form.errors.has('email') }">
-                                            <div class="error" v-if="form.errors.has('email')"
-                                                 v-html="form.errors.get('email')"/>
+                                            <input v-model="form.email" type="email" name="email" class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
+                                            <div class="error" v-if="form.errors.has('email')" v-html="form.errors.get('email')"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6" v-if="!editMode">
@@ -161,21 +157,6 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>District</label>
-                                            <select name="text" id="district_id" class="form-control"
-                                                    v-model="form.district_id"
-                                                    :class="{ 'is-invalid': form.errors.has('district_id') }">
-                                                <option disabled value="">Select District</option>
-                                                <option :value="district.id" v-for="(district , index) in districts"
-                                                        :key="index">{{ district.name }}
-                                                </option>
-                                            </select>
-                                            <div class="error" v-if="form.errors.has('district_id')"
-                                                 v-html="form.errors.get('district_id')"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
                                             <label>Area</label>
                                             <select name="text" id="area_id" class="form-control" v-model="form.area_id"
                                                     :class="{ 'is-invalid': form.errors.has('area_id') }">
@@ -186,6 +167,20 @@
                                             </select>
                                             <div class="error" v-if="form.errors.has('area_id')"
                                                  v-html="form.errors.get('area_id')"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>District</label>
+                                            <select name="text" id="district_id" class="form-control" v-model="form.district_id"
+                                                    :class="{ 'is-invalid': form.errors.has('district_id') }">
+                                                <option disabled value="">Select District</option>
+                                                <option :value="district.id" v-for="(district , index) in districts"
+                                                        :key="index">{{ district.name }}
+                                                </option>
+                                            </select>
+                                            <div class="error" v-if="form.errors.has('district_id')"
+                                                 v-html="form.errors.get('district_id')"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -208,9 +203,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Model</label>
-                                            <select name="text" id="model" class="form-control"
-                                                    v-model="form.model"
-                                                    :class="{ 'is-invalid': form.errors.has('model') }">
+                                            <select name="text" id="model" class="form-control" v-model="form.model" :class="{ 'is-invalid': form.errors.has('model') }">
                                                 <option disabled value="">Select Model</option>
                                                 <option :value="model.model_name_bn" v-for="(model , index) in models"
                                                         :key="index">{{ model.model_name_bn }}
@@ -233,27 +226,27 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Service Hour</label>
-                                            <input v-model="form.service_hour" type="text" name="service_hour"
-                                                   class="form-control"
-                                                   :class="{ 'is-invalid': form.errors.has('service_hour') }">
-                                            <div class="error" v-if="form.errors.has('service_hour')"
-                                                 v-html="form.errors.get('service_hour')"/>
-                                        </div>
-                                    </div>
+<!--                                    <div class="col-md-6">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>Service Hour</label>-->
+<!--                                            <input v-model="form.service_hour" type="text" name="service_hour"-->
+<!--                                                   class="form-control"-->
+<!--                                                   :class="{ 'is-invalid': form.errors.has('service_hour') }">-->
+<!--                                            <div class="error" v-if="form.errors.has('service_hour')"-->
+<!--                                                 v-html="form.errors.get('service_hour')"/>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Customer Address</label>
-                                            <input v-model="form.address" type="text" name="address"
-                                                   class="form-control"
-                                                   :class="{ 'is-invalid': form.errors.has('address') }">
-                                            <div class="error" v-if="form.errors.has('address')"
-                                                 v-html="form.errors.get('address')"/>
-                                        </div>
-                                    </div>
+<!--                                    <div class="col-md-6">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>Customer Address</label>-->
+<!--                                            <input v-model="form.address" type="text" name="address"-->
+<!--                                                   class="form-control"-->
+<!--                                                   :class="{ 'is-invalid': form.errors.has('address') }">-->
+<!--                                            <div class="error" v-if="form.errors.has('address')"-->
+<!--                                                 v-html="form.errors.get('address')"/>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Chassis</label>
@@ -283,6 +276,37 @@
 
         </div>
 
+        <!--  Modal content for Reset Password -->
+        <div class="modal fade" id="resetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0">Reset Password</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click.prevent="closeModal">×</button>
+                    </div>
+                    <form @submit.prevent="updatePassword()" @keydown="form2.onKeydown($event)">
+                        <div class="modal-body">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Enter New Password</label>
+                                            <input v-model="form2.new_password" type="text" name="new_password" class="form-control" :class="{ 'is-invalid': form2.errors.has('new_password') }" >
+                                            <div class="error" v-if="form2.errors.has('new_password')" v-html="form2.errors.get('new_password')"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" @click.prevent="closeModal">Close</button>
+                            <button :disabled="form2.busy" type="submit" class="btn btn-primary">Reset Password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -319,15 +343,19 @@ export default {
                 mobile: '',
                 password: '',
                 product_id: '',
-                service_hour: '',
+                //service_hour: '',
                 district_id: '',
                 model: '',
                 area_id: '',
-                address: '',
+                //address: '',
                 chassis: '',
                 image: '',
                 email: '',
                 code: '',
+            }),
+            form2: new Form({
+                new_password: '',
+                customer_id: '',
             }),
             isExport : ''
         }
@@ -413,6 +441,26 @@ export default {
                 $("#customerModal").modal("hide");
                 this.getAllCustomer();
             }).catch(e => {
+                this.isLoading = false;
+            });
+        },
+        resetModalOpen(customer){
+            this.form2.customer_id = customer.id
+            $("#resetPasswordModal").modal("show");
+        },
+        updatePassword(){
+            this.form2.busy = true;
+            this.form2.post("/api/customer-password-change-from-admin").then(response => {
+                console.log(response.data)
+                // if (response.data.status === 'success'){
+                //     $("#customerModal").modal("hide");
+                //     this.$toaster.success(response.data.message);
+                //     this.getAllCustomer();
+                // }else {
+                //     this.$toaster.error(response.data.message);
+                // }
+            }).catch(e => {
+                this.$toaster.error(response.data.message);
                 this.isLoading = false;
             });
         },

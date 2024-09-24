@@ -184,6 +184,8 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::apiResource('dealer-list', DealerController::class);
     Route::get('search/dealer-list/{query}', [DealerController::class, 'search']);
 
+    Route::post('add-additional-chassis', [CustomerController::class, 'addChassis']);
+
 });
 
 //For Customer Login

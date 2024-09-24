@@ -9,8 +9,7 @@ class ServiceRequestJobCardCollection extends ResourceCollection
 {
     public function toArray($request)
     {
-        return [
-            'data' => $this->collection->transform(function ($job_card) {
+        return $this->collection->transform(function ($job_card) {
                 return [
                     'id' =>$job_card->id,
                     'territory_id' =>$job_card->territory_id,
@@ -73,7 +72,7 @@ class ServiceRequestJobCardCollection extends ResourceCollection
                     'technitian_name'=> isset($job_card->technitian) ? $job_card->technitian->name: '',
                     'technitian_mobile'=> isset($job_card->technitian) ? $job_card->technitian->mobile: '',
                 ];
-            })
-        ];
+            });
+
     }
 }

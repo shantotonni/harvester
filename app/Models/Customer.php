@@ -44,8 +44,7 @@ class Customer extends Authenticatable implements JWTSubject
     public function Products(){
         return $this->belongsTo(Products::class,'product_id','id');
     }
-    public function District()
-    {
+    public function District(){
         return $this->belongsTo(District::class,'district_id','id');
     }
     public function area(){
@@ -54,8 +53,8 @@ class Customer extends Authenticatable implements JWTSubject
     public function chassis_one(){
         return $this->hasOne('App\Models\CustomerChassis','customer_id','id');
     }
-
     public function mirror_customer(){
-        return $this->belongsTo('App\Models\MirrorCustomer','code','CustomerCode')->select('CustomerCode','ThanaCode');
+        return $this->belongsTo('App\Models\MirrorCustomer','code','CustomerCode')
+            ->select('CustomerCode','ThanaCode','CustomerName1','CustomerName2','Address1','Address2','Mobile');
     }
 }

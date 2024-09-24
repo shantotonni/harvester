@@ -30,14 +30,20 @@ class ServiceRequestController extends Controller
         ]]);
     }
 
-    public function getAllCustomerServiceRequest()
+    public function getAllCustomerServiceRequest(Request $request)
     {
-        $user = JWTAuth::parseToken()->authenticate();
-        $customer_chassis = CustomerChassis::where('customer_id',$user->id)->pluck('chassis_no');
-        $job_cards = JobCard::whereIn('chassis_number',$customer_chassis)->with('model','products','district','upazila','section','technitian')
+        $chassis_no = $request->chassis_no;
+        //$user = JWTAuth::parseToken()->authenticate();
+        //$customer_chassis = CustomerChassis::where('customer_id',$user->id)->pluck('chassis_no');
+        $job_cards = JobCard::where('chassis_number',$chassis_no)->with('model','products','district','upazila','section','technitian')
             ->orderBy('id','desc')
-            ->paginate(15);
-        return new ServiceRequestJobCardCollection($job_cards);
+            ->get();
+        $service_request = ServiceRequest::query()->where('chassis_number',$chassis_no)->where('is_agree','!=', 1)->get();
+        return response()->json([
+           'service_request' => $service_request,
+           'job_card' => new ServiceRequestJobCardCollection($job_cards)
+        ]);
+       // return new ServiceRequestJobCardCollection($job_cards);
     }
 
     public function customerServiceRequest(Request $request){
@@ -65,7 +71,7 @@ class ServiceRequestController extends Controller
       $service_request->district_id = $request->district_id;
       $service_request->upazila_id = $request->upazila_id;
       $service_request->remarks = $request->remarks;
-      $service_request->customer_moblie = $request->customer_mobile;
+      $service_request->customer_mobile = $request->customer_mobile;
       $service_request->customer_name = $user->name;
       $service_request->address = $user->address;
       $service_request->chassis_number = $request->chassis_number;
