@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api\Mobile;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Customer\CustomerInfoResource;
+use App\Http\Resources\CustomerProfileResource;
 use App\Http\Resources\ServiceRequest\ServiceRequestCollection;
 use App\Http\Resources\WarrantyPartsCollection;
 use App\Models\Customer;
+use App\Models\CustomerChassis;
 use App\Models\PartsDetail;
 use App\Models\ServiceRequest;
 use App\Models\SmartAssist;
@@ -53,5 +56,16 @@ class CustomerController extends Controller
                 'message'=>'Not Match'
             ]);
         }
+    }
+
+    public function getCustomerProfile(Request $request){
+        $chassis_no = $request->chassis_no;
+        $customer_chassis = CustomerChassis::query()->with(['customer','mirror_customer','mirror_customer.mirror_district','mirror_customer.mirror_upazilla'])
+            ->where('chassis_no', $chassis_no)->first();
+
+        return response()->json([
+            'status'            => 'success',
+            'user'  => new CustomerProfileResource($customer_chassis)
+        ]);
     }
 }

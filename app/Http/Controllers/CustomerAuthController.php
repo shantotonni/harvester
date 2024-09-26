@@ -231,7 +231,7 @@ class CustomerAuthController extends Controller
                 ->orderBy('created_at','desc')->first();
 
             $customer = new Customer();
-            //$customer->code               = $CustomerCode ? $CustomerCode : '';
+            $customer->code               = $CustomerCode ? $CustomerCode : '';
             $customer->name                 = $request->name;
             $customer->mobile               = $request->mobile;
             $customer->email                = $request->email;
@@ -239,6 +239,8 @@ class CustomerAuthController extends Controller
             $customer->password             = bcrypt($request->password);
             $customer->customer_type        = 'harvester';
             $customer->address              = $Address;
+            $customer->image                = '';
+            $customer->chassis_image        = '';
             $customer->date_of_purchase     = $DateOfPurchase;
             $customer->service_hour         = $getLastServiceHour ? $getLastServiceHour->hour : 0;
             $customer->last_service_date    = $getLastServiceHour ? $getLastServiceHour->service_date : null;
@@ -253,12 +255,15 @@ class CustomerAuthController extends Controller
                         ], 200);
                     }
 
-                    $customer_chassis               = new CustomerChassis();
-                    $customer_chassis->customer_id  = $customer->id;
-                    $customer_chassis->customer_code= $CustomerCode ? $CustomerCode : '';
-                    $customer_chassis->model_id     = $model_id;
-                    $customer_chassis->model        = $model;
-                    $customer_chassis->chassis_no   = $chassis;
+                    $customer_chassis                       = new CustomerChassis();
+                    $customer_chassis->customer_id          = $customer->id;
+                    $customer_chassis->customer_code        = $CustomerCode ? $CustomerCode : '';
+                    $customer_chassis->model_id             = $model_id;
+                    $customer_chassis->model                = $model;
+                    $customer_chassis->chassis_no           = $chassis;
+                    $customer_chassis->date_of_purchase     = $DateOfPurchase;
+                    $customer_chassis->service_hour         = $getLastServiceHour ? $getLastServiceHour->hour : 0;
+                    $customer_chassis->last_service_date    = $getLastServiceHour ? $getLastServiceHour->service_date : null;
                     $customer_chassis->save();
 
                     $customer = Customer::where('mobile',$request->mobile)->where('customer_type','harvester')

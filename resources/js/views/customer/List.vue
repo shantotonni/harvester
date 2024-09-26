@@ -203,14 +203,11 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Model</label>
-                                            <select name="text" id="model" class="form-control" v-model="form.model" :class="{ 'is-invalid': form.errors.has('model') }">
+                                            <select name="text" id="model_id" class="form-control" v-model="form.model_id" :class="{ 'is-invalid': form.errors.has('model_id') }">
                                                 <option disabled value="">Select Model</option>
-                                                <option :value="model.model_name_bn" v-for="(model , index) in models"
-                                                        :key="index">{{ model.model_name_bn }}
-                                                </option>
+                                                <option :value="model.id" v-for="(model , index) in models" :key="index">{{ model.model_name_bn }} </option>
                                             </select>
-                                            <div class="error" v-if="form.errors.has('model')"
-                                                 v-html="form.errors.get('model')"/>
+                                            <div class="error" v-if="form.errors.has('model_id')" v-html="form.errors.get('model_id')"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -345,7 +342,7 @@ export default {
                 product_id: '',
                 //service_hour: '',
                 district_id: '',
-                model: '',
+                model_id: '',
                 area_id: '',
                 //address: '',
                 chassis: '',

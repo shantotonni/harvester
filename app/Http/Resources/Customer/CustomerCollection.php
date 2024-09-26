@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Customer;
 
+use App\Http\Resources\CustomerChassisCollection;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class CustomerCollection extends ResourceCollection
@@ -9,7 +10,6 @@ class CustomerCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-
             'data' => $this->collection->transform(function ($customer) {
                 return [
                     'id' => $customer->id,
@@ -30,6 +30,7 @@ class CustomerCollection extends ResourceCollection
                     'service_hour' => $customer->service_hour,
                     'image' => $customer->image,
                     'customer_image'=>url('/').'/images/customer/'.$customer->image,
+                    'customer_chassis' =>  new CustomerChassisCollection($customer->customer_chassis),
                 ];
             })
         ];

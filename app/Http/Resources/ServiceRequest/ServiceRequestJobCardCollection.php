@@ -54,7 +54,7 @@ class ServiceRequestJobCardCollection extends ResourceCollection
                     'section' => isset($job_card->section)?$job_card->section->name:'',
                     'created_at' => $job_card->created_at ? date('d-m-Y H:i:s',strtotime($job_card->created_at)) : null,
                     'time_app' => $job_card->time_app,
-                    'service_date'=> $job_card->service_date ? date('d-m-Y',strtotime($job_card->service_date)) : null,
+                    'service_date'=> $job_card->service_date ? date('d-m-Y H:i:s',strtotime($job_card->service_date)) : null,
                     'remarks'=>$job_card->remarks,
                     'spare_parts_sale'=>$job_card->spare_parts_sale,
                     'invoice_number'=>$job_card->invoice_number,

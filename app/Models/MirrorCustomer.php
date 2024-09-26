@@ -16,6 +16,9 @@ class MirrorCustomer extends Model
     protected $guarded = [];
     protected $keyType = 'string';
 
+    public function mirror_district(){
+        return $this->belongsTo('App\Models\MirrorDistrict','DistrictCode','DistrictCode')->select('DistrictCode','DistrictName');
+    }
     public function mirror_upazilla(){
         return $this->belongsTo('App\Models\MirrorUpazila','ThanaCode','UpazillaCode')->select('UpazillaCode','UpazillaName');
     }

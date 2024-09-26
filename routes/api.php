@@ -220,6 +220,7 @@ Route::group(['middleware' => 'CustomerAuth'], function () {
     Route::post('/harvester-warranty-parts', [App\Http\Controllers\Api\Mobile\CustomerController::class,'warrantyParts']);
 
     Route::post('/harvester-smart-assist', [App\Http\Controllers\Api\Mobile\CustomerController::class,'harvesterSmartAssist']);
+    Route::get('/get-customer-profile', [App\Http\Controllers\Api\Mobile\CustomerController::class,'getCustomerProfile']);
 
 });
 

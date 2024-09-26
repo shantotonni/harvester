@@ -30,7 +30,7 @@ class CustomerController extends Controller
     }
 
     public function index(Request $request){
-        $customers = Customer::with(['ProductModel', 'Products', 'area', 'District', 'chassis_one','mirror_customer','mirror_customer.mirror_upazilla'])
+        $customers = Customer::with(['ProductModel', 'Products', 'area', 'District', 'chassis_one','mirror_customer','mirror_customer.mirror_upazilla','customer_chassis','customer_chassis.mirror_customer'])
             ->orderBy('id', 'desc')
             ->where('customer_type', 'harvester')
             ->orderBy('created_at','desc');
@@ -111,11 +111,19 @@ class CustomerController extends Controller
                     ], 200);
                 }
 
-                $customer_chassis               = new CustomerChassis();
-                $customer_chassis->customer_id  = $customer->id;
-                $customer_chassis->model        = $request->model;
-                $customer_chassis->chassis_no   = $request->chassis;
+                $product_model = ProductModel::query()->where('id',$request->model_id)->first();
+
+                $customer_chassis                   = new CustomerChassis();
+                $customer_chassis->customer_id      = $customer->id;
+                $customer_chassis->customer_code    = $CustomerCode;
+                $customer_chassis->model_id         = $product_model->id;
+                $customer_chassis->model            = $product_model->model_name_bn;
+                $customer_chassis->chassis_no       = $request->chassis;
+                $customer_chassis->date_of_purchase     = $DateOfPurchase;
+                $customer_chassis->service_hour         = $getLastServiceHour ? $getLastServiceHour->hour : 0;
+                $customer_chassis->last_service_date    = $getLastServiceHour ? $getLastServiceHour->service_date : null;
                 $customer_chassis->save();
+
                 DB::commit();
                 return response()->json([
                     'status'    => "success",
@@ -178,7 +186,7 @@ class CustomerController extends Controller
             $customer_chassis               = CustomerChassis::where('customer_id', $request->id)->first();
             $customer_chassis->model        = $request->model;
             $customer_chassis->chassis_no   = $request->chassis;
-            $customer_chassis->save();
+            //$customer_chassis->save();
 
             DB::commit();
             return response()->json([
@@ -203,9 +211,8 @@ class CustomerController extends Controller
     public function addChassis(Request $request){
         try {
             $customer   = JWTAuth::parseToken()->authenticate();
-            $chassis    = $request->chassis;
 
-            $exiats = CustomerChassis::where('chassis_no',$chassis)->exists();
+            $exiats = CustomerChassis::where('chassis_no',$request->chassis)->exists();
             if ($exiats){
                 return response()->json([
                     'message'   => 'Chassis Already Registered',
@@ -213,9 +220,29 @@ class CustomerController extends Controller
                 ], 200);
             }
 
-            $chassis        = StockBatch::where('BatchNo', $chassis)->with('product')->first();
-            $productModel   = ProductModel::query()->where('product_id',4)->get();
-            $customer       = CustomerChassis::query()->where('customer_id',$customer->id)->first();
+            $sdmsCustomerInfo = DB::connection('MotorBrInvoiceMirror')->table('InvoiceDetailsBatch')
+                ->select('InvoiceDetailsBatch.Invoiceno','InvoiceDetailsBatch.BatchNo as ChassisNo','Invoice.CustomerCode','Customer.Address1','Invoice.InvoiceDate')
+                ->join('Invoice','Invoice.InvoiceNo','=','InvoiceDetailsBatch.Invoiceno')
+                ->join('Customer','Customer.CustomerCode','=','Invoice.CustomerCode')
+                ->where('BatchNo',$request->chassis)->first();
+
+            $chassis            = StockBatch::where('BatchNo', $request->chassis)->with('product')->first();
+            $productModel       = ProductModel::query()->where('product_id',4)->get();
+            $customer_wise_chassis   = CustomerChassis::query()->where('customer_id',$customer->id)->first();
+
+            $CustomerCode = '';
+            $Address = '';
+            $DateOfPurchase = null;
+
+            if ($sdmsCustomerInfo){
+                $CustomerCode   = $sdmsCustomerInfo->CustomerCode;
+                $Address        = $sdmsCustomerInfo->Address1;
+                $DateOfPurchase = $sdmsCustomerInfo->InvoiceDate;
+            }else{
+                $CustomerCode       = $request->code;
+                //$Address          = $request->address;
+            }
+
             if ($chassis) {
                 $productName = '';
                 if ($chassis){
@@ -252,12 +279,19 @@ class CustomerController extends Controller
                     }
                 }
 
+                $getLastServiceHour = JobCard::query()->where('chassis_number',$request->chassis)
+                    ->where('is_approved',1)
+                    ->orderBy('created_at','desc')->first();
+
                 $customer_chassis                   = new CustomerChassis();
                 $customer_chassis->customer_id      = $customer->id;
-                $customer_chassis->customer_code    = $customer ? $customer->customer_code : '';
+                $customer_chassis->customer_code    = $customer_wise_chassis ? $customer_wise_chassis->customer_code : '';
                 $customer_chassis->model_id         = $modelId;
                 $customer_chassis->model            = $productName;
                 $customer_chassis->chassis_no       = $chassis->BatchNo;
+                $customer_chassis->date_of_purchase     = $DateOfPurchase;
+                $customer_chassis->service_hour         = $getLastServiceHour ? $getLastServiceHour->hour : 0;
+                $customer_chassis->last_service_date    = $getLastServiceHour ? $getLastServiceHour->service_date : null;
                 $customer_chassis->save();
 
                 $customer = Customer::where('id',$customer->id)->where('customer_type','harvester')->with('customer_chassis','customer_chassis.mirror_customer')->first();
