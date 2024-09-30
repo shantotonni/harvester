@@ -237,6 +237,7 @@ class CustomerAuthController extends Controller
             $customer->email                = $request->email;
             $customer->area_id              = $request->area_id;
             $customer->district_id          = $request->district_id;
+            $customer->upazilla_id          = $request->upazilla_id;
             $customer->password             = bcrypt($request->password);
             $customer->customer_type        = 'harvester';
             $customer->address              = $Address;

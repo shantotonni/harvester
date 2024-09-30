@@ -9,6 +9,7 @@ use App\Http\Resources\ServiceRequest\ServiceRequestCollection;
 use App\Http\Resources\WarrantyPartsCollection;
 use App\Models\Customer;
 use App\Models\CustomerChassis;
+use App\Models\JobCard;
 use App\Models\PartsDetail;
 use App\Models\ServiceRequest;
 use App\Models\SmartAssist;
@@ -66,6 +67,22 @@ class CustomerController extends Controller
         return response()->json([
             'status'            => 'success',
             'user'  => new CustomerProfileResource($customer_chassis)
+        ]);
+    }
+
+    public function customerFeedback(Request $request){
+        $job_card_id        = $request->job_card_id;
+        $customer_rating    = $request->customer_rating;
+        $customer_remarks   = $request->customer_remarks;
+
+        $job_card = JobCard::query()->where('id',$job_card_id)->first();
+        $job_card->customer_rating  = $customer_rating;
+        $job_card->customer_remarks = $customer_remarks;
+        $job_card->save();
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'আপনার ফিডব্যাক টি সফলভাবে সম্পন্ন হয়েছে। '
         ]);
     }
 }
