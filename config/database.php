@@ -97,10 +97,8 @@ return [
             'username' => 'sa',
             'password' => 'dataport',
             'charset' => 'utf8',
-            // 'collation' => 'utf8_unicode_ci',
             'prefix' => '',
             'strict' => false,
-            // 'engine' => null,
         ],
         'WarrantyMonitoringProcess' => [
             'driver' => 'sqlsrv',
@@ -110,10 +108,8 @@ return [
             'username' => 'sa',
             'password' => 'dataport',
             'charset' => 'utf8',
-            // 'collation' => 'utf8_unicode_ci',
             'prefix' => '',
             'strict' => false,
-            // 'engine' => null,
         ],
         'MotorSparePartsMirror' => [
             'driver' => 'sqlsrv',
@@ -123,10 +119,8 @@ return [
             'username' => 'sa',
             'password' => 'dataport',
             'charset' => 'utf8',
-            // 'collation' => 'utf8_unicode_ci',
             'prefix' => '',
             'strict' => false,
-            // 'engine' => null,
         ],
 
     ],

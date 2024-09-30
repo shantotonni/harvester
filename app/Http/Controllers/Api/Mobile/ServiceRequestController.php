@@ -14,6 +14,7 @@ use App\Models\ServiceRequest;
 use App\Models\Upazila;
 use App\Models\User;
 use App\Models\UserArea;
+use App\Models\WarrantyClaimInfo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -106,6 +107,16 @@ class ServiceRequestController extends Controller
            'message'    =>'Service Request Created Successfully'
           ], 200);
 
+    }
+
+    public function getHarvesterWarranty(Request $request){
+        $chassis_no = $request->chassis_no;
+        $warrantyClaims = WarrantyClaimInfo::query()->with('parts')->where('Status','!=','Inactive')
+            ->where('ChassisNumber', $chassis_no)
+            ->get();
+        return response()->json([
+            'warranty_claims' => $warrantyClaims
+        ]);
     }
 
     public static function sendSmsQ($to, $sId, $applicationName, $moduleName, $otherInfo, $userId, $vendor, $message)

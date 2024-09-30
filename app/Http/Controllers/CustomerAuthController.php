@@ -45,7 +45,7 @@ class CustomerAuthController extends Controller
             ], 200);
         }
         return response()->json([
-            'message'   => 'Mobile or Password Not Match',
+            'message'   => 'আপনি ভুল মোবাইল/পাসওয়ার্ড দিয়েছেন।',
             'status'    => 'error'
         ], 200);
     }
@@ -57,7 +57,7 @@ class CustomerAuthController extends Controller
 
         if ($exiats){
             return response()->json([
-                'message'   => 'Chassis Already Registered',
+                'message'   => 'এই চেসিসটি ইতিমধ্যে নিবন্ধিত হয়েছে।',
                 'status'    => 'success'
             ], 200);
         }
@@ -108,7 +108,7 @@ class CustomerAuthController extends Controller
         } else {
             return response()->json([
                 'status'    => 'error',
-                'message'   => 'No Found Data',
+                'message'   => 'এই চেসিস নম্বরটি আমাদের সিস্টেমে পাওয়া যায় নি।',
             ]);
         }
     }
@@ -124,7 +124,7 @@ class CustomerAuthController extends Controller
         if ($exist_customer) {
             return response()->json([
                 'status'    => 200,
-                'message'   => 'Mobile number Already Exists'
+                'message'   => 'এই মোবাইল নম্বরটি ইতিমধ্যে নিবন্ধিত।'
             ], 200);
         } else {
             try {
@@ -172,12 +172,12 @@ class CustomerAuthController extends Controller
             $check_otp->save();
             return response()->json([
                 'status'    => 'success',
-                'message'   => 'Otp Match Successfully'
+                'message'   => 'সফলভাবে ওটিপি ম্যাচ করেছে'
             ]);
         } else {
             return response()->json([
                 'status'    => 'error',
-                'message'   => 'Otp Not Match'
+                'message'   => 'ওটিপি ম্যাচ করেনি'
             ]);
         }
     }
@@ -209,7 +209,7 @@ class CustomerAuthController extends Controller
             if (empty($sdmsCustomerInfo)){
                 return response()->json([
                     'status'    => "error",
-                    'message'   => 'Chassis Not Found'
+                    'message'   => 'চেসিস নম্বরটি আমাদের সিস্টেমে পাওয়া যায়নি'
                 ], 200);
             }else{
                 $CustomerCode   = $sdmsCustomerInfo->CustomerCode;
@@ -222,7 +222,7 @@ class CustomerAuthController extends Controller
             if ($exist_customer) {
                 return response()->json([
                     'status'    => 200,
-                    'message'   => 'Mobile number Already Exists'
+                    'message'   => 'এই মোবাইল নম্বরটি ইতিমধ্যে নিবন্ধিত।'
                 ], 200);
             }
 
@@ -231,10 +231,11 @@ class CustomerAuthController extends Controller
                 ->orderBy('created_at','desc')->first();
 
             $customer = new Customer();
-            $customer->code               = $CustomerCode ? $CustomerCode : '';
+            $customer->code                 = $CustomerCode ? $CustomerCode : '';
             $customer->name                 = $request->name;
             $customer->mobile               = $request->mobile;
             $customer->email                = $request->email;
+            $customer->area_id              = $request->area_id;
             $customer->district_id          = $request->district_id;
             $customer->password             = bcrypt($request->password);
             $customer->customer_type        = 'harvester';
@@ -251,7 +252,7 @@ class CustomerAuthController extends Controller
                     if ($existingChassisCheck){
                         return response()->json([
                             'status'    => "success",
-                            'message'   => 'Chassis Already Exist!',
+                            'message'   => 'এই চেসিসটি ইতিমধ্যে নিবন্ধিত হয়েছে।',
                         ], 200);
                     }
 
@@ -350,7 +351,7 @@ class CustomerAuthController extends Controller
 
                 return response()->json([
                     'status' => 'success',
-                    'message' => 'Successfully Otp Send'
+                    'message' => 'সফলভাবে ওটিপি পাঠানো হয়েছে'
                 ]);
             } catch (\Exception $e) {
                 return response()->json([
@@ -361,7 +362,7 @@ class CustomerAuthController extends Controller
         }else{
             return response()->json([
                 'status' => 'error',
-                'error' => 'Mobile Number Not Found'
+                'error' => 'মোবাইল নম্বর পাওয়া যায়নি'
             ]);
         }
     }

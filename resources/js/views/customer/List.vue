@@ -36,7 +36,6 @@
                                         <thead>
                                         <tr>
                                             <th class="text-left">SN</th>
-                                            <th class="text-left">Customer Code</th>
                                             <th class="text-left">Customer Name</th>
                                             <th class="text-left">Mobile Number</th>
                                             <th class="text-left">Area</th>
@@ -45,7 +44,8 @@
                                             <th class="text-left">Email</th>
                                             <th class="text-left">Product Name</th>
                                             <th class="text-left">Model Name</th>
-                                            <th class="text-left">Chassis no</th>
+                                            <th class="text-left">Customer Code</th>
+                                            <th class="text-left">Chassis</th>
                                             <th class="text-left">Registration Date</th>
                                             <th class="text-left">Last Service Hour</th>
                                             <th class="text-left">Image</th>
@@ -54,10 +54,8 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(customer, i) in customers" :key="customer.id"
-                                            v-if="customers.length">
+                                        <tr v-for="(customer, i) in customers" :key="customer.id" v-if="customers.length">
                                             <th class="text-center" scope="row">{{ ++i }}</th>
-                                            <td class="text-left">{{ customer.code }}</td>
                                             <td class="text-left">{{ customer.name }}</td>
                                             <td>{{ customer.mobile }}</td>
                                             <td class="text-left">{{ customer.area_name }}</td>
@@ -66,7 +64,16 @@
                                             <td>{{ customer.email }}</td>
                                             <td class="text-left">{{ customer.product_name }}</td>
                                             <td class="text-left">{{ customer.model}}</td>
-                                            <td class="text-left">{{ customer.chassis }}</td>
+                                            <td class="text-left">
+                                                 <span v-for="(detail, i) in customer.customer_chassis" :key="detail.id" v-if="customer.customer_chassis.length">
+                                                    <p style="margin: 0">Customer Code : {{detail.customer_code}}</p>
+                                                </span>
+                                            </td>
+                                            <td class="text-left">
+                                                <span v-for="(detail, i) in customer.customer_chassis" :key="detail.id" v-if="customer.customer_chassis.length">
+                                                    <p style="margin: 0">Chassis no : {{detail.chassis_no}}</p>
+                                                </span>
+                                            </td>
                                             <td class="text-left">{{ customer.date }}</td>
                                             <td class="text-right">{{ customer.service_hour }}</td>
                                             <td class="text-left"><img v-if="customer.image" height="40" width="40" :src="tableImage(customer.image)" alt=""></td>

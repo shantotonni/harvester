@@ -228,7 +228,6 @@ class CustomerController extends Controller
 
             $chassis            = StockBatch::where('BatchNo', $request->chassis)->with('product')->first();
             $productModel       = ProductModel::query()->where('product_id',4)->get();
-            $customer_wise_chassis   = CustomerChassis::query()->where('customer_id',$customer->id)->first();
 
             $CustomerCode = '';
             $Address = '';
@@ -285,7 +284,7 @@ class CustomerController extends Controller
 
                 $customer_chassis                   = new CustomerChassis();
                 $customer_chassis->customer_id      = $customer->id;
-                $customer_chassis->customer_code    = $customer_wise_chassis ? $customer_wise_chassis->customer_code : '';
+                $customer_chassis->customer_code    = $CustomerCode ? $CustomerCode : '';
                 $customer_chassis->model_id         = $modelId;
                 $customer_chassis->model            = $productName;
                 $customer_chassis->chassis_no       = $chassis->BatchNo;
