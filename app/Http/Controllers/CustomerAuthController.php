@@ -269,7 +269,7 @@ class CustomerAuthController extends Controller
                     $customer_chassis->save();
 
                     $customer = Customer::where('mobile',$request->mobile)->where('customer_type','harvester')
-                        ->with('customer_chassis','customer_chassis.mirror_customer')->first();
+                        ->with('customer_chassis','customer_chassis.mirror_customer','upazilla')->first();
 
                     DB::commit();
                     return response()->json([

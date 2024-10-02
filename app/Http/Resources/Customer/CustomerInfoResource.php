@@ -21,6 +21,8 @@ class CustomerInfoResource extends JsonResource
             'district_id' => $this->district_id,
             'district_name' => isset($this->District) ? $this->District->name : '',
             'district_name_bn' => isset($this->District) ? $this->District->name_bn : '',
+            'upazilla_name' => isset($this->upazilla) ? $this->upazilla->name : '',
+            'upazilla_name_bn' => isset($this->upazilla) ? $this->upazilla->name_bn : '',
             'address' => $this->address,
             'chassis' =>  isset($this->chassis_one) ? $this->chassis_one->chassis_no : '',
             'image' => $this->image,
