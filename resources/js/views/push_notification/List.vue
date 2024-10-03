@@ -188,8 +188,9 @@ export default {
         store() {
             this.form.busy = true;
             this.form.post("/api/notification-list").then(response => {
-                //$("#notificationModal").modal("hide");
-                //this.getAllNotification();
+                $("#notificationModal").modal("hide");
+                this.$toaster.success('Notification Sent Successfully');
+                this.getAllNotification();
             }).catch(e => {
                 this.isLoading = false;
             });

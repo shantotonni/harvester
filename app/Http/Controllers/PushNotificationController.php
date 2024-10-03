@@ -76,7 +76,7 @@ class PushNotificationController extends Controller
             return response()->json([
                 'status'    => 'success',
                 'message' => 'Notification successfully sent.',
-                'result' => $result
+                'result' => $msg
             ]);
         }catch (\Exception $exception){
             return response()->json([
@@ -89,7 +89,7 @@ class PushNotificationController extends Controller
     public function getAllNotification(){
         $notification = PushNotification::query()->where('product_type','harvester')->get();
         return response()->json([
-           'notification' => $notification
+            'notification' => new PushNotificationCollection($notification)
         ]);
     }
 
