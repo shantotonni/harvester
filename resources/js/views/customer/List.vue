@@ -541,7 +541,7 @@ export default {
                             let title = item.replace(rex, '$1$4 $2$3$5')
                             return {title, key: item}
                         });
-                        bus.$emit('data-table-import', dataSets, columns, 'Invoice Export')
+                        bus.$emit('data-table-import', dataSets, columns, 'Customer Export')
                     }
                 }).catch((error)=>{
             })

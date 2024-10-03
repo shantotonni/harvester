@@ -57,6 +57,7 @@ import HarvestingCostList from '../views/harvesting_cost/List'
 import SmartAssisList from '../views/smart_assist/List'
 import FuelPumpList from '../views/fuel_pump/List'
 import DealerList from '../views/dealer/List'
+import PushNotification from '../views/push_notification/List'
 
 const routes = [
     {
@@ -184,9 +185,14 @@ const routes = [
             //pump list
             {
                     path: base_url + '/fuel-pump-list', name: 'FuelPumpList', component: FuelPumpList
-            },//dealer list
+            },
+            //dealer list
             {
                     path: base_url + '/dealer-list', name: 'DealerList', component: DealerList
+            },
+            //push-notification
+            {
+                    path: base_url + '/push-notification', name: 'PushNotification', component: PushNotification
             },
         ],
         beforeEnter(to, from, next) {

@@ -29,6 +29,7 @@ use App\Http\Controllers\Api\SmartAssistController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerAuthController;
+use App\Http\Controllers\PushNotificationController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('login', [AuthController::class, 'login']);
@@ -166,6 +167,10 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //Section
     Route::apiResource('section-list', SectionController::class);
     Route::get('search/section-list/{query}', [SectionController::class, 'search']);
+    //Push Notification
+    Route::apiResource('notification-list', PushNotificationController::class);
+    Route::get('search/notification-list/{query}', [PushNotificationController::class, 'search']);
+    Route::get('get-all-notification', [PushNotificationController::class, 'getAllNotification']);
     //product model
     Route::apiResource('product-model', ProductModelController::class);
     Route::get('search/product-model/{query}', [ProductModelController::class, 'search']);

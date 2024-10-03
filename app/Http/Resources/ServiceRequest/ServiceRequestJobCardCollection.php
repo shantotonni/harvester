@@ -62,6 +62,9 @@ class ServiceRequestJobCardCollection extends ResourceCollection
                     'discount_amount'=>$job_card->discount_amount,
                     'total_receviable'=>$job_card->total_receviable,
 
+                    'customer_rating'=>$job_card->customer_rating,
+                    'customer_remarks'=>$job_card->customer_remarks,
+
                     'name'=>isset($job_card->product)? $job_card->product->name:'',
                     'district_name'=>isset($job_card->district)? $job_card->district->name:'',
                     'upazila_name'=>isset($job_card->upazila)? $job_card->upazila->name:'',
