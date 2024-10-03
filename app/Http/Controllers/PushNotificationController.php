@@ -93,6 +93,14 @@ class PushNotificationController extends Controller
         ]);
     }
 
-
+    private function getAccessToken(){
+        $credentialsPath = public_path('notification_json/'.'aci-applications-firebase-adminsdk-a3zvh-1579f9c032.json'); // Path to your service account file
+        $client = new Google_Client(['verify' => false]);
+        $client->setAuthConfig($credentialsPath);
+        $client->addScope('https://www.googleapis.com/auth/firebase.messaging');
+        $client->useApplicationDefaultCredentials();
+        $token = $client->fetchAccessTokenWithAssertion();
+        return $token['access_token'];
+    }
 
 }
