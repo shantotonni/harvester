@@ -312,4 +312,48 @@ class CustomerController extends Controller
             ]);
         }
     }
+
+    public function customerStatus(Request $request){
+        $current_date = Carbon::now()->format('Y-m-d');
+        $cuustomer_code = $request->CustomerCode;
+        $business = $request->Business;
+        if (empty($cuustomer_code)){
+            return response()->json([
+                'status'=>1,
+                'message'=>'Customer Code Not Found',
+            ]);
+        }
+        $sql = "exec sp_CustomerStatus '%', 'Jan 1 2005', '$current_date', 'RPT', 'N','0', '$business', '$cuustomer_code'";
+        $conn = DB::connection('MotorBrInvoiceMirror');
+        $pdo = $conn->getPdo()->prepare($sql);
+        $pdo->execute();
+        $res = array();
+        do {
+            $rows = $pdo->fetchAll(\PDO::FETCH_ASSOC);
+            $res[] = $rows;
+        } while ($pdo->nextRowset());
+
+        if (!empty($res)){
+            $result = [];
+            foreach ($res[0] as $item){
+                if ($item['DueInstNo'] == $item['CollectInstNo']){
+                    $DueInstNo = 0;
+                }else{
+                    $DueInstNo = $item['NoOfInstallment'] - $item['OverDueInstNo'];
+                }
+                $result = [
+                    'OverDueTaka' => $item['OverDueTaka'],
+                    'OverDueInstNo' => $item['OverDueInstNo'],
+                    'DueAmount' => $item['OutstandingReturn'],
+                    'DueInstNo' => number_format($DueInstNo,2),
+                    'ReceivedAmount' => $item['DownPayment'] + $item['SubsidyReceived'] + $item['CollectAmount'],
+                    'Age' => $item['Age'],
+                ];
+            }
+        }
+        return response()->json([
+            'status'=>1,
+            'data'=> $result,
+        ]);
+    }
 }

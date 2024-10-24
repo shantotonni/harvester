@@ -217,8 +217,7 @@ class CommonController extends Controller
         return new DealerCollection($dealer);
     }
 
-    public function getAllHarvesterServiceDetails(Request $request)
-    {
+    public function getAllHarvesterServiceDetails(Request $request){
         $hour = $request->hour;
         $harvester_services = HarvesterService::orderBy('created_at', 'desc')->with('ServicingType','ProductModel','SparePartsMirror')
             ->where('from_hr','<=', $hour)
@@ -226,15 +225,15 @@ class CommonController extends Controller
             ->where('model_id',$request->model_id)->get();
        return new HarvesterServiceDetailsCollection($harvester_services);
     }
-    public function getAllHarvesterInfo()
-    {
+
+    public function getAllHarvesterInfo(){
         $harvester_infos = HarvesterInfo::with('ProductModel','Products')->orderBy('created_at', 'desc')->paginate(15);
         return response()->json([
             'product_list' => new HarvesterInfoCollection($harvester_infos)
         ]);
     }
-    public function getAllHarvesterParts(Request $request)
-    {
+
+    public function getAllHarvesterParts(Request $request){
         $product_model_id = $request->product_model_id;
         $section_id = $request->section_id;
         $query = $request->search;
@@ -252,8 +251,7 @@ class CommonController extends Controller
         return new HarvesterPartsCollection($harvester_parts);
     }
 
-    public function getAllDistrictWiseSeasonalCrops(Request $request)
-    {
+    public function getAllDistrictWiseSeasonalCrops(Request $request){
         $district_id = $request->district_id;
         $seasonal_crops_id = $request->seasonal_crops_id;
 
@@ -264,54 +262,50 @@ class CommonController extends Controller
         if ($seasonal_crops_id){
             $seasonal_crops = $seasonal_crops->where('seasonal_crops_id',$request->seasonal_crops_id);
         }
-
         $seasonal_crops = $seasonal_crops->orderBy('created_at', 'desc')->get();
         return new SeasonalCropsCollection($seasonal_crops);
     }
 
-    public function getAllCrops()
-    {
+    public function getAllCrops(){
         $crops = Crop::orderBy('created_at', 'desc')->get();
         return response()->json([
             'crops' => $crops
         ]);
     }
 
-    public function getAllDistricts()
-    {
+    public function getAllDistricts(){
         $districts = District::orderBy('name', 'asc')->get();
         return response()->json([
             'districts' => $districts
         ]);
     }
-    public function getAllSections()
-    {
+
+    public function getAllSections(){
         $sections = Section::orderBy('created_at', 'asc')->where('product_id',4)->get();
         return response()->json([
             'sections' => $sections
         ]);
     }
-    public function getAllServiceTips()
-    {
+
+    public function getAllServiceTips(){
         $service_tips = ServiceTips::orderBy('created_at', 'desc')->get();
         return response()->json([
             'service_tips' => new ServiceTipsCollection($service_tips)
         ]);
     }
-    public function getAllServiceEngineer()
-    {
-        $service_engineers = User::orderBy('created_at', 'asc')->where('role_id',2)->get();
-        return new UserCollection($service_engineers);
 
+    public function getAllServiceEngineer(){
+        $service_engineers = User::orderBy('created_at', 'asc')->where('role_id',2)->where('is_active',1)->get();
+        return new UserCollection($service_engineers);
     }
 
-    public function getAllPendingServiceRequestList()
-    {
+    public function getAllPendingServiceRequestList(){
         $job_cards = JobCard::orderBy('created_at', 'asc')->get();
         return response()->json([
             'job_cards' => new ServiceRequestJobCardCollection($job_cards)
         ]);
     }
+
     public function getAllCompletedServiceRequestList()
     {
         $job_cards = JobCard::orderBy('created_at', 'asc')->get();

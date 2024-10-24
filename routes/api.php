@@ -191,6 +191,9 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
 
     Route::post('add-additional-chassis', [CustomerController::class, 'addChassis']);
 
+    //customer status customer-status
+    Route::post('customer-status', [CustomerController::class, 'customerStatus']);
+
 });
 
 //For Customer Login
