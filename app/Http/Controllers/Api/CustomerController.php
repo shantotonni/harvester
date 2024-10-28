@@ -342,12 +342,13 @@ class CustomerController extends Controller
                     $DueInstNo = $item['NoOfInstallment'] - $item['OverDueInstNo'];
                 }
                 $result = [
-                    'OverDueTaka' => $item['OverDueTaka'],
-                    'OverDueInstNo' => $item['OverDueInstNo'],
-                    'DueAmount' => $item['OutstandingReturn'],
-                    'DueInstNo' => number_format($DueInstNo,2),
+                    'TotalSellingPrice' => $item['PrincipalAmount'] + $item['DownPayment'] + $item['SubsidyApproved'],
                     'ReceivedAmount' => $item['DownPayment'] + $item['SubsidyReceived'] + $item['CollectAmount'],
-                    'Age' => $item['Age'],
+                    'DownPayment' => $item['DownPayment'],
+                    'OverDueTaka' => $item['OverDueTaka'],
+                    'SubsidyApproved' => $item['SubsidyApproved'],
+                    'DueInstNo' => number_format($DueInstNo,2),
+                    'TotalOutstanding' => round($item['TotalOutstanding']),
                 ];
             }
         }
