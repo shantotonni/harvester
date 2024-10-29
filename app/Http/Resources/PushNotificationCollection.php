@@ -12,6 +12,7 @@ class PushNotificationCollection extends ResourceCollection
                 return [
                     'id' => $notification->id,
                     'title' => $notification->title,
+                    'created_at' => $notification->created_at,
                     'message' => $notification->message,
                     'image'=>url('/').'/images/notification/'.$notification->image,
                 ];
