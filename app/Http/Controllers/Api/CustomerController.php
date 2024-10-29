@@ -323,7 +323,7 @@ class CustomerController extends Controller
                 'message'=>'Customer Code Not Found',
             ]);
         }
-        $sql = "exec sp_CustomerStatus '%', 'Jan 1 2005', '$current_date', 'RPT', 'N','0', '$business', '$cuustomer_code'";
+        $sql = "exec sp_CustomerStatus '%', 'Jan 1 2005', '$current_date', 'RPT', 'N','0', 'W', '$cuustomer_code'";
         $conn = DB::connection('MotorBrInvoiceMirror');
         $pdo = $conn->getPdo()->prepare($sql);
         $pdo->execute();
@@ -349,6 +349,7 @@ class CustomerController extends Controller
                     'SubsidyApproved' => $item['SubsidyApproved'],
                     'DueInstNo' => number_format($DueInstNo,2),
                     'TotalOutstanding' => round($item['TotalOutstanding']),
+                    'LastPaymentDate' => date('Y-m-d',strtotime($item['LastPaymentDate'])),
                 ];
             }
         }

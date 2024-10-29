@@ -112,6 +112,7 @@ class ServiceRequestController extends Controller
     public function getHarvesterWarranty(Request $request){
         $chassis_no = $request->chassis_no;
         $warrantyClaims = WarrantyClaimInfo::query()->with('parts')->where('Status','!=','Inactive')
+            ->where('ProductId',2)
             ->where('ChassisNumber', $chassis_no)
             ->get();
         return response()->json([
