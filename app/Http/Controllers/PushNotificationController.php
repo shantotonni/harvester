@@ -20,16 +20,16 @@ class PushNotificationController extends Controller
         $request->validate([
             'title' => 'required',
             'message' => 'required',
-            'image' => 'required',
+           // 'image' => 'required',
         ]);
 
         try {
-            if ($request->has('image')) {
+            if ($request->image) {
                 $image = $request->image;
                 $fileName = uniqid() . time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
                 Image::make($image)->save(public_path('images/notification/') . $fileName);
             } else {
-                $fileName = 'not_found.jpg';
+                $fileName = '';
             }
 
             $pushNotification               = new PushNotification();
@@ -87,7 +87,7 @@ class PushNotificationController extends Controller
     }
 
     public function getAllNotification(){
-        $notification = PushNotification::query()->where('product_type','harvester')->get();
+        $notification = PushNotification::query()->where('product_type','harvester')->orderBy('id','desc')->get();
         return response()->json([
             'notification' => new PushNotificationCollection($notification)
         ]);
