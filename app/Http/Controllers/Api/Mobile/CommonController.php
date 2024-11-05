@@ -238,9 +238,9 @@ class CommonController extends Controller
         $section_id = $request->section_id;
         $query = $request->search;
         $harvester_parts = HarvesterParts::query()->with('SparePartsMirror');
-        if (!empty($product_model_id)){
-            $harvester_parts = $harvester_parts->where('product_model_id',$product_model_id);
-        }
+//        if (!empty($product_model_id)){
+//            $harvester_parts = $harvester_parts->where('product_model_id',$product_model_id);
+//        }
         if (!empty($section_id)){
             $harvester_parts = $harvester_parts->where('section_id',$section_id);
         }

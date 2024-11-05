@@ -15,7 +15,7 @@ class HarvesterParts extends Model
     const UPDATED_AT  = 'updated_at';
 
     public function ProductModel(){
-        return $this->belongsTo(ProductModel::class,'product_model_id','id');
+        return $this->belongsTo(ProductModel::class,'product_id','id');
     }
     public function HarvesterPartsModels(){
         return $this->hasMany(harvesterPartsModels::class,'parts_id','parts_id');

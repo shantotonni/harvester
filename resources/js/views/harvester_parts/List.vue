@@ -303,8 +303,13 @@ export default {
         store() {
             this.form.busy = true;
             this.form.post("/api/harvester-parts").then(response => {
-                $("#harvesterpartsModal").modal("hide");
-                this.getAllHarvesterPart()
+                if (response.data.status === 'success'){
+                    this.$toaster.success('Parts Added Successfully');
+                    $("#harvesterpartsModal").modal("hide");
+                    this.getAllHarvesterPart()
+                }else {
+                    this.$toaster.error('Already Exist');
+                }
             }).catch(e => {
                 this.isLoading = false;
             });
@@ -370,7 +375,6 @@ export default {
         },
         getAllSections() {
             axios.get('/api/get-all-sections').then((response) => {
-                console.log(response)
                 this.sections = response.data.sections;
             }).catch((error) => {
 
