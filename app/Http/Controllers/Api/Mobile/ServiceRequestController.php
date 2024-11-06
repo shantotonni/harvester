@@ -60,10 +60,11 @@ class ServiceRequestController extends Controller
       $user = JWTAuth::parseToken()->authenticate();
 
       $product_model    = ProductModel::where('id',$request->model_id)->first();
-      $district         = District::query()->where('id',$request->district_id)->first();
-      $user_area        = UserArea::query()->where('area_id', $district->area_id)->first();
+      //$district       = District::query()->where('id',$request->district_id)->first();
+      $upazila          = Upazila::query()->where('id',$request->upazila_id)->first();
+      $user_area        = UserArea::query()->where('area_id', $upazila->area_id)->first();
       $engineer = User::query()->where('id',$user_area->user_id)->first();
-      $upazila = Upazila::query()->where('id',$request->upazila_id)->first();
+
       $upazilaName = $upazila->name;
 
       $service_request = new ServiceRequest();

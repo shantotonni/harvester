@@ -117,6 +117,7 @@ class CommonController extends Controller
         $service_centers = ServiceCenter::orderBy('created_at', 'desc')->get();
         return new ServiceCenterCollection($service_centers);
     }
+
     public function getAllShowroom()
     {
         $showrooms = Showroom::orderBy('created_at', 'desc')->get();
@@ -135,10 +136,12 @@ class CommonController extends Controller
         return new ProductModelCollection($models);
 
     }
+
     public function getAllProducts(){
         $products = Products::OrderBy('id','asc')->where('id',4)->get();
         return new ProductsCollection($products);
     }
+
     public function getAllMirrorProduct(){
 
         $mirror_products = SparePartsMirror::OrderBy('ProductCode','desc')
@@ -151,6 +154,7 @@ class CommonController extends Controller
         ]);
 
     }
+
     public function getAllPriceByMirror($ProductCode)
     {
         $prices = SparePartsMirror::select('UnitPrice','ProductCode','ProductName')
@@ -187,6 +191,7 @@ class CommonController extends Controller
             'servicing_types' => $servicing_types
         ]);
     }
+
     public function getAllSectionList()
     {
         $sections = Section::OrderBy('id', 'asc')->get();
@@ -194,6 +199,7 @@ class CommonController extends Controller
             'sections' => $sections
         ]);
     }
+
     public function getAllTechnician()
     {
         $technitians = User::OrderBy('id', 'asc')->where('role_id',3)->get();
@@ -201,16 +207,19 @@ class CommonController extends Controller
             'technitians' => $technitians
         ]);
     }
+
     public function getAllEngineer()
     {
         $engineers = User::OrderBy('id', 'asc')->where('role_id',2)->get();
         return new UserCollection($engineers);
     }
+
     public function getAllFuelPump()
     {
         $fule_pump = FuelPump::OrderBy('fuel_pump_id', 'asc')->get();
         return new FuelPumpCollection($fule_pump);
     }
+
     public function getAllDealer()
     {
         $dealer = Dealer::OrderBy('id', 'asc')->paginate(15);
@@ -274,7 +283,8 @@ class CommonController extends Controller
     }
 
     public function getAllDistricts(){
-        $districts = District::orderBy('name', 'asc')->get();
+        $districts = District::orderBy('name', 'asc')
+            ->where('active','Y')->get();
         return response()->json([
             'districts' => $districts
         ]);
@@ -313,6 +323,7 @@ class CommonController extends Controller
             'job_cards' => new ServiceRequestJobCardCollection($job_cards)
         ]);
     }
+
     public function getAllServiceRequestDetailsList()
     {
         $job_cards = JobCard::orderBy('created_at', 'asc')->get();
@@ -323,8 +334,8 @@ class CommonController extends Controller
 
     public function getAllDistrictsUpazilla()
     {
-        $districts = District::orderBy('created_at', 'desc')->get();
-        $upazilla = Upazila::orderBy('created_at', 'desc')->get();
+        $districts = District::orderBy('created_at', 'desc')->where('active','Y')->get();
+        $upazilla = Upazila::orderBy('created_at', 'desc')->where('active','Y')->get();
         return response()->json([
             'districts' => $districts,
             'upazilla' => $upazilla,
@@ -334,6 +345,7 @@ class CommonController extends Controller
     public function getAllModelByProduct($id){
         return new ProductModelCollection(ProductModel::where('product_id',$id)->get());
     }
+
     public function getAllProblemSection(){
         $sections = Section::select('id','name','product_id')->where('product_id',4)->get();
         return response()->json([
