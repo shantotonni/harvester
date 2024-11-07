@@ -157,7 +157,7 @@ class CustomerAuthController extends Controller
             } catch (\Exception $e) {
                 return response()->json([
                     'status'    => 401,
-                    'error'     => $e
+                    'message'     => $e
                 ]);
             }
         }
@@ -359,13 +359,13 @@ class CustomerAuthController extends Controller
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => 401,
-                    'error' => $e
+                    'message' => $e
                 ]);
             }
         }else{
             return response()->json([
                 'status' => 'error',
-                'error' => 'মোবাইল নম্বর পাওয়া যায়নি'
+                'message' => 'মোবাইল নম্বর পাওয়া যায়নি'
             ]);
         }
     }
