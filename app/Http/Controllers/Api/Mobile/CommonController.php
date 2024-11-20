@@ -3,44 +3,26 @@
 namespace App\Http\Controllers\Api\Mobile;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Banner\BannerCollection;
-use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\Customer\CustomerCollection;
 use App\Http\Resources\Dealer\DealerCollection;
-use App\Http\Resources\District\DistrictCollection;
-use App\Http\Resources\Doctor\DoctorCollection;
-use App\Http\Resources\Doctor\DoctorResource;
 use App\Http\Resources\FuelPump\FuelPumpCollection;
 use App\Http\Resources\HarvesterInfo\HarvesterInfoCollection;
 use App\Http\Resources\HarvesterParts\HarvesterPartsCollection;
-use App\Http\Resources\HarvesterService\HarvesterServiceCollection;
 use App\Http\Resources\HarvesterServiceDetailsCollection;
-use App\Http\Resources\MirrorProduct\MirrorProductCollection;
-use App\Http\Resources\MOInfo\MOInfoCollection;
-use App\Http\Resources\Portfolio\PortfolioCollection;
-use App\Http\Resources\Product\ProductCollection;
 use App\Http\Resources\ProductModel\ProductModelCollection;
 use App\Http\Resources\Products\ProductsCollection;
 use App\Http\Resources\SeasonalCrops\SeasonalCropsCollection;
 use App\Http\Resources\ServiceCenter\ServiceCenterCollection;
-use App\Http\Resources\ServiceEngineer\ServiceEngineerCollection;
 use App\Http\Resources\ServiceRequest\ServiceRequestJobCardCollection;
-use App\Http\Resources\ServiceRequest\ServiceRequestJobCardResource;
 use App\Http\Resources\ServiceTips\ServiceTipsCollection;
-use App\Http\Resources\Shop\ShopCollection;
 use App\Http\Resources\Showroom\ShowroomCollection;
-use App\Http\Resources\Upazila\UpazilaCollection;
 use App\Http\Resources\User\UserCollection;
 use App\Models\Area;
-use App\Models\Banner;
 use App\Models\Brand;
-use App\Models\Category;
 use App\Models\Crop;
 use App\Models\Customer;
 use App\Models\Dealer;
 use App\Models\District;
-use App\Models\Doctor;
-use App\Models\Engineer;
 use App\Models\FuelPump;
 use App\Models\HarvesterInfo;
 use App\Models\HarvesterParts;
@@ -48,28 +30,20 @@ use App\Models\HarvesterService;
 use App\Models\HarvestingCost;
 use App\Models\JobCard;
 use App\Models\Menu;
-use App\Models\MOInfo;
-use App\Models\Portfolio;
-use App\Models\MirrorProduct;
 use App\Models\ProductModel;
 use App\Models\Products;
 use App\Models\Role;
 use App\Models\SeasonalCrops;
 use App\Models\Section;
 use App\Models\ServiceCenter;
-use App\Models\ServiceEngineer;
-use App\Models\ServiceRequest;
 use App\Models\ServiceTips;
 use App\Models\ServiceType;
 use App\Models\ServicingType;
-use App\Models\Shop;
 use App\Models\Showroom;
 use App\Models\SparePartsMirror;
-use App\Models\Technician;
 use App\Models\Upazila;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class CommonController extends Controller
 {
@@ -287,6 +261,14 @@ class CommonController extends Controller
             ->where('active','Y')->get();
         return response()->json([
             'districts' => $districts
+        ]);
+    }
+
+    public function getAllUpazillaByDistricts(Request $request){
+        $district_id = $request->district_id;
+        $upazillas = Upazila::where('district_id',$district_id)->get();
+        return response()->json([
+            'upazillas' => $upazillas
         ]);
     }
 

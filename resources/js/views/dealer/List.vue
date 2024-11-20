@@ -55,6 +55,8 @@
                                         <tr>
                                             <th class="text-left">SN</th>
                                             <th class="text-left">Area</th>
+                                            <th class="text-left">District</th>
+                                            <th class="text-left">Upazilla</th>
                                             <th class="text-left">Store Name</th>
                                             <th class="text-left">Dealer Code</th>
                                             <th class="text-left">Responsible person</th>
@@ -68,10 +70,11 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(dealer, i) in dealers" :key="dealer.id"
-                                            v-if="dealers.length">
-                                            <th class="text-center" scope="row">{{ ++i }}</th>
+                                        <tr v-for="(dealer, i) in dealers" :key="dealer.id" v-if="dealers.length">
+                                            <th class="text-center" scope="row">{{ dealer.id }}</th>
                                             <td class="text-left">{{ dealer.area_name_bn }}</td>
+                                            <td class="text-left">{{ dealer.district_name_bn }}</td>
+                                            <td class="text-left">{{ dealer.upazilla_name_bn }}</td>
                                             <td class="text-left">{{ dealer.dealer_name }}</td>
                                             <td class="text-left">{{ dealer.dealer_code }}</td>
                                             <td class="text-left">{{ dealer.store_name }}</td>
@@ -81,8 +84,7 @@
                                             <td class="text-right">{{ dealer.lat }}</td>
                                             <td class="text-right">{{ dealer.long }}</td>
                                             <td class="text-left">
-                                                <img v-if="dealer.image" height="40" width="40"
-                                                     :src="tableImage(dealer.image)" alt="">
+                                                <img v-if="dealer.image" height="40" width="40" :src="tableImage(dealer.image)" alt="">
                                             </td>
                                             <td class="text-left">
                                                 <button @click="edit(dealer)" class="btn btn-success btn-sm"><i
@@ -135,11 +137,37 @@
                                                     :class="{ 'is-invalid': form.errors.has('area_id') }">
                                                 <option disabled value="">Select Area</option>
                                                 <option :value="area.id" v-for="(area , index) in areas" :key="index">
-                                                    {{ area.name_bn }}
+                                                    {{ area.name }}-{{ area.name_bn }}
                                                 </option>
                                             </select>
                                             <div class="error" v-if="form.errors.has('area_id')"
                                                  v-html="form.errors.get('area_id')"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>District</label>
+                                            <select name="text" id="district_id" class="form-control" v-model="form.district_id"
+                                                    :class="{ 'is-invalid': form.errors.has('district_id') }" @change="getUpazillaByDistrict()">
+                                                <option disabled value="">Select District</option>
+                                                <option :value="district.id" v-for="(district , index) in districts" :key="index">
+                                                    {{ district.name }} - {{ district.name_bn }}
+                                                </option>
+                                            </select>
+                                            <div class="error" v-if="form.errors.has('district_id')" v-html="form.errors.get('district_id')"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Upazilla</label>
+                                            <select name="text" id="upazilla_id" class="form-control" v-model="form.upazilla_id"
+                                                    :class="{ 'is-invalid': form.errors.has('upazilla_id') }">
+                                                <option disabled value="">Select Upazilla</option>
+                                                <option :value="upazilla.id" v-for="(upazilla , index) in upazillas" :key="index">
+                                                    {{ upazilla.name }}-{{ upazilla.name_bn }}
+                                                </option>
+                                            </select>
+                                            <div class="error" v-if="form.errors.has('upazilla_id')" v-html="form.errors.get('upazilla_id')"/>
                                         </div>
                                     </div>
 <!--                                    for some reason we have exchange the dealer and shop name-->
@@ -163,7 +191,6 @@
                                                  v-html="form.errors.get('store_name')"/>
                                         </div>
                                     </div>
-
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Dealer Code</label>
@@ -174,7 +201,6 @@
                                                  v-html="form.errors.get('dealer_code')"/>
                                         </div>
                                     </div>
-
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Mobile</label>
@@ -185,7 +211,6 @@
                                                  v-html="form.errors.get('mobile')"/>
                                         </div>
                                     </div>
-
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Address</label>
@@ -221,6 +246,7 @@
                                                     class="form-control">
                                                 <option value="">Select Type</option>
                                                 <option value="harvester">Harvester</option>
+                                                <option value="tractor">Tractor</option>
                                                 <option value="both">Both</option>
                                             </select>
                                             <div class="error" v-if="form.errors.has('dealer_type')"
@@ -265,6 +291,8 @@ export default {
         return {
             dealers: [],
             areas: [],
+            districts: [],
+            upazillas: [],
             pagination: {
                 current_page: 1
             },
@@ -275,6 +303,8 @@ export default {
             form: new Form({
                 id: '',
                 area_id: '',
+                district_id: '',
+                upazilla_id: '',
                 address: '',
                 dealer_name: '',
                 store_name: '',
@@ -300,6 +330,7 @@ export default {
         document.title = 'Dealer List | Harvester';
         this.getAllDealer();
         this.getAllAreas();
+        this.getAllDistrict();
     },
     methods: {
         getAllDealer() {
@@ -366,10 +397,23 @@ export default {
         },
         getAllAreas() {
             axios.get('/api/get-all-areas').then((response) => {
-                console.log(response)
                 this.areas = response.data.areas;
             }).catch((error) => {
 
+            })
+        },
+        getAllDistrict() {
+            axios.get('/api/get-all-districts').then((response) => {
+                console.log(response)
+                this.districts = response.data.districts;
+            }).catch((error) => {
+
+            })
+        },
+        getUpazillaByDistrict(){
+            axios.get( '/api/get-all-upazilla-by-district?district_id=' + this.form.district_id).then((response)=>{
+                this.upazillas = response.data.upazillas;
+            }).catch((error)=>{
             })
         },
         changeImage(event) {

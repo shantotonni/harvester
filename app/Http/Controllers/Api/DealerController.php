@@ -18,12 +18,20 @@ class DealerController extends Controller
         if (!empty($area_id)){
             $dealers=$dealers->where('area_id',$area_id);
         }
-        $dealers = $dealers->paginate();
+        $dealers = $dealers->orderBy('id','desc')->paginate();
         return new DealerCollection($dealers);
     }
 
     public function store(DealerStoreRequest $request)
     {
+        $exist_check = Dealer::query()->where('dealer_code', $request->dealer_code)->exists();
+        if ($exist_check){
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Dealer Already Exist'
+            ]);
+        }
+
         if ($request->has('image')) {
             $image = $request->image;
             $name = uniqid().time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
@@ -34,6 +42,8 @@ class DealerController extends Controller
 
         $dealer = new Dealer();
         $dealer->area_id = $request->area_id;
+        $dealer->district_id = $request->district_id;
+        $dealer->upazilla_id = $request->upazilla_id;
         $dealer->address = $request->address;
         $dealer->responsible_person = $request->dealer_name;
         $dealer->dealer_code = $request->dealer_code;
@@ -46,7 +56,6 @@ class DealerController extends Controller
         $dealer->save();
         return response()->json(['message' => 'Dealer created Successfully', 200]);
     }
-
 
     public function update(Request $request, $id){
         $dealer = Dealer::where('id', $id)->first();
@@ -68,7 +77,9 @@ class DealerController extends Controller
         } else{
             $name = $dealer->image;
         }
-        $dealer->area_id = $request->area_id;;
+        $dealer->area_id = $request->area_id;
+        $dealer->district_id = $request->district_id;
+        $dealer->upazilla_id = $request->upazilla_id;
         $dealer->address = $request->address;
         $dealer->responsible_person = $request->dealer_name;
         $dealer->dealer_code = $request->dealer_code;
