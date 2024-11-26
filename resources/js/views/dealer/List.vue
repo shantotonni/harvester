@@ -59,16 +59,15 @@
 
                                 </div>
                                 <div class="table-responsive">
-                                    <table
-                                        class="table table-bordered table-striped dt-responsive nowrap dataTable no-footer dtr-inline table-sm small">
+                                    <table class="table table-bordered table-striped dt-responsive nowrap dataTable no-footer dtr-inline table-sm small">
                                         <thead>
                                         <tr>
                                             <th class="text-left">SN</th>
+                                            <th class="text-left">Dealer Code</th>
+                                            <th class="text-left">Store Name</th>
                                             <th class="text-left">Area</th>
                                             <th class="text-left">District</th>
                                             <th class="text-left">Upazilla</th>
-                                            <th class="text-left">Store Name</th>
-                                            <th class="text-left">Dealer Code</th>
                                             <th class="text-left">Responsible person</th>
                                             <th class="text-left">Address</th>
                                             <th class="text-left">Mobile</th>
@@ -82,38 +81,43 @@
                                         <tbody>
                                         <tr v-for="(dealer, i) in dealers" :key="dealer.id" v-if="dealers.length">
                                             <th class="text-center" scope="row">{{ dealer.id }}</th>
-                                            <td class="text-left">{{ dealer.area_name_bn }}</td>
-                                            <td class="text-left">{{ dealer.district_name_bn }}</td>
-                                            <td class="text-left">{{ dealer.upazilla_name_bn }}</td>
-                                            <td class="text-left">{{ dealer.dealer_name }}</td>
                                             <td class="text-left">{{ dealer.dealer_code }}</td>
-                                            <td class="text-left">{{ dealer.store_name }}</td>
-                                            <td class="text-left">{{ dealer.address }}</td>
-                                            <td class="text-right">{{ dealer.mobile }}</td>
-                                            <td class="text-right">{{ dealer.dealer_type }}</td>
-                                            <td class="text-right">{{ dealer.lat }}</td>
-                                            <td class="text-right">{{ dealer.long }}</td>
-                                            <td class="text-left">
+                                            <td class="text-center">{{ dealer.dealer_name }}</td>
+                                            <td class="text-center">{{ dealer.area_name_bn }}</td>
+                                            <td class="text-center">{{ dealer.district_name_bn }}</td>
+                                            <td class="text-center">{{ dealer.upazilla_name_bn }}</td>
+                                            <td class="text-center">{{ dealer.store_name }}</td>
+                                            <td class="text-center">{{ dealer.address }}</td>
+                                            <td class="text-center">{{ dealer.mobile }}</td>
+                                            <td class="text-center">{{ dealer.dealer_type }}</td>
+                                            <td class="text-center">{{ dealer.lat }}</td>
+                                            <td class="text-center">{{ dealer.long }}</td>
+                                            <td class="text-center">
                                                 <img v-if="dealer.image" height="40" width="40" :src="tableImage(dealer.image)" alt="">
                                             </td>
                                             <td class="text-left">
-                                                <button @click="edit(dealer)" class="btn btn-success btn-sm"><i
-                                                    class="far fa-edit"></i></button>
-                                                <button @click="destroy(dealer.id)"
-                                                        class="btn btn-danger btn-sm"><i class="fas fa-trash"></i>
-                                                </button>
+                                                <button @click="edit(dealer)" class="btn btn-success btn-sm"><i class="far fa-edit"></i></button>
+                                                <button @click="destroy(dealer.id)" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                                             </td>
-
                                         </tr>
                                         </tbody>
                                     </table>
-                                    <br>
-                                    <pagination
-                                        v-if="pagination.last_page > 1"
-                                        :pagination="pagination"
-                                        :offset="5"
-                                        @paginate="query === '' ? getAllDealer() : searchData()"
-                                    ></pagination>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="data-count">
+                                            Show {{ pagination.from }} to {{ pagination.to }} of
+                                            {{ pagination.total }} rows
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <pagination
+                                            v-if="pagination.last_page > 1"
+                                            :pagination="pagination"
+                                            :offset="5"
+                                            @paginate="query === '' ? getAllDealer() : searchData()"
+                                        ></pagination>
+                                    </div>
                                 </div>
                             </div>
                         </div>

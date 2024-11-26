@@ -196,7 +196,7 @@ class CommonController extends Controller
 
     public function getAllDealer()
     {
-        $dealer = Dealer::OrderBy('id', 'asc')->paginate(15);
+        $dealer = Dealer::OrderBy('id', 'desc')->where('active','Y')->get();
         return new DealerCollection($dealer);
     }
 

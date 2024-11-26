@@ -23,7 +23,7 @@ class DealerController extends Controller
         if (!empty($district_id)){
             $dealers = $dealers->where('district_id',$district_id);
         }
-        $dealers = $dealers->orderBy('id','desc')->paginate();
+        $dealers = $dealers->orderBy('id','desc')->where('active','Y')->paginate();
         return new DealerCollection($dealers);
     }
 
