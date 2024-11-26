@@ -13,10 +13,15 @@ class DealerController extends Controller
 {
     public function index(Request $request)
     {
-        $area_id =$request->area_id;
+        $area_id        =$request->area_id;
+        $district_id    =$request->district_id;
+
         $dealers = Dealer::query()->with('Area');
         if (!empty($area_id)){
-            $dealers=$dealers->where('area_id',$area_id);
+            $dealers = $dealers->where('area_id',$area_id);
+        }
+        if (!empty($district_id)){
+            $dealers = $dealers->where('district_id',$district_id);
         }
         $dealers = $dealers->orderBy('id','desc')->paginate();
         return new DealerCollection($dealers);

@@ -27,10 +27,20 @@
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <select name="" id="" v-model="area_id" class="form-control">
+                                                    <select name="" id="" v-model="area_id" class="form-control" @change="areaWiseDistrict">
                                                         <option disabled value="">Select Area</option>
                                                         <option :value="area.id" v-for="(area , index) in areas"
-                                                                :key="index">{{ area.name_bn }}
+                                                                :key="index">{{ area.name }} - {{ area.name_bn }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <select name="district_id" id="district_id" v-model="district_id" class="form-control">
+                                                        <option disabled value="">Select District</option>
+                                                        <option :value="dist.id" v-for="(dist , index) in area_wise_districts"
+                                                                :key="index">{{ dist.name }} - {{ dist.name_bn }}
                                                         </option>
                                                     </select>
                                                 </div>
@@ -292,12 +302,14 @@ export default {
             dealers: [],
             areas: [],
             districts: [],
+            area_wise_districts: [],
             upazillas: [],
             pagination: {
                 current_page: 1
             },
             query: "",
             area_id: '',
+            district_id: '',
             editMode: false,
             isLoading: false,
             form: new Form({
@@ -335,7 +347,10 @@ export default {
     methods: {
         getAllDealer() {
             this.isLoading = true;
-            axios.get('/api/dealer-list?page=' + this.pagination.current_page + "&area_id=" + this.area_id).then((response) => {
+            axios.get('/api/dealer-list?page=' + this.pagination.current_page
+                + "&area_id=" + this.area_id
+                + "&district_id=" + this.district_id
+            ).then((response) => {
                 // console.log('data', response.data.data)
                 this.dealers = response.data.data;
                 this.pagination = response.data.meta;
@@ -408,6 +423,12 @@ export default {
                 this.districts = response.data.districts;
             }).catch((error) => {
 
+            })
+        },
+        areaWiseDistrict(){
+            axios.get( '/api/get-all-district-by-area?area_id=' + this.area_id).then((response)=>{
+                this.area_wise_districts = response.data.area_wise_districts;
+            }).catch((error)=>{
             })
         },
         getUpazillaByDistrict(){

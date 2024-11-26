@@ -92,6 +92,7 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-crops', [CommonController::class, 'getAllCrops']);
     Route::get('get-all-districts', [CommonController::class, 'getAllDistricts']);
     Route::get('get-all-upazilla-by-district', [CommonController::class, 'getAllUpazillaByDistricts']);
+    Route::get('get-all-district-by-area', [CommonController::class, 'getAllDistrictByArea']);
     Route::get('get-all-showrooms', [CommonController::class, 'getAllShowroom']);
     Route::post('get-all-district-wise-seasonal-crops', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
     Route::get('get-all-model-by-product/{id}', [CommonController::class, 'getAllModelByProduct']);

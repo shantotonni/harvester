@@ -99,7 +99,7 @@ class CommonController extends Controller
     }
 
     public function getAllArea(){
-        $areas = Area::OrderBy('id','asc')->get();
+        $areas = Area::OrderBy('name','asc')->where('active','Y')->get();
         return response()->json([
             'areas'=>$areas
         ]);
@@ -217,7 +217,7 @@ class CommonController extends Controller
     }
 
     public function getAllHarvesterParts(Request $request){
-        $product_model_id = $request->product_model_id;
+        //$product_model_id = $request->product_model_id;
         $section_id = $request->section_id;
         $query = $request->search;
         $harvester_parts = HarvesterParts::query()->with('SparePartsMirror');
@@ -269,6 +269,14 @@ class CommonController extends Controller
         $upazillas = Upazila::where('district_id',$district_id)->get();
         return response()->json([
             'upazillas' => $upazillas
+        ]);
+    }
+
+    public function getAllDistrictByArea(Request $request){
+        $area_id = $request->area_id;
+        $area_wise_districts = District::where('area_id',$area_id)->get();
+        return response()->json([
+            'area_wise_districts' => $area_wise_districts
         ]);
     }
 
