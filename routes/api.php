@@ -33,6 +33,7 @@ use App\Http\Controllers\PushNotificationController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('login', [AuthController::class, 'login']);
+Route::post('get-address', [AuthController::class, 'getAddress']);
 Route::post('dashboard-login', [AuthController::class, 'dashboardLogin']);
 
 Route::group(['middleware' => 'jwtauth:api'], function () {

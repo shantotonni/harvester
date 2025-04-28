@@ -45,7 +45,7 @@
                                             <th class="text-left">Product Name</th>
                                             <th class="text-left">Model Name</th>
                                             <th class="text-left">Customer Code</th>
-                                            <th class="text-left">Chassis</th>
+                                            <th class="text-left">Chassis No</th>
                                             <th class="text-left">Registration Date</th>
                                             <th class="text-left">Last Service Hour</th>
                                             <th class="text-left">Image</th>
@@ -66,12 +66,12 @@
                                             <td class="text-left">{{ customer.model}}</td>
                                             <td class="text-left">
                                                  <span v-for="(detail, i) in customer.customer_chassis" :key="detail.id" v-if="customer.customer_chassis.length">
-                                                    <p style="margin: 0">Customer Code : {{detail.customer_code}}</p>
+                                                    <p style="margin: 0">{{detail.customer_code}}</p>
                                                 </span>
                                             </td>
                                             <td class="text-left">
                                                 <span v-for="(detail, i) in customer.customer_chassis" :key="detail.id" v-if="customer.customer_chassis.length">
-                                                    <p style="margin: 0">Chassis no : {{detail.chassis_no}}</p>
+                                                    <p style="margin: 0">{{detail.chassis_no}}</p>
                                                 </span>
                                             </td>
                                             <td class="text-left">{{ customer.date }}</td>

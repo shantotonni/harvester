@@ -58,6 +58,7 @@ class DealerController extends Controller
         $dealer->lat = $request->lat;
         $dealer->lon = $request->long;
         $dealer->image =$name;
+        $dealer->active ='Y';
         $dealer->save();
         return response()->json(['message' => 'Dealer created Successfully', 200]);
     }
@@ -94,6 +95,7 @@ class DealerController extends Controller
         $dealer->lat = $request->lat;
         $dealer->lon = $request->long;
         $dealer->image =$name;
+        $dealer->active ='Y';
         $dealer->save();
         return response()->json(['message' => 'Dealer updated Successfully', 200]);
     }
@@ -106,6 +108,7 @@ class DealerController extends Controller
 
     public function search($query)
     {
-        return new DealerCollection(Dealer::Where('responsible_person', 'like', "%$query%")->latest()->paginate(10));
+        return new DealerCollection(Dealer::Where('responsible_person', 'like', "%$query%")
+            ->latest()->paginate(10));
     }
 }
