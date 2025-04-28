@@ -41,6 +41,7 @@
                                             <th class="text-left">Area</th>
                                             <th class="text-left">District</th>
                                             <th class="text-left">Upazilla Name</th>
+                                            <th class="text-left">Invoice Upazilla</th>
                                             <th class="text-left">Email</th>
                                             <th class="text-left">Product Name</th>
                                             <th class="text-left">Model Name</th>
@@ -61,6 +62,7 @@
                                             <td class="text-left">{{ customer.area_name }}</td>
                                             <td class="text-left">{{ customer.district_name }}</td>
                                             <td class="text-left">{{ customer.UpazillaName }}</td>
+                                            <td class="text-left">{{ customer.InvoiceUpazillaName }}</td>
                                             <td>{{ customer.email }}</td>
                                             <td class="text-left">{{ customer.product_name }}</td>
                                             <td class="text-left">{{ customer.model}}</td>
