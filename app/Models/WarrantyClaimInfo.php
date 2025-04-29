@@ -17,4 +17,9 @@ class WarrantyClaimInfo extends Model
     const CREATED_AT = 'CreatedAt';
     const UPDATED_AT = 'UpdatedAt';
 
+    public function parts()
+    {
+        return $this->hasMany(PartsDetail::class, 'WarrantyclaiminfoId', 'Id');
+    }
+
 }

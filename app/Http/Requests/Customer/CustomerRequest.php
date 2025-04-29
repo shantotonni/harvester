@@ -26,7 +26,7 @@ class CustomerRequest extends FormRequest
         return [
             'name'=>'required|min:3',
             'mobile' => 'required|min:11|max:11',
-            'email'=>'required',
+            //'email'=>'required',
             'area_id'=>'required',
             'district_id'=>'required',
             //'code'=>'required',
@@ -34,7 +34,7 @@ class CustomerRequest extends FormRequest
             'password'=>'required',
             'product_id'=>'required',
             //'image'=>'required',
-            'address'=>'required',
+            //'address'=>'required',
         ];
     }
 }

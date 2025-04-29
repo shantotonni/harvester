@@ -13,17 +13,30 @@ class DealerController extends Controller
 {
     public function index(Request $request)
     {
-        $area_id =$request->area_id;
+        $area_id        =$request->area_id;
+        $district_id    =$request->district_id;
+
         $dealers = Dealer::query()->with('Area');
         if (!empty($area_id)){
-            $dealers=$dealers->where('area_id',$area_id);
+            $dealers = $dealers->where('area_id',$area_id);
         }
-        $dealers = $dealers->paginate();
+        if (!empty($district_id)){
+            $dealers = $dealers->where('district_id',$district_id);
+        }
+        $dealers = $dealers->orderBy('id','desc')->where('active','Y')->paginate();
         return new DealerCollection($dealers);
     }
 
     public function store(DealerStoreRequest $request)
     {
+        $exist_check = Dealer::query()->where('dealer_code', $request->dealer_code)->exists();
+        if ($exist_check){
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Dealer Already Exist'
+            ]);
+        }
+
         if ($request->has('image')) {
             $image = $request->image;
             $name = uniqid().time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
@@ -34,6 +47,8 @@ class DealerController extends Controller
 
         $dealer = new Dealer();
         $dealer->area_id = $request->area_id;
+        $dealer->district_id = $request->district_id;
+        $dealer->upazilla_id = $request->upazilla_id;
         $dealer->address = $request->address;
         $dealer->responsible_person = $request->dealer_name;
         $dealer->dealer_code = $request->dealer_code;
@@ -43,10 +58,10 @@ class DealerController extends Controller
         $dealer->lat = $request->lat;
         $dealer->lon = $request->long;
         $dealer->image =$name;
+        $dealer->active ='Y';
         $dealer->save();
         return response()->json(['message' => 'Dealer created Successfully', 200]);
     }
-
 
     public function update(Request $request, $id){
         $dealer = Dealer::where('id', $id)->first();
@@ -68,7 +83,9 @@ class DealerController extends Controller
         } else{
             $name = $dealer->image;
         }
-        $dealer->area_id = $request->area_id;;
+        $dealer->area_id = $request->area_id;
+        $dealer->district_id = $request->district_id;
+        $dealer->upazilla_id = $request->upazilla_id;
         $dealer->address = $request->address;
         $dealer->responsible_person = $request->dealer_name;
         $dealer->dealer_code = $request->dealer_code;
@@ -78,6 +95,7 @@ class DealerController extends Controller
         $dealer->lat = $request->lat;
         $dealer->lon = $request->long;
         $dealer->image =$name;
+        $dealer->active ='Y';
         $dealer->save();
         return response()->json(['message' => 'Dealer updated Successfully', 200]);
     }
@@ -90,6 +108,7 @@ class DealerController extends Controller
 
     public function search($query)
     {
-        return new DealerCollection(Dealer::Where('responsible_person', 'like', "%$query%")->latest()->paginate(10));
+        return new DealerCollection(Dealer::Where('responsible_person', 'like', "%$query%")
+            ->latest()->paginate(10));
     }
 }

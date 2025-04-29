@@ -6,7 +6,9 @@ use App\Http\Resources\Customer\CustomerInfoCollection;
 use App\Http\Resources\Customer\CustomerInfoResource;
 use App\Models\Customer;
 use App\Models\CustomerChassis;
+use App\Models\JobCard;
 use App\Models\Otp;
+use App\Models\ProductModel;
 use App\Models\StockBatch;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -27,77 +29,88 @@ class CustomerAuthController extends Controller
         ]]);
     }
 
-    public function login(Request $request)
-    {
+    public function login(Request $request){
         $this->validate($request, [
-            'mobile' => 'required',
-            'password' => 'required',
+            'mobile'    => 'required',
+            'password'  => 'required',
         ]);
 
         if ($token = JWTAuth::attempt(['mobile' => $request->mobile, 'password' => $request->password,'customer_type'=>'harvester'])) {
-            $customer = Customer::where('mobile',$request->mobile)->where('customer_type','harvester')->with('customer_chassis','District')->first();
-
-//            $customer = Customer::where('mobile',$request->mobile)->where('customer_type','harvester')->with('customer_chassis','District')->first();
-            //$chassis = CustomerChassis::where('customer_id',$user->id)->select('id','customer_id','chassis_no','model')->get();
+            $customer = Customer::where('mobile',$request->mobile)->where('customer_type','harvester')
+                ->with('customer_chassis','District','customer_chassis.mirror_customer')->first();
+            $customer->device_token = $request->device_token;
+            $customer->save();
             return response()->json([
-                'status' => 'success',
-                'token' => $token,
-                'user' => new CustomerInfoResource($customer),
+                'status'    => 'success',
+                'token'     => $token,
+                'user'      => new CustomerInfoResource($customer),
             ], 200);
         }
         return response()->json([
-            'message' => 'Mobile or Password Not Match',
-            'status' => 'error'
+            'message'   => 'আপনি ভুল মোবাইল/পাসওয়ার্ড দিয়েছেন।',
+            'status'    => 'error'
         ], 200);
     }
 
     public function findChassisNumber(Request $request)
     {
-        $chassis = $request->chassis;
-        $exiats = CustomerChassis::where('chassis_no',$chassis)->exists();
+        $chassis    = $request->chassis;
+        $exiats     = CustomerChassis::where('chassis_no',$chassis)->exists();
+
         if ($exiats){
             return response()->json([
-                'message' => 'Chassis Already Registered',
-                'status' => 'success'
+                'message'   => 'এই চেসিসটি ইতিমধ্যে নিবন্ধিত হয়েছে।',
+                'status'    => 'success'
             ], 200);
         }
 
-        $chassis = StockBatch::where('BatchNo', $chassis)->with('product')->first();
-        //return $chassis;
+        $chassis        = StockBatch::where('BatchNo', $chassis)->with('product')->first();
+        $productModel   = ProductModel::query()->where('product_id',4)->get();
         if ($chassis) {
             $productName = '';
             if ($chassis){
                 if ($chassis->ProductCode == 'W051'){
-                    $productName = 'লিউলিন কম্বাইন হারভেস্টার';
+                    $productName    = $productModel[4]->model_name_bn;
+                    $modelId        = $productModel[4]->id;
                 }elseif ($chassis->ProductCode == 'W098'){
-                    $productName = 'মিনি কম্বাইন হারভেস্টার';
+                    $productName    = $productModel[5]->model_name_bn;
+                    $modelId        = $productModel[5]->id;
                 }elseif ($chassis->ProductCode == 'W112'){
-                    $productName = 'ইয়ানমার AG600 কম্বাইন হারভেস্টার';
+                    $productName    = $productModel[0]->model_name_bn;
+                    $modelId        = $productModel[0]->id;
                 }elseif ($chassis->ProductCode == 'W127'){
-                    $productName = 'ইয়ানমার AG600 কম্বাইন হারভেস্টার';
+                    $productName    = $productModel[0]->model_name_bn;
+                    $modelId        = $productModel[0]->id;
                 }elseif ($chassis->ProductCode == 'W133'){
-                    $productName = 'লিউলিন কম্বাইন হারভেস্টার';
+                    $productName    = $productModel[4]->model_name_bn;
+                    $modelId        = $productModel[4]->id;
                 }elseif ($chassis->ProductCode == 'W146'){
-                    $productName = 'লোভল RG108 কম্বাইন হারভেস্টার';
+                    $productName    = $productModel[3]->model_name_bn;
+                    $modelId        = $productModel[3]->id;
                 }elseif ($chassis->ProductCode == 'W148'){
-                    $productName = 'ইয়ানমার YH700 কম্বাইন হারভেস্টার';
+                    $productName    = $productModel[1]->model_name_bn;
+                    $modelId        = $productModel[1]->id;
                 }elseif ($chassis->ProductCode == 'W150'){
-                    $productName = 'ইয়ানমার AG600 কম্বাইন হারভেস্টার';
+                    $productName    = $productModel[0]->model_name_bn;
+                    $modelId        = $productModel[0]->id;
                 }elseif ($chassis->ProductCode == 'W151'){
-                    $productName = 'ইয়ানমার AG600 কম্বাইন হারভেস্টার';
+                    $productName    = $productModel[0]->model_name_bn;
+                    $modelId        = $productModel[0]->id;
                 }else{
-                    $productName = $chassis->product->ProductName;
+                    $productName    = $productModel[5]->model_name_bn;
+                    $modelId        = $productModel[5]->id;
                 }
             }
             return response()->json([
-                'status' => 'success',
-                'chassis' => $chassis->BatchNo,
-                'model' => $productName,
+                'status'    => 'success',
+                'chassis'   => $chassis->BatchNo,
+                'model'     => $productName,
+                'modelId'   => $modelId,
             ]);
         } else {
             return response()->json([
-                'status' => 'error',
-                'message' => 'No Found Data',
+                'status'    => 'error',
+                'message'   => 'এই চেসিস নম্বরটি আমাদের সিস্টেমে পাওয়া যায় নি।',
             ]);
         }
     }
@@ -112,39 +125,39 @@ class CustomerAuthController extends Controller
 
         if ($exist_customer) {
             return response()->json([
-                'status' => 200,
-                'message' => 'Mobile number Already Exists'
+                'status'    => 200,
+                'message'   => 'এই মোবাইল নম্বরটি ইতিমধ্যে নিবন্ধিত।'
             ], 200);
         } else {
             try {
-                $six_digit_random_number = random_int(100000, 999999);
-                $smscontent = 'Otp Code - ' . $six_digit_random_number;
-                $mobile = $request->mobile;
+                $four_digit_random_number   = mt_rand(1000,9999);
+                $smscontent                 = 'Otp Code - ' . $four_digit_random_number;
+                $mobile                     = $request->mobile;
 
-                $to = $mobile;
-                $sId = '8809617615000';
-                $applicationName = 'ACI PremioPlastics';
-                $moduleName = 'Registration';
-                $otherInfo = '';
-                $userId = '2845';
-                $vendor = 'smsq';
-                $message = $smscontent;
+                $to                 = $mobile;
+                $sId                = '8809617615000';
+                $applicationName    = 'Harvester';
+                $moduleName         = 'Registration';
+                $otherInfo          = '';
+                $userId             = '2845';
+                $vendor             = 'smsq';
+                $message            = $smscontent;
                 $this->sendSmsQ($to, $sId, $applicationName, $moduleName, $otherInfo, $userId, $vendor, $message);
 
-                $otp = new Otp();
-                $otp->otp_code = $six_digit_random_number;
-                $otp->mobile = $mobile;
-                $otp->Status = 0;
+                $otp            = new Otp();
+                $otp->otp_code  = $four_digit_random_number;
+                $otp->mobile    = $mobile;
+                $otp->status    = 0;
                 $otp->save();
 
                 return response()->json([
-                    'status' => 'success',
-                    'message' => 'success'
+                    'status'    => 'success',
+                    'message'   => 'success'
                 ]);
             } catch (\Exception $e) {
                 return response()->json([
-                    'status' => 401,
-                    'error' => $e
+                    'status'    => 401,
+                    'message'     => $e
                 ]);
             }
         }
@@ -152,89 +165,124 @@ class CustomerAuthController extends Controller
 
     public function checkOtp(Request $request)
     {
-        $otp = $request->otp_code;
-        $mobile = $request->mobile;
-
-        $check_otp = Otp::where('mobile', $mobile)->where('otp_code', $otp)->where('Status', 0)->orderBy('created_at', 'desc')->first();
+        $otp        = $request->otp_code;
+        $mobile     = $request->mobile;
+        $check_otp  = Otp::where('mobile', $mobile)->where('otp_code', $otp)->where('status', 0)->orderBy('created_at', 'desc')->first();
 
         if ($check_otp) {
             $check_otp->status = 1;
             $check_otp->save();
             return response()->json([
-                'status' => 'success',
-                'message' => 'Otp Match Successfully'
+                'status'    => 'success',
+                'message'   => 'সফলভাবে ওটিপি ম্যাচ করেছে'
             ]);
         } else {
             return response()->json([
-                'status' => 'error',
-                'message' => 'Otp Not Match'
+                'status'    => 'error',
+                'message'   => 'ওটিপি ম্যাচ করেনি'
             ]);
         }
     }
 
-    public function registration(Request $request)
-    {
-        $chassis = $request->chassis;
-        $model = $request->model;
+    public function registration(Request $request){
+        $chassis    = $request->chassis;
+        $model      = $request->model;
+        $model_id   = $request->model_id;
         $this->validate($request, [
-            'name' => 'required',
-            'mobile' => 'required',
-            'chassis' => 'required',
-            'password' => 'required',
+            'name'      => 'required',
+            'mobile'    => 'required',
+            'chassis'   => 'required',
+            'password'  => 'required',
         ]);
 
         DB::beginTransaction();
 
         try {
-            $sdmsCustomerInfo = DB::connection('MotorBrInvoiceMirror')->table('InvoiceDetails')
-                ->select('InvoiceDetails.InvoiceNo','InvoiceDetails.ChassisNo','Invoice.CustomerCode')
-                ->join('Invoice','Invoice.InvoiceNo','=','InvoiceDetails.Invoiceno')
-                ->where('ChassisNo',$request->chassis)->first();
-            $CustomerCode = $sdmsCustomerInfo->CustomerCode;
+            $sdmsCustomerInfo = DB::connection('MotorBrInvoiceMirror')->table('InvoiceDetailsBatch')
+                ->select('InvoiceDetailsBatch.Invoiceno','InvoiceDetailsBatch.BatchNo as ChassisNo','Invoice.CustomerCode','Customer.Address1','Invoice.InvoiceDate')
+                ->join('Invoice','Invoice.InvoiceNo','=','InvoiceDetailsBatch.Invoiceno')
+                ->join('Customer','Customer.CustomerCode','=','Invoice.CustomerCode')
+                ->where('BatchNo',$request->chassis)->first();
+
+            $CustomerCode       = '';
+            $Address            = '';
+            $DateOfPurchase     = null;
 
             if (empty($sdmsCustomerInfo)){
                 return response()->json([
-                    'status' => "error",
-                    'message' => 'Chassis Not Found'
+                    'status'    => "error",
+                    'message'   => 'চেসিস নম্বরটি আমাদের সিস্টেমে পাওয়া যায়নি'
                 ], 200);
+            }else{
+                $CustomerCode   = $sdmsCustomerInfo->CustomerCode;
+                $Address        = $sdmsCustomerInfo->Address1;
+                $DateOfPurchase = $sdmsCustomerInfo->InvoiceDate;
             }
+
 
             $exist_customer = Customer::where('mobile', $request->mobile)->where('customer_type', 'harvester')->exists();
             if ($exist_customer) {
                 return response()->json([
-                    'status' => 200,
-                    'message' => 'Mobile number Already Exists'
+                    'status'    => 200,
+                    'message'   => 'এই মোবাইল নম্বরটি ইতিমধ্যে নিবন্ধিত।'
                 ], 200);
             }
+
+            $getLastServiceHour = JobCard::query()->where('chassis_number',$request->chassis)
+                ->where('is_approved',1)
+                ->orderBy('created_at','desc')->first();
+
             $customer = new Customer();
-            $customer->code             = $CustomerCode ? $CustomerCode : '';
-            $customer->name             = $request->name;
-            $customer->mobile           = $request->mobile;
-            $customer->email            = $request->email;
-            $customer->district_id      = $request->district_id;
-            $customer->password         = bcrypt($request->password);
-            $customer->customer_type    = 'harvester';
+            $customer->code                 = $CustomerCode ? $CustomerCode : '';
+            $customer->name                 = $request->name;
+            $customer->mobile               = $request->mobile;
+            $customer->email                = $request->email;
+            $customer->area_id              = $request->area_id;
+            $customer->district_id          = $request->district_id;
+            $customer->upazilla_id          = $request->upazilla_id;
+            $customer->password             = bcrypt($request->password);
+            $customer->customer_type        = 'harvester';
+            $customer->address              = $Address;
+            $customer->image                = '';
+            $customer->chassis_image        = '';
+            $customer->date_of_purchase     = $DateOfPurchase;
+            $customer->service_hour         = $getLastServiceHour ? $getLastServiceHour->hour : 0;
+            $customer->last_service_date    = $getLastServiceHour ? $getLastServiceHour->service_date : null;
 
             if ($customer->save()) {
                 if ($token = JWTAuth::attempt(['mobile' => $request->mobile, 'password' => $request->password,'customer_type'=>'harvester'])) {
-                    $customer_chassis               = new CustomerChassis();
-                    $customer_chassis->customer_id  = $customer->id;
-                    $customer_chassis->model        = $model;
-                    $customer_chassis->chassis_no   = $chassis;
+                    $existingChassisCheck = CustomerChassis::query()->where('chassis_no',$chassis)->exists();
+                    if ($existingChassisCheck){
+                        return response()->json([
+                            'status'    => "success",
+                            'message'   => 'এই চেসিসটি ইতিমধ্যে নিবন্ধিত হয়েছে।',
+                        ], 200);
+                    }
+
+                    $customer_chassis                       = new CustomerChassis();
+                    $customer_chassis->customer_id          = $customer->id;
+                    $customer_chassis->customer_code        = $CustomerCode ? $CustomerCode : '';
+                    $customer_chassis->model_id             = $model_id;
+                    $customer_chassis->model                = $model;
+                    $customer_chassis->chassis_no           = $chassis;
+                    $customer_chassis->date_of_purchase     = $DateOfPurchase;
+                    $customer_chassis->service_hour         = $getLastServiceHour ? $getLastServiceHour->hour : 0;
+                    $customer_chassis->last_service_date    = $getLastServiceHour ? $getLastServiceHour->service_date : null;
                     $customer_chassis->save();
 
-                    $customer = Customer::where('mobile',$request->mobile)->where('customer_type','harvester')->with('Customer_chassis')->first();
+                    $customer = Customer::where('mobile',$request->mobile)->where('customer_type','harvester')
+                        ->with('customer_chassis','customer_chassis.mirror_customer','upazilla')->first();
 
                     DB::commit();
                     return response()->json([
-                        'status' => "success",
-                        'token' => $token,
-                        'user' => $customer,
+                        'status'    => "success",
+                        'token'     => $token,
+                        'user'      => new CustomerInfoResource($customer),
                     ], 200);
                 } else {
                     return response()->json([
-                        'status' => "error",
-                        'message' => 'Something went wrong!',
+                        'status'    => "error",
+                        'message'   => 'Something went wrong!',
                     ], 200);
                 }
             }
@@ -242,8 +290,8 @@ class CustomerAuthController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json([
-                'status' => "error",
-                'message' => $e->getMessage()
+                'status'    => "error",
+                'message'   => $e->getMessage()
             ], 200);
         }
     }
@@ -284,31 +332,40 @@ class CustomerAuthController extends Controller
         $exist_customer = Customer::where('mobile', $mobile)->where('customer_type', 'harvester')->exists();
         if ($exist_customer){
             try {
-                $six_digit_random_number = random_int(100000, 999999);
-                $smscontent = 'Otp Code - ' . $six_digit_random_number;
+                $four_digit_random_number = mt_rand(1000,9999);
+                $smscontent = 'Otp Code - ' . $four_digit_random_number;
+                $mobile = $request->mobile;
 
-                $this->sendsms($ip = '192.168.100.213', $userid = 'motors', $password = 'Asdf1234', $smstext = urlencode($smscontent), $receipient = urlencode($mobile));
+                $to = $mobile;
+                $sId = '8809617615000';
+                $applicationName = 'Harvester';
+                $moduleName = 'Forgot Password';
+                $otherInfo = '';
+                $userId = '2845';
+                $vendor = 'smsq';
+                $message = $smscontent;
+                $this->sendSmsQ($to, $sId, $applicationName, $moduleName, $otherInfo, $userId, $vendor, $message);
 
                 $otp = new Otp();
-                $otp->otp_code = $six_digit_random_number;
+                $otp->otp_code = $four_digit_random_number;
                 $otp->mobile = $mobile;
                 $otp->status = 0;
                 $otp->save();
 
                 return response()->json([
                     'status' => 'success',
-                    'message' => 'Successfully Otp Send'
+                    'message' => 'সফলভাবে ওটিপি পাঠানো হয়েছে'
                 ]);
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => 401,
-                    'error' => $e
+                    'message' => $e
                 ]);
             }
         }else{
             return response()->json([
                 'status' => 'error',
-                'error' => 'Mobile Number Not Found'
+                'message' => 'মোবাইল নম্বর পাওয়া যায়নি'
             ]);
         }
     }
@@ -508,6 +565,7 @@ class CustomerAuthController extends Controller
                 'status' => 'success',
                 'message'=>'notification sent'
             ]);
+
 
         }else{
 

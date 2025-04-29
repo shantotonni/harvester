@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ServiceRequest extends Model
 {
     use HasFactory;
-    protected $table = 'job_cards';
+    protected $table = 'service_requests';
     public $primaryKey = 'id';
     protected $guarded=[];
     const CREATED_AT = 'created_at';

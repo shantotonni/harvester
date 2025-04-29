@@ -9,8 +9,7 @@ class ServiceRequestJobCardCollection extends ResourceCollection
 {
     public function toArray($request)
     {
-        return [
-            'data' => $this->collection->transform(function ($job_card) {
+        return $this->collection->transform(function ($job_card) {
                 return [
                     'id' =>$job_card->id,
                     'territory_id' =>$job_card->territory_id,
@@ -55,13 +54,16 @@ class ServiceRequestJobCardCollection extends ResourceCollection
                     'section' => isset($job_card->section)?$job_card->section->name:'',
                     'created_at' => $job_card->created_at ? date('d-m-Y H:i:s',strtotime($job_card->created_at)) : null,
                     'time_app' => $job_card->time_app,
-                    'service_date'=> $job_card->service_date ? date('d-m-Y',strtotime($job_card->service_date)) : null,
+                    'service_date'=> $job_card->service_date ? date('d-m-Y H:i:s',strtotime($job_card->service_date)) : null,
                     'remarks'=>$job_card->remarks,
                     'spare_parts_sale'=>$job_card->spare_parts_sale,
                     'invoice_number'=>$job_card->invoice_number,
                     'total_service_cost'=>$job_card->total_service_cost,
                     'discount_amount'=>$job_card->discount_amount,
                     'total_receviable'=>$job_card->total_receviable,
+
+                    'customer_rating'=>$job_card->customer_rating,
+                    'customer_remarks'=>$job_card->customer_remarks,
 
                     'name'=>isset($job_card->product)? $job_card->product->name:'',
                     'district_name'=>isset($job_card->district)? $job_card->district->name:'',
@@ -73,7 +75,7 @@ class ServiceRequestJobCardCollection extends ResourceCollection
                     'technitian_name'=> isset($job_card->technitian) ? $job_card->technitian->name: '',
                     'technitian_mobile'=> isset($job_card->technitian) ? $job_card->technitian->mobile: '',
                 ];
-            })
-        ];
+            });
+
     }
 }

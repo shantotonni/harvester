@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Api\Mobile;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Customer\CustomerInfoResource;
+use App\Http\Resources\CustomerProfileResource;
 use App\Http\Resources\ServiceRequest\ServiceRequestCollection;
 use App\Http\Resources\WarrantyPartsCollection;
 use App\Models\Customer;
+use App\Models\CustomerChassis;
+use App\Models\JobCard;
 use App\Models\PartsDetail;
 use App\Models\ServiceRequest;
 use App\Models\SmartAssist;
@@ -53,5 +57,32 @@ class CustomerController extends Controller
                 'message'=>'Not Match'
             ]);
         }
+    }
+
+    public function getCustomerProfile(Request $request){
+        $chassis_no = $request->chassis_no;
+        $customer_chassis = CustomerChassis::query()->with(['customer','mirror_customer','mirror_customer.mirror_district','mirror_customer.mirror_upazilla'])
+            ->where('chassis_no', $chassis_no)->first();
+
+        return response()->json([
+            'status'            => 'success',
+            'user'  => new CustomerProfileResource($customer_chassis)
+        ]);
+    }
+
+    public function customerFeedback(Request $request){
+        $job_card_id        = $request->job_card_id;
+        $customer_rating    = $request->customer_rating;
+        $customer_remarks   = $request->customer_remarks;
+
+        $job_card = JobCard::query()->where('id',$job_card_id)->first();
+        $job_card->customer_rating  = $customer_rating;
+        $job_card->customer_remarks = $customer_remarks;
+        $job_card->save();
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'আপনার ফিডব্যাক টি সফলভাবে সম্পন্ন হয়েছে। '
+        ]);
     }
 }

@@ -18,6 +18,29 @@
                     <div class="card">
                         <div class="datatable" v-if="!isLoading">
                             <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <input v-model="search" type="text" class="form-control" placeholder="Search by JobCard Id">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <input v-model="chassisNo" type="text" class="form-control" placeholder="Search by Chassis No">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3">
+                                                <button type="submit" @click="getAllPendingServiceRequestList"
+                                                        class="btn btn-success"><i class="mdi mdi-filter"></i>Filter
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-striped dt-responsive nowrap dataTable no-footer dtr-inline table-sm small">
                                         <thead>
@@ -29,6 +52,7 @@
                                             <th class="text-center">Section Name</th>
                                             <th class="text-center">Contact P.Name</th>
                                             <th class="text-center">Contact Number</th>
+                                            <th class="text-center">Chassis Number</th>
                                             <th class="text-center">Remarks</th>
                                             <th class="text-center">S.Wanted Date</th>
                                             <th class="text-center">S.Started Date</th>
@@ -46,6 +70,7 @@
                                             <td class="text-center">{{ job_card.section }}</td>
                                             <td class="text-center">{{ job_card.customer_name }}</td>
                                             <td class="text-center">{{ job_card.customer_moblie }}</td>
+                                            <td class="text-center">{{ job_card.chassis_number}}</td>
                                             <td class="text-center">{{ job_card.remarks }}</td>
                                             <td class="text-center">{{ job_card.service_wanted_at }}</td>
                                             <td class="text-center">{{ job_card.service_start_at }}</td>
@@ -139,6 +164,8 @@ export default {
                 current_page: 1
             },
             query: "",
+            search:'',
+            chassisNo:'',
             district_id:'',
             editMode: false,
             isLoading: false,
@@ -149,13 +176,13 @@ export default {
         }
     },
     watch: {
-        query: function (newQ, old) {
-            if (newQ === "") {
-                this. getAllPendingServiceRequestList();
-            } else {
-                this.searchData();
-            }
-        }
+        // query: function (newQ, old) {
+        //     if (newQ === "") {
+        //         this. getAllPendingServiceRequestList();
+        //     } else {
+        //         this.searchData();
+        //     }
+        // }
     },
     mounted() {
         document.title = 'Pending Service Request List | Harvester';
@@ -165,7 +192,10 @@ export default {
     methods: {
         getAllPendingServiceRequestList() {
             this.isLoading = true;
-            axios.get('/api/pending-service-request-list?page=' + this.pagination.current_page).then((response) => {
+            axios.get('/api/pending-service-request-list?page=' + this.pagination.current_page
+                +'&chassis_number='+this.chassisNo
+                +'&search='+this.search
+            ).then((response) => {
                 this.job_cards = response.data.data;
                 this.pagination = response.data.meta;
                 this.isLoading = false;

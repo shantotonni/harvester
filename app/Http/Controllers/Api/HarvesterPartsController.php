@@ -20,6 +20,12 @@ class HarvesterPartsController extends Controller
 
     public function store(HarvesterPartsStoreRequest $request)
     {
+        $exist_check = HarvesterParts::query()->where('ProductCode',$request['ProductCode']['ProductCode'])->exists();
+        if ($exist_check){
+            return response()->json([
+                'message' => 'Already Exist', 200]);
+        }
+
         if ($request->has('image')) {
             $image = $request->image;
             $name = uniqid() . time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
@@ -27,7 +33,6 @@ class HarvesterPartsController extends Controller
         } else {
             $name = 'not_found.jpg';
         }
-
 
         $harvester_part = new HarvesterParts();
         $harvester_part->custom_name = $request->custom_name;

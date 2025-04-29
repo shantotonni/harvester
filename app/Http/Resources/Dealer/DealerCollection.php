@@ -13,6 +13,12 @@ class DealerCollection extends ResourceCollection
                 return [
                     'id' => $dealer->id,
                     'area_id' => $dealer->area_id,
+                    'district_id' => $dealer->district_id,
+                    'district_name' => isset($dealer->district) ? $dealer->district->name : '',
+                    'district_name_bn' => isset($dealer->district) ? $dealer->district->name_bn : '',
+                    'upazilla_id' => $dealer->upazilla_id,
+                    'upazilla_name' => isset($dealer->upazilla) ? $dealer->upazilla->name: '',
+                    'upazilla_name_bn' => isset($dealer->upazilla) ? $dealer->upazilla->name_bn : '',
                     'area_name' => isset($dealer->Area) ? $dealer->Area->areaname : '',
                     'area_name_bn' => isset($dealer->Area) ? $dealer->Area->name_bn : '',
                     'dealer_name' => $dealer->responsible_person,

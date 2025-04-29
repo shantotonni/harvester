@@ -2,16 +2,11 @@
 
 namespace App\Http\Resources\Customer;
 
+use App\Http\Resources\CustomerChassisCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CustomerInfoResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-     */
     public function toArray($request)
     {
         return [
@@ -26,11 +21,13 @@ class CustomerInfoResource extends JsonResource
             'district_id' => $this->district_id,
             'district_name' => isset($this->District) ? $this->District->name : '',
             'district_name_bn' => isset($this->District) ? $this->District->name_bn : '',
+            'upazilla_name' => isset($this->upazilla) ? $this->upazilla->name : '',
+            'upazilla_name_bn' => isset($this->upazilla) ? $this->upazilla->name_bn : '',
             'address' => $this->address,
             'chassis' =>  isset($this->chassis_one) ? $this->chassis_one->chassis_no : '',
             'image' => $this->image,
             'customer_image'=>url('/').'/images/customer/'.$this->image,
-            'customer_chassis' =>  $this->customer_chassis,
+            'customer_chassis' =>  new CustomerChassisCollection($this->customer_chassis),
         ];
     }
 }

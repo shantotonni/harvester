@@ -17,4 +17,11 @@ class CustomerChassis extends Model
     public function invoice_details(){
         return $this->hasOne('App\Models\InvoiceDetails','ChassisNo','chassis_no');
     }
+    public function mirror_customer(){
+        return $this->belongsTo('App\Models\MirrorCustomer','customer_code','CustomerCode')
+            ->select('CustomerCode','ThanaCode','DistrictCode','CustomerName1','CustomerName2','Address1','Address2','Mobile');
+    }
+    public function customer(){
+        return $this->belongsTo('App\Models\Customer','customer_id','id');
+    }
 }

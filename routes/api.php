@@ -30,9 +30,11 @@ use App\Http\Controllers\Api\SmartAssistController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerAuthController;
+use App\Http\Controllers\PushNotificationController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('login', [AuthController::class, 'login']);
+Route::post('get-address', [AuthController::class, 'getAddress']);
 Route::post('dashboard-login', [AuthController::class, 'dashboardLogin']);
 
 Route::group(['middleware' => 'jwtauth:api'], function () {
@@ -91,6 +93,8 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     Route::get('get-all-harvester-parts', [CommonController::class, 'getAllHarvesterParts']);
     Route::get('get-all-crops', [CommonController::class, 'getAllCrops']);
     Route::get('get-all-districts', [CommonController::class, 'getAllDistricts']);
+    Route::get('get-all-upazilla-by-district', [CommonController::class, 'getAllUpazillaByDistricts']);
+    Route::get('get-all-district-by-area', [CommonController::class, 'getAllDistrictByArea']);
     Route::get('get-all-showrooms', [CommonController::class, 'getAllShowroom']);
     Route::post('get-all-district-wise-seasonal-crops', [CommonController::class, 'getAllDistrictWiseSeasonalCrops']);
     Route::get('get-all-model-by-product/{id}', [CommonController::class, 'getAllModelByProduct']);
@@ -167,6 +171,10 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //Section
     Route::apiResource('section-list', SectionController::class);
     Route::get('search/section-list/{query}', [SectionController::class, 'search']);
+    //Push Notification
+    Route::apiResource('notification-list', PushNotificationController::class);
+    Route::get('search/notification-list/{query}', [PushNotificationController::class, 'search']);
+    Route::get('get-all-notification', [PushNotificationController::class, 'getAllNotification']);
     //product model
     Route::apiResource('product-model', ProductModelController::class);
     Route::get('search/product-model/{query}', [ProductModelController::class, 'search']);
@@ -184,6 +192,11 @@ Route::group(['middleware' => 'jwtauth:api'], function () {
     //dealer
     Route::apiResource('dealer-list', DealerController::class);
     Route::get('search/dealer-list/{query}', [DealerController::class, 'search']);
+
+    Route::post('add-additional-chassis', [CustomerController::class, 'addChassis']);
+
+    //customer status customer-status
+    Route::post('customer-status', [CustomerController::class, 'customerStatus']);
 
 });
 
@@ -223,6 +236,9 @@ Route::group(['middleware' => 'CustomerAuth'], function () {
     Route::post('/harvester-warranty-parts', [App\Http\Controllers\Api\Mobile\CustomerController::class,'warrantyParts']);
 
     Route::post('/harvester-smart-assist', [App\Http\Controllers\Api\Mobile\CustomerController::class,'harvesterSmartAssist']);
+    Route::get('/get-customer-profile', [App\Http\Controllers\Api\Mobile\CustomerController::class,'getCustomerProfile']);
+    Route::post('/customer-feedback', [App\Http\Controllers\Api\Mobile\CustomerController::class,'customerFeedback']);
+    Route::get('/get-harvester-warranty', [App\Http\Controllers\Api\Mobile\ServiceRequestController::class,'getHarvesterWarranty']);
 
 });
 

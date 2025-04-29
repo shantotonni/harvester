@@ -17,7 +17,16 @@ class SmartAssistController extends Controller
         $smart_assists = SmartAssist::paginate(15);
         return new SmartAssistCollection($smart_assists);
     }
+
     public function store(SmartAssistStoreRequest $request){
+        $existCheck = SmartAssist::query()->where('chassis_no',$request->chassis_no)->exists();
+        if ($existCheck){
+            return response()->json([
+                'status'=>'success',
+                'message'=>'Chassis Already Exist'
+            ],200);
+        }
+
         $smart_assist = new SmartAssist();
         $smart_assist->chassis_no = $request->chassis_no;
         $smart_assist->SARID = $request->sarid;
@@ -28,8 +37,8 @@ class SmartAssistController extends Controller
             'message'=>'Successfully stored'
         ],200);
     }
-    public function update(SmartAssistUpdateRequest $request, $chassis_no ){
 
+    public function update(SmartAssistUpdateRequest $request, $chassis_no ){
         $smart_assist = SmartAssist::where('chassis_no', $chassis_no)->first();
         $smart_assist->SARID = $request->sarid;
         $smart_assist->password = $request->password;
@@ -38,13 +47,14 @@ class SmartAssistController extends Controller
             'status'=>'success',
             'message'=>'Successfully updated',200]);
     }
-    public function destroy($chassis_no)
-    {
+
+    public function destroy($chassis_no){
         SmartAssist::where('chassis_no', $chassis_no)->delete();
         return response()->json([
             'status'=>'success',
             'message' => ' Deleted Successfully', 200]);
     }
+
     public function search($query)
     {
         return new SmartAssistCollection(SmartAssist::Where('chassis_no', 'like', "%$query%")->paginate(10));
