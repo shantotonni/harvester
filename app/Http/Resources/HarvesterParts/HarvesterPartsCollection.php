@@ -47,7 +47,11 @@ class  HarvesterPartsCollection extends ResourceCollection
                     'ProductName'=>isset($harvester_part->SparePartsMirror) ? $harvester_part->SparePartsMirror->ProductName:'',
                     'parts' => $harvester_part->ProductCode,
                     'ProductCode' => $mirror_products,
-                    'UnitPrice'=>isset($harvester_part->SparePartsMirror) ? $harvester_part->SparePartsMirror->UnitPrice:'',
+                    //age chile
+                    //'UnitPrice' => isset($harvester_part->SparePartsMirror) ? $harvester_part->SparePartsMirror->UnitPrice:'',
+
+                    //new
+                    'UnitPrice' => isset($harvester_part->SparePartsMirror) ? $harvester_part->SparePartsMirror->MRP:'',
 //                    'product_model_id' => $harvester_part->product_model_id,
 //                    'model_name'=>isset($harvester_part->ProductModel) ? $harvester_part->ProductModel->model_name:'',
                     'section_id' => $harvester_part->section_id,
