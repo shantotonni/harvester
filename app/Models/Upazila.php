@@ -14,7 +14,11 @@ class Upazila extends Model
     protected $guarded =[];
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
+
     public function Upazila(){
         return $this->belongsTo(ServicingType::class,'upazila_id','id');
+    }
+    public function area(){
+        return $this->belongsTo(Area::class,'area_id','id');
     }
 }

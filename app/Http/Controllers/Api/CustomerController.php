@@ -30,7 +30,7 @@ class CustomerController extends Controller
     }
 
     public function index(Request $request){
-        $customers = Customer::with(['ProductModel', 'Products', 'area', 'District', 'upazilla','chassis_one','mirror_customer','mirror_customer.mirror_upazilla','customer_chassis','customer_chassis.mirror_customer'])
+        $customers = Customer::with(['ProductModel', 'Products', 'upazilla.area', 'District', 'upazilla','chassis_one','mirror_customer','mirror_customer.mirror_upazilla','customer_chassis','customer_chassis.mirror_customer'])
             ->orderBy('id', 'desc')
             ->where('customer_type', 'harvester')
             ->orderBy('created_at','desc');

@@ -21,7 +21,7 @@ class CustomerCollection extends ResourceCollection
                     'product_name' => isset($customer->Products) ? $customer->Products->name : '',
                     'product_name_bn' => isset($customer->Products) ? $customer->Products->name_bn : '',
                     'model' => isset($customer->chassis_one) ? $customer->chassis_one->model: '',
-                    'area_name' => isset($customer->area) ? $customer->area->name : '',
+                    'area_name' => isset($customer->upazilla->area) ? $customer->upazilla->area->name : '',
                     'district_name' => isset($customer->District) ? $customer->District->name : '',
                     'district_name_bn' => isset($customer->District) ? $customer->District->name_bn : '',
                     'UpazillaName' => isset($customer->upazilla) ? $customer->upazilla->name : '',
