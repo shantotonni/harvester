@@ -9,12 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class  HarvesterPartsCollection extends ResourceCollection
 {
-    /**
-     * Transform the resource collection into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-     */
+
     public function toArray($request)
     {
 
@@ -47,7 +42,7 @@ class  HarvesterPartsCollection extends ResourceCollection
                     'ProductName'=>isset($harvester_part->SparePartsMirror) ? $harvester_part->SparePartsMirror->ProductName:'',
                     'parts' => $harvester_part->ProductCode,
                     'ProductCode' => $mirror_products,
-                    //age chile
+                    //old
                     //'UnitPrice' => isset($harvester_part->SparePartsMirror) ? $harvester_part->SparePartsMirror->UnitPrice:'',
 
                     //new

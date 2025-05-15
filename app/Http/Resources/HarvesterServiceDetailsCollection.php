@@ -27,8 +27,11 @@ class HarvesterServiceDetailsCollection extends ResourceCollection
                     'fix_hour' => $details->fix_hour,
                     'parts_name' => $details->parts_name,
                     'parts_code' => $details->parts_code,
-                    'price' => isset($details->MirrorProducts) ? $details->MirrorProducts->UnitPrice: '',
-                    'UnitPrice' => isset($details->SparePartsMirror) ? $details->SparePartsMirror->UnitPrice: '',
+                    //new
+                    'price' => isset($details->MirrorProducts) ? $details->MirrorProducts->MRP: '',
+                    //old
+                    //'UnitPrice' => isset($details->SparePartsMirror) ? $details->SparePartsMirror->UnitPrice: '',
+                    //'UnitPrice' => isset($details->SparePartsMirror) ? $details->SparePartsMirror->UnitPrice: '',
                     'quantity' => $details->quantity,
                     'servicing_status' => $details->servicing_status,
                 ];
