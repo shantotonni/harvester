@@ -29,11 +29,11 @@
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
                                         <div class="row">
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <input v-model="chassis" type="text" class="form-control" placeholder="Search by Chassis">
-                                                </div>
-                                            </div>
+<!--                                            <div class="col-md-2">-->
+<!--                                                <div class="form-group">-->
+<!--                                                    <input v-model="chassis" type="text" class="form-control" placeholder="Search by Chassis">-->
+<!--                                                </div>-->
+<!--                                            </div>-->
                                             <div class="col-md-2">
                                                 <div class="form-group">
                                                     <datepicker v-model="from_date" :format="customFormatter" placeholder="Enter From Date" input-class="form-control"></datepicker>
