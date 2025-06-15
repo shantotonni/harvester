@@ -30,16 +30,20 @@ class CustomerController extends Controller
     }
 
     public function index(Request $request){
-        $customers = Customer::with(['ProductModel', 'Products', 'upazilla.area', 'District', 'upazilla','chassis_one','mirror_customer','mirror_customer.mirror_upazilla','customer_chassis','customer_chassis.mirror_customer'])
-            ->orderBy('id', 'desc')
-            ->where('customer_type', 'harvester')
-            ->orderBy('created_at','desc');
+        $from_date = $request->from_date;
+        $to_date = date('Y-m-d',strtotime($request->to_date.' 24:59:59.000'));
+        $customers = Customer::with(['ProductModel', 'Products', 'upazilla.area', 'District', 'upazilla','chassis_one',
+            'mirror_customer','mirror_customer.mirror_upazilla','customer_chassis','customer_chassis.mirror_customer']
+        );
+        if (!empty($from_date) && !empty($to_date)){
+            $customers = $customers->whereBetween('created_at',[$from_date,$to_date]);
+        }
+        $customers = $customers->where('customer_type', 'harvester')->orderBy('created_at','desc');
             if ($request->isExport == 'Y'){
                 $customers = $customers->get();
             }else{
                 $customers = $customers->paginate(10);
             }
-
         return new CustomerCollection($customers);
     }
 

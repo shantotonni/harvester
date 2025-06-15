@@ -1,7 +1,26 @@
 <template>
     <div class="content">
         <div class="container-fluid">
-            <breadcrumb :options="['Customer List']"/>
+            <breadcrumb :options="['Customer List']">
+                <div class="col-sm-6">
+                    <div class="card-tools">
+                        <div class="float-right d-none d-md-block">
+                            <button type="button" class="btn btn-success btn-sm" @click="createCustomer">
+                                <i class="fas fa-plus"></i>
+                                Add Customer
+                            </button>
+                            <button type="button" class="btn btn-primary btn-sm" @click="exportCustomer">
+                                <i class="mdi mdi-calendar-export"></i>
+                                Export
+                            </button>
+                            <button type="button" class="btn btn-primary btn-sm" @click="reload">
+                                <i class="fas fa-sync"></i>
+                                Reload
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </breadcrumb>
             <div class="row">
                 <div class="col-xl-12">
                     <div class="card">
@@ -11,23 +30,27 @@
                                     <div class="flex-grow-1">
                                         <div class="row">
                                             <div class="col-md-2">
-                                                <input v-model="query" type="text" class="form-control" placeholder="Search by name">
+                                                <div class="form-group">
+                                                    <input v-model="chassis" type="text" class="form-control" placeholder="Search by Chassis">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <datepicker v-model="from_date" :format="customFormatter" placeholder="Enter From Date" input-class="form-control"></datepicker>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <datepicker v-model="to_date" :format="customFormatter" placeholder="Enter To Date" input-class="form-control"></datepicker>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button type="submit" class="btn btn-success" @click="getAllCustomer"><i class="mdi mdi-filter"></i>Filter</button>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-tools">
-                                        <button type="button" class="btn btn-success btn-sm" @click="createCustomer">
-                                            <i class="fas fa-plus"></i>
-                                            Add Customer
-                                        </button>
-                                        <button type="button" class="btn btn-primary btn-sm" @click="exportCustomer">
-                                            <i class="mdi mdi-calendar-export"></i>
-                                            Export
-                                        </button>
-                                        <button type="button" class="btn btn-primary btn-sm" @click="reload">
-                                            <i class="fas fa-sync"></i>
-                                            Reload
-                                        </button>
+                                        <input v-model="query" type="text" class="form-control" placeholder="Search by name">
                                     </div>
                                 </div>
                                 <div class="table-responsive">
@@ -51,7 +74,7 @@
                                             <th class="text-left">Last Service Hour</th>
                                             <th class="text-left">Image</th>
 <!--                                            <th class="text-left"> Customer Type</th>-->
-                                            <th class="text-left">Action</th>
+                                            <th class="text-left" style="width: 11%">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -363,6 +386,9 @@ export default {
                 new_password: '',
                 customer_id: '',
             }),
+            from_date:'',
+            to_date:'',
+            chassis:'',
             isExport : ''
         }
     },
@@ -385,7 +411,13 @@ export default {
     methods: {
         getAllCustomer() {
             this.isLoading = true;
-            axios.get('/api/customer?page=' + this.pagination.current_page).then((response) => {
+            let fromdate =  this.from_date ? moment(this.from_date).format('YYYY-MM-DD') : '';
+            let todate =  this.to_date ? moment(this.to_date).format('YYYY-MM-DD') : '';
+
+            axios.get('/api/customer?page=' + this.pagination.current_page
+                + "&from_date="+ fromdate
+                + "&to_date=" + todate
+            ).then((response) => {
                 this.customers = response.data.data;
                 this.pagination = response.data.meta;
                 this.isLoading = false;
@@ -526,7 +558,7 @@ export default {
             })
         },
         customFormatter(date) {
-            return moment(date).format('MMMM Do YYYY');
+            return moment(date).format('YYYY-MM-DD');
         },
         exportCustomer(){
             this.isExport = 'Y'
