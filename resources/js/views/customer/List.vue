@@ -450,7 +450,6 @@ export default {
         store() {
             this.form.busy = true;
             this.form.post("/api/customer").then(response => {
-                console.log(response.data)
                 if (response.data.status === 'success'){
                     $("#customerModal").modal("hide");
                     this.$toaster.success(response.data.message);
@@ -489,14 +488,13 @@ export default {
         updatePassword(){
             this.form2.busy = true;
             this.form2.post("/api/customer-password-change-from-admin").then(response => {
-                console.log(response.data)
-                // if (response.data.status === 'success'){
-                //     $("#customerModal").modal("hide");
-                //     this.$toaster.success(response.data.message);
-                //     this.getAllCustomer();
-                // }else {
-                //     this.$toaster.error(response.data.message);
-                // }
+                if (response.data.status === 'success'){
+                    $("#customerModal").modal("hide");
+                    this.$toaster.success(response.data.message);
+                    this.getAllCustomer();
+                }else {
+                    this.$toaster.error(response.data.message);
+                }
             }).catch(e => {
                 this.$toaster.error(response.data.message);
                 this.isLoading = false;
@@ -539,19 +537,18 @@ export default {
             axios.get('/api/get-all-model-by-product/' + this.form.product_id).then((response) => {
                 this.models = response.data.data;
             }).catch((error) => {
-
+                //
             })
         },
         getAllArea() {
             axios.get('/api/get-all-areas').then((response) => {
                 this.areas = response.data.areas;
             }).catch((error) => {
-
+                //
             })
         },
         getAllDistricts() {
             axios.get('/api/get-all-districts').then((response) => {
-
                 this.districts = response.data.districts;
             }).catch((error) => {
 
@@ -562,11 +559,15 @@ export default {
         },
         exportCustomer(){
             this.isExport = 'Y'
+            let fromdate =  this.from_date ? moment(this.from_date).format('YYYY-MM-DD') : '';
+            let todate =  this.to_date ? moment(this.to_date).format('YYYY-MM-DD') : '';
+
             axios.get('/api/customer?page=' + this.pagination.current_page
-                + "&isExport=" + this.isExport
+                + "&isExport="  + this.isExport
+                + "&from_date=" + fromdate
+                + "&to_date="   + todate
             ).then((response)=>{
                     let dataSets = response.data.data;
-                console.log(dataSets)
                     if (dataSets.length > 0) {
                         let columns = Object.keys(dataSets[0]);
                         columns = columns.filter((item) => item !== 'row_num');
